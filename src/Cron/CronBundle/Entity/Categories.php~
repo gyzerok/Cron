@@ -1,0 +1,32 @@
+<?php
+
+namespace Cron\CronBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Cron\CronBundle\Entity\Categories
+ *
+ * @ORM\Table(name="categories")
+ * @ORM\Entity
+ */
+class Categories
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string $name
+     *
+     * @ORM\Column(name="name", type="string", length=45, nullable=false)
+     */
+    private $name;
+
+
+}

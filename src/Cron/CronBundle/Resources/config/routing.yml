@@ -1,0 +1,3 @@
+cron_cron_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: CronCronBundle:Default:index }

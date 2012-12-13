@@ -1,0 +1,83 @@
+<?php
+
+namespace Cron\CronBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Cron\CronBundle\Entity\Users
+ *
+ * @ORM\Table(name="users")
+ * @ORM\Entity
+ */
+class Users
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string $username
+     *
+     * @ORM\Column(name="username", type="string", length=45, nullable=false)
+     */
+    private $username;
+
+    /**
+     * @var string $userpass
+     *
+     * @ORM\Column(name="userpass", type="string", length=45, nullable=false)
+     */
+    private $userpass;
+
+    /**
+     * @var \DateTime $regDate
+     *
+     * @ORM\Column(name="reg_date", type="datetime", nullable=false)
+     */
+    private $regDate;
+
+    /**
+     * @var \DateTime $lastVisit
+     *
+     * @ORM\Column(name="last_visit", type="datetime", nullable=false)
+     */
+    private $lastVisit;
+
+    /**
+     * @var Cities
+     *
+     * @ORM\ManyToOne(targetEntity="Cities")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     * })
+     */
+    private $city;
+
+    /**
+     * @var Regions
+     *
+     * @ORM\ManyToOne(targetEntity="Regions")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="region_id", referencedColumnName="id")
+     * })
+     */
+    private $region;
+
+    /**
+     * @var Countries
+     *
+     * @ORM\ManyToOne(targetEntity="Countries")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="country_id", referencedColumnName="id")
+     * })
+     */
+    private $country;
+
+
+}

@@ -1,0 +1,7 @@
+parameters:
+#    cron_cron.example.class: Cron\CronBundle\Example
+
+services:
+#    cron_cron.example:
+#        class: %cron_cron.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

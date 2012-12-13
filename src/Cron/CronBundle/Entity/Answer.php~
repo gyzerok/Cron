@@ -1,0 +1,66 @@
+<?php
+
+namespace Cron\CronBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Cron\CronBundle\Entity\Answer
+ *
+ * @ORM\Table(name="answer")
+ * @ORM\Entity
+ */
+class Answer
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string $text
+     *
+     * @ORM\Column(name="text", type="text", nullable=false)
+     */
+    private $text;
+
+    /**
+     * @var boolean $status
+     *
+     * @ORM\Column(name="status", type="boolean", nullable=false)
+     */
+    private $status;
+
+    /**
+     * @var \DateTime $pubDate
+     *
+     * @ORM\Column(name="pub_date", type="datetime", nullable=false)
+     */
+    private $pubDate;
+
+    /**
+     * @var Question
+     *
+     * @ORM\ManyToOne(targetEntity="Question")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="question_id", referencedColumnName="id")
+     * })
+     */
+    private $question;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
+
+
+}
