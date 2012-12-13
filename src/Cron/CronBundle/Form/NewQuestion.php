@@ -5,6 +5,12 @@ namespace Cron\CronBundle\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\Event\DataEvent;
+use Cron\CronBundle\Entity\Country;
+use Cron\CronBundle\Entity\State;
+use Cron\CronBundle\Entity\City;
 
 class NewQuestion extends AbstractType
 {
@@ -18,9 +24,9 @@ class NewQuestion extends AbstractType
                 ->add('city', null, array('label' => 'Страна'))
                 ->add('boundary', null, array('label' => 'Минимальная наполняемость ответами'));
 
-        /*$builder->add('name');
+        //$builder->add('name');
 
-        $factory = $builder->getFormFactory();
+       /* $factory = $builder->getFormFactory();
 
         $refreshStates = function ($form, $country) use ($factory)
         {
@@ -90,8 +96,8 @@ class NewQuestion extends AbstractType
         return 'question';
     }
 
-    /*public function getDefaultOptions(array $options)
+    public function getDefaultOptions(array $options)
     {
-        return array('data_class' => 'Cron\CronBundle\Entity\City');
-    }*/
+        return array('data_class' => 'Cron\CronBundle\Entity\Question');
+    }
 }
