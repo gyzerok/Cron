@@ -1,0 +1,41 @@
+{% extends '::base.html.twig' %}
+	{% block content %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#question_country').change(function(){
+            if($(this).val()){
+                $.ajax({
+                    type: "POST",
+                    data: "country_id=" + $(this).val(),
+                    url: "{{ path('getStates') }}",
+                    success: function(data){
+                        $('#question_state option:gt(0)').remove();
+                        $('#question_state').append(data);
+                    }
+                });
+            }
+        });
+        $('#question_state').change(function(){
+            if($(this).val()){
+                $.ajax({
+                    type: "POST",
+                    data: "state_id=" + $(this).val(),
+                    url: "{{ path('getCities') }}",
+                    success: function(data){
+                        $('#question_city option:gt(0)').remove();
+                        $('#question_city').append(data);
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<form action="{{ path('index') }}" method="post" {{ form_enctype(form) }}>
+	<div class="questionForm">
+		{{ form_widget(form) }}
+	</div>
+<input type="submit" />
+</form>		
+	{% endblock %}
