@@ -32,10 +32,50 @@
     });
 </script>
 
-<form action="{{ path('index') }}" method="post" {{ form_enctype(form) }}>
+<form class="writeQuestion" action="{{ path('index') }}" method="post" {{ form_enctype(form) }}>
+	{{ form_errors(form) }}
+	
 	<div class="questionForm">
-		{{ form_widget(form) }}
+		{{ form_errors(form.text) }}
+		{{ form_widget(form.text) }}
 	</div>
-<input type="submit" />
-</form>		
-	{% endblock %}
+	<div class="writeQuestionDiv">
+		<div style="border-bottom: 2px solid #C88B79;overflow: hidden; padding-bottom: 3px">
+				<input class="radioButton" name="Radio" value="Радио кнопка" type="radio">по категориям
+			<div class="privateButton">
+				{{ form_label(form.private) }}
+				{{ form_errors(form.private) }}
+				{{ form_widget(form.private) }}
+			</div>
+		</div>
+		<div class="category">
+			{{ form_errors(form.category) }}
+			{{ form_widget(form.category) }}
+		</div>	
+		<div class="chosePlace">
+			{{ form_label(form.country) }}	
+			{{ form_errors(form.country) }}
+			{{ form_widget(form.country) }}
+
+			{{ form_label(form.state) }}
+			{{ form_errors(form.state) }}
+			{{ form_widget(form.state) }}
+
+			{{ form_label(form.city) }}
+			{{ form_errors(form.city) }}
+			{{ form_widget(form.city) }}
+		</div>
+		<div style="clear: both;"></div>
+		<div class="additionalInformation">
+			{{ form_label(form.boundary) }}
+			{{ form_errors(form.boundary) }}
+			{{ form_widget(form.boundary) }}
+		</div>
+		<div style="clear: both"></div>
+		<input class="submitButton" type="submit" />
+	</div>	
+	
+	{{ form_rest(form) }}
+</form>
+	
+{% endblock %}

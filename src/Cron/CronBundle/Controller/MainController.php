@@ -51,4 +51,5 @@ class MainController extends Controller
         $rush = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findByCategory(0);
         $this->render("CronCronBundle:Main:rush.html.twig", array('title' => 'Срочные', 'rush' => $rush));
     }
+
 }

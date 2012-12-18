@@ -18,7 +18,7 @@ class NewQuestion extends AbstractType
     {
         $builder->add('text', 'textarea', array('label' => 'Вопрос'))
                 ->add('category', null, array('label' => 'Категория', 'expanded' => true))
-                ->add('private', 'checkbox', array('label' => 'Закрытый', 'required' => false))
+                ->add('private', 'checkbox', array('label' => 'закрытый', 'required' => false))
                 ->add('country', null, array('label' => 'Страна', 'empty_value' => 'Все страны'))
                 ->add('state', null, array('label' => 'Регион', 'empty_value' => 'Все регионы', 'disabled' => true))
                 ->add('city', null, array('label' => 'Город', 'empty_value' => 'Все города', 'disabled' => true))
