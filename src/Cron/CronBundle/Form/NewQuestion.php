@@ -16,7 +16,7 @@ class NewQuestion extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('text', 'textarea', array(/*'class'=>"question",*/ 'label' => 'Вопрос'))
+        $builder->add('text', 'textarea', array('label' => 'Вопрос'))
                 ->add('category', null, array('label' => 'Категория', 'expanded' => true))
                 ->add('private', 'checkbox', array('label' => 'Закрытый', 'required' => false))
                 ->add('country', null, array('label' => 'Страна', 'empty_value' => 'Все страны'))

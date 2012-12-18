@@ -33,7 +33,7 @@ class MainController extends Controller
             }
         }
 
-        return $this->render("CronCronBundle:Main:index_temp.html.twig", array('title' => 'Главная',
+        return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Главная',
                                                                                'form'  => $form->createView())
                                                                                );
 
