@@ -1,0 +1,6 @@
+Cron\CronBundle\Entity\Question:
+  properties:
+    text:
+      - NotBlank: ~
+    category:
+      - NotBlank: ~

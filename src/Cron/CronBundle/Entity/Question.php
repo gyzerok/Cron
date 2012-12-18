@@ -347,4 +347,9 @@ class Question
     {
         return $this->country;
     }
+
+    public function __construct()
+    {
+        $this->datetime = new \DateTime("now");
+    }
 }
