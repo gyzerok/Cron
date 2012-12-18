@@ -6,6 +6,16 @@ index:
   pattern:  /
   defaults: { _controller: CronCronBundle:Main:index }
 
+category:
+  pattern: /category
+  defaults: { _controller: CronCronBundle:Main:category }
+
+rush:
+  pattern: /rush
+  defaults: { _controller: CronCronBundle:Main:rush }
+
+# Ajax routes
+
 getStates:
   pattern:  /ajax/getStates
   defaults: { _controller: CronCronBundle:Ajax:getStates }
@@ -13,6 +23,10 @@ getStates:
 getCities:
   pattern:  /ajax/getCities
   defaults: { _controller: CronCronBundle:Ajax:getCities }
+
+getUpdate:
+  pattern:  /ajax/getUpdate
+  defaults: { _controller: CronCronBundle:Ajax:getUpdate }
 
 # Internal routing configuration to handle ESI
 #_internal:

@@ -5,12 +5,12 @@ namespace Cron\CronBundle\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
-use Symfony\Component\Form\FormEvents;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\Event\DataEvent;
-use Cron\CronBundle\Entity\Country;
-use Cron\CronBundle\Entity\State;
-use Cron\CronBundle\Entity\City;
+//use Symfony\Component\Form\FormEvents;
+//use Symfony\Component\Form\FormEvent;
+//use Symfony\Component\Form\Event\DataEvent;
+//use Cron\CronBundle\Entity\Country;
+//use Cron\CronBundle\Entity\State;
+//use Cron\CronBundle\Entity\City;
 
 class NewQuestion extends AbstractType
 {
@@ -18,15 +18,15 @@ class NewQuestion extends AbstractType
     {
         $builder->add('text', 'textarea', array(/*'class'=>"question",*/ 'label' => 'Вопрос'))
                 ->add('category', null, array('label' => 'Категория', 'expanded' => true))
-                ->add('private', 'checkbox', array('label' => 'Закрытый'))
-                ->add('country', null, array('label' => 'Страна'))
-                ->add('state', null, array('label' => 'Регион'))
-                ->add('city', null, array('label' => 'Страна'))
-                ->add('boundary', null, array('label' => 'Минимальная наполняемость ответами'));
+                ->add('private', 'checkbox', array('label' => 'Закрытый', 'required' => false))
+                ->add('country', null, array('label' => 'Страна', 'empty_value' => 'Все страны'))
+                ->add('state', null, array('label' => 'Регион', 'empty_value' => 'Все регионы', 'disabled' => true))
+                ->add('city', null, array('label' => 'Город', 'empty_value' => 'Все города', 'disabled' => true))
+                ->add('boundary', 'choice', array('label' => 'Минимальная наполняемость ответами', 'choices' => array(1 => '10', 2 => '20', 3 => '30', 4 => '40', 5 => '50')));
 
-        //$builder->add('name');
+        /*$builder->add('name');
 
-       /* $factory = $builder->getFormFactory();
+        $factory = $builder->getFormFactory();
 
         $refreshStates = function ($form, $country) use ($factory)
         {
@@ -96,8 +96,8 @@ class NewQuestion extends AbstractType
         return 'question';
     }
 
-    public function getDefaultOptions(array $options)
+    /*public function getDefaultOptions(array $options)
     {
         return array('data_class' => 'Cron\CronBundle\Entity\Question');
-    }
+    }*/
 }
