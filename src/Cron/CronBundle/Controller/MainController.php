@@ -33,7 +33,7 @@ class MainController extends Controller
             }
         }
 
-        return $this->render("CronCronBundle:Main:index_temp.html.twig", array('title' => 'Главная',
+        return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Главная',
                                                                                'form'  => $form->createView())
                                                                                );
 
@@ -51,4 +51,5 @@ class MainController extends Controller
         $rush = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findByCategory(0);
         $this->render("CronCronBundle:Main:rush.html.twig", array('title' => 'Срочные', 'rush' => $rush));
     }
+
 }
