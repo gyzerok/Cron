@@ -1,5 +1,4 @@
 
-
 #wrapper {
 	width: 720px;
 	margin: 15px auto;
@@ -416,7 +415,6 @@ h2.categoryH2 {
 
 .singleQuestion {
 	width: 522px;
-	height: 55px;
 	border: 1px solid #C88B79;
 	border-radius: 7px;
 	margin-top: 10px;
@@ -436,10 +434,83 @@ h2.categoryH2 {
 	width: 90px;
 	float: left;
 	overflow: hidden;
-	outline: 1px solid red;
 	font-size: 13px;
 	margin-left: 305px;
 }
+
+.closeButton {
+	width: 11px;
+	height: 10px;
+	float: left;
+	background: url(/i/closeButton.png) no-repeat;
+	background-size: 100%;
+	margin-left: 8px;
+	cursor: pointer;
+
+}
+
+.singleQuestion p.questionText{
+	display: block;
+	width: 380px;
+	margin: 3px 0 5px 5px;
+	float: left;
+}
+
+.socialIcons {
+	width: 136px;
+	overflow: hidden;
+	float: left;
+	margin-top: 15px;
+}
+
+.spamButton {
+	width: 25px;
+	height: 17px;
+	float: left;
+	background: url(/i/spamButton.png) no-repeat;
+	background-size: 100%;
+	cursor: pointer;
+}
+
+.likeButton {
+	width: 18px;
+	height: 20px;
+	float: left;
+	background: url(/i/likeButton.png) no-repeat;
+	background-size: 100%;
+	cursor: pointer;
+}
+
+.repostButton {
+	width: 22px;
+	height: 17px;
+	float: left;
+	background: url(/i/repostButton.png) no-repeat;
+	background-size: 100%;
+	margin-top: 2px;
+	cursor: pointer;
+}
+
+.socialIcons form.answer {
+	width: 70px;
+	height: 15px;
+	float: left;
+	margin-top: 2px;
+}
+
+.socialIcons form.answer input {
+	width: 70px;
+	height: 15px;
+	border: 1px solid gray;
+	margin: 0;
+	cursor: pointer;
+	border-radius: 6px;
+	margin-bottom: 5px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 10px;
+}
+
 .chatWindow {
 	width: 520px;
 	height: 20px;
