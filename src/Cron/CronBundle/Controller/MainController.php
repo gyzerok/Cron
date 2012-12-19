@@ -23,8 +23,10 @@ class MainController extends Controller
             if($form->isValid())
             {
                 $question->setStatus(true);
+                //TODO Сделать нормального юзера
                 $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
                 $question->setUser($user); // заглушка
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($question);
                 $em->flush();

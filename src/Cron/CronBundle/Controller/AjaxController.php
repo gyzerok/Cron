@@ -50,26 +50,44 @@ class AjaxController extends Controller
         {
             $lastTime = $request->get("last_time");
 
-            $em = $this->getDoctrine()->getManager();
-            $query = $em->createQuery(
-                'SELECT q, COUNT(a.id) AS answersCount FROM CronCronBundle:Question q INNER JOIN q.id a WHERE q.pub_date > :pubDate ORDER BY p.pub_date DESC')->setParameter('pubDate', $lastTime);
+            $questionRepo = $this->getDoctrine()->getRepository('CronCronBundle:Question');
+            $catQuery = $questionRepo->createQueryBuilder('question')
+                                     ->innerJoin('question.user', 'user')
+                                     ->where('question.category > :cid AND question.datetime > :lastTime')
+                                     ->setParameter('cid', '1')
+                                     ->setParameter('lastTime',$lastTime)
+                                     ->getQuery();
+            $categorized = $catQuery->getResult();
 
-            $questions = $query->getResult();
+            $rushQuery = $questionRepo->createQueryBuilder('question')
+                                      ->innerJoin('question.user', 'user')
+                                      ->where('question.category = :cid AND question.datetime > :lastTime')
+                                      ->setParameter('cid', '1')
+                                      ->setParameter('lastTime',$lastTime)
+                                      ->getQuery();
+            $rush = $rushQuery->getResult();
 
-            //TODO Разработать формат xml
-            $xml = '';
-            foreach($questions as $question)
-            {
-                //TODO Добавить подсчет числа комментариев
-                //$count = $em->createQuery(
-                    //'SELECT COUNT(*) FROM CronCronBundle:Answer a WHERE a.answer_id = :id')->setParameter('id', $question->getAnswer()
-                //);
-                //$xml = $xml . sprintf('<question text="%s" date="%d" answers="%d" >', $question->getText, $question->getDatetime, $count);
-            }
+            $json = '{';
 
-            return new Response($xml);
+            $json = $json . '"categorized":{' . $this->questionsToJSON($categorized) . '},';
+            $json = $json . '"rush:{"' . $this->questionsToJSON($rush) . '}';
+
+            $json = $json . '}';
+
+            return new Response($json);
         }
 
         return new Response('error');
+    }
+
+    public function questionsToJSON(array $questions)
+    {
+        foreach($questions as $question)
+        {
+            $json = '';
+            $json = $json . sprintf('"%d":{ "text":"%s", "user":"%s", "date":"%s"}', $question->getId, $question->getText, $question->getUser, $question->getDatetime);
+        }
+
+        return $json;
     }
 }
