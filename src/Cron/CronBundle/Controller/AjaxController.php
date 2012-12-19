@@ -84,7 +84,7 @@ class AjaxController extends Controller
     {
         $json = '';
         foreach($questions as $question)
-            $json = $json . sprintf('"%d":{ "text":"%s", "user":"%s", "date":"%s"}', $question->getId(), $question->getText(), $question->getUser(), $question->getDatetime()->format('H:i:s d.m.Y'));
+            $json = $json . sprintf('"%d":{ "text":"%s", "user":"%s", "date":"%s"},', $question->getId(), $question->getText(), $question->getUser(), $question->getDatetime()->format('H:i:s d.m.Y'));
 
         return $json;
     }
