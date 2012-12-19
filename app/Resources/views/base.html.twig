@@ -29,9 +29,9 @@
 		
 	    {% block navigation %}		
 		<div id="nav">
-			<div class="orderQuestions"><a href="">Главная</a></div>
-			<div class="categoryQuestions"><a href="">по категориям</a></div>
-			<div class="expressQuestions"><a href="">срочные</a></div>
+			<div class="orderQuestions"><a href="{{ path('index') }}">Главная</a></div>
+			<div class="categoryQuestions"><a href="{{ path('category') }}">по категориям</a></div>
+			<div class="expressQuestions"><a href="{{ path('rush') }}">срочные</a></div>
 		</div>
 	    {% endblock %}
 		
