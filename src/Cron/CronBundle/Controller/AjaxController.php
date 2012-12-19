@@ -82,11 +82,9 @@ class AjaxController extends Controller
 
     public function questionsToJSON(array $questions)
     {
+        $json = '';
         foreach($questions as $question)
-        {
-            $json = '';
             $json = $json . sprintf('"%d":{ "text":"%s", "user":"%s", "date":"%s"}', $question->getId(), $question->getText(), $question->getUser(), $question->getDatetime()->format('H:i:s d.m.Y'));
-        }
 
         return $json;
     }
