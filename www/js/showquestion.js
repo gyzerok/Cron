@@ -6,18 +6,19 @@ var engine = {
 	busy : false,
 	count : 5,
  
-	render : function(obj){
-		var xhtml = '<div class="singleQuestion" id=post_'+obj.id+'>';
-		if (obj.title) {
-			xhtml += '<h2>'+obj.user+'</h2>';
+	render : function(id, obj){
+
+		var xhtml = '<div class="singleQuestion" id=question_'+id+'>';
+		if (obj.username) {
+			xhtml += '<div class="userName">'+obj.user+'</div>';
 		}
-		if (obj.posted_at) {
-			xhtml += '<div class="posted_at">Posted on: '+obj.posted_at+'</div>';
+		if (obj.questionDate) {
+			xhtml += '<div class="questionDate">'+obj.date+'</div>';
 		}
-		if (obj.comments_count) {
-			xhtml += '<div class="comments_count">Comments: ' + obj.comments_count + '</div>';
+		
+		if (obj.questionText) {
+			xhtml += '<p class="questionText">' + obj.text + '</div>';
 		}
-		xhtml += '<div class="content">' + obj.content + '</div>';
 		xhtml += '</div>';
  
 		return xhtml;
@@ -44,9 +45,10 @@ var engine = {
 	append : function(posts){
 		posts = (posts instanceof Array) ? posts : [];
 		this.posts = this.posts.concat(posts);
- 
-		for (var i=0, len = posts.length; i<len; i++) {
-			this.target.append(this.render(posts[i]));
+	
+			for(var i in posts['categorized']){
+				var question = posts['categorized'][i];
+			this.target.append(this.render(i, question));
 		}
  
 		if (this.scrollPosition !== undefined && this.scrollPosition !== null) {
@@ -67,16 +69,31 @@ var engine = {
 		this.setBusy(true);
 		var that = this;
  
-		$.getJSON('getposts.php', {count:this.count, last:lastId},
-			function(data){
+		// $.getJSON('/ajax/getUpdate', {last_time:0},
+		$.ajax({'url': '/ajax/getUpdate', 'type':'post', 'data':'last_time=0',
+			'success': function(data){
 				if (data.length > 0) {
 					that.append(data);
 				}
 				that.setBusy(false);
 			}
-		);
+		});
+	},
+	
+	showLoading : function(bState){
+		var loading = $('#loading');
+
+		if (bState) {
+			$(this.target).append(loading);
+			loading.show('slow');
+		} else {
+			$('#loading').hide();
+		}
 	},
 
+	setBusy : function(bState){
+	this.showLoading(this.busy = bState);
+	}
 };
  
 // usage
