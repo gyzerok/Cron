@@ -42,7 +42,8 @@ class MainController extends Controller
     public function categoryAction()
     {
         //TODO Добавить реализацию
-        return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'По категориям'));
+        $category = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findAll();
+        return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'По категориям', 'category' => $category));
     }
 
     public function rushAction()
