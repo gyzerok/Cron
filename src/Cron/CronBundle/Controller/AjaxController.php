@@ -70,7 +70,7 @@ class AjaxController extends Controller
             $json = '{';
 
             $json = $json . '"categorized":{' . $this->questionsToJSON($categorized) . '},';
-            $json = $json . '"rush:"{' . $this->questionsToJSON($rush) . '},';
+            $json = $json . '"rush":{' . $this->questionsToJSON($rush) . '},';
             $json = $json . '"last_time":' . time();
             $json = $json . '}';
 
