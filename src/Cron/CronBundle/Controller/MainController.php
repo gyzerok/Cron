@@ -42,15 +42,14 @@ class MainController extends Controller
     public function categoryAction()
     {
         //TODO Добавить реализацию
-        $category = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findAll();
-        return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'По категориям', 'category' => $category));
+        $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Question")->createQueryBuilder('question')->innerJoin('question.user', 'user')->where('question.category > :cid')->setParameter('cid', '1')->getQuery()->getResult();
+        return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'По категориям', 'questions' => $categorized));
     }
 
     public function rushAction()
     {
         //TODO Подумать над формированием запроса
-        $rush = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findByCategory(0);
-        $this->render("CronCronBundle:Main:rush.html.twig", array('title' => 'Срочные', 'rush' => $rush));
+        $rush = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findByCategory(1);
+        return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'Срочные', 'questions' => $rush));
     }
-
 }

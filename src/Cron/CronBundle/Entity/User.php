@@ -251,4 +251,9 @@ class User
     {
         return $this->country;
     }
+
+    public function __toString()
+    {
+        return $this->getUsername();
+    }
 }
