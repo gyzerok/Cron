@@ -2,6 +2,7 @@
 	{% block content %}
 		<h2 class="categoryH2">Category name</h2>
         {% for item in questions %}
+		<div id="showQuestion">
             <div class="singleQuestion">
                 <div class="userName">{{ item.user }}</div>
                 <div class="questionDate">{{ item.datetime|date('d.m.Y') }}</div>
@@ -17,5 +18,6 @@
                     </form>
                 </div>
             </div>
+		</div>
         {% endfor %}
 	{% endblock %}
