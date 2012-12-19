@@ -4,7 +4,7 @@
         {% for item in questions %}
             <div class="singleQuestion">
                 <div class="userName">{{ item.user }}</div>
-                <div class="questionDate">{{ item.datetime|date('d.m.Y') }}</div>
+                <div class="questionDate">{{ item.datetime|date('H:i:s d.m.Y') }}</div>
                 <div class="closeButton"></div>
                 <div style="clear: both;"></div>
                 <p class="questionText">{{ item.text }}</p>

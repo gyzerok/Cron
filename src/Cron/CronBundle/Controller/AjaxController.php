@@ -70,8 +70,8 @@ class AjaxController extends Controller
             $json = '{';
 
             $json = $json . '"categorized":{' . $this->questionsToJSON($categorized) . '},';
-            $json = $json . '"rush:{"' . $this->questionsToJSON($rush) . '}';
-
+            $json = $json . '"rush:{"' . $this->questionsToJSON($rush) . '},';
+            $json = $json . '"last_time":' . time();
             $json = $json . '}';
 
             return new Response($json);
@@ -85,7 +85,7 @@ class AjaxController extends Controller
         foreach($questions as $question)
         {
             $json = '';
-            $json = $json . sprintf('"%d":{ "text":"%s", "user":"%s", "date":"%s"}', $question->getId, $question->getText, $question->getUser, $question->getDatetime);
+            $json = $json . sprintf('"%d":{ "text":"%s", "user":"%s", "date":"%s"}', $question->getId(), $question->getText(), $question->getUser(), $question->getDatetime()->format('H:i:s d.m.Y'));
         }
 
         return $json;
