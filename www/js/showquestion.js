@@ -9,15 +9,15 @@ var engine = {
 	render : function(id, obj){
 
 		var xhtml = '<div class="singleQuestion" id=question_'+id+'>';
-		if (obj.username) {
+		if (obj.user) {
 			xhtml += '<div class="userName">'+obj.user+'</div>';
 		}
-		if (obj.questionDate) {
+		if (obj.date) {
 			xhtml += '<div class="questionDate">'+obj.date+'</div>';
 		}
 		
-		if (obj.questionText) {
-			xhtml += '<p class="questionText">' + obj.text + '</div>';
+		if (obj.text) {
+			xhtml += '<p class="questionText">' + obj.text + '</p>';
 		}
 		xhtml += '</div>';
  
@@ -69,9 +69,10 @@ var engine = {
 		this.setBusy(true);
 		var that = this;
  
-		// $.getJSON('/ajax/getUpdate', {last_time:0},
+
 		$.ajax({'url': '/ajax/getUpdate', 'type':'post', 'data':'last_time=0',
 			'success': function(data){
+				data = JSON.parse(data);
 				if (data.length > 0) {
 					that.append(data);
 				}
@@ -98,6 +99,6 @@ var engine = {
  
 // usage
 $(document).ready(function(){
-	engine.init(null, $("#showQuestion"));
+	engine.init(null, "#showQuestion");
 	engine.get();
 });
