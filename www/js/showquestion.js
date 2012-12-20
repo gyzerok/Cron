@@ -43,8 +43,10 @@ var engine = {
 	},
  
 	append : function(posts){
-		posts = (posts instanceof Array) ? posts : [];
-		this.posts = this.posts.concat(posts);
+		//posts = (posts instanceof Object) ? posts : [];
+		if(!posts) return;
+		//this.posts = this.posts.concat(posts);
+		this.posts = this.posts.concat(posts['categorized']);
 	
 			for(var i in posts['categorized']){
 				var question = posts['categorized'][i];
@@ -73,9 +75,9 @@ var engine = {
 		$.ajax({'url': '/ajax/getUpdate', 'type':'post', 'data':'last_time=0',
 			'success': function(data){
 				data = JSON.parse(data);
-				if (data.length > 0) {
+				//if (data.length > 0) {
 					that.append(data);
-				}
+				//}
 				that.setBusy(false);
 			}
 		});
