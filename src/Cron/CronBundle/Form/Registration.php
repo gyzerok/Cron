@@ -17,14 +17,14 @@ class Registration extends AbstractType
         for ($i = 1950; $i <= date('Y'); $i++)
             $years[$i] = $i;
 
-        $builder->add('email', null, array('label' => 'Email', 'required' => true))
-                ->add('userpass', null, array('label' => 'Пароль', 'required' => true))
-                ->add('userpassAgain', 'text', array('label' => 'Повторите пароль', 'required' => true))
+        $builder->add('email', 'email', array('label' => 'Email', 'required' => true))
+                ->add('userpass', 'password', array('label' => 'Пароль', 'required' => true))
+                //->add('userpassAgain', 'password', array('label' => 'Повторите пароль', 'required' => true))
                 ->add('username', null, array('label' => 'Ваше имя', 'required' => true))
                 ->add('gender', 'choice', array('label' => 'Пол', 'choices' => array(1 => 'Мужской', 2 => 'Женский'), 'expanded' => true, 'required' => true))
-                ->add('day', 'choice', array('label' => 'День', 'choices' => $days, 'expanded' => true, 'required' => true))
-                ->add('month', 'choice', array('label' => 'Месяц', 'choices' => $months, 'expanded' => true, 'required' => true))
-                ->add('year', 'choice', array('label' => 'Год', 'choices' => $years, 'expanded' => true, 'required' => true))
+                ->add('birthDate', 'birthday', array('label' => 'День', 'required' => true))//, 'choices' => $days, 'expanded' => true))
+                //->add('month', 'choice', array('label' => 'Месяц', 'choices' => $months, 'expanded' => true, 'required' => true))
+                //->add('year', 'choice', array('label' => 'Год', 'choices' => $years, 'expanded' => true, 'required' => true))
                 ->add('country', null, array('label' => 'Страна', 'empty_value' => 'Выберите страну', 'required' => true))
                 ->add('state', null, array('label' => 'Регион', 'empty_value' => 'Выберите регион', 'disabled' => true, 'required' => true))
                 ->add('city', null, array('label' => 'Город', 'empty_value' => 'Выберите город', 'disabled' => true, 'required' => true));
