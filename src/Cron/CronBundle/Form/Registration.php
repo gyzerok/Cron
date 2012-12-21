@@ -32,6 +32,6 @@ class Registration extends AbstractType
 
     public function getName()
     {
-        return 'answer';
+        return 'register';
     }
 }

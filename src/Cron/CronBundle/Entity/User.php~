@@ -78,6 +78,16 @@ class User
     private $lastVisit;
 
     /**
+     * @var State
+     *
+     * @ORM\ManyToOne(targetEntity="State")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="state_id", referencedColumnName="id")
+     * })
+     */
+    private $state;
+
+    /**
      * @var City
      *
      * @ORM\ManyToOne(targetEntity="City")
@@ -86,16 +96,6 @@ class User
      * })
      */
     private $city;
-
-    /**
-     * @var Region
-     *
-     * @ORM\ManyToOne(targetEntity="Region")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="region_id", referencedColumnName="id")
-     * })
-     */
-    private $region;
 
     /**
      * @var Country

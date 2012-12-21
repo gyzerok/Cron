@@ -29,14 +29,14 @@ class City
     private $name;
 
     /**
-     * @var Region
+     * @var State
      *
-     * @ORM\ManyToOne(targetEntity="Region")
+     * @ORM\ManyToOne(targetEntity="State")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="region_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="state_id", referencedColumnName="id")
      * })
      */
-    private $region;
+    private $state;
 
 
 
@@ -74,25 +74,30 @@ class City
     }
 
     /**
-     * Set region
+     * Set state
      *
-     * @param Cron\CronBundle\Entity\Region $region
+     * @param Cron\CronBundle\Entity\State $state
      * @return City
      */
-    public function setRegion(\Cron\CronBundle\Entity\Region $region = null)
+    public function setState(\Cron\CronBundle\Entity\State $state = null)
     {
-        $this->region = $region;
+        $this->state = $state;
     
         return $this;
     }
 
     /**
-     * Get region
+     * Get state
      *
-     * @return Cron\CronBundle\Entity\Region 
+     * @return Cron\CronBundle\Entity\State 
      */
-    public function getRegion()
+    public function getState()
     {
-        return $this->region;
+        return $this->state;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

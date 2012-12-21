@@ -78,6 +78,16 @@ class User
     private $lastVisit;
 
     /**
+     * @var State
+     *
+     * @ORM\ManyToOne(targetEntity="State")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="state_id", referencedColumnName="id")
+     * })
+     */
+    private $state;
+
+    /**
      * @var City
      *
      * @ORM\ManyToOne(targetEntity="City")
@@ -86,16 +96,6 @@ class User
      * })
      */
     private $city;
-
-    /**
-     * @var Region
-     *
-     * @ORM\ManyToOne(targetEntity="Region")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="region_id", referencedColumnName="id")
-     * })
-     */
-    private $region;
 
     /**
      * @var Country
@@ -304,6 +304,29 @@ class User
     }
 
     /**
+     * Set state
+     *
+     * @param Cron\CronBundle\Entity\State $state
+     * @return User
+     */
+    public function setState(\Cron\CronBundle\Entity\State $state = null)
+    {
+        $this->state = $state;
+    
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return Cron\CronBundle\Entity\State 
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
      * Set city
      *
      * @param Cron\CronBundle\Entity\City $city
@@ -324,29 +347,6 @@ class User
     public function getCity()
     {
         return $this->city;
-    }
-
-    /**
-     * Set region
-     *
-     * @param Cron\CronBundle\Entity\Region $region
-     * @return User
-     */
-    public function setRegion(\Cron\CronBundle\Entity\Region $region = null)
-    {
-        $this->region = $region;
-    
-        return $this;
-    }
-
-    /**
-     * Get region
-     *
-     * @return Cron\CronBundle\Entity\Region 
-     */
-    public function getRegion()
-    {
-        return $this->region;
     }
 
     /**
@@ -374,6 +374,6 @@ class User
 
     public function __toString()
     {
-        return $this->getUsername();
+        return $this->getName();
     }
 }

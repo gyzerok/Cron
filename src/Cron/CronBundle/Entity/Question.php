@@ -71,24 +71,14 @@ class Question
     private $spams;
 
     /**
-     * @var User
+     * @var State
      *
-     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="State")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="state_id", referencedColumnName="id")
      * })
      */
-    private $user;
-
-    /**
-     * @var Category
-     *
-     * @ORM\ManyToOne(targetEntity="Category")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="category_id", referencedColumnName="id")
-     * })
-     */
-    private $category;
+    private $state;
 
     /**
      * @var City
@@ -101,16 +91,6 @@ class Question
     private $city;
 
     /**
-     * @var Region
-     *
-     * @ORM\ManyToOne(targetEntity="Region")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="region_id", referencedColumnName="id")
-     * })
-     */
-    private $region;
-
-    /**
      * @var Country
      *
      * @ORM\ManyToOne(targetEntity="Country")
@@ -119,6 +99,26 @@ class Question
      * })
      */
     private $country;
+
+    /**
+     * @var Category
+     *
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * })
+     */
+    private $category;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    private $user;
 
 
 
@@ -294,49 +294,26 @@ class Question
     }
 
     /**
-     * Set user
+     * Set state
      *
-     * @param Cron\CronBundle\Entity\User $user
+     * @param Cron\CronBundle\Entity\State $state
      * @return Question
      */
-    public function setUser(\Cron\CronBundle\Entity\User $user = null)
+    public function setState(\Cron\CronBundle\Entity\State $state = null)
     {
-        $this->user = $user;
+        $this->state = $state;
     
         return $this;
     }
 
     /**
-     * Get user
+     * Get state
      *
-     * @return Cron\CronBundle\Entity\User 
+     * @return Cron\CronBundle\Entity\State 
      */
-    public function getUser()
+    public function getState()
     {
-        return $this->user;
-    }
-
-    /**
-     * Set category
-     *
-     * @param Cron\CronBundle\Entity\Category $category
-     * @return Question
-     */
-    public function setCategory(\Cron\CronBundle\Entity\Category $category = null)
-    {
-        $this->category = $category;
-    
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return Cron\CronBundle\Entity\Category 
-     */
-    public function getCategory()
-    {
-        return $this->category;
+        return $this->state;
     }
 
     /**
@@ -363,29 +340,6 @@ class Question
     }
 
     /**
-     * Set region
-     *
-     * @param Cron\CronBundle\Entity\Region $region
-     * @return Question
-     */
-    public function setRegion(\Cron\CronBundle\Entity\Region $region = null)
-    {
-        $this->region = $region;
-    
-        return $this;
-    }
-
-    /**
-     * Get region
-     *
-     * @return Cron\CronBundle\Entity\Region 
-     */
-    public function getRegion()
-    {
-        return $this->region;
-    }
-
-    /**
      * Set country
      *
      * @param Cron\CronBundle\Entity\Country $country
@@ -406,5 +360,51 @@ class Question
     public function getCountry()
     {
         return $this->country;
+    }
+
+    /**
+     * Set category
+     *
+     * @param Cron\CronBundle\Entity\Category $category
+     * @return Question
+     */
+    public function setCategory(\Cron\CronBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+    
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return Cron\CronBundle\Entity\Category 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set user
+     *
+     * @param Cron\CronBundle\Entity\User $user
+     * @return Question
+     */
+    public function setUser(\Cron\CronBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return Cron\CronBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

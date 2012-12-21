@@ -29,14 +29,14 @@ class City
     private $name;
 
     /**
-     * @var Region
+     * @var State
      *
-     * @ORM\ManyToOne(targetEntity="Region")
+     * @ORM\ManyToOne(targetEntity="State")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="region_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="state_id", referencedColumnName="id")
      * })
      */
-    private $region;
+    private $state;
 
 
 }
