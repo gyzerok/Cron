@@ -7,6 +7,7 @@ use Cron\CronBundle\Entity\Answer;
 use Cron\CronBundle\Entity\User;
 use Cron\CronBundle\Form\NewQuestion;
 use Cron\CronBundle\Form\NewAnswer;
+use Cron\CronBundle\Form\Registration;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -91,5 +92,22 @@ class MainController extends Controller
                                                                              'questions' => $rush,
                                                                              'form' => $form->createView())
                                                                              );
+    }
+
+    public function registerAction(Request $request)
+    {
+        $user = new User();
+        $form = $this->createForm(new Registration(), $user);
+        if($request->isMethod('POST'))
+        {
+            $form->bind($request);
+
+            if($form->isValid())
+            {
+                return $this->redirect($this->generateUrl('index'));
+            }
+        }
+
+        return $this->render("CronCronBundle:Main:register.html.twig", array('title' => 'Регистрация', 'from' => $form->createView()));
     }
 }

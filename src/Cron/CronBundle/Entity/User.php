@@ -36,11 +36,39 @@ class User
     private $userpass;
 
     /**
+     * @var string $email
+     *
+     * @ORM\Column(name="email", type="string", length=45, nullable=false)
+     */
+    private $email;
+
+    /**
+     * @var boolean $gender
+     *
+     * @ORM\Column(name="gender", type="boolean", nullable=false)
+     */
+    private $gender;
+
+    /**
+     * @var \DateTime $birthDate
+     *
+     * @ORM\Column(name="birth_date", type="date", nullable=false)
+     */
+    private $birthDate;
+
+    /**
      * @var \DateTime $regDate
      *
      * @ORM\Column(name="reg_date", type="datetime", nullable=false)
      */
     private $regDate;
+
+    /**
+     * @var boolean $agreement
+     *
+     * @ORM\Column(name="agreement", type="boolean", nullable=false)
+     */
+    private $agreement;
 
     /**
      * @var \DateTime $lastVisit
@@ -60,14 +88,14 @@ class User
     private $city;
 
     /**
-     * @var State
+     * @var Region
      *
-     * @ORM\ManyToOne(targetEntity="State")
+     * @ORM\ManyToOne(targetEntity="Region")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="state_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      * })
      */
-    private $state;
+    private $region;
 
     /**
      * @var Country
@@ -138,6 +166,75 @@ class User
     }
 
     /**
+     * Set email
+     *
+     * @param string $email
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * Set gender
+     *
+     * @param boolean $gender
+     * @return User
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+    
+        return $this;
+    }
+
+    /**
+     * Get gender
+     *
+     * @return boolean 
+     */
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    /**
+     * Set birthDate
+     *
+     * @param \DateTime $birthDate
+     * @return User
+     */
+    public function setBirthDate($birthDate)
+    {
+        $this->birthDate = $birthDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get birthDate
+     *
+     * @return \DateTime 
+     */
+    public function getBirthDate()
+    {
+        return $this->birthDate;
+    }
+
+    /**
      * Set regDate
      *
      * @param \DateTime $regDate
@@ -158,6 +255,29 @@ class User
     public function getRegDate()
     {
         return $this->regDate;
+    }
+
+    /**
+     * Set agreement
+     *
+     * @param boolean $agreement
+     * @return User
+     */
+    public function setAgreement($agreement)
+    {
+        $this->agreement = $agreement;
+    
+        return $this;
+    }
+
+    /**
+     * Get agreement
+     *
+     * @return boolean 
+     */
+    public function getAgreement()
+    {
+        return $this->agreement;
     }
 
     /**
@@ -207,26 +327,26 @@ class User
     }
 
     /**
-     * Set state
+     * Set region
      *
-     * @param Cron\CronBundle\Entity\State $state
+     * @param Cron\CronBundle\Entity\Region $region
      * @return User
      */
-    public function setState(\Cron\CronBundle\Entity\State $state = null)
+    public function setRegion(\Cron\CronBundle\Entity\Region $region = null)
     {
-        $this->state = $state;
+        $this->region = $region;
     
         return $this;
     }
 
     /**
-     * Get state
+     * Get region
      *
-     * @return Cron\CronBundle\Entity\State 
+     * @return Cron\CronBundle\Entity\Region 
      */
-    public function getState()
+    public function getRegion()
     {
-        return $this->state;
+        return $this->region;
     }
 
     /**

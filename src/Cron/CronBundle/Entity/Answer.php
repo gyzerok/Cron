@@ -43,6 +43,20 @@ class Answer
     private $pubDate;
 
     /**
+     * @var integer $likes
+     *
+     * @ORM\Column(name="likes", type="integer", nullable=true)
+     */
+    private $likes;
+
+    /**
+     * @var integer $spams
+     *
+     * @ORM\Column(name="spams", type="integer", nullable=true)
+     */
+    private $spams;
+
+    /**
      * @var Question
      *
      * @ORM\ManyToOne(targetEntity="Question")
@@ -141,6 +155,52 @@ class Answer
     public function getPubDate()
     {
         return $this->pubDate;
+    }
+
+    /**
+     * Set likes
+     *
+     * @param integer $likes
+     * @return Answer
+     */
+    public function setLikes($likes)
+    {
+        $this->likes = $likes;
+    
+        return $this;
+    }
+
+    /**
+     * Get likes
+     *
+     * @return integer 
+     */
+    public function getLikes()
+    {
+        return $this->likes;
+    }
+
+    /**
+     * Set spams
+     *
+     * @param integer $spams
+     * @return Answer
+     */
+    public function setSpams($spams)
+    {
+        $this->spams = $spams;
+    
+        return $this;
+    }
+
+    /**
+     * Get spams
+     *
+     * @return integer 
+     */
+    public function getSpams()
+    {
+        return $this->spams;
     }
 
     /**

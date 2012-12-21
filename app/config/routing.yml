@@ -14,6 +14,10 @@ rush:
   pattern: /rush
   defaults: { _controller: CronCronBundle:Main:rush }
 
+register:
+  pattern: /register
+  defaults: { _controller: CronCronBundle:Main:register }
+
 # Ajax routes
 
 getStates:

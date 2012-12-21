@@ -22,7 +22,7 @@ class NewQuestion extends AbstractType
                 ->add('country', null, array('label' => 'Страна', 'empty_value' => 'Все страны'))
                 ->add('state', null, array('label' => 'Регион', 'empty_value' => 'Все регионы', 'disabled' => true))
                 ->add('city', null, array('label' => 'Город', 'empty_value' => 'Все города', 'disabled' => true))
-                ->add('boundary', 'choice', array('label' => 'Минимальная наполняемость ответами', 'choices' => array(1 => '10', 2 => '20', 3 => '30', 4 => '40', 5 => '50')));
+                ->add('boundary', 'choice', array('label' => 'Минимальная наполняемость ответами', 'choices' => array(10 => '10', 20 => '20', 30 => '30', 40 => '40', 50 => '50')));
 
         /*$builder->add('name');
 

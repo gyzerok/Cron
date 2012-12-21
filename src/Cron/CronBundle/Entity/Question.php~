@@ -24,7 +24,7 @@ class Question
     /**
      * @var string $text
      *
-     * @ORM\Column(name="text", type="text", nullable=false)
+     * @ORM\Column(name="text", type="string", length=130, nullable=false)
      */
     private $text;
 
@@ -57,6 +57,20 @@ class Question
     private $datetime;
 
     /**
+     * @var integer $likes
+     *
+     * @ORM\Column(name="likes", type="integer", nullable=true)
+     */
+    private $likes;
+
+    /**
+     * @var integer $spams
+     *
+     * @ORM\Column(name="spams", type="integer", nullable=true)
+     */
+    private $spams;
+
+    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
@@ -87,14 +101,14 @@ class Question
     private $city;
 
     /**
-     * @var State
+     * @var Region
      *
-     * @ORM\ManyToOne(targetEntity="State")
+     * @ORM\ManyToOne(targetEntity="Region")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="state_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      * })
      */
-    private $state;
+    private $region;
 
     /**
      * @var Country

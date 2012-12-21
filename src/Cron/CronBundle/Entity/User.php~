@@ -36,11 +36,39 @@ class User
     private $userpass;
 
     /**
+     * @var string $email
+     *
+     * @ORM\Column(name="email", type="string", length=45, nullable=false)
+     */
+    private $email;
+
+    /**
+     * @var boolean $gender
+     *
+     * @ORM\Column(name="gender", type="boolean", nullable=false)
+     */
+    private $gender;
+
+    /**
+     * @var \DateTime $birthDate
+     *
+     * @ORM\Column(name="birth_date", type="date", nullable=false)
+     */
+    private $birthDate;
+
+    /**
      * @var \DateTime $regDate
      *
      * @ORM\Column(name="reg_date", type="datetime", nullable=false)
      */
     private $regDate;
+
+    /**
+     * @var boolean $agreement
+     *
+     * @ORM\Column(name="agreement", type="boolean", nullable=false)
+     */
+    private $agreement;
 
     /**
      * @var \DateTime $lastVisit
@@ -60,14 +88,14 @@ class User
     private $city;
 
     /**
-     * @var State
+     * @var Region
      *
-     * @ORM\ManyToOne(targetEntity="State")
+     * @ORM\ManyToOne(targetEntity="Region")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="state_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      * })
      */
-    private $state;
+    private $region;
 
     /**
      * @var Country

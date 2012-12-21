@@ -43,6 +43,20 @@ class Answer
     private $pubDate;
 
     /**
+     * @var integer $likes
+     *
+     * @ORM\Column(name="likes", type="integer", nullable=true)
+     */
+    private $likes;
+
+    /**
+     * @var integer $spams
+     *
+     * @ORM\Column(name="spams", type="integer", nullable=true)
+     */
+    private $spams;
+
+    /**
      * @var Question
      *
      * @ORM\ManyToOne(targetEntity="Question")

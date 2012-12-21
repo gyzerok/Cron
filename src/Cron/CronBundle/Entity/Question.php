@@ -24,7 +24,7 @@ class Question
     /**
      * @var string $text
      *
-     * @ORM\Column(name="text", type="text", nullable=false)
+     * @ORM\Column(name="text", type="string", length=130, nullable=false)
      */
     private $text;
 
@@ -57,6 +57,20 @@ class Question
     private $datetime;
 
     /**
+     * @var integer $likes
+     *
+     * @ORM\Column(name="likes", type="integer", nullable=true)
+     */
+    private $likes;
+
+    /**
+     * @var integer $spams
+     *
+     * @ORM\Column(name="spams", type="integer", nullable=true)
+     */
+    private $spams;
+
+    /**
      * @var User
      *
      * @ORM\ManyToOne(targetEntity="User")
@@ -87,14 +101,14 @@ class Question
     private $city;
 
     /**
-     * @var State
+     * @var Region
      *
-     * @ORM\ManyToOne(targetEntity="State")
+     * @ORM\ManyToOne(targetEntity="Region")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="state_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="region_id", referencedColumnName="id")
      * })
      */
-    private $state;
+    private $region;
 
     /**
      * @var Country
@@ -234,6 +248,52 @@ class Question
     }
 
     /**
+     * Set likes
+     *
+     * @param integer $likes
+     * @return Question
+     */
+    public function setLikes($likes)
+    {
+        $this->likes = $likes;
+    
+        return $this;
+    }
+
+    /**
+     * Get likes
+     *
+     * @return integer 
+     */
+    public function getLikes()
+    {
+        return $this->likes;
+    }
+
+    /**
+     * Set spams
+     *
+     * @param integer $spams
+     * @return Question
+     */
+    public function setSpams($spams)
+    {
+        $this->spams = $spams;
+    
+        return $this;
+    }
+
+    /**
+     * Get spams
+     *
+     * @return integer 
+     */
+    public function getSpams()
+    {
+        return $this->spams;
+    }
+
+    /**
      * Set user
      *
      * @param Cron\CronBundle\Entity\User $user
@@ -303,26 +363,26 @@ class Question
     }
 
     /**
-     * Set state
+     * Set region
      *
-     * @param Cron\CronBundle\Entity\State $state
+     * @param Cron\CronBundle\Entity\Region $region
      * @return Question
      */
-    public function setState(\Cron\CronBundle\Entity\State $state = null)
+    public function setRegion(\Cron\CronBundle\Entity\Region $region = null)
     {
-        $this->state = $state;
+        $this->region = $region;
     
         return $this;
     }
 
     /**
-     * Get state
+     * Get region
      *
-     * @return Cron\CronBundle\Entity\State 
+     * @return Cron\CronBundle\Entity\Region 
      */
-    public function getState()
+    public function getRegion()
     {
-        return $this->state;
+        return $this->region;
     }
 
     /**
@@ -346,10 +406,5 @@ class Question
     public function getCountry()
     {
         return $this->country;
-    }
-
-    public function __construct()
-    {
-        $this->datetime = new \DateTime("now");
     }
 }
