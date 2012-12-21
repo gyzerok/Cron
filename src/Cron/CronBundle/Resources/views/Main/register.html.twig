@@ -1,6 +1,16 @@
 {% extends '::base.html.twig' %}
 	{% block content %}
 	<form class="registerForm" action="{{ path('register') }}" method="post" {{ form_enctype(form) }}>
-		{{ form_widget(form) }}
+		<h2 class="registrationH2">Регистрация</h2>
+		<h3 class="registrationH3">Все поля обязательны для заполнения</h3>
+		<div style="clear:both;"></div>
+			
+			
+		<div class="registrationField">
+			{{ form_label(form.email) }}
+			{{ form_errors(form.email) }}
+			{{ form_widget(form.email) }}
+			<span class="fieldHelp">Укажите реальный и действующий e-mail адрес. Он потребуется для входа на сайт и для получения уведомлений.</span>
+		</div>
 	</form>
 	{% endblock %}

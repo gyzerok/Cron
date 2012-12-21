@@ -561,3 +561,55 @@ h2.categoryH2 {
 	font-size: 20px;
 }
 
+.registerForm {
+	width: 650px;
+	outline: 1px solid red;
+	margin: 0 auto;
+}
+
+h2.registrationH2 {
+	font-size: 26px;
+	margin-left: 35px;
+	margin-bottom: 10px;
+	display: block;
+	width: 142px;
+	float: left;
+}
+
+h3.registrationH3 {
+	font-size: 16px;
+	margin-left: 140px;
+	margin-top: 5px;
+	display: block;
+	float: left;
+}
+
+.registrationField {
+	outline: 1px solid red;
+	width: 100%;
+}
+
+.registrationField label {
+	margin-left: 5px;
+	margin-top: 20px;
+	font-size: 20px;
+	color: #52648A;
+}
+
+.registrationField input {
+	border: 1px solid #52648A;
+	border-radius: 3px;
+	margin-left: 100px;
+	margin-top: 20px;
+	width: 331px;
+	font-size: 18px;
+}
+
+span.fieldHelp {
+	display: block;
+	width: 415px;
+	height: 30px;
+	outline: 1px solid green;
+	font-size: 14px;
+	margin: 2px 0 0 165px;
+}
