@@ -301,7 +301,7 @@
 
 #main {
 	width: 520px;
-	height: 800px;
+	min-height: 800px;
 	margin: -40px 0 0 5px;
 	float: left;
 }
@@ -431,11 +431,12 @@ h2.categoryH2 {
 }
 
 .questionDate {
-	width: 90px;
+	width: 105px;
 	float: left;
 	overflow: hidden;
 	font-size: 13px;
-	margin-left: 305px;
+	margin-left: 295px;
+	margin-right: 0;
 }
 
 .closeButton {
@@ -444,7 +445,7 @@ h2.categoryH2 {
 	float: left;
 	background: url(/i/closeButton.png) no-repeat;
 	background-size: 100%;
-	margin-left: 8px;
+	margin-left: 0px;
 	cursor: pointer;
 
 }
@@ -453,13 +454,12 @@ h2.categoryH2 {
 	display: block;
 	width: 380px;
 	margin: 3px 0 5px 5px;
-	float: left;
 }
 
 .socialIcons {
 	width: 136px;
 	overflow: hidden;
-	float: left;
+	float: right;
 	margin-top: 15px;
 }
 
