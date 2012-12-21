@@ -1,23 +1,25 @@
 {% extends '::base.html.twig' %}
 	{% block content %}
 		<h2 class="categoryH2">Category name</h2>
-        {% for item in questions %}
 		<div id="showQuestion">
-            <div class="singleQuestion">
-                <div class="userName">{{ item.user }}</div>
-                <div class="questionDate">{{ item.datetime|date('H:i:s d.m.Y') }}</div>
-                <div class="closeButton"></div>
-                <div style="clear: both;"></div>
-                <p class="questionText">{{ item.text }}</p>
-                <div class="socialIcons">
-                    <div class="spamButton"></div>
-                    <div class="likeButton"></div>
-                    <div class="repostButton"></div>
-                    <form class="answer">
-                        <input class="answerButton" type="submit" />
-                    </form>
-                </div>
-            </div>
+			{% for item in questions %}
+				<div class="singleQuestion">
+					<div class="userName">{{ item.user }}</div>
+					<div class="questionDate">{{ item.datetime|date('H:i:s d.m.Y') }}</div>
+					<div class="closeButton"></div>
+					<div style="clear: both;"></div>
+					<div class="questionText">
+					{{ item.text }}
+						<div class="socialIcons">
+							<div class="spamButton"></div>
+							<div class="likeButton"></div>
+							<div class="repostButton"></div>
+							<form class="answer">
+								<input class="answerButton" type="submit" />
+							</form>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
 		</div>
-        {% endfor %}
 	{% endblock %}

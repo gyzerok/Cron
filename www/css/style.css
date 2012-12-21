@@ -1,6 +1,6 @@
 
 #wrapper {
-	width: 720px;
+	width: 960px;
 	margin: 15px auto;
 	outline: 1px solid red;
 	padding-top: 1px;
@@ -14,8 +14,8 @@
 }
 
 .logo {
-	width: 288px;
-	height: 78px;
+	width: 300px;
+	height: 80px;
 	background: url(/i/logo.png) no-repeat;
 	background-size: 100%;
 	margin-top: 5px;
@@ -42,7 +42,7 @@
 	width: 90px;
 	float: left;
 	overflow: hidden;
-	margin: 9px 0 0 145px;
+	margin: 9px 0 0 550px;
 	padding: 1px;
 }
 
@@ -100,8 +100,8 @@
 .users {
 	width: 232px;
 	height: 32px;
-	float: left;
-	margin: 2px 0 0 2px;
+	float: right;
+	margin: 10px 17px 0 0px;
 }
 
 .users p {
@@ -118,7 +118,7 @@
 }
 
 #nav {
-	width: 527px;
+	width: 730px;
 	height: 30px;
 	border: 2px solid #C88B79;
 	border-radius: 7px;
@@ -128,7 +128,7 @@
 }
 
 #nav .orderQuestions {
-	width: 235px;
+	width: 250px;
 	height: 30px;
 	border-right: 1px solid #C88B79;
 	float: left;
@@ -149,7 +149,7 @@
 
 
 #nav .categoryQuestions {
-	width: 164px;
+	width: 240px;
 	height: 30px;
 	border-right: 1px solid #C88B79;
 	float: left;
@@ -161,7 +161,7 @@
 
 #nav .categoryQuestions a {
 	display: block;
-	width: 164px;
+	width: 240px;
 	height: 30px;
 	cursor: pointer;
 	text-decoration: none;
@@ -173,7 +173,7 @@
 }
 
 #nav .expressQuestions {
-	width: 126px;
+	width: 238px;
 	height: 30px;
 	float: left;
 	font-size: 24px;
@@ -184,7 +184,7 @@
 
 #nav .expressQuestions a {
 	display: block;
-	width: 126px;
+	width: 238px;
 	height: 30px;
 	cursor: pointer;
 	text-decoration: none;
@@ -198,7 +198,7 @@
 
 
 .usersProfile {
-	width: 182px;
+	width: 220px;
 	height: 90px;
 	border: 2px solid #C88B79;
 	border-radius: 7px;
@@ -208,7 +208,7 @@
 
 .usersProfile p.name {
 	display: block;
-	width: 92px;
+	width: 123px;
 	height: 21px;
 	margin: 5px 0 0 5px;
 	float: left;
@@ -219,7 +219,7 @@
 .usersProfile p.credits {
 	display: block;
 	width: 62px;
-	margin: 5px 0 0 5px;
+	margin: 22px 0 0 5px;
 	float: left;
 	color: #52648A;
 	text-align: center;
@@ -243,7 +243,8 @@
 }
 
 .usersProfile p.myQuestions {
-	text-align: right;
+	overflow: hidden;
+	float: right;
 }
 
 .usersProfile p.myQuestions a {
@@ -255,7 +256,7 @@
 
 
 #menu {
-	width: 182px;
+	width: 220px;
 	height: 800px;
 	border: 2px solid #C88B79;
 	border-radius: 7px;
@@ -264,17 +265,17 @@
 }
 
 #menu form.menuNavigation {
-	width: 167px;
+	width: 192px;
 	margin: 10px auto;
 }
 
 #menu form.menuNavigation input {
-	width: 164px;
+	width: 192px;
 	height: 39px;
 	text-align: center;
 	border: 1px solid #EFEFEF;
 	border-radius: 5px;
-	margin-top: 5px;
+	margin-top: 2px;
 	background-color: #fff;
 	text-transform: uppercase;
 	font-size: 18px;
@@ -300,7 +301,7 @@
 
 
 #main {
-	width: 520px;
+	width: 720px;
 	min-height: 800px;
 	margin: -40px 0 0 5px;
 	float: left;
@@ -308,24 +309,47 @@
 
 #main form.writeQuestion {
 	margin: 0px auto 0 auto;
-	width: 500px;
+	width: 680px;
 
 }
 
 #main form.writeQuestion textarea {
-	width: 490px;
-	height: 25px;
+	width: 680px;
+	min-height: 25px;
 	border: 2px solid #C88B79;
-	font-size: 25px;
+	font-size: 18px;
 	padding: 0;
-	vertical-align: middle;
 	padding-left: 8px;
 	overflow: hidden;
 	margin: 0;
+    resize: none;
 }
 
+.noscroll {
+    overflow: hidden;
+}
+
+
+
+.hiddenWriteQuestion {
+    display: none;
+    white-space: pre-wrap;
+	width: 680px;
+	min-height: 18px;
+    font-size: 15px;
+	padding-left: 8px;
+    word-wrap: break-word;
+	padding: 5px;
+	margin: 0;
+}
+
+.questionForm {
+	margin: 0;
+}
+
+
 .writeQuestionDiv {
-	width: 470px;
+	width: 650px;
 	border: 1px solid #C88B79;
 	margin: 0 auto;
 	font-size: 18px;
@@ -360,6 +384,12 @@
 	margin-right: 5px;
 }
 
+
+.privateButton label {
+	float: none;
+	display: inline;
+}
+
 .category {
 	margin-top: 25px;
 	overflow: hidden;
@@ -380,6 +410,8 @@
 .chosePlace {
 	width: 300px;
 	float: left;
+	margin-left: 150px;
+	margin-top: 10px;
 }
 
 .chosePlace label {
@@ -399,11 +431,19 @@
 	font-size: 14px;
 	float: right;
 	margin-top: 10px;
+	margin-right: 60px;
 }
 
 
 .additionalInformation select {
 	display: block;
+}
+
+p.questionCost {
+	display: block;
+	width: 180px;
+	float: right;
+	margin: -20px 130px 0 0;
 }
 
 h2.categoryH2 {
@@ -414,7 +454,7 @@ h2.categoryH2 {
 
 
 .singleQuestion {
-	width: 522px;
+	width: 680px;
 	border: 1px solid #C88B79;
 	border-radius: 7px;
 	margin-top: 10px;
@@ -423,11 +463,12 @@ h2.categoryH2 {
 
 .userName {
 	width: 73px;
-	outline: 1px solid #C88B79;
+	border: 1px solid #C88B79;
 	margin-left: 30px;
 	text-align: center;
 	color: #686868;
 	float: left;
+	border-radius: 0 0 5px 5px;
 }
 
 .questionDate {
@@ -435,7 +476,7 @@ h2.categoryH2 {
 	float: left;
 	overflow: hidden;
 	font-size: 13px;
-	margin-left: 295px;
+	margin-left: 450px;
 	margin-right: 0;
 }
 
@@ -450,17 +491,17 @@ h2.categoryH2 {
 
 }
 
-.singleQuestion p.questionText{
+.questionText{
 	display: block;
-	width: 380px;
+	width: 650px;
 	margin: 3px 0 5px 5px;
+	overflow: hidden;
 }
 
 .socialIcons {
 	width: 136px;
 	overflow: hidden;
 	float: right;
-	margin-top: 15px;
 }
 
 .spamButton {

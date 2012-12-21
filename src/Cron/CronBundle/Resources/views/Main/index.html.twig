@@ -12,9 +12,15 @@
                     success: function(data){
                         $('#question_state option:gt(0)').remove();
                         $('#question_state').append(data);
+						document.getElementById('question_state').disabled=false;
                     }
                 });
-            }
+            } else {
+                $('#question_state option:gt(0)').remove();
+				document.getElementById('question_state').disabled=true;
+				$('#question_city option:gt(0)').remove();
+				document.getElementById('question_city').disabled=true;				
+			}
         });
         $('#question_state').change(function(){
             if($(this).val()){
@@ -25,11 +31,38 @@
                     success: function(data){
                         $('#question_city option:gt(0)').remove();
                         $('#question_city').append(data);
+						document.getElementById('question_city').disabled=false;
                     }
                 });
             }
+			else {
+				$('#question_city option:gt(0)').remove();
+				document.getElementById('question_city').disabled=true;					
+			}
         });
+		$('[id="categoryScripture"]').after($('#question_category_1, [for="question_category_1"]'));
     });
+	$(function() {
+	var txt = $('#question_text'),
+	hiddenDiv = $(document.createElement('div')),
+	content = null;
+
+	txt.addClass('noscroll');
+	hiddenDiv.addClass('hiddenWriteQuestion');
+
+	$('body').append(hiddenDiv);
+
+	txt.bind('keyup', function() {
+
+	    content = txt.val();
+	    content = content.replace(/\n/g, '<br>');
+	    hiddenDiv.html(content);
+
+	    txt.css('height', hiddenDiv.height());
+
+	});
+});
+
 </script>
 
 <form class="writeQuestion" action="{{ path('index') }}" method="post" {{ form_enctype(form) }}>
@@ -41,7 +74,7 @@
 	</div>
 	<div class="writeQuestionDiv">
 		<div style="border-bottom: 2px solid #C88B79;overflow: hidden; padding-bottom: 3px">
-				<input class="radioButton" name="Radio" value="Радио кнопка" type="radio">по категориям
+				<input class="radioButton" name="Radio" value="Радио кнопка" type="radio"><span id="categoryScripture">По категориям<span>
 			<div class="privateButton">
 				{{ form_label(form.private) }}
 				{{ form_errors(form.private) }}
@@ -72,10 +105,13 @@
 			{{ form_widget(form.boundary) }}
 		</div>
 		<div style="clear: both"></div>
+		<p class="questionCost">Стоимость 0 кредитов</p>
 		<input class="submitButton" type="submit" />
 	</div>	
 	
 	{{ form_rest(form) }}
 </form>
+
+
 	
 {% endblock %}
