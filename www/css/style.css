@@ -563,8 +563,10 @@ h2.categoryH2 {
 
 .registerForm {
 	width: 650px;
-	outline: 1px solid red;
+	border: 2px solid #52648A;
+	border-radius: 7px;
 	margin: 0 auto;
+	padding: 10px;
 }
 
 h2.registrationH2 {
@@ -574,19 +576,21 @@ h2.registrationH2 {
 	display: block;
 	width: 142px;
 	float: left;
+	color: #7A2116;
 }
 
 h3.registrationH3 {
 	font-size: 16px;
 	margin-left: 140px;
-	margin-top: 5px;
+	margin-top: 9px;
 	display: block;
 	float: left;
+	color: #686868;
 }
 
 .registrationField {
-	outline: 1px solid red;
 	width: 100%;
+	overflow: hidden;
 }
 
 .registrationField label {
@@ -594,22 +598,87 @@ h3.registrationH3 {
 	margin-top: 20px;
 	font-size: 20px;
 	color: #52648A;
+	float: left;
 }
 
 .registrationField input {
 	border: 1px solid #52648A;
 	border-radius: 3px;
-	margin-left: 100px;
 	margin-top: 20px;
 	width: 331px;
 	font-size: 18px;
+	float: right;
+	margin-right: 150px;
+}
+
+.registrationField select {
+	
 }
 
 span.fieldHelp {
 	display: block;
 	width: 415px;
-	height: 30px;
-	outline: 1px solid green;
 	font-size: 14px;
-	margin: 2px 0 0 165px;
+	margin: 2px 0 0 168px;
+	color: 9D9D9D;
+}
+
+.birthDateSelect {
+	overflow: hidden;
+	width: 156px;
+	height: 30px;
+	float: right;
+	margin-right: 350px;
+	margin-top: 18px;
+}
+
+.genderRadio {
+	display: block;
+	width: 105px;
+	overflow: hidden;
+	float: right;
+	margin-right: 380px;
+	margin-top: 15px;
+}
+
+
+.registrationFieldGender {
+	width: 100%;
+	overflow: hidden;
+}
+
+.genderLabel {
+	overflow: hidden;
+	display: block;
+	width: 40px;
+	height: 25px;
+	margin-top: 25px;
+	float: left;
+}
+.registrationFieldGender label {
+	display: block;
+	font-size: 20px;
+	color: #52648A;
+}
+
+.registrationFieldGender input {
+	float: left;
+	display: block;
+}
+
+.registrationFieldPlace {
+	width: 100%;
+	overflow: hidden;
+}
+
+.registrationFieldPlace label {
+	margin-left: 5px;
+	margin-top: 20px;
+	font-size: 20px;
+	color: #52648A;
+	display: block;
+}
+
+.registrationFieldPlace select {
+	
 }

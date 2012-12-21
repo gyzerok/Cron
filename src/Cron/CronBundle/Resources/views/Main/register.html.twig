@@ -12,5 +12,49 @@
 			{{ form_widget(form.email) }}
 			<span class="fieldHelp">Укажите реальный и действующий e-mail адрес. Он потребуется для входа на сайт и для получения уведомлений.</span>
 		</div>
+		<div class="registrationField">
+			{{ form_label(form.userpass) }}
+			{{ form_errors(form.userpass) }}
+			{{ form_widget(form.userpass) }}
+			<span class="fieldHelp">Придумайте сложный пароль, который нельзя подобрать; От 4 до 12 символов — цифры и латинские буквы.</span>
+		</div>
+		<div class="registrationField">
+			{{ form_label(form.username) }}
+			{{ form_errors(form.username) }}
+			{{ form_widget(form.username) }}
+			<span class="fieldHelp">Укажите ваше имя или никнейм; От 2 до 12 символов - нельзя использовать цифры.</span>
+		</div>
+		<div class="registrationFieldGender">
+			<div class="genderLabel">
+			{{ form_label(form.gender) }}
+			</div>
+			{{ form_errors(form.gender) }}
+			<div class="genderRadio">
+			{{ form_widget(form.gender) }}
+			</div>
+		</div>
+		<div class="registrationField">
+			{{ form_label(form.birthDate) }}
+			{{ form_errors(form.birthDate) }}
+			<div class="birthDateSelect">
+			{{ form_widget(form.birthDate) }}
+			</div>
+		</div>
+		<div class="registrationFieldPlace">
+			{{ form_label(form.country) }}
+			{{ form_errors(form.country) }}
+			{{ form_widget(form.country) }}
+			{{ form_label(form.state) }}
+			{{ form_errors(form.state) }}
+			{{ form_widget(form.state) }}
+			{{ form_label(form.city) }}
+			{{ form_errors(form.city) }}
+			{{ form_widget(form.city) }}
+		</div>
+		<div class="registrationField">
+			{{ form_errors(form.agreement) }}
+			{{ form_widget(form.agreement) }}
+		</div>
+	<input type="submit">
 	</form>
 	{% endblock %}
