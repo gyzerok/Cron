@@ -1,6 +1,6 @@
 {% extends '::base.html.twig' %}
 	{% block content %}
-	<form class="writeQuestion" action="{{ path('register') }}" method="post" {{ form_enctype(form) }}>
-		{{ form_errors(form) }}
+	<form class="registerForm" action="{{ path('register') }}" method="post" {{ form_enctype(form) }}>
+		{{ form_widget(form) }}
 	</form>
 	{% endblock %}
