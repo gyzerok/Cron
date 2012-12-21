@@ -18,9 +18,7 @@ class AjaxController extends Controller
 
             $html = '';
             foreach($states as $state)
-            {
                 $html = $html . sprintf('<option value="%d">%s</option>', $state->getId(), $state->getName());
-            }
 
             return new Response($html);
         }
@@ -36,9 +34,7 @@ class AjaxController extends Controller
 
             $html = '';
             foreach($cities as $city)
-            {
                 $html = $html . sprintf('<option value="%d">%s</option>', $city->getId(), $city->getName());
-            }
 
             return new Response($html);
         }
