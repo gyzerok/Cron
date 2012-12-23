@@ -1,6 +1,5 @@
 {% extends '::base.html.twig' %}
 	{% block content %}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $('#question_country').change(function(){
@@ -42,6 +41,8 @@
         });
 		$('[id="categoryScripture"]').after($('#question_category_1, [for="question_category_1"]'));
     });
+	
+	//Resable textarea on Index page
 	$(function() {
 	var txt = $('#question_text'),
 	hiddenDiv = $(document.createElement('div')),
@@ -61,8 +62,37 @@
 	    txt.css('height', hiddenDiv.height());
 
 	});
-});
+	
+	
+	//Скрытия блоков с информацией о вопросе
+	$('#questionsType').hide();
+	$('.writeQuestionDiv').hide();
+	
+	// Появление блока с типом вопросов
+	$('#question_text').focus(function() {
+		$('#questionsType').slideDown();
+	});
 
+	// Появление блока с информацией о вопросе
+	$('#questionsType > input:first').click(function() {
+		$('.writeQuestionDiv').slideDown();
+		$('#question_category').show(500);
+		document.getElementById('question_category_1').checked = false;
+	});
+
+	$('#questionsType > input:last').click(function() {	
+		document.getElementById('categoryRadioButton').checked = false;
+		$('#question_category').hide();
+		$('.writeQuestionDiv').slideDown();
+	});	
+	
+	$('input[name=cancelInformation]').click(function() {
+		$('.writeQuestionDiv').slideUp();		
+		$('#questionsType').slideUp();
+		
+	});
+	
+});
 </script>
 
 <form class="writeQuestion" action="{{ path('index') }}" method="post" {{ form_enctype(form) }}>
@@ -72,15 +102,15 @@
 		{{ form_errors(form.text) }}
 		{{ form_widget(form.text) }}
 	</div>
-	<div class="writeQuestionDiv">
-		<div style="border-bottom: 2px solid #C88B79;overflow: hidden; padding-bottom: 3px">
-				<input class="radioButton" name="Radio" value="Радио кнопка" type="radio"><span id="categoryScripture">По категориям<span>
+		<div id="questionsType">
+				<input id="categoryRadioButton" class="radioButton" name="Radio" value="Радио кнопка" type="radio"><span id="categoryScripture">По категориям<span>
 			<div class="privateButton">
 				{{ form_label(form.private) }}
 				{{ form_errors(form.private) }}
 				{{ form_widget(form.private) }}
 			</div>
 		</div>
+	<div class="writeQuestionDiv">
 		<div class="category">
 			{{ form_errors(form.category) }}
 			{{ form_widget(form.category) }}
@@ -107,6 +137,7 @@
 		<div style="clear: both"></div>
 		<p class="questionCost">Стоимость 0 кредитов</p>
 		<input class="submitButton" type="submit" />
+		<input name="cancelInformation" class="submitButton" type="button" value="Отменить" />
 	</div>	
 	
 	{{ form_rest(form) }}

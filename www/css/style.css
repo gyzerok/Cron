@@ -348,6 +348,19 @@
 }
 
 
+.questionForm textarea {
+	margin: 0;
+}
+
+
+#questionsType {
+	width: 680px;
+	border: 1px solid #C88B79;
+	overflow: hidden;
+	margin: 0 0 0 5px;
+}
+
+
 .writeQuestionDiv {
 	width: 650px;
 	border: 1px solid #C88B79;

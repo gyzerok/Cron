@@ -1,5 +1,16 @@
 {% extends '::base.html.twig' %}
 	{% block content %}
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.closeButton').click(function() {
+				$('.singleQuestion').each(function() {
+					var i = $(this);
+					i.fadeOut(500);
+				});
+			
+			});
+		});
+	</script>
 		<h2 class="categoryH2">Category name</h2>
 		<div id="showQuestion">
 			{% for item in questions %}
