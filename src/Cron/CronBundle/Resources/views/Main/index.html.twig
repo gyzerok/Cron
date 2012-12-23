@@ -89,13 +89,13 @@
 	$('input[name=cancelInformation]').click(function() {
 		$('.writeQuestionDiv').slideUp();		
 		$('#questionsType').slideUp();
-		
+		document.forms.writeQuestion.reset()
 	});
 	
 });
 </script>
 
-<form class="writeQuestion" action="{{ path('index') }}" method="post" {{ form_enctype(form) }}>
+<form name="writeQuestion" class="writeQuestion" action="{{ path('index') }}" method="post" {{ form_enctype(form) }}>
 	{{ form_errors(form) }}
 	
 	<div class="questionForm">
