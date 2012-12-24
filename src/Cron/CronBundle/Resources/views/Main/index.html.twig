@@ -40,8 +40,7 @@
 			}
         });
 		$('[id="categoryScripture"]').after($('#question_category_1, [for="question_category_1"]'));
-    });
-	
+		
 	//Resable textarea on Index page
 	$(function() {
 	var txt = $('#question_text'),
@@ -93,7 +92,10 @@
 		document.forms.writeQuestion.reset()
 	});
 	
-});
+	});
+	
+	});
+	
 </script>
 
 <form name="writeQuestion" class="writeQuestion" action="{{ path('index') }}" method="post" {{ form_enctype(form) }}>

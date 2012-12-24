@@ -1,5 +1,47 @@
 {% extends '::base.html.twig' %}
 	{% block content %}
+	<script type="text/javascript">
+    $(document).ready(function () {
+        $('#register_country').change(function(){
+            if($(this).val()){
+                $.ajax({
+                    type: "POST",
+                    data: "country_id=" + $(this).val(),
+                    url: "{{ path('getStates') }}",
+                    success: function(data){
+                        $('#register_state option:gt(0)').remove();
+                        $('#register_state').append(data);
+						document.getElementById('register_state').disabled=false;
+                    }
+                });
+            } else {
+                $('#register_state option:gt(0)').remove();
+				document.getElementById('register_state').disabled=true;
+				$('#register_city option:gt(0)').remove();
+				document.getElementById('register_city').disabled=true;				
+			}
+        });
+        $('#register_state').change(function(){
+            if($(this).val()){
+                $.ajax({
+                    type: "POST",
+                    data: "state_id=" + $(this).val(),
+                    url: "{{ path('getCities') }}",
+                    success: function(data){
+                        $('#register_city option:gt(0)').remove();
+                        $('#register_city').append(data);
+						document.getElementById('register_city').disabled=false;
+                    }
+                });
+            }
+			else {
+				$('#register_city option:gt(0)').remove();
+				document.getElementById('register_city').disabled=true;					
+			}
+        });
+	});
+		</script>
+		
 	<form class="registerForm" action="{{ path('register') }}" method="post" {{ form_enctype(form) }}>
 		<h2 class="registrationH2">Регистрация</h2>
 		<h3 class="registrationH3">Все поля обязательны для заполнения</h3>
