@@ -23,15 +23,16 @@ security:
             entity: { class: Cron\CronBundle\Entity\User, property: username }
 
     firewalls:
-        dev:
-            pattern:  ^/(_(profiler|wdt)|css|images|js)/
-            security: true
-            anonymous: ~
+        #dev:
+        #    pattern:  ^/(_(profiler|wdt)|css|images|js)/
+        #    security: true
+        #    anonymous: ~
         login_firewall:
             pattern:    ^/login$
             anonymous:  ~
         secured_area:
             pattern:    ^/
+            anonymous:  ~
             form_login:
                 login_path:  /login
                 check_path:  /login_check

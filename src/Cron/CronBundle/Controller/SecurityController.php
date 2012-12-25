@@ -18,7 +18,7 @@ class SecurityController extends Controller
             $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
         }
 
-        return $this->render('CronCronBundle:Security:index.html.twig', array(
+        return $this->render('CronCronBundle:Security:login.html.twig', array(
             // имя, введённое пользователем в последний раз
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,

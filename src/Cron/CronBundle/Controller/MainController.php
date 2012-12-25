@@ -18,6 +18,7 @@ class MainController extends Controller
     {
         $question = new Question();
         $form = $this->createForm(new NewQuestion(), $question);
+        $curUser = $this->getUser();
 
         if($request->isMethod('POST'))
         {
@@ -46,6 +47,7 @@ class MainController extends Controller
         }
 
         return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Главная',
+                                                                          'curUser'  => $curUser,
                                                                           'form'  => $form->createView())
                                                                           );
 

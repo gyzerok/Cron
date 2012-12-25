@@ -5,6 +5,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/reset.css" rel="stylesheet">
 	<script src="js/jquery.js"></script>
+	<script src="js/jquery.validate.min.js"></script>
   </head>
   <body>
 	<div id="wrapper">
@@ -45,22 +46,6 @@
 			<p class="credits">Кредиты 123</p>
 			<p class="myQuestions"><a href="">Мои вопросы</a></p>
 			<p class="myQuestions"><a href="">Входящие вопросы</a></p>!-->
-			
-			
-			<form action="{{ path('login_check') }}" method="post">
-				<label for="username">Username:</label>
-				<input type="text" id="username" name="_username" value="" />
-
-				<label for="password">Password:</label>
-				<input type="password" id="password" name="_password" />
-
-
-				<input type="submit" name="login" />
-			</form>
-			
-			
-			
-			
 		</div>
 		
 		<div style="clear: both"></div>
@@ -75,6 +60,13 @@
 		<div id="menu">
 			<form class="menuNavigation" name="menuNavigation" action="" method="post">
 				<input type="submit" value="Вопросы" />
+				<div class="menuCategory">
+					<ul>
+						<li>Камни</li>
+						<li>Кружки</li>
+						<li>Расчески</li>
+					</ul>
+				</div>
 				<input type="submit" value="Заметки" />
 				<input type="submit" value="Информация" />
 				<input type="submit" value="Кибердиск" />
