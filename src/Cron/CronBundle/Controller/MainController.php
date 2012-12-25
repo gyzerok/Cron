@@ -34,7 +34,11 @@ class MainController extends Controller
 
                 $question->setStatus(true);
                 //TODO Сделать нормального юзера
-                $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+                $user = $this->getUser();
+                if (!$user instanceof User)
+                {
+                    $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+                }
                 $question->setUser($user); // заглушка
 
                 $em = $this->getDoctrine()->getManager();
