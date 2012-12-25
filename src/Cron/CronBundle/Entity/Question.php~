@@ -121,4 +121,295 @@ class Question
     private $user;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set text
+     *
+     * @param string $text
+     * @return Question
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    
+        return $this;
+    }
+
+    /**
+     * Get text
+     *
+     * @return string 
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * Set private
+     *
+     * @param boolean $private
+     * @return Question
+     */
+    public function setPrivate($private)
+    {
+        $this->private = $private;
+    
+        return $this;
+    }
+
+    /**
+     * Get private
+     *
+     * @return boolean 
+     */
+    public function getPrivate()
+    {
+        return $this->private;
+    }
+
+    /**
+     * Set boundary
+     *
+     * @param integer $boundary
+     * @return Question
+     */
+    public function setBoundary($boundary)
+    {
+        $this->boundary = $boundary;
+    
+        return $this;
+    }
+
+    /**
+     * Get boundary
+     *
+     * @return integer 
+     */
+    public function getBoundary()
+    {
+        return $this->boundary;
+    }
+
+    /**
+     * Set status
+     *
+     * @param boolean $status
+     * @return Question
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return boolean 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set datetime
+     *
+     * @param \DateTime $datetime
+     * @return Question
+     */
+    public function setDatetime($datetime)
+    {
+        $this->datetime = $datetime;
+    
+        return $this;
+    }
+
+    /**
+     * Get datetime
+     *
+     * @return \DateTime 
+     */
+    public function getDatetime()
+    {
+        return $this->datetime;
+    }
+
+    /**
+     * Set likes
+     *
+     * @param integer $likes
+     * @return Question
+     */
+    public function setLikes($likes)
+    {
+        $this->likes = $likes;
+    
+        return $this;
+    }
+
+    /**
+     * Get likes
+     *
+     * @return integer 
+     */
+    public function getLikes()
+    {
+        return $this->likes;
+    }
+
+    /**
+     * Set spams
+     *
+     * @param integer $spams
+     * @return Question
+     */
+    public function setSpams($spams)
+    {
+        $this->spams = $spams;
+    
+        return $this;
+    }
+
+    /**
+     * Get spams
+     *
+     * @return integer 
+     */
+    public function getSpams()
+    {
+        return $this->spams;
+    }
+
+    /**
+     * Set state
+     *
+     * @param Cron\CronBundle\Entity\State $state
+     * @return Question
+     */
+    public function setState(\Cron\CronBundle\Entity\State $state = null)
+    {
+        $this->state = $state;
+    
+        return $this;
+    }
+
+    /**
+     * Get state
+     *
+     * @return Cron\CronBundle\Entity\State 
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * Set city
+     *
+     * @param Cron\CronBundle\Entity\City $city
+     * @return Question
+     */
+    public function setCity(\Cron\CronBundle\Entity\City $city = null)
+    {
+        $this->city = $city;
+    
+        return $this;
+    }
+
+    /**
+     * Get city
+     *
+     * @return Cron\CronBundle\Entity\City 
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * Set country
+     *
+     * @param Cron\CronBundle\Entity\Country $country
+     * @return Question
+     */
+    public function setCountry(\Cron\CronBundle\Entity\Country $country = null)
+    {
+        $this->country = $country;
+    
+        return $this;
+    }
+
+    /**
+     * Get country
+     *
+     * @return Cron\CronBundle\Entity\Country 
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * Set category
+     *
+     * @param Cron\CronBundle\Entity\Category $category
+     * @return Question
+     */
+    public function setCategory(\Cron\CronBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+    
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return Cron\CronBundle\Entity\Category 
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set user
+     *
+     * @param Cron\CronBundle\Entity\User $user
+     * @return Question
+     */
+    public function setUser(\Cron\CronBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return Cron\CronBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    public function __construct()
+    {
+        $this->setDatetime(new \DateTime());
+    }
 }

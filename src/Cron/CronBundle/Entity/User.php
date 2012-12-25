@@ -2,6 +2,7 @@
 
 namespace Cron\CronBundle\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -10,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user")
  * @ORM\Entity
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var integer $id
@@ -29,11 +30,11 @@ class User
     private $username;
 
     /**
-     * @var string $userpass
+     * @var string $password
      *
-     * @ORM\Column(name="userpass", type="string", length=45, nullable=false)
+     * @ORM\Column(name="password", type="string", length=45, nullable=false)
      */
-    private $userpass;
+    private $password;
 
     /**
      * @var string $email
@@ -143,26 +144,26 @@ class User
     }
 
     /**
-     * Set userpass
+     * Set password
      *
-     * @param string $userpass
+     * @param string $password
      * @return User
      */
-    public function setUserpass($userpass)
+    public function setPassword($password)
     {
-        $this->userpass = $userpass;
+        $this->password = $password;
     
         return $this;
     }
 
     /**
-     * Get userpass
+     * Get password
      *
      * @return string 
      */
-    public function getUserpass()
+    public function getPassword()
     {
-        return $this->userpass;
+        return $this->password;
     }
 
     /**
@@ -370,6 +371,27 @@ class User
     public function getCountry()
     {
         return $this->country;
+    }
+
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function eraseCredentials()
+    {
+        return;
+    }
+
+    public function __construct()
+    {
+        $this->setRegDate(new \DateTime());
+        $this->setLastVisit(new \DateTime());
     }
 
     public function __toString()

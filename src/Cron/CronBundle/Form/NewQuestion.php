@@ -24,16 +24,16 @@ class NewQuestion extends AbstractType
                 ->add('city', null, array('label' => 'Город', 'empty_value' => 'Все города', 'disabled' => true))
                 ->add('boundary', 'choice', array('label' => 'Минимальная наполняемость ответами', 'choices' => array(10 => '10', 20 => '20', 30 => '30', 40 => '40', 50 => '50')));
 
-        /*$builder->add('name');
+        //$builder->add('country')->add('state');
 
-        $factory = $builder->getFormFactory();
+        /*$factory = $builder->getFormFactory();
 
         $refreshStates = function ($form, $country) use ($factory)
         {
             $form->add($factory->createNamed('entity','state', null, array(
                 'class'         => 'Cron\CronBundle\Entity\State',
-                'property'      => 'name',
-                'empty_value'   => '-- Select a state --',
+                'property'      => 'state',
+                'empty_value'   => 'Все регионы',
                 'query_builder' => function (EntityRepository $repository) use ($country)
                 {
                     $qb = $repository->createQueryBuilder('state')
@@ -58,9 +58,9 @@ class NewQuestion extends AbstractType
         {
             $form->add($factory->createNamed('entity', 'country', null, array(
                 'class'         => 'CronBundle:Country',
-                'property'      => 'name',
-                'property_path' => false,
-                'empty_value'   => '-- Select a country --',
+                'property'      => 'country',
+                //'property_path' => false,
+                'empty_value'   => 'Все страны',
                 'data'          => $country,
             )));
         };

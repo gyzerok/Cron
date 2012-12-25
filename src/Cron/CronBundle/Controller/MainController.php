@@ -25,6 +25,13 @@ class MainController extends Controller
 
             if($form->isValid())
             {
+                $state_id = $request->get('question');//['state'];
+                $state = $this->getDoctrine()->getRepository('CronCronBundle:State')->findOneById($state_id['state']);
+                $question->setState($state);
+                $city_id = $request->get('question');//['city'];
+                $city = $this->getDoctrine()->getRepository('CronCronBundle:City')->findOneById($city_id['city']);
+                $question->setCity($city);
+
                 $question->setStatus(true);
                 //TODO Сделать нормального юзера
                 $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
@@ -104,6 +111,22 @@ class MainController extends Controller
 
             if($form->isValid())
             {
+                $state_id = $request->get('register');//['state'];
+                $state = $this->getDoctrine()->getRepository('CronCronBundle:State')->findOneById($state_id['state']);
+                $user->setState($state);
+                $city_id = $request->get('register');//['city'];
+                $city = $this->getDoctrine()->getRepository('CronCronBundle:City')->findOneById($city_id['city']);
+                $user->setCity($city);
+
+                $factory = $this->get('security.encoder_factory');
+                $encoder = $factory->getEncoder($user);
+                $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+                $user->setPassword($password);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+
                 return $this->redirect($this->generateUrl('index'));
             }
         }

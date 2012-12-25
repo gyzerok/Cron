@@ -73,7 +73,7 @@
 		
 		
 	});
-		</script>
+	</script>
 		
 	<form class="registerForm" action="{{ path('register') }}" method="post" {{ form_enctype(form) }}>
 		<h2 class="registrationH2">Регистрация</h2>
@@ -87,12 +87,12 @@
 			{{ form_widget(form.email) }}
 			<span class="fieldHelp">Укажите реальный и действующий e-mail адрес. Он потребуется для входа на сайт и для получения уведомлений.</span>
 		</div>
-		<div class="registrationFieldPass">
-			{{ form_label(form.userpass) }}
-			{{ form_errors(form.userpass) }}
-			{{ form_widget(form.userpass) }}
-			<span class="fieldHelpPass">Придумайте сложный пароль, который нельзя подобрать; От 4 до 12 символов — цифры и латинские буквы.</span>
-			<span class="checkPassword"></span>
+		<div class="registrationField">
+			{{ form_label(form.password) }}
+			{{ form_errors(form.password) }}
+			{{ form_widget(form.password) }}
+			<span class="fieldHelp">Придумайте сложный пароль, который нельзя подобрать; От 4 до 12 символов — цифры и латинские буквы.</span>
+            <span class="checkPassword"></span>
 		</div>
 		<div class="registrationField">
 			{{ form_label(form.username) }}
@@ -131,6 +131,8 @@
 			{{ form_errors(form.agreement) }}
 			{{ form_widget(form.agreement) }}
 		</div>
+
+        {{ form_rest(form) }}
 	<input type="submit">
 	</form>
 	{% endblock %}
