@@ -4,37 +4,34 @@ jms_security_extra:
 
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User:
-            algorithm: sha1
-            iterations: 1
-            encode_as_base64: false
-        Cron\CronBundle\Entity\User: sha512
+        Cron\CronBundle\Entity\User:
+            algorithm: sha512
+            encode_as_base64: true
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
+        main:
+            entity: { class: Cron\CronBundle\Entity\User, property: username }
         in_memory:
             memory:
                 users:
                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
-        main:
-            entity: { class: Cron\CronBundle\Entity\User, property: username }
 
     firewalls:
-        dev:
-            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+        secured_area:
+            pattern: /.*
+            form_login:
+                login_path: /login
+                check_path: /login_check
+            logout: true
             security: true
-            anonymous: ~
-
-
-            #anonymous: ~
-            #http_basic:
-            #    realm: "Secured Demo Area"
+            anonymous: true
 
     access_control:
-        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/ajax, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         #- { path: ^/_internal/secure, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

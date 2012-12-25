@@ -46,7 +46,8 @@ class MainController extends Controller
         }
 
         return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Главная',
-                                                                          'form'  => $form->createView())
+                                                                          'curUser' => $this->getUser(),
+                                                                          'form' => $form->createView())
                                                                           );
 
     }
@@ -75,6 +76,7 @@ class MainController extends Controller
 
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'По категориям',
                                                                              'questions' => $categorized,
+                                                                             'curUser' => $this->getUser(),
                                                                              'form' => $form->createView())
                                                                              );
     }
@@ -97,6 +99,7 @@ class MainController extends Controller
 
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'Срочные',
                                                                              'questions' => $rush,
+                                                                             'curUser' => $this->getUser(),
                                                                              'form' => $form->createView())
                                                                              );
     }
@@ -131,6 +134,6 @@ class MainController extends Controller
             }
         }
 
-        return $this->render("CronCronBundle:Main:register.html.twig", array('title' => 'Регистрация', 'form' => $form->createView()));
+        return $this->render("CronCronBundle:Main:register.html.twig", array('title' => 'Регистрация', 'curUser' => $this->getUser(), 'form' => $form->createView()));
     }
 }

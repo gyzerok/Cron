@@ -47,6 +47,13 @@
 			<p class="myQuestions"><a href="">Мои вопросы</a></p>
 			<p class="myQuestions"><a href="">Входящие вопросы</a></p>!-->
 
+			<form action="{{ path('login') }}">
+				<input type="submit" value="Логин" />
+			</form>
+            {% if curUser %}
+			    <p class="name">{{ curUser.username }}</p>
+            {% endif %}
+
 		</div>
 		
 		<div style="clear: both"></div>
