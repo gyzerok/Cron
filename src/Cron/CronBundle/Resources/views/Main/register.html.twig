@@ -39,6 +39,26 @@
 				document.getElementById('register_city').disabled=true;					
 			}
         });
+		
+		$('.registrationFieldPass > label').text('Пароль');
+		$('#register_userpass > div:first > label').remove();
+		$('#register_userpass > div:last > label').css({
+			'position': 'relative',
+			'top':'28px',
+			'left': '-1px'
+		}).text('Повторите пароль');
+		
+		$('#register_userpass_Password').Change(testPass());
+		
+		function testPass() {
+			var p1 = $("#register_userpass_Password").val(); 
+			var p2 = $("#register_userpass_Confirm").val(); 
+			if(p1 != p2) { 
+				$(".checkPassword").text("Пароли не совпадают"); 			
+			} 
+			else { 
+			}
+		}
 	});
 		</script>
 		
@@ -54,11 +74,12 @@
 			{{ form_widget(form.email) }}
 			<span class="fieldHelp">Укажите реальный и действующий e-mail адрес. Он потребуется для входа на сайт и для получения уведомлений.</span>
 		</div>
-		<div class="registrationField">
+		<div class="registrationFieldPass">
 			{{ form_label(form.userpass) }}
 			{{ form_errors(form.userpass) }}
 			{{ form_widget(form.userpass) }}
-			<span class="fieldHelp">Придумайте сложный пароль, который нельзя подобрать; От 4 до 12 символов — цифры и латинские буквы.</span>
+			<span class="fieldHelpPass">Придумайте сложный пароль, который нельзя подобрать; От 4 до 12 символов — цифры и латинские буквы.</span>
+			<span class="checkPassword"></span>
 		</div>
 		<div class="registrationField">
 			{{ form_label(form.username) }}
