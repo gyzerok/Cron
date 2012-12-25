@@ -299,6 +299,16 @@
 	margin: 5px auto;
 }
 
+.menuCategory {
+	width: 155px;
+	height: 50px;
+	overflow: hidden;
+	margin: 0 auto;
+	border: 2px solid #EFEFEF;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
 
 #main {
 	width: 720px;
