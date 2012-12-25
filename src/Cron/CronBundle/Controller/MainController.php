@@ -25,12 +25,17 @@ class MainController extends Controller
 
             if($form->isValid())
             {
-                $state_id = $request->get('question');//['state'];
-                $state = $this->getDoctrine()->getRepository('CronCronBundle:State')->findOneById($state_id['state']);
-                $question->setState($state);
-                $city_id = $request->get('question');//['city'];
-                $city = $this->getDoctrine()->getRepository('CronCronBundle:City')->findOneById($city_id['city']);
-                $question->setCity($city);
+                $q = $request->get('question');//['state'];
+                if (isset($q['state']))
+                {
+                    $state = $this->getDoctrine()->getRepository('CronCronBundle:State')->findOneById($q['state']);
+                    $question->setState($state);
+                }
+                if (isset($q['city']))
+                {
+                    $city = $this->getDoctrine()->getRepository('CronCronBundle:City')->findOneById($q['city']);
+                    $question->setCity($city);
+                }
 
                 $question->setStatus(true);
                 //TODO Сделать нормального юзера
@@ -118,12 +123,17 @@ class MainController extends Controller
 
             if($form->isValid())
             {
-                $state_id = $request->get('register');//['state'];
-                $state = $this->getDoctrine()->getRepository('CronCronBundle:State')->findOneById($state_id['state']);
-                $user->setState($state);
-                $city_id = $request->get('register');//['city'];
-                $city = $this->getDoctrine()->getRepository('CronCronBundle:City')->findOneById($city_id['city']);
-                $user->setCity($city);
+                $reg = $request->get('register');//['state'];
+                if (isset($reg['state']))
+                {
+                    $state = $this->getDoctrine()->getRepository('CronCronBundle:State')->findOneById($reg['state']);
+                    $user->setState($state);
+                }
+                if (isset($reg['city']))
+                {
+                    $city = $this->getDoctrine()->getRepository('CronCronBundle:City')->findOneById($reg['city']);
+                    $user->setCity($city);
+                }
 
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($user);
