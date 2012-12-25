@@ -47,18 +47,31 @@
 			'top':'28px',
 			'left': '-1px'
 		}).text('Повторите пароль');
+		$('.genderLabel > label').css({
+			'margin-left':'4px'
+		});
 		
-		$('#register_userpass_Password').Change(testPass());
 		
-		function testPass() {
-			var p1 = $("#register_userpass_Password").val(); 
-			var p2 = $("#register_userpass_Confirm").val(); 
-			if(p1 != p2) { 
-				$(".checkPassword").text("Пароли не совпадают"); 			
-			} 
-			else { 
-			}
-		}
+		$("#loginform").validate({
+
+       rules:{
+
+            register[userpass][Password]:{
+				equalTo:"#register_userpass_Confirm"
+            },
+       },
+
+       messages:{
+
+            register[userpass][Password]:{
+				equalTo:"Пароли не совпадают!"				
+            },
+
+       }
+
+    });
+		
+		
 	});
 		</script>
 		

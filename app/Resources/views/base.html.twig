@@ -5,6 +5,7 @@
     <link href="css/style.css" rel="stylesheet">
     <link href="css/reset.css" rel="stylesheet">
 	<script src="js/jquery.js"></script>
+	<script src="js/jquery.validate.min.js"></script>
   </head>
   <body>
 	<div id="wrapper">
@@ -45,21 +46,6 @@
 			<p class="credits">Кредиты 123</p>
 			<p class="myQuestions"><a href="">Мои вопросы</a></p>
 			<p class="myQuestions"><a href="">Входящие вопросы</a></p>!-->
-			
-			
-			<form action="{{ path('login_check') }}" method="post">
-				<label for="username">Username:</label>
-				<input type="text" id="username" name="_username" value="{{ last_username }}" />
-
-				<label for="password">Password:</label>
-				<input type="password" id="password" name="_password" />
-
-
-				<input type="submit" name="login" />
-			</form>
-			
-			
-			
 			
 		</div>
 		
