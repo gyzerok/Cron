@@ -46,6 +46,12 @@
 			<p class="credits">Кредиты 123</p>
 			<p class="myQuestions"><a href="">Мои вопросы</a></p>
 			<p class="myQuestions"><a href="">Входящие вопросы</a></p>!-->
+			<form action="{{ path('login') }}">
+				<input type="submit" value="Логин" />
+			</form>
+            {% if curUser %}
+			    <p class="name">{{ curUser.username }}</p>
+            {% endif %}
 		</div>
 		
 		<div style="clear: both"></div>
@@ -62,9 +68,9 @@
 				<input type="submit" value="Вопросы" />
 				<div class="menuCategory">
 					<ul>
-						<li>Камни</li>
-						<li>Кружки</li>
-						<li>Расчески</li>
+						<li><a href="">Камни</a></li>
+						<li><a href="">Кружки</a></li>
+						<li><a href="">Расчески</a></li>
 					</ul>
 				</div>
 				<input type="submit" value="Заметки" />

@@ -19,6 +19,7 @@ class SecurityController extends Controller
         }
 
         return $this->render('CronCronBundle:Security:login.html.twig', array(
+            'curUser'       => $this->getUser(),
             // имя, введённое пользователем в последний раз
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
