@@ -37,15 +37,32 @@
 		
 	    {% block userPrifile %}
 		<div class="usersProfile">
-			<p class="name">UserName11111</p>
+			<!--<p class="name">UserName11111</p>
 			<form class="profileNavigation" name="profileNavigation" action="" method="post">
 				<input type="submit" value="Выход" />
 				<input type="submit" value="Настройки" />
 			</form>
 			<p class="credits">Кредиты 123</p>
 			<p class="myQuestions"><a href="">Мои вопросы</a></p>
-			<p class="myQuestions"><a href="">Входящие вопросы</a></p>
+			<p class="myQuestions"><a href="">Входящие вопросы</a></p>!-->
+			
+			
+			<form action="{{ path('login_check') }}" method="post">
+				<label for="username">Username:</label>
+				<input type="text" id="username" name="_username" value="{{ last_username }}" />
+
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="_password" />
+
+
+				<input type="submit" name="login" />
+			</form>
+			
+			
+			
+			
 		</div>
+		
 		<div style="clear: both"></div>
 	    {% endblock %}
 		

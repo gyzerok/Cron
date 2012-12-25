@@ -636,12 +636,63 @@ span.fieldHelp {
 	color: 9D9D9D;
 }
 
+
+.registrationFieldPass{
+	width: 100%;
+	overflow: hidden;
+}
+
+.registrationFieldPass input {
+	border: 1px solid #52648A;
+	border-radius: 3px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	width: 331px;
+	font-size: 18px;
+	float: right;
+	margin-right: 150px;
+}
+
+.registrationFieldPass label {
+	margin-left: 5px;
+	margin-top: 20px;
+	font-size: 20px;
+	color: #52648A;
+	float: left;
+	
+}
+
+span.fieldHelpPass {
+	display: block;
+	line-height: 100%;
+	position: relative;
+	width: 415px;
+	font-size: 14px;
+	color: 9D9D9D;
+	overflow: hidden;
+	top: -82px;
+	left: 170px;
+}
+
+span.checkPassword {
+	display: block;
+	line-height: 100%;
+	position: relative;
+	width: 415px;
+	font-size: 14px;
+	color: 9D9D9D;
+	overflow: hidden;
+	top: -40px;
+	left: 170px;
+}
+
+
 .birthDateSelect {
 	overflow: hidden;
 	width: 156px;
 	height: 30px;
 	float: right;
-	margin-right: 350px;
+	margin-right: 345px;
 	margin-top: 18px;
 }
 
