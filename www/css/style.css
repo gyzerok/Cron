@@ -307,6 +307,12 @@
 	border: 2px solid #EFEFEF;
 	border-bottom-left-radius: 5px;
 	border-bottom-right-radius: 5px;
+	text-align: center;
+	color: #000;
+}
+
+.menuCategory a {
+	color: #000;
 }
 
 
@@ -614,6 +620,7 @@ h3.registrationH3 {
 .registrationField {
 	width: 100%;
 	overflow: hidden;
+	margin-top: 15px;
 }
 
 .registrationField label {
@@ -696,6 +703,15 @@ span.checkPassword {
 	left: 170px;
 }
 
+span.birtDateDescription {
+	width: 142px;
+	overflow: hidden;
+	position: relative;
+	top: -39px;
+	left: 150px;
+	font-size: 20px;
+	color: #52648A;
+}
 
 .birthDateSelect {
 	overflow: hidden;
@@ -745,14 +761,52 @@ span.checkPassword {
 	overflow: hidden;
 }
 
-.registrationFieldPlace label {
-	margin-left: 5px;
-	margin-top: 20px;
+span.placeLabel {
+	display: block;
+	float: left;
+	width: 130px;
 	font-size: 20px;
 	color: #52648A;
-	display: block;
+	margin-right: 15px;
+	margin-left: 5px;
+}
+
+.placeSelects {
+	width: 130px;
+	float: left;	
+}
+
+.placeSelects label {
+	font-size: 20px;
+	color: #52648A;
 }
 
 .registrationFieldPlace select {
-	
+	display: block;
+	width: 200px;
+}
+
+span.agreementLabel {
+	width: 386px;
+	display: block;
+	float: left;
+	margin: 25px 0 0 23px;
+	font-size: 20px;
+	color: #52648A;		
+}
+
+span.agreementLabel a {
+	text-decoration: underline;
+	color: #52648A;	
+}
+
+input.registerButton {
+	width: 330px;
+	height: 30px;
+	margin-left: 25%; 
+	background: #fff;
+	border: 2px solid #00A3D4;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 24px;
 }

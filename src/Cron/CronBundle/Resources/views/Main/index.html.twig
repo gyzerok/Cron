@@ -66,10 +66,12 @@
 	//Скрытия блоков с информацией о вопросе
 	$('#questionsType').hide();
 	$('.writeQuestionDiv').hide();
+	$('#question_text').text('Введите, пожалуйста, Ваш вопрос');
 	
 	// Появление блока с типом вопросов
 	$('#question_text').focus(function() {
 		$('#questionsType').slideDown();
+		$('#question_text').text('');
 	});
 
 	// Появление блока с информацией о вопросе
