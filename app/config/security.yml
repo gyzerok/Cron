@@ -27,6 +27,14 @@ security:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
             security: true
             anonymous: ~
+        login_firewall:
+            pattern:    ^/login$
+            anonymous:  ~
+        secured_area:
+            pattern:    ^/
+            form_login:
+                login_path:  /login
+                check_path:  /login_check
 
 
             #anonymous: ~
@@ -34,7 +42,7 @@ security:
             #    realm: "Secured Demo Area"
 
     access_control:
-        - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/ajax, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
         #- { path: ^/_internal/secure, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }
