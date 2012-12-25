@@ -407,4 +407,9 @@ class Question
     {
         return $this->user;
     }
+
+    public function __construct()
+    {
+        $this->setDatetime(new \DateTime());
+    }
 }

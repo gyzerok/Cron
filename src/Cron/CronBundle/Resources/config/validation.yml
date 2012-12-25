@@ -4,3 +4,14 @@ Cron\CronBundle\Entity\Question:
       - NotBlank: ~
     category:
       - NotBlank: ~
+
+Cron\CronBundle\Entity\User:
+  properties:
+    email:
+      - NotBlank: ~
+    country:
+      - NotBlank: ~
+    state:
+      #- NotBlank: ~
+    city:
+      #- NotBlank: ~

@@ -77,4 +77,175 @@ class Answer
     private $user;
 
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set text
+     *
+     * @param string $text
+     * @return Answer
+     */
+    public function setText($text)
+    {
+        $this->text = $text;
+    
+        return $this;
+    }
+
+    /**
+     * Get text
+     *
+     * @return string 
+     */
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    /**
+     * Set status
+     *
+     * @param boolean $status
+     * @return Answer
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return boolean 
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set pubDate
+     *
+     * @param \DateTime $pubDate
+     * @return Answer
+     */
+    public function setPubDate($pubDate)
+    {
+        $this->pubDate = $pubDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get pubDate
+     *
+     * @return \DateTime 
+     */
+    public function getPubDate()
+    {
+        return $this->pubDate;
+    }
+
+    /**
+     * Set likes
+     *
+     * @param integer $likes
+     * @return Answer
+     */
+    public function setLikes($likes)
+    {
+        $this->likes = $likes;
+    
+        return $this;
+    }
+
+    /**
+     * Get likes
+     *
+     * @return integer 
+     */
+    public function getLikes()
+    {
+        return $this->likes;
+    }
+
+    /**
+     * Set spams
+     *
+     * @param integer $spams
+     * @return Answer
+     */
+    public function setSpams($spams)
+    {
+        $this->spams = $spams;
+    
+        return $this;
+    }
+
+    /**
+     * Get spams
+     *
+     * @return integer 
+     */
+    public function getSpams()
+    {
+        return $this->spams;
+    }
+
+    /**
+     * Set question
+     *
+     * @param Cron\CronBundle\Entity\Question $question
+     * @return Answer
+     */
+    public function setQuestion(\Cron\CronBundle\Entity\Question $question = null)
+    {
+        $this->question = $question;
+    
+        return $this;
+    }
+
+    /**
+     * Get question
+     *
+     * @return Cron\CronBundle\Entity\Question 
+     */
+    public function getQuestion()
+    {
+        return $this->question;
+    }
+
+    /**
+     * Set user
+     *
+     * @param Cron\CronBundle\Entity\User $user
+     * @return Answer
+     */
+    public function setUser(\Cron\CronBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return Cron\CronBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

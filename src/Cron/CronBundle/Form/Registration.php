@@ -18,7 +18,7 @@ class Registration extends AbstractType
             $years[$i] = $i;
 
         $builder->add('email', 'email', array('label' => 'Email', 'required' => true))
-                ->add('userpass', 'repeated', array('required' => true, 'first_name' => 'Password', 'second_name' => 'Confirm', 'type' => 'password'))
+                ->add('password', 'repeated', array('required' => true, 'first_name' => 'Password', 'second_name' => 'Confirm', 'type' => 'password'))
                 ->add('username', null, array('label' => 'Ваше имя', 'required' => true))
                 ->add('gender', 'choice', array('label' => 'Пол', 'choices' => array(1 => 'Мужской', 2 => 'Женский'), 'expanded' => true, 'required' => true))
                 ->add('birthDate', 'birthday', array('label' => 'Дата рождения', 'format' => 'dd MM yyyy', 'years' => $years, 'required' => true))
