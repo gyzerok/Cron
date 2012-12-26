@@ -104,6 +104,8 @@ class AjaxController extends Controller
             if ($questionId = $request->get("question_id"))
             {
                 $question = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findOneById($questionId);
+                if (!$question instanceof \Cron\CronBundle\Entity\Question)
+                    return new Response('Fail');
 
                 $user = $this->getUser();
                 if (!$user instanceof User)
