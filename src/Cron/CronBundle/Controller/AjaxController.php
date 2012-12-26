@@ -86,6 +86,8 @@ class AjaxController extends Controller
             $questionId = $request->get("question_id");
 
             $question = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findOneById($questionId);
+            if (!$question instanceof \Cron\CronBundle\Entity\Question)
+                return new Response('Fail');
 
             $em = $this->getDoctrine()->getManager();
             $em->remove($question);
