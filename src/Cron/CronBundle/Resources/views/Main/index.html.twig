@@ -149,25 +149,25 @@
 </form>
 	
 	{% if userQuestions|length > 0 %}
-		{% for item in userQuestions %}
-		<div class="singleQuestion">
-			<div style="border: 1px solid #fff;" class="userName"></div>
-			<div class="questionDate">{{ item.datetime|date('H:i:s d.m.Y') }}</div>
-			<div class="closeButton"></div>
-			<div style="clear: both;"></div>
-			<div class="questionText">
-				{{ item.text }}
-				<div class="socialIcons">
-					<div class="spamButton"></div>
-					<div class="likeButton"></div>
-					<div class="repostButton"></div>
-					<form class="answer">
-						<input class="answerButton" type="submit" />
-					</form>
+			{% for item in userQuestions %}
+			<div class="singleQuestion">
+				<div style="border: 1px solid #fff;" class="userName"></div>
+				<div class="questionDate">{{ item.datetime|date('H:i:s d.m.Y') }}</div>
+				<div class="closeButton"></div>
+				<div style="clear: both;"></div>
+				<div class="questionText">
+					{{ item.text }}
+					<div class="socialIcons">
+						<div class="spamButton"></div>
+						<div class="likeButton"></div>
+						<div class="repostButton"></div>
+						<form class="answer">
+							<input class="answerButton" type="submit" />
+						</form>
+					</div>
 				</div>
 			</div>
-		</div>
-		{% endfor %}
+			{% endfor %}
 	{% endif %}
 
 	

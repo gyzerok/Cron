@@ -2,15 +2,17 @@
 	{% block content %}
 	<script type="text/javascript">
 		//$(document).ready(function() {
-		//	$('.closeButton').click(function() {
-		//		$(this).closest('.singleQuestion').fadeOut(800);
+		//	$('#showQuestion').on('click', '.closeButton', function(){
+		//		var id = $(this).closest('.singleQuestion').attr('id');
+		//		id = id.replace('question_', '');
+		//		$(this).closest('.singleQuestion').fadeOut(800, function(){$(this).remove();});
 		//	});
-		//});
+		// });!
 	</script>
 		<h2 class="categoryH2">Category name</h2>
 		<div id="showQuestion">
-			{% for item in questions %}
-				<!-- <div class="singleQuestion">
+			<!--{% for item in questions %}
+				<div class="singleQuestion">
 					<div class="userName">{{ item.user }}</div>
 					<div class="questionDate">{{ item.datetime|date('H:i:s d.m.Y') }}</div>
 					<div class="closeButton"></div>
@@ -26,7 +28,7 @@
 							</form>
 						</div>
 					</div>
-				</div> -->
-			{% endfor %}
+				</div>
+			{% endfor %}!-->
 		</div>
 	{% endblock %}

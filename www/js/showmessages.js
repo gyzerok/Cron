@@ -51,6 +51,7 @@ var engine = {
 				that.get();
 			}
 		});
+		
 		$('#showQuestion').on('click', '.closeButton', function(){
 			var id = $(this).closest('.singleQuestion').attr('id');
 			id = id.replace('question_', '');
@@ -66,7 +67,7 @@ var engine = {
 	
 			for(var i in posts['categorized']){
 				var question = posts['categorized'][i];
-			this.target.prepend(this.render(i, question));
+			this.target.append(this.render(i, question));
 		}
  
 		if (this.scrollPosition !== undefined && this.scrollPosition !== null) {
