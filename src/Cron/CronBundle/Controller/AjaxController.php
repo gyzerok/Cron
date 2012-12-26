@@ -45,6 +45,7 @@ class AjaxController extends Controller
         if($request->isMethod('POST'))
         {
             $lastTime = $request->get("last_time");
+            $lastTime = date('Y-m-d H:i:s', $lastTime);
 
             $questionRepo = $this->getDoctrine()->getRepository('CronCronBundle:Question');
             $catQuery = $questionRepo->createQueryBuilder('question')
@@ -74,6 +75,24 @@ class AjaxController extends Controller
         }
 
         return new Response('error');
+    }
+
+    public function delQuestion(Request $request)
+    {
+        if ($request->isMethod('POST'))
+        {
+            $questionId = $request->get("question_id");
+
+            $question = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findOneById($questionId);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($question);
+            $em->flush();
+
+            return new Response('Succsess');
+        }
+
+        return new Response('Fail');
     }
 
     public function questionsToJSON(array $questions)

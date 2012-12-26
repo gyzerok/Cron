@@ -32,6 +32,12 @@ getUpdate:
   pattern:  /ajax/getUpdate
   defaults: { _controller: CronCronBundle:Ajax:getUpdate }
 
+delQuestion:
+  pattern:  /ajax/delQuestion
+  defaults: { _controller: CronCronBundle:Ajax:delQuestion }
+
+# Security routes
+
 login:
     pattern:  /login
     defaults: { _controller: CronCronBundle:Security:login }
