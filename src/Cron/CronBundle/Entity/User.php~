@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="user")
  * @ORM\Entity
  */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /**
      * @var integer $id
@@ -32,7 +32,7 @@ class User implements UserInterface
     /**
      * @var string $password
      *
-     * @ORM\Column(name="password", type="string", length=45, nullable=false)
+     * @ORM\Column(name="password", type="string", length=129, nullable=false)
      */
     private $password;
 
@@ -380,12 +380,25 @@ class User implements UserInterface
 
     public function getSalt()
     {
-        return null;
+        return 'salt';
     }
 
     public function eraseCredentials()
     {
-        return;
+    }
+
+    public function serialize()
+    {
+        return serialize(array($this->id, $this->username, $this->email));
+    }
+
+    public function unserialize($data)
+    {
+        list(
+            $this->id,
+            $this->username,
+            $this->password
+            ) = unserialize($data);
     }
 
     public function __construct()
@@ -398,4 +411,16 @@ class User implements UserInterface
     {
         return $this->getUsername();
     }
+
+    function equals(UserInterface $user)
+    {
+        if ($this->username != $user->getUsername() || $this->password != $user->getPassword())
+            return false;
+
+        return true;
+    }
+
+    /*public function __sleep(){
+        return array('id', 'username', 'email', 'password', 'regDate', 'birthDate', "agreement", "gender", "lastVisit", "city", "state", "country");
+    }*/
 }

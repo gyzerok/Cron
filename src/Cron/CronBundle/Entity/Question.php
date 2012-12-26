@@ -3,6 +3,7 @@
 namespace Cron\CronBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Cron\CronBundle\Entity\Question
@@ -57,16 +58,24 @@ class Question
     private $datetime;
 
     /**
-     * @var integer $likes
+     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\JoinTable(name="userLikes",
+     *     joinColumns={@ORM\JoinColumn(name="question_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     * )
      *
-     * @ORM\Column(name="likes", type="integer", nullable=true)
+     * @var ArrayCollection $likes
      */
     private $likes;
 
     /**
-     * @var integer $spams
+     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\JoinTable(name="userSpams",
+     *     joinColumns={@ORM\JoinColumn(name="question_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     * )
      *
-     * @ORM\Column(name="spams", type="integer", nullable=true)
+     * @var ArrayCollection $spams
      */
     private $spams;
 
@@ -410,6 +419,54 @@ class Question
 
     public function __construct()
     {
+        $this->likes = new ArrayCollection();
+        $this->spams = new ArrayCollection();
         $this->setDatetime(new \DateTime());
+    }
+
+    /**
+     * Add likes
+     *
+     * @param Cron\CronBundle\Entity\User $likes
+     * @return Question
+     */
+    public function addLike(\Cron\CronBundle\Entity\User $likes)
+    {
+        $this->likes[] = $likes;
+
+        return $this;
+    }
+
+    /**
+     * Remove likes
+     *
+     * @param Cron\CronBundle\Entity\User $likes
+     */
+    public function removeLike(\Cron\CronBundle\Entity\User $likes)
+    {
+        $this->likes->removeElement($likes);
+    }
+
+    /**
+     * Add spams
+     *
+     * @param Cron\CronBundle\Entity\User $spams
+     * @return Question
+     */
+    public function addSpam(\Cron\CronBundle\Entity\User $spams)
+    {
+        $this->spams[] = $spams;
+
+        return $this;
+    }
+
+    /**
+     * Remove spams
+     *
+     * @param Cron\CronBundle\Entity\User $spams
+     */
+    public function removeSpam(\Cron\CronBundle\Entity\User $spams)
+    {
+        $this->spams->removeElement($spams);
     }
 }
