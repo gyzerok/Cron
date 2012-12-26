@@ -50,17 +50,19 @@ class AjaxController extends Controller
             $questionRepo = $this->getDoctrine()->getRepository('CronCronBundle:Question');
             $catQuery = $questionRepo->createQueryBuilder('question')
                                      ->innerJoin('question.user', 'user')
-                                     ->where('question.category > :cid AND question.datetime > :lastTime')
+                                     ->where('question.category > :cid AND question.datetime > :lastTime AND question.status <> :status')
                                      ->setParameter('cid', '1')
-                                     ->setParameter('lastTime',$lastTime)
+                                     ->setParameter('lastTime', $lastTime)
+                                     ->setParameter('status', '0')
                                      ->getQuery();
             $categorized = $catQuery->getResult();
 
             $rushQuery = $questionRepo->createQueryBuilder('question')
                                       ->innerJoin('question.user', 'user')
-                                      ->where('question.category = :cid AND question.datetime > :lastTime')
+                                      ->where('question.category = :cid AND question.datetime > :lastTime AND question.status <> :status')
                                       ->setParameter('cid', '1')
-                                      ->setParameter('lastTime',$lastTime)
+                                      ->setParameter('lastTime', $lastTime)
+                                      ->setParameter('status', '0')
                                       ->getQuery();
             $rush = $rushQuery->getResult();
 
@@ -90,6 +92,27 @@ class AjaxController extends Controller
             $em->flush();
 
             return new Response('Succsess');
+        }
+
+        return new Response('Fail');
+    }
+
+    public function likeItem(Request $request)
+    {
+        if ($request->isMethod('POST'))
+        {
+            if ($questionId = $request->get("question_id"))
+            {
+                $question = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findOneById($questionId);
+
+                $user = $this->getUser();
+                if (!$user instanceof User)
+                    $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+
+                $question->addLikes($user);
+
+                return new Response('Succsess');
+            }
         }
 
         return new Response('Fail');

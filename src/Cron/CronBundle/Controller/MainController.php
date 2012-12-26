@@ -58,7 +58,8 @@ class MainController extends Controller
         if ($user instanceof User)
             $userQuestions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                                                  ->createQueryBuilder('question')
-                                                 ->where('question.user = :uid')
+                                                 ->where('question.user = :uid  AND question.status <> :status')
+                                                 ->setParameter('status', '0')
                                                  ->setParameter('uid', $user->getId())
                                                  ->getQuery()
                                                  ->getResult();
@@ -88,8 +89,9 @@ class MainController extends Controller
         $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                                            ->createQueryBuilder('question')
                                            ->innerJoin('question.user', 'user')
-                                           ->where('question.category > :cid')
+                                           ->where('question.category > :cid  AND question.status <> :status')
                                            ->setParameter('cid', '1')
+                                           ->setParameter('status', '0')
                                            ->getQuery()
                                            ->getResult();
 
@@ -114,7 +116,14 @@ class MainController extends Controller
             }
         }
 
-        $rush = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findByCategory(1);
+        $rush = $this->getDoctrine()->getRepository("CronCronBundle:Question")
+                                    ->createQueryBuilder('question')
+                                    ->innerJoin('question.user', 'user')
+                                    ->where('question.category = :cid  AND question.status <> :status')
+                                    ->setParameter('cid', '1')
+                                    ->setParameter('status', '0')
+                                    ->getQuery()
+                                    ->getResult();
 
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'Срочные',
                                                                              'questions' => $rush,

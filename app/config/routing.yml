@@ -36,6 +36,10 @@ delQuestion:
   pattern:  /ajax/delQuestion
   defaults: { _controller: CronCronBundle:Ajax:delQuestion }
 
+likeItem:
+  pattern:  /ajax/likeItem
+  defaults: { _controller: CronCronBundle:Ajax:likeItem }
+
 # Security routes
 
 login:
