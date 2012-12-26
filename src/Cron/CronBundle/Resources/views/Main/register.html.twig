@@ -40,6 +40,8 @@
 			}
         });
 		
+		
+		//Русский язык в форме регистрации. Отображение некоторых эдементов
 		$('.registrationFieldPass > label').text('Пароль');
 		$('#register_password > div:first > label').remove();
 		$('#register_password > div:last > label').css({
@@ -50,7 +52,32 @@
 		$('.genderLabel > label').css({
 			'margin-left':'4px'
 		});
+		$('.registrationFieldPass + div').css({
+			'margin-top':'-10px'
+		});
+		$('#register_agreement').css({
+			'position':'relative',
+			'left':'-325px',
+			'top':'-36px'
+		});
+		
+		//Сравнение полей с паролем
+		$('#register_password_Password').change(testPass).keyup(testPass);
+		$('#register_password_Confirm').change(testPass).keyup(testPass);
+		
+		
+		function testPass() {
+			var p1 = $("#register_password_Password").val(); 
+			var p2 = $("#register_password_Confirm").val();
 			
+			if(p1 == p2) { 
+				$(".checkPassword").text("Пароли совпадают"); 
+			} 
+			else { 
+				$(".checkPassword").text("Пароли не совпадают"); 
+			}
+		} 
+		
 	});
 	</script>
 		
@@ -94,24 +121,29 @@
 			<div class="birthDateSelect">
 			{{ form_widget(form.birthDate) }}
 			</div>
+			<span class="birtDateDescription">День Месяц Год</span>
 		</div>
 		<div class="registrationFieldPlace">
-			{{ form_label(form.country) }}
+			<span class="placeLabel">Место нахождения</span>
+			<div class="placeSelects">
+			{{ form_label(form.country) }}	
 			{{ form_errors(form.country) }}
 			{{ form_widget(form.country) }}
-			{{ form_label(form.state) }}
+			{{ form_label(form.state) }}	
 			{{ form_errors(form.state) }}
 			{{ form_widget(form.state) }}
-			{{ form_label(form.city) }}
+			{{ form_label(form.city) }}	
 			{{ form_errors(form.city) }}
 			{{ form_widget(form.city) }}
+			</div>
 		</div>
 		<div class="registrationField">
+			<span class="agreementLabel">Я согласен с <a href="#">пользовательским соглашением</a></span>
 			{{ form_errors(form.agreement) }}
 			{{ form_widget(form.agreement) }}
 		</div>
 
         {{ form_rest(form) }}
-	<input type="submit">
+	<input class="registerButton" type="submit" value="Зарегестрироваться">
 	</form>
 	{% endblock %}

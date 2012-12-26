@@ -3,11 +3,7 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('.closeButton').click(function() {
-				$('.singleQuestion').each(function() {
-					var i = $(this);
-					i.fadeOut(500);
-				});
-			
+				$(this).closest('.singleQuestion').fadeOut(800);
 			});
 		});
 	</script>
