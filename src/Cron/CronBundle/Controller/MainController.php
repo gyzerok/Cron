@@ -38,13 +38,12 @@ class MainController extends Controller
                 }
 
                 $question->setStatus(true);
-                //TODO Сделать нормального юзера
+
                 $user = $this->getUser();
                 if (!$user instanceof User)
-                {
                     $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
-                }
-                $question->setUser($user); // заглушка
+
+                $question->setUser($user);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($question);
@@ -54,8 +53,18 @@ class MainController extends Controller
             }
         }
 
+        $user = $this->getUser();
+        if ($user instanceof User)
+            $userQuestions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
+                                                 ->createQueryBuilder('question')
+                                                 ->where('question.user = :uid')
+                                                 ->setParameter('uid', $user->getId())
+                                                 ->getQuery()
+                                                 ->getResult();
+
         return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Главная',
                                                                           'curUser' => $this->getUser(),
+                                                                          'userQuestions' => $userQuestions,
                                                                           'form' => $form->createView())
                                                                           );
 
