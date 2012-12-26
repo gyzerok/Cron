@@ -55,7 +55,12 @@ var engine = {
 		$('#showQuestion').on('click', '.closeButton', function(){
 			var id = $(this).closest('.singleQuestion').attr('id');
 			id = id.replace('question_', '');
-			$(this).closest('.singleQuestion').fadeOut(800, function(){$(this).remove();});
+			
+			$.ajax({'url': '/ajax/delQuestion', 'type':'post', 'data':'question_id='+this.id,
+				'success': function(data){
+				$(this).closest('.singleQuestion').fadeOut(800, function(){$(this).remove();});					
+				}
+			});
 		});
 	},
  
