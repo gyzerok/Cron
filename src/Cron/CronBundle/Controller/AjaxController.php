@@ -79,7 +79,7 @@ class AjaxController extends Controller
         return new Response('error');
     }
 
-    public function delQuestion(Request $request)
+    public function delQuestionAction(Request $request)
     {
         if ($request->isMethod('POST'))
         {
@@ -97,7 +97,7 @@ class AjaxController extends Controller
         return new Response('Fail');
     }
 
-    public function likeItem(Request $request)
+    public function likeItemAction(Request $request)
     {
         if ($request->isMethod('POST'))
         {
