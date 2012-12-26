@@ -6,6 +6,7 @@
     <link href="css/reset.css" rel="stylesheet">
 	<script src="js/jquery.js"></script>
 	<script src="js/jquery.validate.min.js"></script>
+	<script src="js/showmessages.js"></script>
   </head>
   <body>
 	<div id="wrapper">
@@ -38,22 +39,33 @@
 		
 	    {% block userPrifile %}
 		<div class="usersProfile">
-			<!--<p class="name">UserName11111</p>
-			<form class="profileNavigation" name="profileNavigation" action="" method="post">
-				<input type="submit" value="Выход" />
+		    {% if curUser %}
+			<p class="name">{{ curUser.username }}</p>
+			<form action="{{ path('logout') }}" class="profileNavigation" name="profileNavigation" action="" method="post">
+				<input type="submit"  value="Выход" />
+			</form>
+			<form class="profileNavigation">
 				<input type="submit" value="Настройки" />
 			</form>
 			<p class="credits">Кредиты 123</p>
 			<p class="myQuestions"><a href="">Мои вопросы</a></p>
-			<p class="myQuestions"><a href="">Входящие вопросы</a></p>!-->
-
-			<form action="{{ path('login') }}">
+			<p class="myQuestions"><a href="">Входящие вопросы</a></p>
+			{% else %}
+			<!--<form action="{{ path('login') }}">
 				<input type="submit" value="Логин" />
-			</form>
-            {% if curUser %}
-			    <p class="name">{{ curUser.username }}</p>
-            {% endif %}
+			</form>!-->
+			<form action="{{ path('login_check') }}" method="post">
+				<input type="text" id="username" name="_username" value="" placeholder="логин" />
 
+				<input type="password" id="password" name="_password" placeholder="пароль" />
+
+				<input class="enterButton" type="submit" name="login" value="Вход" />
+			</form>
+			<form action="{{ path('register') }}" style="height: 0px;" type="text">
+				<input class="registerButtonOnIndex" type="submit" name="" value="Регистрация" />
+			</form>
+			<a class="forgotPassword" href="#">Забыли пароль?</a>
+            {% endif %}
 		</div>
 		
 		<div style="clear: both"></div>
