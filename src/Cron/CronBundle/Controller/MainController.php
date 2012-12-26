@@ -54,6 +54,7 @@ class MainController extends Controller
         }
 
         $user = $this->getUser();
+        $userQuestions = null;
         if ($user instanceof User)
             $userQuestions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                                                  ->createQueryBuilder('question')
