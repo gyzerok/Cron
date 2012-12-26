@@ -56,7 +56,7 @@ var engine = {
 			var id = $(this).closest('.singleQuestion').attr('id');
 			id = id.replace('question_', '');
 			
-			$.ajax({'url': '/ajax/delQuestion', 'type':'post', 'data':'question_id='+this.id,
+			$.ajax({'url': '/ajax/delQuestion', 'type':'post', 'data':'question_id='+id,
 				'success': function(data){
 				$(this).closest('.singleQuestion').fadeOut(800, function(){$(this).remove();});					
 				}
