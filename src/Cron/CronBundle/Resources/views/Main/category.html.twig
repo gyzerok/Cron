@@ -1,16 +1,16 @@
 {% extends '::base.html.twig' %}
 	{% block content %}
 	<script type="text/javascript">
-		$(document).ready(function() {
-			$('.closeButton').click(function() {
-				$(this).closest('.singleQuestion').fadeOut(800);
-			});
-		});
+		//$(document).ready(function() {
+		//	$('.closeButton').click(function() {
+		//		$(this).closest('.singleQuestion').fadeOut(800);
+		//	});
+		//});
 	</script>
 		<h2 class="categoryH2">Category name</h2>
 		<div id="showQuestion">
 			{% for item in questions %}
-				<div class="singleQuestion">
+				<!-- <div class="singleQuestion">
 					<div class="userName">{{ item.user }}</div>
 					<div class="questionDate">{{ item.datetime|date('H:i:s d.m.Y') }}</div>
 					<div class="closeButton"></div>
@@ -26,7 +26,7 @@
 							</form>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			{% endfor %}
 		</div>
 	{% endblock %}

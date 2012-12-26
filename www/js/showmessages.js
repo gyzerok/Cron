@@ -4,7 +4,8 @@ var engine = {
 	posts : [],
 	target : null,
 	busy : false,
-	count : 5,
+	// count : 5,
+	last_time: 0,
  
 	render : function(id, obj){
 
@@ -15,10 +16,20 @@ var engine = {
 		if (obj.date) {
 			xhtml += '<div class="questionDate">'+obj.date+'</div>';
 		}
-		
+		xhtml += '<div class="closeButton"></div><div style="clear: both;"></div>';
+					
 		if (obj.text) {
-			xhtml += '<p class="questionText">' + obj.text + '</p>';
+			//xhtml += '<p class="questionText">' + obj.text + '</p>';
+			xhtml += '<div class="questionText">' + obj.text + '</div>';
 		}
+		xhtml += '<div class="socialIcons">'+
+							'<div class="spamButton"></div>'+
+							'<div class="likeButton"></div>'+
+							'<div class="repostButton"></div>'+
+							'<form class="answer">'+
+								'<input class="answerButton" type="submit" />'+
+							'</form>'+
+						'</div>';
 		xhtml += '</div>';
  
 		return xhtml;
@@ -40,6 +51,11 @@ var engine = {
 				that.get();
 			}
 		});
+		$('#showQuestion').on('click', '.closeButton', function(){
+			var id = $(this).closest('.singleQuestion').attr('id');
+			id = id.replace('question_', '');
+			$(this).closest('.singleQuestion').fadeOut(800, function(){$(this).remove();});
+		});
 	},
  
 	append : function(posts){
@@ -50,7 +66,7 @@ var engine = {
 	
 			for(var i in posts['categorized']){
 				var question = posts['categorized'][i];
-			this.target.append(this.render(i, question));
+			this.target.prepend(this.render(i, question));
 		}
  
 		if (this.scrollPosition !== undefined && this.scrollPosition !== null) {
@@ -72,11 +88,12 @@ var engine = {
 		var that = this;
  
 
-		$.ajax({'url': '/ajax/getUpdate', 'type':'post', 'data':'last_time=0',
+		$.ajax({'url': '/ajax/getUpdate', 'type':'post', 'data':'last_time='+this.last_time,
 			'success': function(data){
 				data = JSON.parse(data);
 				//if (data.length > 0) {
 					that.append(data);
+					that.last_time = data.last_time;
 				//}
 				that.setBusy(false);
 			}

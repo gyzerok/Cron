@@ -582,7 +582,7 @@ h2.categoryH2 {
 }
 
 .chatWindow {
-	width: 520px;
+	width: 723px;
 	height: 20px;
 	border: 2px solid #C88B79;
 	margin: -30px 0 0 5px;
@@ -810,3 +810,59 @@ input.registerButton {
 	cursor: pointer;
 	font-size: 24px;
 }
+
+#username {
+	width: 120px;
+	height: 17px;
+	border: 1px solid #A02B1C;
+	border-radius: 5px;
+	display: block;
+	margin: 5px 0 0 5px;
+}
+
+#password {
+	width: 120px;
+	height: 17px;
+	border: 1px solid #A02B1C;
+	border-radius: 5px;
+	display: block;
+	margin: 5px 0 0 5px;
+}
+
+.enterButton {
+	width: 70px;
+	border: 1px solid gray;
+	border-radius: 5px;
+	background-color: #EFEFEF;
+	cursor: pointer;
+	font-weight: bold;
+	position: relative;
+	top: -48px;
+	left: 139px;
+	
+}
+
+.registerButtonOnIndex {
+	width: 90px;
+	border: 1px solid gray;
+	border-radius: 5px;
+	background-color: #EFEFEF;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: bold;
+	position: relative;
+	top: -45px;
+	left: 129px;
+}
+
+a.forgotPassword {
+	margin: 0;
+	display: block;
+	width: 125px;
+	margin-top: -10px;
+	margin-left: auto;
+	margin-right: auto;	
+	color: #52648A;
+	text-decoration: none;
+	font-size: 18px;
+} 
