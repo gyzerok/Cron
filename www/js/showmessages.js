@@ -19,10 +19,8 @@ var engine = {
 		xhtml += '<div class="closeButton"></div><div style="clear: both;"></div>';
 					
 		if (obj.text) {
-			//xhtml += '<p class="questionText">' + obj.text + '</p>';
-			xhtml += '<div class="questionText">' + obj.text + '</div>';
-		}
-		xhtml += '<div class="socialIcons">'+
+			xhtml += '<div class="questionText">' + obj.text;
+					xhtml += '<div class="socialIcons">'+
 							'<div class="spamButton"></div>'+
 							'<div class="likeButton"></div>'+
 							'<div class="repostButton"></div>'+
@@ -31,6 +29,8 @@ var engine = {
 							'</form>'+
 						'</div>';
 		xhtml += '</div>';
+		}
+
  
 		return xhtml;
 	},
@@ -55,13 +55,27 @@ var engine = {
 		$('#showQuestion').on('click', '.closeButton', function(){
 			var id = $(this).closest('.singleQuestion').attr('id');
 			id = id.replace('question_', '');
-			
-			$.ajax({'url': '/ajax/delQuestion', 'type':'post', 'data':'question_id='+id,
-				'success': function(data){
-				$(this).closest('.singleQuestion').fadeOut(800, function(){$(this).remove();});					
-				}
-			});
+				$.ajax({'url': '/ajax/delQuestion', 'type':'post', 'data': 'question_id='+id,
+					'success': function(){
+						$('.closeButton').click(function() {
+						$(this).closest('.singleQuestion').fadeOut(800, function(){$(this).remove();});	
+						});		
+					}
+				});
 		});
+		
+		$('#showQuestionIndex').on('click', '.closeButton', function(){
+			var id = $(this).closest('.singleQuestion').attr('id');
+			id = id.replace('question_', '');
+				$.ajax({'url': '/ajax/delQuestion', 'type':'post', 'data': 'question_id='+id,
+					'success': function(){
+						$('.closeButton').click(function() {
+						$(this).closest('.singleQuestion').fadeOut(800, function(){$(this).remove();});	
+						});		
+					}
+				});
+		});
+		
 	},
  
 	append : function(posts){

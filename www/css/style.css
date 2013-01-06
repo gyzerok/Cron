@@ -1,8 +1,8 @@
 
 #wrapper {
 	width: 960px;
-	margin: 15px auto;
-	outline: 1px solid red;
+	margin: 0 auto;
+	outline: 1px solid #A33A1C;
 	padding-top: 1px;
 	overflow: hidden;
 }
@@ -102,25 +102,28 @@
 	height: 32px;
 	float: right;
 	margin: 10px 17px 0 0px;
+	font-family: 'Candara';
+	font-size: 14px;
 }
 
 .users p {
 	text-align: right;
 	margin: 0;
 	padding: 0;
+	color: #383838;
 }
 
 .users p span {
 	text-align: right;
 	margin: 0;
 	padding: 0;
-	color: gray;
+	color: #52648A;
 }
 
 #nav {
-	width: 730px;
+	width: 728px;
 	height: 30px;
-	border: 2px solid #C88B79;
+	border: 3px solid #A33A1C;
 	border-radius: 7px;
 	margin-top: 4px;
 	float: left;
@@ -130,7 +133,7 @@
 #nav .orderQuestions {
 	width: 250px;
 	height: 30px;
-	border-right: 1px solid #C88B79;
+	border-right: 2px solid #A33A1C;
 	float: left;
 	font-weight: bold;
 	font-size: 24px;
@@ -144,14 +147,16 @@
 	height: 30px;
 	cursor: pointer;
 	text-decoration: none;
-	color: #000;
+	color: #383838;
+	font-family: 'Candara';
+	font-size: 24px;
 }
 
 
 #nav .categoryQuestions {
-	width: 240px;
+	width: 236px;
 	height: 30px;
-	border-right: 1px solid #C88B79;
+	border-right: 2px solid #A33A1C;
 	float: left;
 	font-size: 24px;
 	text-align: center;
@@ -161,11 +166,13 @@
 
 #nav .categoryQuestions a {
 	display: block;
-	width: 240px;
+	width: 236px;
 	height: 30px;
 	cursor: pointer;
 	text-decoration: none;
-	color: #000;
+	color: #383838;
+	font-family: 'Candara';
+	font-size: 24px;
 }
 
 #nav .categoryQuestions a:hover {
@@ -188,7 +195,9 @@
 	height: 30px;
 	cursor: pointer;
 	text-decoration: none;
-	color: #000;
+	color: #383838;
+	font-family: 'Candara';
+	font-size: 24px;
 }
 
 #nav .expressQuestions a:hover {
@@ -200,7 +209,7 @@
 .usersProfile {
 	width: 220px;
 	height: 90px;
-	border: 2px solid #C88B79;
+	border: 3px solid #A33A1C;
 	border-radius: 7px;
 	float: right;
 	margin-top: 4px;
@@ -258,7 +267,7 @@
 #menu {
 	width: 220px;
 	height: 800px;
-	border: 2px solid #C88B79;
+	border: 3px solid #A33A1C;
 	border-radius: 7px;
 	float: right;
 	margin-top: 3px;
@@ -267,6 +276,7 @@
 #menu form.menuNavigation {
 	width: 192px;
 	margin: 10px auto;
+
 }
 
 #menu form.menuNavigation input {
@@ -278,8 +288,9 @@
 	margin-top: 2px;
 	background-color: #fff;
 	text-transform: uppercase;
-	font-size: 18px;
+	font-size: 26px;
 	cursor: pointer;
+	font-family: 'Cambria';
 }
 
 #menu form.menuNavigation input:hover {
@@ -287,16 +298,18 @@
 }
 
 #menu form.menuNavigation input.chatInvite {
-	width: 138px;
+	width: 145px;
 	height: 18px;
 	text-align: center;
 	margin-top: 5px;
 	background-color: #EFEFEF;
 	text-transform: uppercase;
-	font-size: 12px;
+	font-size: 14px;
 	cursor: pointer;
 	display: block;
 	margin: 5px auto;
+	font-family: 'Candara';
+	color: #383838;
 }
 
 .menuCategory {
@@ -325,15 +338,18 @@
 
 #main form.writeQuestion {
 	margin: 0px auto 0 auto;
-	width: 680px;
+	width: 700px;
+	overflow: hidden;
+	font-family: 'Cambria';
+	font-size: 16px;
 
 }
 
 #main form.writeQuestion textarea {
 	width: 680px;
-	min-height: 25px;
-	border: 2px solid #C88B79;
-	font-size: 18px;
+	height: 29px;
+	border: 3px solid #A33A1C;
+	font-size: 24px;
 	padding: 0;
 	padding-left: 8px;
 	overflow: hidden;
@@ -351,7 +367,7 @@
     display: none;
     white-space: pre-wrap;
 	width: 680px;
-	min-height: 18px;
+	min-height: 29px;
     font-size: 15px;
 	padding-left: 8px;
     word-wrap: break-word;
@@ -360,7 +376,9 @@
 }
 
 .questionForm {
-	margin: 0;
+	margin: 0 auto;
+	height: 35px;
+	width: 692px;
 }
 
 
@@ -371,15 +389,21 @@
 
 #questionsType {
 	width: 680px;
-	border: 1px solid #C88B79;
+	height: 24px;
+	padding-top: 5px;
+	border-bottom: 2px solid #A33A1C;
+	border-left: 2px solid #A33A1C;
+	border-right: 2px solid #A33A1C;
 	overflow: hidden;
-	margin: 0 0 0 5px;
+	margin: 0 auto;
 }
 
 
 .writeQuestionDiv {
-	width: 650px;
-	border: 1px solid #C88B79;
+	width: 680px;
+	border-bottom: 2px solid #A33A1C;
+	border-left: 2px solid #A33A1C;
+	border-right: 2px solid #A33A1C;
 	margin: 0 auto;
 	font-size: 18px;
 	overflow: hidden;
@@ -405,6 +429,7 @@
 	margin-bottom: 5px;
 	vertical-align: middle;
 	text-align: center;
+	margin-top: 25px;
 }
 
 
@@ -420,9 +445,9 @@
 }
 
 .category {
-	margin-top: 25px;
+	margin-top: 5px;
 	overflow: hidden;
-	width: 160px;
+	width: 220px;
 	float: left;
 	padding-left: 10px;
 }
@@ -436,11 +461,18 @@
 	float: left;
 }
 
+.rushWrapper {
+	width: 450px;
+	overflow: hidden;
+	outline: 2px solid #A33A1C;
+
+}
+
 .chosePlace {
-	width: 300px;
+	width: 273px;
 	float: left;
-	margin-left: 150px;
-	margin-top: 10px;
+	margin-left: 40px;
+	overflow: hidden;
 }
 
 .chosePlace label {
@@ -460,7 +492,7 @@
 	font-size: 14px;
 	float: right;
 	margin-top: 10px;
-	margin-right: 60px;
+	margin-right: 110px;
 }
 
 
@@ -470,9 +502,9 @@
 
 p.questionCost {
 	display: block;
-	width: 180px;
+	width: 184px;
 	float: right;
-	margin: -20px 130px 0 0;
+	margin: -20px 170px 0 0;
 }
 
 h2.categoryH2 {
@@ -484,7 +516,7 @@ h2.categoryH2 {
 
 .singleQuestion {
 	width: 680px;
-	border: 1px solid #C88B79;
+	border: 1px solid #965565;
 	border-radius: 7px;
 	margin-top: 10px;
 	overflow: hidden;
@@ -492,7 +524,7 @@ h2.categoryH2 {
 
 .userName {
 	width: 73px;
-	border: 1px solid #C88B79;
+	border: 1px solid #965565;
 	margin-left: 30px;
 	text-align: center;
 	color: #686868;
@@ -507,6 +539,7 @@ h2.categoryH2 {
 	font-size: 13px;
 	margin-left: 450px;
 	margin-right: 0;
+	color: #999999;
 }
 
 .closeButton {
@@ -525,6 +558,8 @@ h2.categoryH2 {
 	width: 650px;
 	margin: 3px 0 5px 5px;
 	overflow: hidden;
+	font-family: 'Cambria';
+	
 }
 
 .socialIcons {
@@ -590,27 +625,35 @@ h2.categoryH2 {
 	font-size: 20px;
 }
 
+.registerWrapper {
+	position: relative;
+	top: -101px;
+	left: 44px;
+}
+
 .registerForm {
-	width: 650px;
+	width: 842px;
 	border: 2px solid #52648A;
 	border-radius: 7px;
 	margin: 0 auto;
 	padding: 10px;
+	background-color: #fff;
 }
 
 h2.registrationH2 {
 	font-size: 26px;
-	margin-left: 35px;
+	margin-left: 30px;
 	margin-bottom: 10px;
 	display: block;
 	width: 142px;
 	float: left;
 	color: #7A2116;
+	text-transform: uppercase;
 }
 
 h3.registrationH3 {
 	font-size: 16px;
-	margin-left: 140px;
+	margin-left: 266px;
 	margin-top: 9px;
 	display: block;
 	float: left;
@@ -635,7 +678,7 @@ h3.registrationH3 {
 	border: 1px solid #52648A;
 	border-radius: 3px;
 	margin-top: 20px;
-	width: 331px;
+	width: 522px;
 	font-size: 18px;
 	float: right;
 	margin-right: 150px;
@@ -664,7 +707,7 @@ span.fieldHelp {
 	border-radius: 3px;
 	margin-top: 20px;
 	margin-bottom: 20px;
-	width: 331px;
+	width: 522px;
 	font-size: 18px;
 	float: right;
 	margin-right: 150px;
@@ -718,7 +761,7 @@ span.birtDateDescription {
 	width: 156px;
 	height: 30px;
 	float: right;
-	margin-right: 345px;
+	margin-right: 537px;
 	margin-top: 18px;
 }
 
@@ -727,7 +770,7 @@ span.birtDateDescription {
 	width: 105px;
 	overflow: hidden;
 	float: right;
-	margin-right: 380px;
+	margin-right: 571px;
 	margin-top: 15px;
 }
 
@@ -803,12 +846,13 @@ span.agreementLabel a {
 input.registerButton {
 	width: 330px;
 	height: 30px;
-	margin-left: 25%; 
 	background: #fff;
 	border: 2px solid #00A3D4;
 	border-radius: 5px;
 	cursor: pointer;
 	font-size: 24px;
+	display: block;
+	margin: 0 auto;
 }
 
 #username {

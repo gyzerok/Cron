@@ -66,18 +66,26 @@
 	//Скрытия блоков с информацией о вопросе
 	$('#questionsType').hide();
 	$('.writeQuestionDiv').hide();
-	$('#question_text').text('Введите, пожалуйста, Ваш вопрос');
+	//$('#question_text').text('Введите, пожалуйста, Ваш вопрос');
 	
 	// Появление блока с типом вопросов
 	$('#question_text').focus(function() {
 		$('#questionsType').slideDown();
-		$('#question_text').text('');
+		//$('#question_text').text('');
 	});
 
 	// Появление блока с информацией о вопросе
 	$('#questionsType > input:first').click(function() {
 		$('.writeQuestionDiv').slideDown();
 		$('#question_category').show(500);
+		$('.rushWrapper').css({
+		'outline':'none',
+		'border-bottom':'none'
+		});
+		$('.writeQuestionDiv').css({
+		'border-bottom': '2px solid #A33A1C',
+		'border-left': '2px solid #A33A1C'
+		});
 		document.getElementById('question_category_1').checked = false;
 	});
 
@@ -85,6 +93,14 @@
 		document.getElementById('categoryRadioButton').checked = false;
 		$('#question_category').hide();
 		$('.writeQuestionDiv').slideDown();
+		$('.rushWrapper').css({
+		'outline':'2px solid #A33A1C',
+		'border-bottom':'2px solid #A33A1C'
+		});
+		$('.writeQuestionDiv').css({
+		'border-bottom': 'none',
+		'border-left': 'none'
+		});
 	});	
 	
 	// Уплывание формы и сброс полей
@@ -119,36 +135,37 @@
 		<div class="category">
 			{{ form_errors(form.category) }}
 			{{ form_widget(form.category) }}
-		</div>	
-		<div class="chosePlace">
-			{{ form_label(form.country) }}	
-			{{ form_errors(form.country) }}
-			{{ form_widget(form.country) }}
-
-			{{ form_label(form.state) }}
-			{{ form_errors(form.state) }}
-			{{ form_widget(form.state) }}
-
-			{{ form_label(form.city) }}
-			{{ form_errors(form.city) }}
-			{{ form_widget(form.city) }}
 		</div>
-		<div style="clear: both;"></div>
-		<div class="additionalInformation">
-			{{ form_label(form.boundary) }}
-			{{ form_errors(form.boundary) }}
-			{{ form_widget(form.boundary) }}
+		<div class="rushWrapper">
+			<div class="chosePlace">
+				{{ form_label(form.country) }}	
+				{{ form_errors(form.country) }}
+				{{ form_widget(form.country) }}
+
+				{{ form_label(form.state) }}
+				{{ form_errors(form.state) }}
+				{{ form_widget(form.state) }}
+
+				{{ form_label(form.city) }}
+				{{ form_errors(form.city) }}
+				{{ form_widget(form.city) }}
+			</div>
+			<div class="additionalInformation">
+				{{ form_label(form.boundary) }}
+				{{ form_errors(form.boundary) }}
+				{{ form_widget(form.boundary) }}
+			</div>
+			<p class="questionCost">Стоимость 0 кредитов</p>
+			<input class="submitButton" type="submit" />
+			<input name="cancelInformation" class="submitButton" type="button" value="Отменить" />
 		</div>
-		<div style="clear: both"></div>
-		<p class="questionCost">Стоимость 0 кредитов</p>
-		<input class="submitButton" type="submit" />
-		<input name="cancelInformation" class="submitButton" type="button" value="Отменить" />
 	</div>	
 	
 	{{ form_rest(form) }}
 </form>
 	
 	{% if userQuestions|length > 0 %}
+		<div id="showQuestionIndex">
 			{% for item in userQuestions %}
 			<div class="singleQuestion">
 				<div style="border: 1px solid #fff;" class="userName"></div>
@@ -168,6 +185,7 @@
 				</div>
 			</div>
 			{% endfor %}
+		</div>
 	{% endif %}
 
 	
