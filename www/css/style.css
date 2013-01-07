@@ -568,6 +568,29 @@ h2.categoryH2 {
 	float: right;
 }
 
+.actionButton {
+	width: 220px;
+	overflow: hidden;
+	float: right;
+}
+
+.actionButton form.answer {
+	margin-top: 7px;
+}
+
+.actionButton form.answer input {
+	width: 70px;
+	height: 20px;
+	border: 1px solid gray;
+	margin: 0;
+	cursor: pointer;
+	border-radius: 3px;
+	margin-bottom: 5px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 14px;
+}
+
 .spamButton {
 	width: 25px;
 	height: 17px;

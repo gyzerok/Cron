@@ -25,7 +25,7 @@ var engine = {
 							'<div class="likeButton"></div>'+
 							'<div class="repostButton"></div>'+
 							'<form class="answer">'+
-								'<input class="answerButton" type="submit" />'+
+								'<input class="answerButton" type="submit" value="Ответить"/>'+
 							'</form>'+
 						'</div>';
 		xhtml += '</div>';
