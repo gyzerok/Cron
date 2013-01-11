@@ -93,7 +93,7 @@ class AjaxController extends Controller
             $em->remove($question);
             $em->flush();
 
-            return new Response('Succsess');
+            return new Response('SUCCESS');
         }
 
         return new Response('Fail');
