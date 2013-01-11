@@ -513,6 +513,13 @@ h2.categoryH2 {
 	margin-top: 0;
 }
 
+.greeting {
+	font-size: 14px;
+	font-family: 'Tahoma';
+	text-align: center;
+	margin-top: 15px;
+}
+
 
 .singleQuestion {
 	width: 680px;
@@ -687,6 +694,7 @@ h3.registrationH3 {
 	width: 100%;
 	overflow: hidden;
 	margin-top: 15px;
+	margin-bottom: 25px;
 }
 
 .registrationField label {
@@ -864,18 +872,22 @@ span.agreementLabel {
 span.agreementLabel a {
 	text-decoration: underline;
 	color: #52648A;	
+	cursor: pointer;
+	display: inline-block;
+	height: 22px;
 }
 
 input.registerButton {
 	width: 330px;
-	height: 30px;
+	height: 50px;
 	background: #fff;
 	border: 2px solid #00A3D4;
-	border-radius: 5px;
+	border-radius: 12px;
 	cursor: pointer;
-	font-size: 24px;
+	font-size: 26px;
 	display: block;
 	margin: 0 auto;
+	text-transform: uppercase;
 }
 
 #username {
@@ -932,4 +944,26 @@ a.forgotPassword {
 	color: #52648A;
 	text-decoration: none;
 	font-size: 18px;
+}
+
+a.closeRegisterButton {
+	display: block;
+	width: 30px;
+	height: 30px;
+	float: right;
+	background: url(/i/closeRegisterButton.png) no-repeat;
+}
+
+#terms {
+	border-radius: 7px;
+	border: 2px solid #52648A;
 } 
+
+#terms h5 {
+	text-align: center;
+	font-weight: bold;
+}
+
+#terms p.pCenter {
+	text-align: center;
+}

@@ -54,24 +54,22 @@ var engine = {
 		
 		$('#showQuestion').on('click', '.closeButton', function(){
 			var id = $(this).closest('.singleQuestion').attr('id');
+			var that = $(this);
 			id = id.replace('question_', '');
 				$.ajax({'url': '/ajax/delQuestion', 'type':'post', 'data': 'question_id='+id,
 					'success': function(){
-						$('.closeButton').click(function() {
-						$(this).closest('.singleQuestion').fadeOut(800, function(){$(this).remove();});	
-						});		
+						that.closest('.singleQuestion').fadeOut(800, function(){$(this).remove();});	
 					}
 				});
 		});
 		
 		$('#showQuestionIndex').on('click', '.closeButton', function(){
 			var id = $(this).closest('.singleQuestion').attr('id');
+			var that = $(this);
 			id = id.replace('question_', '');
 				$.ajax({'url': '/ajax/delQuestion', 'type':'post', 'data': 'question_id='+id,
 					'success': function(){
-						$('.closeButton').click(function() {
-						$(this).closest('.singleQuestion').fadeOut(800, function(){$(this).remove();});	
-						});		
+						that.closest('.singleQuestion').fadeOut(800, function(){$(this).remove();});	
 					}
 				});
 		});
