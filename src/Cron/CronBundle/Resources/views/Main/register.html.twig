@@ -135,6 +135,9 @@
 			<a class="closeRegisterButton" href="{{ path('index') }}"></a>
 			<div style="clear:both;"></div>	
 			<div class="registrationField">
+				{{ form_label(form.username) }}
+				{{ form_errors(form.username) }}
+				{{ form_widget(form.username) }}
 				<span class="fieldHelp">Укажите реальный и действующий e-mail адрес. Он потребуется для входа на сайт и для получения уведомлений.</span>
 			</div>
 			<div class="registrationFieldPass">
@@ -145,9 +148,9 @@
 				<span class="checkPassword"></span>
 			</div>
 			<div class="registrationField">
-				{{ form_label(form.username) }}
-				{{ form_errors(form.username) }}
-				{{ form_widget(form.username) }}
+				{{ form_label(form.nick) }}
+				{{ form_errors(form.nick) }}
+				{{ form_widget(form.nick) }}
 				<span class="fieldHelp">Укажите ваше имя или никнейм; От 2 до 12 символов - нельзя использовать цифры.</span>
 			</div>
 			<div class="registrationFieldGender">
