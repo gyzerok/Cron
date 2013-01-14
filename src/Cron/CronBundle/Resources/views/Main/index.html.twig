@@ -59,10 +59,9 @@
 	    hiddenDiv.html(content);
 
 	    txt.css('height', hiddenDiv.height());
-
-	});
+		});
 	
-	
+	});	
 	//Скрытия блоков с информацией о вопросе
 	$('#questionsType').hide();
 	$('.writeQuestionDiv').hide();
@@ -113,8 +112,20 @@
 		document.forms.writeQuestion.reset();
 	});
 	
+	//Уплывание формы по клику вне области
+	var questionSubs = $('#questionsType').add('.writeQuestionDiv');
+	if (questionSubs.length != 0){
+	$('body').click(
+		function(){
+			questionSubs.slideUp();
+			document.forms.writeQuestion.reset();
+		}
+	);
+	$('.writeQuestion').click(function(e){
+		e.stopPropagation();
 	});
-		
+	}
+	
 	});
 	
 </script>
