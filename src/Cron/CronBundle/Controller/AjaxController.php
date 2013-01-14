@@ -67,12 +67,12 @@ class AjaxController extends Controller
                                       ->setParameter('status', '2')
                                       ->getQuery();
             $rush = $rushQuery->getResult();
-            $answers = $this->getDoctrine()->getRepository('CronCronBundle:Answer')
+            /*$answers = $this->getDoctrine()->getRepository('CronCronBundle:Answer')
                                            ->createQueryBuilder('answer')
                                            ->innerJoin('answer.user', 'user')
                                            ->where('answer.status <> :status')
                                            ->setParameter('status', '0')
-                                           ->getQuery()->getRuslt();
+                                           ->getQuery()->getResult();*/
 
             $json = '{';
 
