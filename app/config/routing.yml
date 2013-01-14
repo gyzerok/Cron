@@ -44,6 +44,10 @@ likeItem:
   pattern:  /ajax/likeItem
   defaults: { _controller: CronCronBundle:Ajax:likeItem }
 
+postAnswer:
+  pattern:  /ajax/postAnswer
+  defaults: { _controller: CronCronBundle:Ajax:postAnswer }
+
 # Security routes
 
 login:

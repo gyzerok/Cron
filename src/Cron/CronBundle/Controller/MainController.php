@@ -37,8 +37,6 @@ class MainController extends Controller
                     $question->setCity($city);
                 }
 
-                $question->setStatus(true);
-
                 $user = $this->getUser();
                 if (!$user instanceof User)
                     $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
@@ -59,7 +57,7 @@ class MainController extends Controller
             $userQuestions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                                                  ->createQueryBuilder('question')
                                                  ->where('question.user = :uid  AND question.status <> :status')
-                                                 ->setParameter('status', '0')
+                                                 ->setParameter('status', '2')
                                                  ->setParameter('uid', $user->getId())
                                                  ->getQuery()
                                                  ->getResult();
@@ -91,7 +89,7 @@ class MainController extends Controller
                                            ->innerJoin('question.user', 'user')
                                            ->where('question.category > :cid  AND question.status <> :status')
                                            ->setParameter('cid', '1')
-                                           ->setParameter('status', '0')
+                                           ->setParameter('status', '2')
                                            ->getQuery()
                                            ->getResult();
 
@@ -121,7 +119,7 @@ class MainController extends Controller
                                     ->innerJoin('question.user', 'user')
                                     ->where('question.category = :cid  AND question.status <> :status')
                                     ->setParameter('cid', '1')
-                                    ->setParameter('status', '0')
+                                    ->setParameter('status', '2')
                                     ->getQuery()
                                     ->getResult();
 
@@ -170,8 +168,25 @@ class MainController extends Controller
         return $this->render("CronCronBundle:Main:register.html.twig", array('title' => 'Регистрация', 'curUser' => $this->getUser(), 'form' => $form->createView()));
     }
 
-    public function regconfAction()
+    public function regconfAction(Request $request)
     {
-        return $this->render("CronCronBundle:Main:registration_confirmation.html.twig", array('title' => 'Подтверждение регистрации', 'curUser' => $this->getUser(), 'success' => true));
+        $success = false;
+
+        if ($request->isMethod("GET"))
+        {
+            $id = $request->get("id");
+            $hash = $request->get("code");
+            $user = $this->getDoctrine()->getRepository("CronCronBundle:User")->findOneById($id);
+            if (md5($user->getId() + $user->getBirthDate() + $user->getUsername()) == $hash)
+            {
+                $user->setIsActive(true);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($user);
+                $em->flush();
+            }
+        }
+
+        return $this->render("CronCronBundle:Main:registration_confirmation.html.twig", array('title' => 'Подтверждение регистрации', 'curUser' => $this->getUser(), 'success' => $success));
     }
 }

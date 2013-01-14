@@ -248,4 +248,10 @@ class Answer
     {
         return $this->user;
     }
+
+    public function __construct()
+    {
+        $this->setPubDate(new \DateTime());
+        $this->setStatus(true);
+    }
 }

@@ -44,9 +44,9 @@ class Question
     private $boundary;
 
     /**
-     * @var boolean $status
+     * @var integer $status
      *
-     * @ORM\Column(name="status", type="boolean", nullable=false)
+     * @ORM\Column(name="status", type="integer", nullable=false)
      */
     private $status;
 
@@ -213,7 +213,7 @@ class Question
     /**
      * Set status
      *
-     * @param boolean $status
+     * @param integer $status
      * @return Question
      */
     public function setStatus($status)
@@ -226,7 +226,7 @@ class Question
     /**
      * Get status
      *
-     * @return boolean 
+     * @return integer
      */
     public function getStatus()
     {
@@ -422,6 +422,7 @@ class Question
         $this->likes = new ArrayCollection();
         $this->spams = new ArrayCollection();
         $this->setDatetime(new \DateTime());
+        $this->setStatus(0);
     }
 
     /**

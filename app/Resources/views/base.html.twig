@@ -42,7 +42,7 @@
 	    {% block userPrifile %}
 		<div class="usersProfile">
 		    {% if curUser %}
-			<p class="name">{{ curUser.username }}</p>
+			<p class="name">{{ curUser.nick }}</p>
 			<form action="{{ path('logout') }}" class="profileNavigation" name="profileNavigation" action="" method="post">
 				<input type="submit"  value="Выход" />
 			</form>

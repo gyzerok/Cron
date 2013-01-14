@@ -37,11 +37,11 @@ class User implements UserInterface, \Serializable
     private $password;
 
     /**
-     * @var string $email
+     * @var string $nick
      *
-     * @ORM\Column(name="email", type="string", length=45, nullable=false)
+     * @ORM\Column(name="nick", type="string", length=45, nullable=false)
      */
-    private $email;
+    private $nick;
 
     /**
      * @var boolean $gender
@@ -70,6 +70,13 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(name="agreement", type="boolean", nullable=false)
      */
     private $agreement;
+
+    /**
+     * @var boolean $isActive
+     *
+     * @ORM\Column(name="is_active", type="boolean", nullable=false)
+     */
+    private $isActive;
 
     /**
      * @var \DateTime $lastVisit
@@ -405,6 +412,7 @@ class User implements UserInterface, \Serializable
     {
         $this->setRegDate(new \DateTime());
         $this->setLastVisit(new \DateTime());
+        $this->setIsActive(false);
     }
 
     public function __toString()
@@ -423,4 +431,50 @@ class User implements UserInterface, \Serializable
     /*public function __sleep(){
         return array('id', 'username', 'email', 'password', 'regDate', 'birthDate', "agreement", "gender", "lastVisit", "city", "state", "country");
     }*/
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     * @return User
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+    
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set nick
+     *
+     * @param string $nick
+     * @return User
+     */
+    public function setNick($nick)
+    {
+        $this->nick = $nick;
+    
+        return $this;
+    }
+
+    /**
+     * Get nick
+     *
+     * @return string 
+     */
+    public function getNick()
+    {
+        return $this->nick;
+    }
 }
