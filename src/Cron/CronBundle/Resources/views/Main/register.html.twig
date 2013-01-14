@@ -81,14 +81,15 @@
 		
 		
 		function testPass() {
+			
 			var p1 = $("#register_password_Password").val(); 
 			var p2 = $("#register_password_Confirm").val();
 			
 			if(p1 == p2) { 
-				$(".checkPassword").text("Пароли совпадают"); 
+				$(".checkPassword").html('<span style="color:green;">Пароли совпадают</span>'); 
 			} 
 			else { 
-				$(".checkPassword").text("Пароли не совпадают"); 
+				$(".checkPassword").html('<span style="color:red;">Пароли не совпадают</span>'); 
 			}
 		}
 		
@@ -99,10 +100,11 @@
 		  autoOpen: false,
 		  show: "blind",
 		  hide: "clip",
-		  width: '800',
+		  width: '955',
 		  height: '500',
 		  modal: true,
-		  resizable: false
+		  resizable: false,
+		  position: { my: "top",}
 		});
 	 
 	$( ".agreementLabel > a" ).click(function() {
@@ -131,13 +133,11 @@
 			<h2 class="registrationH2">Регистрация</h2>
 			<h3 class="registrationH3">Все поля обязательны для заполнения</h3>
 			<a class="closeRegisterButton" href="{{ path('index') }}"></a>
-			<div style="clear:both;"></div>
-				
-				
+			<div style="clear:both;"></div>	
 			<div class="registrationField">
-				{{ form_label(form.email) }}
+				<!--{{ form_label(form.email) }}
 				{{ form_errors(form.email) }}
-				{{ form_widget(form.email) }}
+				{{ form_widget(form.email) }}!-->
 				<span class="fieldHelp">Укажите реальный и действующий e-mail адрес. Он потребуется для входа на сайт и для получения уведомлений.</span>
 			</div>
 			<div class="registrationFieldPass">

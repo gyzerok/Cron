@@ -530,13 +530,14 @@ h2.categoryH2 {
 }
 
 .userName {
-	width: 73px;
+	width: 101px;
 	border: 1px solid #965565;
-	margin-left: 30px;
+	margin-left: 8px;
 	text-align: center;
 	color: #686868;
 	float: left;
 	border-radius: 0 0 5px 5px;
+	font-size: 13px;
 }
 
 .questionDate {
@@ -657,12 +658,13 @@ h2.categoryH2 {
 
 .registerWrapper {
 	position: relative;
-	top: -101px;
-	left: 44px;
+	top: -147px;
+	left: -5px;
+	z-index: 1000;
 }
 
 .registerForm {
-	width: 842px;
+	width: 937px;
 	border: 2px solid #52648A;
 	border-radius: 7px;
 	margin: 0 auto;
@@ -709,7 +711,7 @@ h3.registrationH3 {
 	border: 1px solid #52648A;
 	border-radius: 3px;
 	margin-top: 20px;
-	width: 522px;
+	width: 618px;
 	font-size: 18px;
 	float: right;
 	margin-right: 150px;
@@ -738,7 +740,7 @@ span.fieldHelp {
 	border-radius: 3px;
 	margin-top: 20px;
 	margin-bottom: 20px;
-	width: 522px;
+	width: 618px;
 	font-size: 18px;
 	float: right;
 	margin-right: 150px;
@@ -792,7 +794,7 @@ span.birtDateDescription {
 	width: 156px;
 	height: 30px;
 	float: right;
-	margin-right: 537px;
+	margin-right: 632px;
 	margin-top: 18px;
 }
 
@@ -801,7 +803,7 @@ span.birtDateDescription {
 	width: 105px;
 	overflow: hidden;
 	float: right;
-	margin-right: 571px;
+	margin-right: 670px;
 	margin-top: 15px;
 }
 

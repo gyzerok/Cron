@@ -63,21 +63,20 @@
 	
 	});	
 	//Скрытия блоков с информацией о вопросе
-	$('#questionsType').hide();
-	$('.writeQuestionDiv').hide();
-	//$('#question_text').text('Введите, пожалуйста, Ваш вопрос');
+	var questionHidddenDivs = $('#questionsType').add('.writeQuestionDiv');
+	questionHidddenDivs.hide();
+	questionHidddenDivs.hide();
 	
 	// Появление блока с типом вопросов
 	$('#question_text').focus(function() {
 		$('#questionsType').slideDown();
 		$('.greeting').fadeOut(500);
-		//$('#question_text').text('');
 	});
 
 	// Появление блока с информацией о вопросе
 	$('#questionsType > input:first').click(function() {
 		$('.writeQuestionDiv').slideDown();
-		$('#question_category').show(500);
+		$('#question_category').show();
 		$('.rushWrapper').css({
 		'outline':'none',
 		'border-bottom':'none'
@@ -96,7 +95,6 @@
 		$('.rushWrapper').css({
 		'outline':'2px solid #A33A1C',
 		'border-bottom':'2px solid #A33A1C',
-		'outline-right': '1px solid #A33A1C'
 		});
 		$('.writeQuestionDiv').css({
 		'border-bottom': 'none',
@@ -115,15 +113,16 @@
 	//Уплывание формы по клику вне области
 	var questionSubs = $('#questionsType').add('.writeQuestionDiv');
 	if (questionSubs.length != 0){
-	$('body').click(
-		function(){
-			questionSubs.slideUp();
-			document.forms.writeQuestion.reset();
-		}
-	);
-	$('.writeQuestion').click(function(e){
-		e.stopPropagation();
-	});
+		$('body').click(
+			function(){
+				questionSubs.slideUp();
+				document.forms.writeQuestion.reset();
+				$('.greeting').fadeIn(500);				
+			}
+		);
+		$('.writeQuestion').click(function(e){
+			e.stopPropagation();
+		});
 	}
 	
 	});
@@ -170,7 +169,7 @@
 				{{ form_widget(form.boundary) }}
 			</div>
 			<p class="questionCost">Стоимость 0 кредитов</p>
-			<input class="submitButton" type="submit" />
+			<input class="submitButton" type="submit" value="Отправить" />
 			<input name="cancelInformation" class="submitButton" type="button" value="Отменить" />
 		</div>
 	</div>	
