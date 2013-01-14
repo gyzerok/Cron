@@ -55,7 +55,7 @@ class AjaxController extends Controller
                                      ->where('question.category > :cid AND question.datetime > :lastTime AND question.status <> :status')
                                      ->setParameter('cid', '1')
                                      ->setParameter('lastTime', $lastTime)
-                                     ->setParameter('status', '0')
+                                     ->setParameter('status', '2')
                                      ->getQuery();
             $categorized = $catQuery->getResult();
 
@@ -64,7 +64,7 @@ class AjaxController extends Controller
                                       ->where('question.category = :cid AND question.datetime > :lastTime AND question.status <> :status')
                                       ->setParameter('cid', '1')
                                       ->setParameter('lastTime', $lastTime)
-                                      ->setParameter('status', '0')
+                                      ->setParameter('status', '2')
                                       ->getQuery();
             $rush = $rushQuery->getResult();
             $answers = $this->getDoctrine()->getRepository('CronCronBundle:Answer')
