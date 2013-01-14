@@ -21,7 +21,7 @@ class Registration extends AbstractType
                 ->add('password', 'repeated', array('required' => true, 'first_name' => 'Password', 'second_name' => 'Confirm', 'type' => 'password'))
                 ->add('nick', null, array('label' => 'Ваше имя', 'required' => true))
                 ->add('gender', 'choice', array('label' => 'Пол', 'choices' => array(1 => 'Мужской', 2 => 'Женский'), 'expanded' => true, 'required' => true))
-                ->add('birthDate', 'birthday', array('label' => 'Дата рождения', 'format' => 'dd MMM yyyy', 'years' => $years, 'months' => $months, 'required' => true))
+                ->add('birthDate', 'birthday', array('label' => 'Дата рождения', 'format' => 'dd MMM yyyy', 'years' => $years, 'required' => true))
                 ->add('country', null, array('label' => 'Страна', 'empty_value' => 'Выберите страну', 'required' => true))
                 ->add('state', null, array('label' => 'Регион', 'empty_value' => 'Выберите регион', 'disabled' => true, 'required' => true))
                 ->add('city', null, array('label' => 'Город', 'empty_value' => 'Выберите город', 'disabled' => true, 'required' => true))
