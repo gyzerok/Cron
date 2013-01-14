@@ -18,6 +18,10 @@ register:
   pattern: /register
   defaults: { _controller: CronCronBundle:Main:register }
 
+regconf:
+  pattern: /regconf
+  defaults: { _controller: CronCronBundle:Main:regconf }
+
 # Ajax routes
 
 getStates:
