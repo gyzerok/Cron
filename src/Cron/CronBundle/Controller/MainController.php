@@ -177,6 +177,8 @@ class MainController extends Controller
             $id = $request->get("id");
             $hash = $request->get("code");
             $user = $this->getDoctrine()->getRepository("CronCronBundle:User")->findOneById($id);
+            if (!$user instanceof User)
+                $this->render("CronCronBundle:Main:registration_confirmation.html.twig", array('title' => 'Подтверждение регистрации', 'curUser' => $this->getUser(), 'success' => $success));
             if (md5($user->getId() + $user->getBirthDate() + $user->getUsername()) == $hash)
             {
                 $user->setIsActive(true);
@@ -184,6 +186,8 @@ class MainController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
+
+                $success = true;
             }
         }
 
