@@ -7,7 +7,7 @@ Cron\CronBundle\Entity\Question:
 
 Cron\CronBundle\Entity\User:
   properties:
-    email:
+    username:
       - NotBlank: ~
     country:
       - NotBlank: ~
