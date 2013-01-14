@@ -172,6 +172,6 @@ class MainController extends Controller
 
     public function regconfAction()
     {
-        return $this->render("CronCronBundle:Main:registration_confirmation.html.twig", array('title' => 'Подтверждение регистрации', 'success' => true));
+        return $this->render("CronCronBundle:Main:registration_confirmation.html.twig", array('title' => 'Подтверждение регистрации', 'curUser' => $this->getUser(), 'success' => true));
     }
 }
