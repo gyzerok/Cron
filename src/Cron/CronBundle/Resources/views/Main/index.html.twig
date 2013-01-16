@@ -125,6 +125,17 @@
 		});
 	}
 	
+	//Развертывание ответов
+	var myAnswer = $('.myAnswer');
+	myAnswer.hide();	
+	$('.answerButtonItalic').toggle(function() {
+		$(this).closest('.singleQuestion').next('.myAnswer').slideDown();
+		$(this).val('свернуть');
+	}, function(){
+		$(this).closest('.singleQuestion').next('.myAnswer').slideUp();
+		$(this).val('развернуть');	
+	});	
+	
 	});
 	
 </script>
@@ -185,7 +196,6 @@
 	{% endif %}
 	
 	{% if userQuestions|length > 0 %}
-		<div id="showQuestionIndex">
 			{% for item in userQuestions %}
 			<div class="singleQuestion">
 				<div style="border: 1px solid #fff;" class="userName"></div>
@@ -196,15 +206,58 @@
 					{{ item.text }}
 					<div class="actionButton">
 						<form class="answer">
-							<input class="answerButton" type="submit" value="закрыть" />
-							<input class="answerButton" type="submit" value="удалить" />
-							<input class="answerButton" type="submit" value="свернуть" />
+							<input class="answerButton" type="button" value="закрыть" />
+							<input class="answerButton" type="button" value="удалить" />
+							<input class="answerButtonItalic" type="button" value="развернуть" />
 						</form>
 					</div>
 				</div>
 			</div>
+			<div class="myAnswer">
+				<div class="singleAnswer">
+					<div class="userName">Alekseys</div>
+					<div class="answerDate">15:15:16 14.01.2013</div>
+					<div style="clear: both;"></div>
+					<div class="questionText">
+						blablabla
+						<div class="socialIcons">
+							<div class="spamButton"></div>
+							<div class="likeButton"></div>
+							<div class="arrowButton"></div>
+							<div class="letterButton"></div>
+						</div>
+					</div>
+				</div>
+				<div class="singleAnswer">
+					<div class="userName">Alekseys</div>
+					<div class="answerDate">15:15:16 14.01.2013</div>
+					<div style="clear: both;"></div>
+					<div class="questionText">
+						tralala
+						<div class="socialIcons">
+							<div class="spamButton"></div>
+							<div class="likeButton"></div>
+							<div class="arrowButton"></div>
+							<div class="letterButton"></div>
+						</div>
+					</div>
+				</div>
+				<div class="singleAnswer">
+					<div class="userName">Alekseys</div>
+					<div class="answerDate">15:15:16 14.01.2013</div>
+					<div style="clear: both;"></div>
+					<div class="questionText">
+						ololo
+						<div class="socialIcons">
+							<div class="spamButton"></div>
+							<div class="likeButton"></div>
+							<div class="arrowButton"></div>
+							<div class="letterButton"></div>
+						</div>
+					</div>
+				</div>
+			</div>
 			{% endfor %}
-		</div>
 	{% endif %}
 
 	

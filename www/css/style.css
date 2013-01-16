@@ -571,13 +571,12 @@ h2.categoryH2 {
 }
 
 .socialIcons {
-	width: 136px;
+	width: 144px;
 	overflow: hidden;
 	float: right;
 }
 
 .actionButton {
-	width: 220px;
 	overflow: hidden;
 	float: right;
 }
@@ -587,44 +586,81 @@ h2.categoryH2 {
 }
 
 .actionButton form.answer input {
-	width: 70px;
+	width: 86px;
 	height: 20px;
 	border: 1px solid gray;
-	margin: 0;
 	cursor: pointer;
 	border-radius: 3px;
 	margin-bottom: 5px;
 	vertical-align: middle;
 	text-align: center;
 	font-size: 14px;
+
+}
+
+.actionButton form.answer input.answerButtonItalic {
+	width: 91px;
+	height: 20px;
+	border: 1px solid gray;
+	cursor: pointer;
+	border-radius: 3px;
+	margin-bottom: 5px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 14px;
+	font-style: italic;
 }
 
 .spamButton {
 	width: 25px;
-	height: 17px;
+	height: 22px;
 	float: left;
 	background: url(/i/spamButton.png) no-repeat;
 	background-size: 100%;
 	cursor: pointer;
+	margin-right: 3px;
 }
 
 .likeButton {
 	width: 18px;
-	height: 20px;
+	height: 22px;
 	float: left;
 	background: url(/i/likeButton.png) no-repeat;
 	background-size: 100%;
 	cursor: pointer;
+	margin-right: 3px;
 }
 
 .repostButton {
 	width: 22px;
-	height: 17px;
+	height: 22px;
 	float: left;
 	background: url(/i/repostButton.png) no-repeat;
 	background-size: 100%;
 	margin-top: 2px;
 	cursor: pointer;
+	margin-right: 3px;
+}
+
+.arrowButton {
+	width: 22px;
+	height: 22px;
+	float: left;
+	background: url(/i/chat2.jpg) no-repeat;
+	background-size: 100%;
+	cursor: pointer;
+	margin-right: 3px;
+}
+
+.letterButton {
+	width: 22px;
+	height: 22px;
+	float: left;
+	background: url(/i/mes2.jpg) no-repeat;
+	background-size: 100%;
+	margin-top: 2px;
+	cursor: pointer;
+	margin-right: 3px;
 }
 
 .socialIcons form.answer {
@@ -1008,3 +1044,24 @@ a.closeRegisterButton {
 	float: right;
 }
 
+.myAnswer {
+	width: 690px;
+	overflow: hidden;
+}
+
+.singleAnswer {
+	margin: 4px 0 0 31px;
+	width: 650px;
+	border: 1px solid #965565;
+	border-radius: 7px;
+	overflow: hidden;
+}
+
+.answerDate {
+	width: 105px;
+	float: left;
+	overflow: hidden;
+	font-size: 13px;
+	margin-left: 416px;
+	color: #999999;
+}
