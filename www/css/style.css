@@ -656,6 +656,7 @@ h2.categoryH2 {
 	font-size: 20px;
 }
 
+
 .registerWrapper {
 	position: relative;
 	top: -147px;
@@ -791,10 +792,10 @@ span.birtDateDescription {
 
 .birthDateSelect {
 	overflow: hidden;
-	width: 156px;
+	width: 160px;
 	height: 30px;
 	float: right;
-	margin-right: 632px;
+	margin-right: 625px;
 	margin-top: 18px;
 }
 
@@ -969,3 +970,41 @@ a.closeRegisterButton {
 #terms p.pCenter {
 	text-align: center;
 }
+
+.answerForm {
+	width: 662px;
+	margin: 0 0 0 13px;
+}
+
+.answerTextarea {
+	width: 100%;
+	border: 1px solid #965565;
+	height: 64px;
+	resize: none;
+	font-size: 15px;
+	outline: none;
+}
+
+.answerFormNavigation {
+	width: 666px;
+	border-bottom: 1px solid #965565;
+	border-right: 1px solid #965565;
+	border-left: 1px solid #965565;
+	height: 23px;
+	margin: -3px 0 0 0px;
+}
+
+.answerFormNavigation input {
+	width: 88px;
+	height: 20px;
+	border: 1px solid gray;
+	margin: 0 15px 0 0;
+	cursor: pointer;
+	border-radius: 8px;
+	margin-bottom: 5px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 14px;
+	float: right;
+}
+

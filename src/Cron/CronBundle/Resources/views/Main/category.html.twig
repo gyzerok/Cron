@@ -1,17 +1,30 @@
 {% extends '::base.html.twig' %}
 	{% block content %}
 	<script type="text/javascript">
-		//$(document).ready(function() {
-		//	$('#showQuestion').on('click', '.closeButton', function(){
-		//		var id = $(this).closest('.singleQuestion').attr('id');
-		//		id = id.replace('question_', '');
-		//		$(this).closest('.singleQuestion').fadeOut(800, function(){$(this).remove();});
-		//	});
-		// });!
+	$(document).ready(function() {
+	
+		var answerFrom = $('.answerForm');
+		answerFrom.hide();
+		$('.answerButton').click(function() {
+			$(this).closest('.singleQuestion').next('.answerForm').slideDown(500);
+		});
+		
+		var answerFormNavigation = $('.answerFormNavigation');
+		answerFormNavigation.hide();
+		$('.answerTextarea').focus(function() {
+			$(this).next('.answerFormNavigation').slideDown(500);
+			$(this).css({
+				'border-bottom':'0'
+			});
+		});
+		$('.cancelButton').click(function() {
+			$(this).closest('.answerForm').slideUp(500);
+		});
+	});
 	</script>
 		<h2 class="categoryH2">Category name</h2>
 		<div id="showQuestion">
-			<!--{% for item in questions %}
+			{% for item in questions %}
 				<div class="singleQuestion">
 					<div class="userName">{{ item.user }}</div>
 					<div class="questionDate">{{ item.datetime|date('H:i:s d.m.Y') }}</div>
@@ -24,11 +37,18 @@
 							<div class="likeButton"></div>
 							<div class="repostButton"></div>
 							<form class="answer">
-								<input class="answerButton" type="submit" value="ответить" />
+								<input class="answerButton" type="button" value="ответить" />
 							</form>
 						</div>
 					</div>
 				</div>
-			{% endfor %}!-->
+				<form class="answerForm">
+					<textarea class="answerTextarea" ></textarea>
+					<div class="answerFormNavigation">
+						<input type="submit" value="отправить" />
+						<input class="cancelButton" type="button" value="отменить" />
+					</div>
+				</form>
+			{% endfor %}
 		</div>
 	{% endblock %}
