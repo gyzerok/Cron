@@ -30,7 +30,11 @@ var engine = {
 						'</div>';
 		xhtml += '</div>';
 		}
-
+		xhtml += '</div>'
+		
+		xhtml += '<form class="answerForm">'+
+		'<textarea class="answerTextarea" ></textarea>'
+		'</form>';
  
 		return xhtml;
 	},
