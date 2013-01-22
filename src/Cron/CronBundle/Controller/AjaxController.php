@@ -7,6 +7,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Cron\CronBundle\Entity\Answer;
+use Cron\CronBundle\Entity\File;
+use Cron\CronBundle\Entity\User;
 
 class AjaxController extends Controller
 {
@@ -172,5 +174,27 @@ class AjaxController extends Controller
 
         $json = substr($json, 0, -1);
         return $json;
+    }
+
+    public function uploadFileAction(Request $request)
+    {
+        if ($request->isMethod('POST')){
+            move_uploaded_file($_FILES['file']['tmp_name'], $_SERVER['DOCUMENT_ROOT'].'/files/'.$_FILES['file']['name']);
+            $file = new File();
+            $file->setFilename($_FILES['file']['name']);
+            $file->setUrl('http://aditus.ru/files/'.$_FILES['file']['name']);
+            $file->setHash(md5(file_get_contents($_SERVER['DOCUMENT_ROOT'].'/files/'.$_FILES['file']['name'])));
+            $file->setFilesize(filesize($_SERVER['DOCUMENT_ROOT'].'/files/'.$_FILES['file']['name']));
+            $file->setUploadDate(new \DateTime());
+            $user = $this->getUser();
+            if (!$user instanceof User)
+                $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+            $file->setUser($user);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($file);
+            $em->flush();
+            return new Response('SUCCESS');
+        }
     }
 }

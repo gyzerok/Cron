@@ -213,7 +213,7 @@ class Question
     /**
      * Set status
      *
-     * @param boolean $status
+     * @param integer $status
      * @return Question
      */
     public function setStatus($status)
@@ -226,7 +226,7 @@ class Question
     /**
      * Get status
      *
-     * @return boolean 
+     * @return integer
      */
     public function getStatus()
     {
@@ -318,7 +318,7 @@ class Question
     /**
      * Get state
      *
-     * @return Cron\CronBundle\Entity\State 
+     * @return Cron\CronBundle\Entity\State
      */
     public function getState()
     {
@@ -422,6 +422,7 @@ class Question
         $this->likes = new ArrayCollection();
         $this->spams = new ArrayCollection();
         $this->setDatetime(new \DateTime());
+        $this->setStatus(0);
     }
 
     /**
