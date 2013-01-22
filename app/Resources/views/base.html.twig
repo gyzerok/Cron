@@ -80,21 +80,14 @@
 		
 	    {% block menu %}		
 		<div id="menu">
-			<form class="menuNavigation" name="menuNavigation" action="" method="post">
-				<input type="submit" value="Вопросы" />
-				<div class="menuCategory">
-					<ul>
-						<li><a href="">Камни</a></li>
-						<li><a href="">Кружки</a></li>
-						<li><a href="">Расчески</a></li>
-					</ul>
-				</div>
-				<input type="submit" value="Заметки" />
-				<input type="submit" value="Информация" />
-				<input type="submit" value="Кибердиск" />
-				<input type="submit" value="Сообщения" />
-				<input class="chatInvite" type="submit" value="Приглашение в чат" />
-			</form>			
+			<ul class="menuNavigation">
+				<li>Вопросы</li>
+				<li>Заметки</li>
+				<li>Информация</li>
+				<li>Кибердиск</li>
+				<li>Сообщения</li>
+				<li class="chatInvite">Приглашение в чат</li>
+			</ul>			
 		</div>
 		<div style="clear: both"></div>
 	    {% endblock %}

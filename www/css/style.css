@@ -273,16 +273,17 @@
 	margin-top: 3px;
 }
 
-#menu form.menuNavigation {
+#menu ul.menuNavigation {
 	width: 192px;
 	margin: 10px auto;
 
 }
 
-#menu form.menuNavigation input {
+#menu ul.menuNavigation li {
 	width: 192px;
 	height: 39px;
 	text-align: center;
+	line-height: 150%;
 	border: 1px solid #EFEFEF;
 	border-radius: 5px;
 	margin-top: 2px;
@@ -293,11 +294,11 @@
 	font-family: 'Cambria';
 }
 
-#menu form.menuNavigation input:hover {
+#menu ul.menuNavigation li:hover {
 	background-color: #EFEFEF;
 }
 
-#menu form.menuNavigation input.chatInvite {
+#menu ul.menuNavigation li.chatInvite {
 	width: 145px;
 	height: 18px;
 	text-align: center;
