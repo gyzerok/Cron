@@ -295,7 +295,8 @@
 }
 
 #menu ul.menuNavigation li:hover {
-	background-color: #EFEFEF;
+	background-color: #FFDDDB;
+	border: 2px solid #EF5928;
 }
 
 #menu ul.menuNavigation li.chatInvite {
@@ -312,6 +313,45 @@
 	font-family: 'Candara';
 	color: #383838;
 }
+
+#menu ul.menuNavigation li ul.subMenuNavigation {
+  display:none;
+  position:absolute;
+  z-index:100;
+  width:180px;
+  border: 2px solid #EF5928;
+  background-color: #FFDDDB;
+  margin-left: 5px;
+}
+
+#menu ul.menuNavigation li:hover ul.subMenuNavigation  {
+  display: block;
+}
+
+#menu ul.menuNavigation li ul.subMenuNavigation li {
+	width: 180px;
+	height: inherit;
+	text-align: center;
+	line-height: 100%;
+	border: none;
+	border-radius: none;
+	background-color: #FFDDDB;
+	text-transform: uppercase;
+	font-size: 15px;
+	cursor: pointer;
+	font-family: 'Cambria';
+}
+
+#menu ul.menuNavigation li ul.subMenuNavigation li:hover {
+	background-color: #FFDDDB;
+}
+
+#menu ul.menuNavigation li ul.subMenuNavigation li a {
+	color: #383838;
+	text-decoration: none;
+	cursor: pointer;
+}
+
 
 .menuCategory {
 	width: 155px;
