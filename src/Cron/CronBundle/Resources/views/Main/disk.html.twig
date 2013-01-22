@@ -1,0 +1,131 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <style type="text/css">
+        #progress {
+            float: left;
+            border: 2px solid #003580;
+            border-radius: 5px;
+            width: 600px;
+            position: relative;
+        }
+        #progress .bar {
+            height: 25px;
+            background: #d2ecff;
+        }
+        #progress .file-name {
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: #000000;
+        }
+        .my-files {
+            clear: both;
+        }
+        .my-file {
+            padding: 8px;
+            margin: 8px 0;
+            border-radius: 8px;
+            border: 1px solid #003580;
+        }
+        .my-file:hover {
+            background: #f0f0f0;
+        }
+        .my-file.selected {
+            background: #dcf1ff;
+        }
+        .my-file table td {
+            vertical-align: middle;
+        }
+        .my-file input[type=button] {
+            float: right;
+        }
+        .my-file-size {
+            float: right;
+        }
+        #file-path-field {
+            width: 250px;
+        }
+    </style>
+    <h2 class="categoryH2">Кибердиск</h2>
+    <div id="progress">
+        <div class="bar" style="width: 0;"></div>
+        <div class="file-name"></div>
+    </div>
+    <input id="fileupload" type="file" name="file" data-url="{{ path('uploadFile') }}" style="/*visibility: hidden;*/position:absolute;left:-9999px;">
+    <input type="button" value="Добавить" id="add-file-button">
+    <script src="js/vendor/jquery.ui.widget.js"></script>
+    <script src="js/jquery.iframe-transport.js"></script>
+    <script src="js/jquery.fileupload.js"></script>
+    <script src="js/ZeroClipboard.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#fileupload').fileupload({
+                dataType: 'json',
+                start: function (e, data) {
+
+                },
+                done: function (e, data) {
+                    $.each(data.result.files, function (index, file) {
+                        $('<p/>').text(file.name).appendTo(document.body);
+                    });
+                },
+                progressall: function (e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    $('#progress .bar').css(
+                            'width',
+                            progress + '%'
+                    );
+                }
+            });
+            $('#fileupload').bind('change', function(){
+                $('#progress .file-name').text($(this).val());
+            });
+            $('#add-file-button').bind('click', function(){
+                $('#fileupload').click();
+            });
+            $(".my-file").live('click', function(){
+                $(".my-file").removeClass('selected');
+                $(this).addClass('selected');
+                $("#file-path-field").val($(this).attr('filepath'));
+            });
+
+            var clip = new ZeroClipboard.Client();
+            ZeroClipboard.setMoviePath('/flash/ZeroClipboard10.swf');
+            clip.glue('d_clip_button');
+            clip.setHandCursor(true);
+            $("body").mousemove(function(event) {
+                clip.setText($('#file-path-field').val().trim());
+            });
+            $("#ZeroClipboardMovie_1").bind('click', function(){
+                alert('Ссылка скопирована в буфер обмена.');
+            });
+
+        });
+    </script>
+    <div class="" style="clear:both;padding: 20px;">
+        <div class="file-link-wrap" style="float:left;">
+            <div>Адрес файла</div>
+            <input type="text" id="file-path-field">
+            <span id="d_clip_button">Copy To Clipboard</span>
+        </div>
+        <div class="total-size-wrap" style="float:right;">
+            {{ total_filesize }} / {{ total_filesize_left }}
+            <br>
+            занято / свободно
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+    <div class="my-files">
+        {% for file in user_files %}
+            <div class="my-file" fileid="{{ file.id }}" filepath="http://aditus.ru/disk/{{ file.hash }}">
+                <table width="100%">
+                    <tr>
+                        <td>{{ file.filename }}</td>
+                        <td><div class="my-file-size">{{ file.filesize }}</div></td>
+                        <td width="155"><input type="button" class="delete-my-file" value="удалить"><input type="button" class="download-my-file" value="загрузить"></td>
+                    </tr>
+                </table>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

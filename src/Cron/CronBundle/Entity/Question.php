@@ -318,7 +318,7 @@ class Question
     /**
      * Get state
      *
-     * @return Cron\CronBundle\Entity\State 
+     * @return Cron\CronBundle\Entity\State
      */
     public function getState()
     {
