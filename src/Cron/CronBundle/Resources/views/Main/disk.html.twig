@@ -1,58 +1,12 @@
 {% extends '::base.html.twig' %}
 {% block content %}
-    <style type="text/css">
-        #progress {
-            float: left;
-            border: 2px solid #003580;
-            border-radius: 5px;
-            width: 600px;
-            position: relative;
-        }
-        #progress .bar {
-            height: 25px;
-            background: #d2ecff;
-        }
-        #progress .file-name {
-            position: absolute;
-            top: 0;
-            left: 0;
-            color: #000000;
-        }
-        .my-files {
-            clear: both;
-        }
-        .my-file {
-            padding: 8px;
-            margin: 8px 0;
-            border-radius: 8px;
-            border: 1px solid #003580;
-        }
-        .my-file:hover {
-            background: #f0f0f0;
-        }
-        .my-file.selected {
-            background: #dcf1ff;
-        }
-        .my-file table td {
-            vertical-align: middle;
-        }
-        .my-file input[type=button] {
-            float: right;
-        }
-        .my-file-size {
-            float: right;
-        }
-        #file-path-field {
-            width: 250px;
-        }
-    </style>
     <h2 class="categoryH2">Кибердиск</h2>
     <div id="progress">
         <div class="bar" style="width: 0;"></div>
         <div class="file-name"></div>
     </div>
     <input id="fileupload" type="file" name="file" data-url="{{ path('uploadFile') }}" style="/*visibility: hidden;*/position:absolute;left:-9999px;">
-    <input type="button" value="Добавить" id="add-file-button">
+    <input type="button" value="добавить" id="add-file-button">
     <script src="js/vendor/jquery.ui.widget.js"></script>
     <script src="js/jquery.iframe-transport.js"></script>
     <script src="js/jquery.fileupload.js"></script>
@@ -102,7 +56,7 @@
 
         });
     </script>
-    <div class="" style="clear:both;padding: 20px;">
+    <div class="" style="clear:both">
         <div class="file-link-wrap" style="float:left;">
             <div>Адрес файла</div>
             <input type="text" id="file-path-field">
