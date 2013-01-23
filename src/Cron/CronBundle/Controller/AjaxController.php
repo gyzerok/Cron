@@ -180,21 +180,117 @@ class AjaxController extends Controller
     {
         if ($request->isMethod('POST')){
             move_uploaded_file($_FILES['file']['tmp_name'], $_SERVER['DOCUMENT_ROOT'].'/files/'.$_FILES['file']['name']);
-            $file = new File();
-            $file->setFilename($_FILES['file']['name']);
-            $file->setUrl('http://aditus.ru/files/'.$_FILES['file']['name']);
-            $file->setHash(md5(file_get_contents($_SERVER['DOCUMENT_ROOT'].'/files/'.$_FILES['file']['name'])));
-            $file->setFilesize(filesize($_SERVER['DOCUMENT_ROOT'].'/files/'.$_FILES['file']['name']));
-            $file->setUploadDate(new \DateTime());
-            $user = $this->getUser();
-            if (!$user instanceof User)
-                $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
-            $file->setUser($user);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($file);
-            $em->flush();
-            return new Response('SUCCESS');
+            $user = $this->getUser();
+            $total_filesize = $this->getDoctrine()->getRepository("CronCronBundle:File")
+                ->createQueryBuilder('file')
+                ->select('SUM(file.filesize) as value')
+                ->where('file.user = :uid')
+                ->setParameter('uid', $user->getId())
+                ->groupBy('file.user')
+                ->getQuery()
+                ->getResult();
+
+            $total_size_left = 52428800;
+            if (!empty($total_filesize)){
+                $total_size_left = 52428800 - $total_filesize[0]['value'];
+            }
+            if (filesize($_SERVER['DOCUMENT_ROOT'].'/files/'.$_FILES['file']['name']) <= $total_size_left){
+                $file = new File();
+                $file->setFilename($_FILES['file']['name']);
+                $file->setUrl('http://'.$_SERVER['HTTP_HOST'].'/files/'.$_FILES['file']['name']);
+                $file->setHash(md5(file_get_contents($_SERVER['DOCUMENT_ROOT'].'/files/'.$_FILES['file']['name'])));
+                $file->setFilesize(filesize($_SERVER['DOCUMENT_ROOT'].'/files/'.$_FILES['file']['name']));
+                $file->setUploadDate(new \DateTime());
+                $user = $this->getUser();
+                if (!$user instanceof User)
+                    $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+                $file->setUser($user);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($file);
+                $em->flush();
+                return new Response($file->getId());
+            } else {
+                @unlink($_SERVER['DOCUMENT_ROOT'].'/files/'.$_FILES['file']['name']);
+                return new Response('FAIL', 403);
+            }
+        }
+    }
+
+    public function deleteFileAction(Request $request)
+    {
+        $user = $this->getUser();
+        $file = $this->getDoctrine()->getRepository('CronCronBundle:File')->findOneBy(array('id' => $request->get('file_id'), 'user' => $user->getId()));
+        //$file = $this->getDoctrine()->getRepository('CronCronBundle:File')->findById('1');
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($file);
+        $em->flush();
+
+        @unlink($_SERVER['DOCUMENT_ROOT'].'/files/'.$file->getFilename());
+        return new Response('SUCCESS');
+    }
+
+    public function updateFilesizeAction(Request $request)
+    {
+        $user = $this->getUser();
+        $total_filesize = $this->getDoctrine()->getRepository("CronCronBundle:File")
+            ->createQueryBuilder('file')
+            ->select('SUM(file.filesize) as value')
+            ->where('file.user = :uid')
+            ->setParameter('uid', $user->getId())
+            ->groupBy('file.user')
+            ->getQuery()
+            ->getResult();
+
+        $total_size = 0;
+        $total_size_left = 52428800;
+        if (!empty($total_filesize)){
+            $total_size = $total_filesize[0]['value'];
+            $total_size_left = 52428800 - $total_filesize[0]['value'];
+        }
+
+        return new Response($this->convertFilesize($total_size).' / '.$this->convertFilesize($total_size_left));
+    }
+
+    public function getLastFileAction(Request $request)
+    {
+        $user = $this->getUser();
+        $last_file = $this->getDoctrine()->getRepository("CronCronBundle:File")->findOneBy(array('id' => $request->get('file_id'), 'user' => $user->getId()));
+        $html = '<div class="my-file" fileid="'.$last_file->getId().'" filepath="/disk/'.$last_file->getHash().'">
+                <table width="100%">
+                    <tr>
+                        <td>'.$last_file->getFilename().'</td>
+                        <td><div class="my-file-size">'.$last_file->getFilesize().'</div></td>
+                        <td width="155"><input type="button" class="delete-my-file" value="удалить"><input type="button" class="download-my-file" value="загрузить"></td>
+                    </tr>
+                </table>
+            </div>';
+        return new Response($html);
+    }
+
+    public function convertFilesize($input_filesize)
+    {
+        $filesize = $input_filesize;
+        if($filesize > 1024){
+            $filesize = ($filesize/1024);
+            if($filesize > 1024){
+                $filesize = ($filesize/1024);
+                if($filesize > 1024){
+                    $filesize = ($filesize/1024);
+                    $filesize = round($filesize, 1);
+                    return $filesize." ГБ";
+                } else {
+                    $filesize = round($filesize, 1);
+                    return $filesize." MБ";
+                }
+            } else {
+                $filesize = round($filesize, 1);
+                return $filesize." Кб";
+            }
+        } else {
+            $filesize = round($filesize, 1);
+            return $filesize." байт";
         }
     }
 }

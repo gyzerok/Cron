@@ -15,8 +15,12 @@ rush:
   defaults: { _controller: CronCronBundle:Main:rush }
 
 disk:
-  pattern: /disk
-  defaults: { _controller: CronCronBundle:Main:disk }
+  pattern: /disk/{file_hash}
+  defaults: { _controller: CronCronBundle:Main:disk, "file_hash":"" }
+
+#disk:
+  #pattern: /disk/
+  #defaults: { _controller: CronCronBundle:Main:disk }
 
 register:
   pattern: /register
@@ -55,6 +59,18 @@ postAnswer:
 uploadFile:
   pattern:  /ajax/uploadFile
   defaults: { _controller: CronCronBundle:Ajax:uploadFile }
+
+deleteFile:
+  pattern:  /ajax/deleteFile
+  defaults: { _controller: CronCronBundle:Ajax:deleteFile }
+
+getLastFile:
+  pattern:  /ajax/getLastFile
+  defaults: { _controller: CronCronBundle:Ajax:getLastFile }
+
+updateFilesize:
+  pattern:  /ajax/updateFilesize
+  defaults: { _controller: CronCronBundle:Ajax:updateFilesize }
 
 # Security routes
 

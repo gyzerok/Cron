@@ -1,0 +1,21 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <h2 class="categoryH2">Скачать файл "{{ file.filename }}"</h2>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".download-button").bind('click', function(){
+                window.open($(this).attr('url'));
+//                window.location.href= $(this).attr('url');
+
+            });
+        });
+    </script>
+    <div class="download-file-wrap" style="padding: 10px;">
+        {% if isAuth<1 %}
+            Необходимо авторизоваться, чтобы скачать файл.
+        {% else %}
+            {{ file.getFilesize() }}
+            <input type="button" class="download-button" style="font-size: 18px;" url="{{ file.url }}" value="Скачать">
+        {% endif %}
+    </div>
+{% endblock %}
