@@ -136,6 +136,13 @@ class MainController extends Controller
             ->getQuery()
             ->getResult();
 
+        $total_size = 0;
+        $total_size_left = 52428800;
+        if (!empty($total_filesize)){
+            $total_size = $total_filesize[0]['value'];
+            $total_size_left = 52428800 - $total_filesize[0]['value'];
+        }
+
         $user_files = $this->getDoctrine()->getRepository("CronCronBundle:File")
             ->createQueryBuilder('file')
             ->where('file.user = :uid')
@@ -145,8 +152,8 @@ class MainController extends Controller
             ->getResult();
 
         return $this->render("CronCronBundle:Main:disk.html.twig", array('title' => 'Кибердиск',
-                'total_filesize' => $this->convertFilesize($total_filesize[0]['value']),
-                'total_filesize_left' => $this->convertFilesize(52428800 - $total_filesize[0]['value']),
+                'total_filesize' => $this->convertFilesize($total_size),
+                'total_filesize_left' => $this->convertFilesize($total_size_left),
                 'user_files' => $user_files,
                 'curUser' => $user)
         );
