@@ -292,6 +292,16 @@
 	font-size: 26px;
 	cursor: pointer;
 	font-family: 'Cambria';
+	color: #383838;
+}
+
+#menu ul.menuNavigation li a.menuNavigationLink {
+	text-transform: uppercase;
+	font-size: 26px;
+	cursor: pointer;
+	font-family: 'Cambria';
+	text-decoration: none;
+	color: #383838;
 }
 
 #menu ul.menuNavigation li:hover {
