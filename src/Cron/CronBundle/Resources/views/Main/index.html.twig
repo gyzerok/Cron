@@ -123,7 +123,10 @@
 			function(){
 				questionSubs.slideUp();
 				document.forms.writeQuestion.reset();
-				$('.greeting').fadeIn(500);				
+				$('.greeting').fadeIn(500);	
+				$('#questionsType > input:last').css({
+					'margin-left': '6px'
+				});				
 			}
 		);
 		$('.writeQuestion').click(function(e){

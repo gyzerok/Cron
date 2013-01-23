@@ -11,14 +11,12 @@
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
   </head>
   <body>
+	{% block wrapper %}
 	<div id="wrapper">
 	
 	    {% block header %}
 		<div id="header">
 			<div class="logo"><a href=""></a></div>
-			<!--<div class="messagesFromAdministration">
-				Место для сообщений от администрации/сервисных сообщений
-			</div>!-->
 			<div class="language">
 				<div class="russian"><a href=""></a></div>
 				<div class="english"><a href=""></a></div>
@@ -107,6 +105,10 @@
 		</div>
 		<div style="clear: both"></div>
 	    {% endblock %}
-		<div class="chatWindow">Окно чата</div>		
+		{% block chat %}
+		<div class="chatWindow">Окно чата</div>
+		{% endblock %}
+	</div>
+	{% endblock %}
   </body>
 </html>

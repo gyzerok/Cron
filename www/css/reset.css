@@ -43,4 +43,12 @@ content: "";
 }
 blockquote, q {
 quotes: "" "";
+}
+input {
+color: #383838;
+border-color:#C6C6C6;	
+}
+input:hover {
+color: #000;
+border-color: #000000;	
 } 
