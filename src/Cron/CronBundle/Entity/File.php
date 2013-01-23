@@ -204,6 +204,11 @@ class File {
         return $this;
     }
 
+    public function getHashUrl()
+    {
+        return 'http://'.$_SERVER['HTTP_HOST'].'/disk/'.$this->hash;
+    }
+
     /**
      * Get filesize
      *
