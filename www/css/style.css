@@ -475,8 +475,8 @@
 }
 
 #main form.writeQuestion input.submitButton {
-	border: 1px solid gray;
-	width: 92px;
+	border: 1px solid #808080;
+	width: 86px;
 	height: 20px;
 	float: right;
 	margin-right: 11px;
@@ -486,6 +486,13 @@
 	vertical-align: middle;
 	text-align: center;
 	margin-top: 69px;
+	font-family: 'Arial';
+	font-size: 14px;
+	background-color: #fff;
+}
+
+#main form.writeQuestion input.submitButton:hover {
+	border: 1px solid #000;
 }
 
 
@@ -544,11 +551,17 @@
 }
 
 .additionalInformation {
-	width: 300px;
+	width: 332px;
 	font-size: 14px;
 	float: right;
 	margin-top: 10px;
-	margin-right: 110px;
+	margin-right: 86px;
+}
+
+.additionalInformation label {
+	font-family: 'Cambria';
+	font-size: 18px;
+	color: #000;
 }
 
 
