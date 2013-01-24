@@ -86,9 +86,6 @@
 		'border-left': '2px solid #A33A1C'
 		});
 		document.getElementById('question_category_1').checked = false;
-		$('#questionsType > input:last').css({
-			'margin-left': '6px'
-		});
 	});
 
 	$('#questionsType > input:last').click(function() {	
@@ -102,9 +99,6 @@
 		$('.writeQuestionDiv').css({
 		'border-bottom': 'none',
 		'border-left': 'none'
-		});
-		$('#questionsType > input:last').css({
-		'margin-left': '100px'
 		});
 	});	
 	
@@ -123,10 +117,7 @@
 			function(){
 				questionSubs.slideUp();
 				document.forms.writeQuestion.reset();
-				$('.greeting').fadeIn(500);	
-				$('#questionsType > input:last').css({
-					'margin-left': '6px'
-				});				
+				$('.greeting').fadeIn(500);			
 			}
 		);
 		$('.writeQuestion').click(function(e){
@@ -145,6 +136,22 @@
 		$(this).val('развернуть');	
 	});
 	
+	//Расположение элементов страницы
+	$('#questionsType > input:last').css({
+		'margin-left': '117px'
+	});
+	$('#question_category > input').css({
+	'margin-top':'5px'
+	});
+	$('#question_category > label').css({
+	'margin-top':'4px'
+	});	
+	$('#question_category_2').css({
+	'margin-top':'2px'
+	});
+	$('#question_category_15').css({
+	'margin-bottom':'8px'
+	});	
 	});
 	
 </script>
@@ -189,8 +196,8 @@
 				{{ form_widget(form.boundary) }}
 			</div>
 			<p class="questionCost">Стоимость 0 кредитов</p>
-			<input class="submitButton" type="submit" value="Отправить" />
-			<input name="cancelInformation" class="submitButton" type="button" value="Отменить" />
+			<input name="cancelInformation" class="submitButton" type="button" value="отмена" />			
+			<input class="submitButton" type="submit" value="отправить" />
 		</div>
 	</div>	
 	
