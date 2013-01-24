@@ -7,12 +7,12 @@ use Cron\CronBundle\Entity\Answer;
 use Cron\CronBundle\Entity\User;
 use Cron\CronBundle\Entity\File;
 use Cron\CronBundle\Form\NewQuestion;
-use Cron\CronBundle\Form\DiskUpload;
 use Cron\CronBundle\Form\NewAnswer;
 use Cron\CronBundle\Form\Registration;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class MainController extends Controller
 {
@@ -128,47 +128,60 @@ class MainController extends Controller
         $user = $this->getUser();
 
         if (!$file_hash){
-            $total_filesize = $this->getDoctrine()->getRepository("CronCronBundle:File")
-                ->createQueryBuilder('file')
-                ->select('SUM(file.filesize) as value')
-                ->where('file.user = :uid')
-                ->setParameter('uid', $user->getId())
-                ->groupBy('file.user')
-                ->getQuery()
-                ->getResult();
+            if (!$user instanceof User) {
+                return $this->render("CronCronBundle:Main:disk.html.twig", array('title' => 'Кибердиск',
+                        'curUser' => $user,
+                        'isAuth' => 0)
+                );
+            } else {
+                $total_filesize = $this->getDoctrine()->getRepository("CronCronBundle:File")
+                    ->createQueryBuilder('file')
+                    ->select('SUM(file.filesize) as value')
+                    ->where('file.user = :uid')
+                    ->setParameter('uid', $user->getId())
+                    ->groupBy('file.user')
+                    ->getQuery()
+                    ->getResult();
 
-            $total_size = 0;
-            $total_size_left = 52428800;
-            if (!empty($total_filesize)){
-                $total_size = $total_filesize[0]['value'];
-                $total_size_left = 52428800 - $total_filesize[0]['value'];
+                $total_size = 0;
+                $total_size_left = 52428800;
+                if (!empty($total_filesize)){
+                    $total_size = $total_filesize[0]['value'];
+                    $total_size_left = 52428800 - $total_filesize[0]['value'];
+                }
+
+                $user_files = $this->getDoctrine()->getRepository("CronCronBundle:File")
+                    ->createQueryBuilder('file')
+                    ->where('file.user = :uid')
+                    ->setParameter('uid', $user->getId())
+                    ->orderBy('file.upload_date', 'DESC')
+                    ->getQuery()
+                    ->getResult();
+
+                return $this->render("CronCronBundle:Main:disk.html.twig", array('title' => 'Кибердиск',
+                        'total_filesize' => $this->convertFilesize($total_size),
+                        'total_filesize_left' => $this->convertFilesize($total_size_left),
+                        'user_files' => $user_files,
+                        'curUser' => $user,
+                        'isAuth' => 1)
+                );
             }
 
-            $user_files = $this->getDoctrine()->getRepository("CronCronBundle:File")
-                ->createQueryBuilder('file')
-                ->where('file.user = :uid')
-                ->setParameter('uid', $user->getId())
-                ->orderBy('file.upload_date', 'DESC')
-                ->getQuery()
-                ->getResult();
-
-            return $this->render("CronCronBundle:Main:disk.html.twig", array('title' => 'Кибердиск',
-                'total_filesize' => $this->convertFilesize($total_size),
-                'total_filesize_left' => $this->convertFilesize($total_size_left),
-                'user_files' => $user_files,
-                'curUser' => $user)
-            );
         } else {
-            if (!$user instanceof User)
-                $isAuth = 0;
-            else
-                $isAuth = 1;
             $file = $this->getDoctrine()->getRepository('CronCronBundle:File')->findOneBy(array('hash' => $file_hash));
-            return $this->render("CronCronBundle:Main:file.html.twig", array('title' => 'Скачать файл',
-                'file' => $file,
-                'curUser' => $user,
-                'isAuth' => $isAuth)
-            );
+            if (!$user instanceof User) {
+                $isAuth = 0;
+                return $this->render("CronCronBundle:Main:file.html.twig", array('title' => 'Скачать файл',
+                        'file' => $file,
+                        'curUser' => $user,
+                        'isAuth' => $isAuth)
+                );
+            } else {
+                $isAuth = 1;
+                return $this->redirect($file->getUrl());
+            }
+//            return header("Location: ".$file->getUrl());
+            /**/
         }
     }
 

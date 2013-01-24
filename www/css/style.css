@@ -475,17 +475,24 @@
 }
 
 #main form.writeQuestion input.submitButton {
-	border: 1px solid gray;
-	width: 92px;
+	border: 1px solid #808080;
+	width: 86px;
 	height: 20px;
 	float: right;
-	margin-right: 15px;
+	margin-right: 11px;
 	cursor: pointer;
 	border-radius: 6px;
 	margin-bottom: 5px;
 	vertical-align: middle;
 	text-align: center;
-	margin-top: 25px;
+	margin-top: 69px;
+	font-family: 'Arial';
+	font-size: 14px;
+	background-color: #fff;
+}
+
+#main form.writeQuestion input.submitButton:hover {
+	border: 1px solid #000;
 }
 
 
@@ -498,6 +505,17 @@
 .privateButton label {
 	float: none;
 	display: inline;
+	font-family: 'Cambria';
+	font-size: 18px;
+	color: #000;
+	float: right;
+}
+
+p.questionPrivateCost {
+	margin: -15px 0px 0 -125px;
+	font-family: 'Arial';
+	font-size: 12px;
+	color: #000;
 }
 
 .category {
@@ -544,11 +562,17 @@
 }
 
 .additionalInformation {
-	width: 300px;
+	width: 332px;
 	font-size: 14px;
 	float: right;
 	margin-top: 10px;
-	margin-right: 110px;
+	margin-right: 86px;
+}
+
+.additionalInformation label {
+	font-family: 'Cambria';
+	font-size: 18px;
+	color: #000;
 }
 
 
@@ -558,9 +582,12 @@
 
 p.questionCost {
 	display: block;
-	width: 184px;
+	width: 189px;
 	float: right;
 	margin: -20px 170px 0 0;
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #000;
 }
 
 h2.categoryH2 {
