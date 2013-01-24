@@ -1,51 +1,5 @@
 {% extends '::base.html.twig' %}
 {% block content %}
-    <style type="text/css">
-        #progress {
-            float: left;
-            border: 2px solid #003580;
-            border-radius: 5px;
-            width: 600px;
-            position: relative;
-        }
-        #progress .bar {
-            height: 25px;
-            background: #d2ecff;
-        }
-        #progress .file-name {
-            position: absolute;
-            top: 0;
-            left: 0;
-            color: #000000;
-        }
-        .my-files {
-            clear: both;
-        }
-        .my-file {
-            padding: 8px;
-            margin: 8px 0;
-            border-radius: 8px;
-            border: 1px solid #003580;
-        }
-        .my-file:hover {
-            background: #f0f0f0;
-        }
-        .my-file.selected {
-            background: #dcf1ff;
-        }
-        .my-file table td {
-            vertical-align: middle;
-        }
-        .my-file input[type=button] {
-            float: right;
-        }
-        .my-file-size {
-            float: right;
-        }
-        #file-path-field {
-            width: 250px;
-        }
-    </style>
     <h2 class="categoryH2">Кибердиск</h2>
     {% if isAuth>0 %}
         <div id="progress">
@@ -168,7 +122,7 @@
 
             });
         </script>
-        <div class="" style="clear:both;padding: 20px;">
+        <div class="" style="clear:both;">
             <div class="file-link-wrap" style="float:left;/*visibility: hidden;*/">
                 <div>Адрес файла</div>
                 <input type="text" id="file-path-field">
@@ -180,7 +134,6 @@
                 занято / свободно
             </div>
             <div style="clear:both;"></div>
-        </div>
         <div class="my-files" style="overflow-y: scroll;height:300px;padding-right: 15px;">
             {% for file in user_files %}
                 <div class="my-file" fileid="{{ file.id }}" filepath="{{ file.getHashUrl() }}">
