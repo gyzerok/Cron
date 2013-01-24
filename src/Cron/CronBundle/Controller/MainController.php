@@ -192,12 +192,32 @@ class MainController extends Controller
 
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($user);
+                $forconf = $user->getPassword();
                 $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
                 $user->setPassword($password);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
+
+                $user = $this->getDoctrine()->getRepository("CronCronBundle:User")->findOneByUsername($user->getUsername());
+                //acception
+                $hash = md5($user->getId() + $user->getNick() + $user->getUsername());
+                $mailer = $this->get('mailer');
+                $message = \Swift_Message::newInstance(null, null, "text/html")
+                    ->setSubject('Обратная связь')
+                    ->setFrom("aditus777@gmail.com")
+                    ->setTo($user->getUsername())
+                    ->setBody('<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body>' .
+                    'Поздравляем Вас с успешной регистрацией!<br>' .
+                    'Ваш логин ' . $user->getUsername() . '<br>' .
+                    'Ваш пароль ' . $forconf . '<br>' .
+                    'Перейдите по ссылке для подтверждения вашего e-mail адреса:<br><a href="http://cron.ru/regconf?id=' . $user->getId() . '&hash=' . $hash . '">http://cron.ru/regconf?id=' . $user->getId() . '&hash=' . $hash . '</a><br>' .
+                    '(если не можете нажать на нее, скопируйте ее в адресную строку Вашего браузера)<br>' .
+                    'Добро пожаловать на ADITUS.ru!<br><br>' .
+                    'Данное сообщение было выслано автоматически. Это сообщение является служебным письмом, которое связано с вашей учётной записью на ADITUS. Если у вас есть вопросы или вам необходима помощь, вы можете обратиться в службу поддержки ADITUS.<br><br>' .
+                    'Если Вы считаете, что данное сообщение послано Вам ошибочно, проигнорируйте его и все данные будут автоматически удалены.');
+                $mailer->send($message);
 
                 return $this->redirect($this->generateUrl('index'));
             }
@@ -212,11 +232,12 @@ class MainController extends Controller
 
         if ($request->isMethod("GET")) {
             $id = $request->get("id");
-            $hash = $request->get("code");
+            $hash = $request->get("hash");
             $user = $this->getDoctrine()->getRepository("CronCronBundle:User")->findOneById($id);
             if (!$user instanceof User)
                 $this->render("CronCronBundle:Main:registration_confirmation.html.twig", array('title' => 'Подтверждение регистрации', 'curUser' => $this->getUser(), 'success' => $success));
-            if (md5($user->getId() + $user->getBirthDate() + $user->getUsername()) == $hash) {
+            if (md5($user->getId() + $user->getNick() + $user->getUsername()) == $hash)
+            {
                 $user->setIsActive(true);
 
                 $em = $this->getDoctrine()->getManager();
@@ -232,6 +253,11 @@ class MainController extends Controller
 
     public function convertFilesize($input_filesize)
     {
+        /*$sizeStr = array("байт", "Кб", "МБ", "ГБ");
+        $index = log($input_filesize, 1024);
+
+        return $sizeStr[floor($index)];*/
+
         $filesize = $input_filesize;
         if($filesize > 1024){
             $filesize = ($filesize/1024);

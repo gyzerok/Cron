@@ -13,8 +13,10 @@ security:
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
+        #my_user_provider: { class: Cron\CronBundle\Entity\User }#, property: username }
         main:
-            entity: { class: Cron\CronBundle\Entity\User, property: username }
+          #id: my_user_provider #{ class: Cron\CronBundle\Entity\User }
+            entity: { class: Cron\CronBundle\Entity\User }
         in_memory:
             memory:
                 users:
