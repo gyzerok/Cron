@@ -47,148 +47,154 @@
         }
     </style>
     <h2 class="categoryH2">Кибердиск</h2>
-    <div id="progress">
-        <div class="bar" style="width: 0;"></div>
-        <div class="file-name"></div>
-    </div>
-    <input id="fileupload" type="file" name="file" data-url="{{ path('uploadFile') }}" style="/*visibility: hidden;*/position:absolute;left:-9999px;">
-    <input type="button" value="Добавить" id="add-file-button">
-    <script src="js/vendor/jquery.ui.widget.js"></script>
-    <script src="js/jquery.iframe-transport.js"></script>
-    <script src="js/jquery.fileupload.js"></script>
-    <script src="js/ZeroClipboard.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $('#fileupload').fileupload({
-                dataType: 'json',
-                /*done: function (e, data) {
-                    alert(data.id);
-                },*/
-                complete: function(file){
-//                    alert(file.id);
-                    $.ajax({
-                        url: '{{ path('updateFilesize') }}',
-                        type: 'post',
-                        data: {},
-                        success: function(data){
-                            $("#total-size-values").html(data);
-                        }
-                    });
-                    $("#total-size-values").html('Обновляется...');
-                },
-                success: function(last_file_id){
-//                    $(".my-files").attr('lastid', last_file_id);
-                    $.ajax({
-                        url: '{{ path('getLastFile') }}',
-                        /*dataType: 'json',*/
-                        type: 'post',
-                        data: {
-                            file_id: last_file_id
-                        },
-                        success: function(data){
-                            $(".my-files .hint").remove();
-                            $(".my-files").prepend(data).find('.my-file:first').click();
-                            //$(".my-files").prepend(data);
-                        }
-                    });
-                    $(".my-files").prepend('<div class="hint">Обновляется...</div>');
-                },
-                error: function(){
-                    alert('Ошибка! Недостаточно места на диске.');
-                },
-                progressall: function (e, data) {
-                    var progress = parseInt(data.loaded / data.total * 100, 10);
-                    $('#progress .bar').css(
-                            'width',
-                            progress + '%'
-                    );
-                }
-            });
-            $('#fileupload').bind('change', function(){
-                var fullPath = $(this).val();
-                var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
-                var filename = fullPath.substring(startIndex);
-                if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
-                    filename = filename.substring(1);
-                }
-                $('#progress .file-name').text(filename);
-            });
-            $('#add-file-button').bind('click', function(){
-                $('#fileupload').click();
-            });
-            $(".my-file").live('click', function(){
-                $(".my-file").removeClass('selected');
-                $(this).addClass('selected');
-                $(".file-link-wrap").css({'visibility':'visible'});
-                $("#file-path-field").val($(this).attr('filepath'));
-            });
-            $(".delete-my-file").live('click', function(){
-                if (confirm('Удалить файл?')){
-                    var my_file = $(this).closest('.my-file');
-                    $.ajax({
-                        url: '{{ path('deleteFile') }}',
-                        dataType: 'json',
-                        type: 'post',
-                        data: {
-                            file_id: my_file.attr('fileid')
-                        },
-                        complete: function(){
-                            $(".file-link-wrap").css({'visibility':'hidden'});
-                            $.ajax({
-                                url: '{{ path('updateFilesize') }}',
-                                type: 'post',
-                                data: {},
-                                success: function(data){
-                                    $("#total-size-values").html(data);
-                                }
-                            });
-                        }
-                    });
-                    my_file.remove();
-                    $("#total-size-values").html('Обновляется...');
-                }
-            });
-            $(".download-my-file").live('click', function(){
-                window.location.href = $(this).closest('.my-file').attr('filepath');
-            });
-
-            var clip = new ZeroClipboard.Client();
-            ZeroClipboard.setMoviePath('/flash/ZeroClipboard10.swf');
-            clip.glue('d_clip_button');
-            clip.setHandCursor(true);
-            $("body").mousemove(function(event) {
-                clip.setText($('#file-path-field').val().trim());
-            });
-            $("#ZeroClipboardMovie_1").bind('click', function(){
-                alert('Ссылка скопирована в буфер обмена.');
-            });
-
-        });
-    </script>
-    <div class="" style="clear:both;padding: 20px;">
-        <div class="file-link-wrap" style="float:left;visibility: hidden;">
-            <div>Адрес файла</div>
-            <input type="text" id="file-path-field">
-            <span id="d_clip_button">Copy To Clipboard</span>
+    {% if isAuth>0 %}
+        <div id="progress">
+            <div class="bar" style="width: 0;"></div>
+            <div class="file-name"></div>
         </div>
-        <div class="total-size-wrap" style="float:right;">
-            <span id="total-size-values">{{ total_filesize }} / {{ total_filesize_left }}</span>
-            <br>
-            занято / свободно
-        </div>
-        <div style="clear:both;"></div>
-    </div>
-    <div class="my-files">
-        {% for file in user_files %}
-            <div class="my-file" fileid="{{ file.id }}" filepath="{{ file.getHashUrl() }}">
-                <table width="100%">
-                    <tr>
-                        <td>{{ file.filename }}</td>
-                        <td><div class="my-file-size">{{ file.filesize }}</div></td>
-                        <td width="155"><input type="button" class="delete-my-file" value="удалить"><input type="button" class="download-my-file" value="загрузить"></td>
-                    </tr>
-                </table>
+        <input id="fileupload" type="file" name="file" data-url="{{ path('uploadFile') }}" style="/*visibility: hidden;*/position:absolute;left:-9999px;">
+        <input type="button" value="Добавить" id="add-file-button">
+        <script src="js/vendor/jquery.ui.widget.js"></script>
+        <script src="js/jquery.iframe-transport.js"></script>
+        <script src="js/jquery.fileupload.js"></script>
+        <script src="js/ZeroClipboard.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#fileupload').fileupload({
+                    dataType: 'json',
+                    /*done: function (e, data) {
+                        alert(data.id);
+                    },*/
+                    complete: function(file){
+    //                    alert(file.id);
+                        $.ajax({
+                            url: '{{ path('updateFilesize') }}',
+                            type: 'post',
+                            data: {},
+                            success: function(data){
+                                $("#total-size-values").html(data);
+                            }
+                        });
+                        $("#total-size-values").html('Обновляется...');
+                    },
+                    success: function(last_file_id){
+    //                    $(".my-files").attr('lastid', last_file_id);
+                        $.ajax({
+                            url: '{{ path('getLastFile') }}',
+                            /*dataType: 'json',*/
+                            type: 'post',
+                            data: {
+                                file_id: last_file_id
+                            },
+                            success: function(data){
+                                $(".my-files .hint").remove();
+                                $(".my-files").prepend(data).find('.my-file:first').click();
+                                //$(".my-files").prepend(data);
+                            }
+                        });
+                        $(".my-files").prepend('<div class="hint">Обновляется...</div>');
+                        $('#progress .bar').delay(2000).width(0);
+                        $('#progress .file-name').text('');
+                    },
+                    error: function(){
+                        alert('Ошибка! Недостаточно места на диске.');
+                    },
+                    progressall: function (e, data) {
+                        var progress = parseInt(data.loaded / data.total * 100, 10);
+                        $('#progress .bar').css(
+                                'width',
+                                progress + '%'
+                        );
+                    }
+                });
+                $('#fileupload').bind('change', function(){
+                    var fullPath = $(this).val();
+                    var startIndex = (fullPath.indexOf('\\') >= 0 ? fullPath.lastIndexOf('\\') : fullPath.lastIndexOf('/'));
+                    var filename = fullPath.substring(startIndex);
+                    if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+                        filename = filename.substring(1);
+                    }
+                    $('#progress .file-name').text(filename);
+                });
+                $('#add-file-button').bind('click', function(){
+                    $('#fileupload').click();
+                });
+                $(".my-file").live('click', function(){
+                    $(".my-file").removeClass('selected');
+                    $(this).addClass('selected');
+    //                $(".file-link-wrap").css({'visibility':'visible'});
+                    $("#file-path-field").val($(this).attr('filepath'));
+                });
+                $(".delete-my-file").live('click', function(){
+                    if (confirm('Удалить файл?')){
+                        var my_file = $(this).closest('.my-file');
+                        $.ajax({
+                            url: '{{ path('deleteFile') }}',
+                            dataType: 'json',
+                            type: 'post',
+                            data: {
+                                file_id: my_file.attr('fileid')
+                            },
+                            complete: function(){
+    //                            $(".file-link-wrap").css({'visibility':'hidden'});
+                                $.ajax({
+                                    url: '{{ path('updateFilesize') }}',
+                                    type: 'post',
+                                    data: {},
+                                    success: function(data){
+                                        $("#total-size-values").html(data);
+                                    }
+                                });
+                            }
+                        });
+                        my_file.remove();
+                        $("#total-size-values").html('Обновляется...');
+                    }
+                });
+                $(".download-my-file").live('click', function(){
+                    window.open($(this).closest('.my-file').attr('filepath'));
+                });
+
+                var clip = new ZeroClipboard.Client();
+                ZeroClipboard.setMoviePath('/flash/ZeroClipboard10.swf');
+                clip.glue('d_clip_button');
+                clip.setHandCursor(true);
+                $("body").mousemove(function(event) {
+                    clip.setText($('#file-path-field').val().trim());
+                });
+                $("#ZeroClipboardMovie_1").bind('click', function(){
+                    alert('Ссылка скопирована в буфер обмена.');
+                });
+
+            });
+        </script>
+        <div class="" style="clear:both;padding: 20px;">
+            <div class="file-link-wrap" style="float:left;/*visibility: hidden;*/">
+                <div>Адрес файла</div>
+                <input type="text" id="file-path-field">
+                <span id="d_clip_button">Copy To Clipboard</span>
             </div>
-        {% endfor %}
-    </div>
+            <div class="total-size-wrap" style="float:right;">
+                <span id="total-size-values">{{ total_filesize }} / {{ total_filesize_left }}</span>
+                <br>
+                занято / свободно
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        <div class="my-files" style="overflow-y: scroll;height:300px;padding-right: 15px;">
+            {% for file in user_files %}
+                <div class="my-file" fileid="{{ file.id }}" filepath="{{ file.getHashUrl() }}">
+                    <table width="100%">
+                        <tr>
+                            <td>{{ file.filename }}</td>
+                            <td><div class="my-file-size">{{ file.filesize }}</div></td>
+                            <td width="155"><input type="button" class="delete-my-file" value="удалить"><input type="button" class="download-my-file" value="загрузить"></td>
+                        </tr>
+                    </table>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div style="padding: 15px;">Необходимо авторизоваться, чтобы пользоваться кибердиском.</div>
+    {% endif %}
 {% endblock %}

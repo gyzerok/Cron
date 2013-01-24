@@ -257,7 +257,7 @@ class AjaxController extends Controller
     {
         $user = $this->getUser();
         $last_file = $this->getDoctrine()->getRepository("CronCronBundle:File")->findOneBy(array('id' => $request->get('file_id'), 'user' => $user->getId()));
-        $html = '<div class="my-file" fileid="'.$last_file->getId().'" filepath="/disk/'.$last_file->getHash().'">
+        $html = '<div class="my-file" fileid="'.$last_file->getId().'" filepath="'.'http://'.$_SERVER['HTTP_HOST'].'/disk/'.$last_file->getHash().'">
                 <table width="100%">
                     <tr>
                         <td>'.$last_file->getFilename().'</td>
