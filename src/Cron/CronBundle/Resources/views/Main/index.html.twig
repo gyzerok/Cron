@@ -151,7 +151,20 @@
 	});
 	$('#question_category_15').css({
 	'margin-bottom':'8px'
-	});	
+	});
+	var questionPrivateCost = $('p.questionPrivateCost');
+	questionPrivateCost.hide();
+	
+
+	$('#question_private').toggle(
+	function() {
+	questionPrivateCost.show();
+	$('#question_private').attr('checked', true);
+	},
+	function() {
+	questionPrivateCost.hide();		
+	}
+	);
 	});
 	
 </script>
@@ -169,6 +182,7 @@
 				{{ form_label(form.private) }}
 				{{ form_errors(form.private) }}
 				{{ form_widget(form.private) }}
+			<p class="questionPrivateCost">стоимость 5 кредитов</p>
 			</div>
 		</div>
 	<div class="writeQuestionDiv">
