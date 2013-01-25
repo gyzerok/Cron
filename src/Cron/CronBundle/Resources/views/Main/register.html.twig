@@ -51,14 +51,14 @@
 		$('#register_password > div:first > label').remove();
 		$('#register_password > div:last > label').css({
 			'position': 'relative',
-			'top':'28px',
+			'top':'21px',
 			'left': '-1px'
 		}).text('Повторите пароль');
 		$('.genderLabel > label').css({
 			'margin-left':'4px'
 		});
 		$('.registrationFieldPass + div').css({
-			'margin-top':'-10px'
+			'margin-top':'-24px'
 		});
 		$('#register_agreement').css({
 			'width':'13px',
@@ -144,20 +144,20 @@
 				{{ form_label(form.username) }}
 				{{ form_errors(form.username) }}
 				{{ form_widget(form.username) }}
-				<span class="fieldHelp">Укажите реальный и действующий e-mail адрес. Он потребуется для входа на сайт и для получения уведомлений.</span>
+				<span class="fieldHelp">Укажите реальный и действующий e-mail адрес.<br> Он потребуется для входа на сайт и для получения уведомлений.</span>
 			</div>
 			<div class="registrationFieldPass">
 				{{ form_label(form.password) }}
 				{{ form_errors(form.password) }}
 				{{ form_widget(form.password) }}
-				<span class="fieldHelpPass">Придумайте сложный пароль, который нельзя подобрать; От 4 до 12 символов — цифры и латинские буквы.</span>
+				<span class="fieldHelpPass">Придумайте сложный пароль, который нельзя подобрать; <br> От 4 до 12 символов — цифры и латинские буквы.</span>
 				<span class="checkPassword"></span>
 			</div>
 			<div class="registrationField">
 				{{ form_label(form.nick) }}
 				{{ form_errors(form.nick) }}
 				{{ form_widget(form.nick) }}
-				<span class="fieldHelp">Укажите ваше имя или никнейм; От 2 до 12 символов - нельзя использовать цифры.</span>
+				<span class="fieldHelp">Укажите ваше имя или никнейм; <br> От 2 до 12 символов - нельзя использовать цифры.</span>
 			</div>
 			<div class="registrationFieldGender">
 				<div class="genderLabel">
@@ -171,13 +171,13 @@
 			<div class="registrationField">
 				{{ form_label(form.birthDate) }}
 				{{ form_errors(form.birthDate) }}
+				<span class="birtDateDescription">День&nbsp;&nbsp; Месяц &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Год</span>
 				<div class="birthDateSelect">
 				{{ form_widget(form.birthDate) }}
 				</div>
-				<span class="birtDateDescription">День Месяц Год</span>
 			</div>
 			<div class="registrationFieldPlace">
-				<span class="placeLabel">Место нахождения</span>
+				<span class="placeLabel">Местонахождение</span>
 				<div class="placeSelects">
 				{{ form_label(form.country) }}	
 				{{ form_errors(form.country) }}
