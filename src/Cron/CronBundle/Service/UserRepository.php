@@ -43,6 +43,6 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
     public function supportsClass($class)
     {
-        return $class === 'Cron\CronBundle\Entity\User';
+        return $class == 'Cron\CronBundle\Entity\User';
     }
 }

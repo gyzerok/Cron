@@ -9,6 +9,7 @@ use Cron\CronBundle\Entity\File;
 use Cron\CronBundle\Form\NewQuestion;
 use Cron\CronBundle\Form\NewAnswer;
 use Cron\CronBundle\Form\Registration;
+use Cron\CronBundle\Form\New1;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,20 +22,12 @@ class MainController extends Controller
         $question = new Question();
         $form = $this->createForm(new NewQuestion(), $question);
 
-        if ($request->isMethod('POST')) {
+        if ($request->isMethod('POST'))
+        {
             $form->bind($request);
 
-            if ($form->isValid()) {
-                $q = $request->get('question'); //['state'];
-                if (isset($q['state'])) {
-                    $state = $this->getDoctrine()->getRepository('CronCronBundle:State')->findOneById($q['state']);
-                    $question->setState($state);
-                }
-                if (isset($q['city'])) {
-                    $city = $this->getDoctrine()->getRepository('CronCronBundle:City')->findOneById($q['city']);
-                    $question->setCity($city);
-                }
-
+            if ($form->isValid())
+            {
                 $user = $this->getUser();
                 if (!$user instanceof User)
                     $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
@@ -66,6 +59,38 @@ class MainController extends Controller
                 'form' => $form->createView())
         );
 
+    }
+
+    //test
+    public function newAction(Request $request)
+    {
+        $question = new Question();
+        $form = $this->createForm(new New1(), $question);
+
+        if ($request->isMethod('POST'))
+        {
+            $form->bind($request);
+
+            if ($form->isValid())
+            {
+                $user = $this->getUser();
+                if (!$user instanceof User)
+                    $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+
+                $question->setUser($user);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($question);
+                $em->flush();
+
+                return $this->redirect($this->generateUrl('new'));
+            }
+        }
+
+        return $this->render("CronCronBundle:Main:index_temp.html.twig", array('title' => 'Главная',
+            'curUser' => $this->getUser(),
+            'form' => $form->createView())
+        );
     }
 
     public function categoryAction(Request $request)
@@ -193,16 +218,6 @@ class MainController extends Controller
             $form->bind($request);
 
             if ($form->isValid()) {
-                $reg = $request->get('register'); //['state'];
-                if (isset($reg['state'])) {
-                    $state = $this->getDoctrine()->getRepository('CronCronBundle:State')->findOneById($reg['state']);
-                    $user->setState($state);
-                }
-                if (isset($reg['city'])) {
-                    $city = $this->getDoctrine()->getRepository('CronCronBundle:City')->findOneById($reg['city']);
-                    $user->setCity($city);
-                }
-
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($user);
                 $forconf = $user->getPassword();
