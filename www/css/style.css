@@ -1050,6 +1050,23 @@ span.agreementLabel a {
 	height: 22px;
 }
 
+.emailError {
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #ff5151;
+	width: 225px;
+	display: block;
+	position: relative;
+	left: 668px;
+	top: 44px;
+	margin: 0;
+	padding: 0;
+}
+
+.emailError ul {
+
+}
+
 input.registerButton {
 	width: 330px;
 	height: 50px;
