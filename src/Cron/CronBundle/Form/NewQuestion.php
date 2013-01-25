@@ -16,12 +16,12 @@ class NewQuestion extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('text', 'textarea', array('label' => 'Вопрос', 'max_length' => 130))
-            ->add('category', null, array('label' => 'Категория', 'expanded' => true))
-            ->add('private', 'checkbox', array('label' => 'закрытый', 'required' => false))
-            ->add('country', 'entity', array('label' => 'Страна', 'class' => 'CronCronBundle:Country', 'property' => 'name', 'empty_value' => 'Все страны', 'required' => false))
-            ->add('state', 'entity', array('label' => 'Регион', 'class' => 'CronCronBundle:State', 'property' => 'name', 'empty_value' => 'Все регионы', 'disabled' => true, 'required' => false))
-            ->add('city', 'entity', array('label' => 'Город', 'class' => 'CronCronBundle:City', 'property' => 'name', 'empty_value' => 'Все города', 'disabled' => true, 'required' => false))
-            ->add('boundary', 'choice', array('label' => 'Минимальная наполняемость ответами', 'choices' => array(10 => '10', 20 => '20', 30 => '30', 40 => '40', 50 => '50')));
+                ->add('category', null, array('label' => 'Категория', 'expanded' => true))
+                ->add('private', 'checkbox', array('label' => 'закрытый', 'required' => false))
+                ->add('country', 'entity', array('label' => 'Страна', 'class' => 'CronCronBundle:Country', 'property' => 'name', 'empty_value' => 'Все страны', 'required' => false))
+                ->add('state', 'entity', array('label' => 'Регион', 'class' => 'CronCronBundle:State', 'property' => 'name', 'empty_value' => 'Все регионы', 'disabled' => true, 'required' => false))
+                ->add('city', 'entity', array('label' => 'Город', 'class' => 'CronCronBundle:City', 'property' => 'name', 'empty_value' => 'Все города', 'disabled' => true, 'required' => false))
+                ->add('boundary', 'choice', array('label' => 'Минимальная наполняемость ответами', 'choices' => array(10 => '10', 20 => '20', 30 => '30', 40 => '40', 50 => '50')));
 
         $factory = $builder->getFormFactory();
 
@@ -29,7 +29,7 @@ class NewQuestion extends AbstractType
         {
             $form->add($factory->createNamed('state', 'entity', null, array(
                 'class'         => 'Cron\CronBundle\Entity\State',
-                'property'      => 'state',
+                'property'      => 'name',
                 'empty_value'   => 'Все регионы',
                 'query_builder' => function (EntityRepository $repository) use ($country)
                 {
@@ -55,7 +55,7 @@ class NewQuestion extends AbstractType
         {
             $form->add($factory->createNamed('city', 'entity', null, array(
                 'class'         => 'Cron\CronBundle\Entity\City',
-                'property'      => 'city',
+                'property'      => 'name',
                 'empty_value'   => 'Все регионы',
                 'query_builder' => function (EntityRepository $repository) use ($state)
                 {
@@ -79,9 +79,9 @@ class NewQuestion extends AbstractType
 
         $setCountry = function ($form, $country) use ($factory)
         {
-            $form->add($factory->createNamed('entity', 'country', null, array(
+            $form->add($factory->createNamed('country', 'entity', null, array(
                 'class'         => 'CronCronBundle:Country',
-                'property'      => 'country',
+                'property'      => 'name',
                 'property_path' => false,
                 'empty_value'   => 'Все страны',
                 'data'          => $country,
@@ -90,9 +90,9 @@ class NewQuestion extends AbstractType
 
         $setState = function ($form, $state) use ($factory)
         {
-            $form->add($factory->createNamed('entity', 'state', null, array(
+            $form->add($factory->createNamed('state', 'entity', null, array(
                 'class'         => 'CronCronBundle:State',
-                'property'      => 'state',
+                'property'      => 'name',
                 'property_path' => false,
                 'empty_value'   => 'Все регионы',
                 'data'          => $state,

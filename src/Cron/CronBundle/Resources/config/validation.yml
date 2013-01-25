@@ -8,10 +8,17 @@ Cron\CronBundle\Entity\Question:
 Cron\CronBundle\Entity\User:
   properties:
     username:
-      - NotBlank: ~
+      - NotBlank:   { message: "поле не заполнено" }
+      - Email:      { message: "некорректное заполнение" }
+    nick:
+      - NotBlank:   { message: "поле не заполнено" }
+    gender:
+      - NotBlank:   { message: "укажите ваш пол" }
     country:
-      - NotBlank: ~
+      - NotBlank:   { message: "поле не заполнено" }
     state:
-      #- NotBlank: ~
+      - NotBlank:   { message: "поле не заполнено" }
     city:
-      #- NotBlank: ~
+      - NotBlank:   { message: "поле не заполнено" }
+    agreement:
+      - NotBlank:   { message: "вы не ознакомились с пользовательским соглашением" }
