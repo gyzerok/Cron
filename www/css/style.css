@@ -579,7 +579,7 @@ p.questionPrivateCost {
 .chosePlace {
 	width: 273px;
 	float: left;
-	margin-left: 40px;
+	margin-left: 75px;
 	overflow: hidden;
 }
 
@@ -600,7 +600,7 @@ p.questionPrivateCost {
 	font-size: 14px;
 	float: right;
 	margin-top: 10px;
-	margin-right: 86px;
+	margin-right: 53px;
 }
 
 .additionalInformation label {
@@ -618,7 +618,7 @@ p.questionCost {
 	display: block;
 	width: 189px;
 	float: right;
-	margin: -20px 170px 0 0;
+	margin: -20px 146px 0 0;
 	font-family: 'Arial';
 	font-size: 18px;
 	color: #000;
@@ -840,12 +840,13 @@ h2.registrationH2 {
 }
 
 h3.registrationH3 {
-	font-size: 16px;
-	margin-left: 266px;
+	margin-left: 162px;
 	margin-top: 9px;
 	display: block;
 	float: left;
-	color: #686868;
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #828282;
 }
 
 .registrationField {
@@ -858,19 +859,22 @@ h3.registrationH3 {
 .registrationField label {
 	margin-left: 5px;
 	margin-top: 20px;
-	font-size: 20px;
+	font-size: 24px;
 	color: #52648A;
 	float: left;
+	font-family: 'Cambria';
 }
 
 .registrationField input {
+	height: 27px;
 	border: 1px solid #52648A;
 	border-radius: 3px;
 	margin-top: 20px;
-	width: 618px;
-	font-size: 18px;
+	width: 500px;
+	font-size: 20px;
+	font-family: 'Arial';
 	float: right;
-	margin-right: 150px;
+	margin-right: 217px;;
 }
 
 .registrationField select {
@@ -879,16 +883,18 @@ h3.registrationH3 {
 
 span.fieldHelp {
 	display: block;
-	width: 415px;
 	font-size: 14px;
-	margin: 2px 0 0 168px;
-	color: 9D9D9D;
+	margin: 53px 0 0 220px;
+	color: #828282;
+	font-family: 'Arial';
+	text-align: left;
 }
 
 
 .registrationFieldPass{
 	width: 100%;
 	overflow: hidden;
+	margin-top: -19px;
 }
 
 .registrationFieldPass input {
@@ -896,19 +902,19 @@ span.fieldHelp {
 	border-radius: 3px;
 	margin-top: 20px;
 	margin-bottom: 20px;
-	width: 618px;
+	width: 500px;
 	font-size: 18px;
 	float: right;
-	margin-right: 150px;
+	margin-right: 217px;
 }
 
 .registrationFieldPass label {
 	margin-left: 5px;
 	margin-top: 20px;
-	font-size: 20px;
 	color: #52648A;
 	float: left;
-	
+	font-size: 24px;
+	font-family: 'Cambria';
 }
 
 span.fieldHelpPass {
@@ -917,10 +923,12 @@ span.fieldHelpPass {
 	position: relative;
 	width: 415px;
 	font-size: 14px;
-	color: 9D9D9D;
 	overflow: hidden;
 	top: -82px;
-	left: 170px;
+	left: 217px;
+	color: #828282;
+	font-family: 'Arial';
+	text-align: left;
 }
 
 span.checkPassword {
@@ -929,58 +937,62 @@ span.checkPassword {
 	position: relative;
 	width: 415px;
 	font-size: 14px;
-	color: 9D9D9D;
 	overflow: hidden;
 	top: -40px;
-	left: 170px;
+	left: 221px;
+	font-family: 'Arial';
+	font-size: 14px;	
 }
 
 span.birtDateDescription {
 	width: 142px;
 	overflow: hidden;
 	position: relative;
-	top: -39px;
-	left: 150px;
-	font-size: 20px;
+	top: 4px;
+	left: 59px;
+	font-size: 16px;
+	font-family: 'Cambria';
 	color: #52648A;
 }
 
 .birthDateSelect {
 	overflow: hidden;
-	width: 160px;
+	width: 198px;
 	height: 30px;
 	float: right;
-	margin-right: 625px;
-	margin-top: 18px;
+	margin-right: 511px;
+	margin-top: 2px;
 }
 
 .genderRadio {
 	display: block;
-	width: 105px;
+	width: 121px;
 	overflow: hidden;
 	float: right;
-	margin-right: 670px;
-	margin-top: 15px;
+	margin-right: 606px;
+	margin-top: 21px;
 }
 
 
 .registrationFieldGender {
 	width: 100%;
 	overflow: hidden;
+	margin-top: -26px;
 }
 
 .genderLabel {
 	overflow: hidden;
 	display: block;
-	width: 40px;
+	width: 50px;
 	height: 25px;
 	margin-top: 25px;
 	float: left;
 }
 .registrationFieldGender label {
 	display: block;
-	font-size: 20px;
 	color: #52648A;
+	font-size: 24px;
+	font-family: 'Cambria';
 }
 
 .registrationFieldGender input {
@@ -990,32 +1002,35 @@ span.birtDateDescription {
 
 .registrationFieldPlace {
 	width: 100%;
-	overflow: hidden;
 }
 
 span.placeLabel {
 	display: block;
 	float: left;
 	width: 130px;
-	font-size: 20px;
+	font-size: 24px;
 	color: #52648A;
+	font-family: 'Cambria';
 	margin-right: 15px;
 	margin-left: 5px;
 }
 
 .placeSelects {
 	width: 130px;
-	float: left;	
+	float: left;
+	margin-left: 78px;
+	margin-top: -13px;	
 }
 
 .placeSelects label {
-	font-size: 20px;
-	color: #52648A;
+	font-family: 'Cambria';
+	font-size: 16px;
+	color: #495677;
 }
 
 .registrationFieldPlace select {
 	display: block;
-	width: 200px;
+	width: 272px;
 }
 
 span.agreementLabel {
