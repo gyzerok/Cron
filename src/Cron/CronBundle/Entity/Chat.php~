@@ -1,0 +1,41 @@
+<?php
+
+namespace Cron\CronBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * Cron\CronBundle\Entity\Chat
+ *
+ * @ORM\Table(name="chat")
+ * @ORM\Entity
+ */
+class Chat {
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    protected $id;
+
+    /**
+     * @var User
+     *
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user", referencedColumnName="id", nullable=false)
+     * })
+     */
+    protected $owner;
+
+    /**
+     * @var boolean $is_active
+     *
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    protected $is_active;
+
+}

@@ -1,0 +1,79 @@
+<?php
+
+namespace Cron\CronBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * Cron\CronBundle\Entity\Dialog
+ *
+ * @ORM\Table(name="dialog")
+ * @ORM\Entity
+ */
+class Dialog {
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    protected $id;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user1", referencedColumnName="id", nullable=false)
+     * })
+     */
+    protected $user1;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user2", referencedColumnName="id", nullable=false)
+     * })
+     */
+    protected $user2;
+
+    /**
+     * @var boolean $del1
+     *
+     * @ORM\Column(name="del1", type="boolean")
+     */
+    protected $del1;
+
+    /**
+     * @var boolean $del2
+     *
+     * @ORM\Column(name="del2", type="boolean")
+     */
+    protected $del2;
+
+    /**
+     * @var boolean $spam1
+     *
+     * @ORM\Column(name="spam1", type="boolean")
+     */
+    protected $spam1;
+
+    /**
+     * @var boolean $spam2
+     *
+     * @ORM\Column(name="spam2", type="boolean")
+     */
+    protected $spam2;
+
+    /**
+     * @var \DateTime $start_date
+     *
+     * @ORM\Column(name="start_date", type="datetime", nullable=false)
+     */
+    protected $start_date;
+
+}
