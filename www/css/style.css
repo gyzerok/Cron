@@ -99,25 +99,46 @@
 
 .users {
 	width: 232px;
-	height: 32px;
 	float: right;
 	margin: 10px 17px 0 0px;
-	font-family: 'Candara';
-	font-size: 14px;
+	overflow: hidden;
 }
 
 .users p {
 	text-align: right;
 	margin: 0;
 	padding: 0;
-	color: #383838;
+	font-family: 'Candara';
+	font-size: 20px;
+	color: #495677;
 }
 
-.users p span {
+.users span {
 	text-align: right;
 	margin: 0;
 	padding: 0;
-	color: #52648A;
+	font-family: 'Cambria';
+	font-size: 20px;
+	color: #495677;
+}
+
+.users span.online {
+	text-align: right;
+	margin: 0;
+	padding: 0;
+	font-family: 'Candara';
+	font-size: 20px;
+	color: #495677;
+	margin-right: 21px;
+}
+
+.users span.onSite {
+	text-align: right;
+	margin: 0;
+	padding: 0;
+	font-family: 'Candara';
+	font-size: 20px;
+	color: #495677;
 }
 
 #nav {
@@ -340,16 +361,14 @@
 
 #menu ul.menuNavigation li ul.subMenuNavigation li {
 	width: 180px;
-	height: inherit;
+	height: 18px;
 	text-align: center;
-	line-height: 100%;
 	border: none;
 	border-radius: none;
 	background-color: #FFDDDB;
-	text-transform: uppercase;
-	font-size: 15px;
 	cursor: pointer;
-	font-family: 'Cambria';
+	line-height: 100%;
+	font-size: 16px;
 }
 
 #menu ul.menuNavigation li ul.subMenuNavigation li a:hover {
@@ -361,6 +380,9 @@
 	color: #383838;
 	text-decoration: none;
 	cursor: pointer;
+	text-transform: none;
+	font-family: 'Cambria';
+	font-size: 16px;
 }
 
 
@@ -454,6 +476,13 @@
 	margin: 0 auto;
 }
 
+#questionsType label {
+	font-size: 18px;
+	font-family: 'Cambria';
+	color: #000;
+}
+
+
 
 .writeQuestionDiv {
 	width: 680px;
@@ -485,7 +514,7 @@
 	margin-bottom: 5px;
 	vertical-align: middle;
 	text-align: center;
-	margin-top: 69px;
+	margin-top: 57px;
 	font-family: 'Arial';
 	font-size: 14px;
 	background-color: #fff;
@@ -495,6 +524,11 @@
 	border: 1px solid #000;
 }
 
+#categoryScripture {
+	font-size: 18px;
+	font-family: 'Cambria';
+	color: #000;
+}
 
 .privateButton {
 	float: right;
@@ -505,6 +539,17 @@
 .privateButton label {
 	float: none;
 	display: inline;
+	font-family: 'Cambria';
+	font-size: 18px;
+	color: #000;
+	float: right;
+}
+
+p.questionPrivateCost {
+	margin: -15px 0px 0 -125px;
+	font-family: 'Arial';
+	font-size: 12px;
+	color: #000;
 }
 
 .category {
@@ -540,7 +585,7 @@
 
 .chosePlace label {
 	display: block;
-	margin-top: 5px;
+	margin-top: 8px;
 	margin-left: 5px;
 }
 
@@ -571,9 +616,12 @@
 
 p.questionCost {
 	display: block;
-	width: 184px;
+	width: 189px;
 	float: right;
 	margin: -20px 170px 0 0;
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #000;
 }
 
 h2.categoryH2 {
@@ -1024,11 +1072,13 @@ input.registerButton {
 	border-radius: 5px;
 	background-color: #EFEFEF;
 	cursor: pointer;
-	font-weight: bold;
 	position: relative;
-	top: -48px;
+	top: -47px;
 	left: 139px;
-	
+	font-size: 18px;
+	font-family: 'Cambria';
+	padding: 0;
+	height: 22px;
 }
 
 .registerButtonOnIndex {
@@ -1038,22 +1088,26 @@ input.registerButton {
 	background-color: #EFEFEF;
 	cursor: pointer;
 	font-size: 12px;
-	font-weight: bold;
 	position: relative;
-	top: -45px;
+	top: -43px;
 	left: 129px;
+	font-family: 'Cambria';
+	font-size: 14px;
+	padding: 0;
+	height: 21px;
 }
 
 a.forgotPassword {
 	margin: 0;
 	display: block;
-	width: 125px;
+	width: 133px;
 	margin-top: -10px;
 	margin-left: auto;
 	margin-right: auto;	
 	color: #52648A;
 	text-decoration: none;
 	font-size: 18px;
+	font-family: 'Cambria';
 }
 
 a.closeRegisterButton {

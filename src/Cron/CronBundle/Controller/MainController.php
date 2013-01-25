@@ -21,20 +21,12 @@ class MainController extends Controller
         $question = new Question();
         $form = $this->createForm(new NewQuestion(), $question);
 
-        if ($request->isMethod('POST')) {
+        if ($request->isMethod('POST'))
+        {
             $form->bind($request);
 
-            if ($form->isValid()) {
-                $q = $request->get('question'); //['state'];
-                if (isset($q['state'])) {
-                    $state = $this->getDoctrine()->getRepository('CronCronBundle:State')->findOneById($q['state']);
-                    $question->setState($state);
-                }
-                if (isset($q['city'])) {
-                    $city = $this->getDoctrine()->getRepository('CronCronBundle:City')->findOneById($q['city']);
-                    $question->setCity($city);
-                }
-
+            if ($form->isValid())
+            {
                 $user = $this->getUser();
                 if (!$user instanceof User)
                     $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
@@ -53,17 +45,17 @@ class MainController extends Controller
         $userQuestions = null;
         if ($user instanceof User)
             $userQuestions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
-                ->createQueryBuilder('question')
-                ->where('question.user = :uid  AND question.status <> :status')
-                ->setParameter('status', '2')
-                ->setParameter('uid', $user->getId())
-                ->getQuery()
-                ->getResult();
+                                                 ->createQueryBuilder('question')
+                                                 ->where('question.user = :uid  AND question.status <> :status')
+                                                 ->setParameter('status', '2')
+                                                 ->setParameter('uid', $user->getId())
+                                                 ->getQuery()
+                                                 ->getResult();
 
         return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Главная',
-                'curUser' => $this->getUser(),
-                'userQuestions' => $userQuestions,
-                'form' => $form->createView())
+                                                                          'curUser' => $this->getUser(),
+                                                                          'userQuestions' => $userQuestions,
+                                                                          'form' => $form->createView())
         );
 
     }
@@ -81,18 +73,18 @@ class MainController extends Controller
         }
 
         $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Question")
-            ->createQueryBuilder('question')
-            ->innerJoin('question.user', 'user')
-            ->where('question.category > :cid  AND question.status <> :status')
-            ->setParameter('cid', '1')
-            ->setParameter('status', '2')
-            ->getQuery()
-            ->getResult();
+                                           ->createQueryBuilder('question')
+                                           ->innerJoin('question.user', 'user')
+                                           ->where('question.category > :cid  AND question.status <> :status')
+                                           ->setParameter('cid', '1')
+                                           ->setParameter('status', '2')
+                                           ->getQuery()
+                                           ->getResult();
 
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'По категориям',
-                'questions' => $categorized,
-                'curUser' => $this->getUser(),
-                'form' => $form->createView())
+                                                                             'questions' => $categorized,
+                                                                             'curUser' => $this->getUser(),
+                                                                             'form' => $form->createView())
         );
     }
 
@@ -109,18 +101,18 @@ class MainController extends Controller
         }
 
         $rush = $this->getDoctrine()->getRepository("CronCronBundle:Question")
-            ->createQueryBuilder('question')
-            ->innerJoin('question.user', 'user')
-            ->where('question.category = :cid  AND question.status <> :status')
-            ->setParameter('cid', '1')
-            ->setParameter('status', '2')
-            ->getQuery()
-            ->getResult();
+                                    ->createQueryBuilder('question')
+                                    ->innerJoin('question.user', 'user')
+                                    ->where('question.category = :cid  AND question.status <> :status')
+                                    ->setParameter('cid', '1')
+                                    ->setParameter('status', '2')
+                                    ->getQuery()
+                                    ->getResult();
 
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'Срочные',
-                'questions' => $rush,
-                'curUser' => $this->getUser(),
-                'form' => $form->createView())
+                                                                             'questions' => $rush,
+                                                                             'curUser' => $this->getUser(),
+                                                                             'form' => $form->createView())
         );
     }
     public function diskAction($file_hash)
@@ -130,8 +122,8 @@ class MainController extends Controller
         if (!$file_hash){
             if (!$user instanceof User) {
                 return $this->render("CronCronBundle:Main:disk.html.twig", array('title' => 'Кибердиск',
-                        'curUser' => $user,
-                        'isAuth' => 0)
+                                                                                 'curUser' => $user,
+                                                                                 'isAuth' => 0)
                 );
             } else {
                 $total_filesize = $this->getDoctrine()->getRepository("CronCronBundle:File")
@@ -193,24 +185,34 @@ class MainController extends Controller
             $form->bind($request);
 
             if ($form->isValid()) {
-                $reg = $request->get('register'); //['state'];
-                if (isset($reg['state'])) {
-                    $state = $this->getDoctrine()->getRepository('CronCronBundle:State')->findOneById($reg['state']);
-                    $user->setState($state);
-                }
-                if (isset($reg['city'])) {
-                    $city = $this->getDoctrine()->getRepository('CronCronBundle:City')->findOneById($reg['city']);
-                    $user->setCity($city);
-                }
-
                 $factory = $this->get('security.encoder_factory');
                 $encoder = $factory->getEncoder($user);
+                $forconf = $user->getPassword();
                 $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
                 $user->setPassword($password);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
+
+                $user = $this->getDoctrine()->getRepository("CronCronBundle:User")->findOneByUsername($user->getUsername());
+                //acception
+                $hash = md5($user->getId() + $user->getNick() + $user->getUsername());
+                $mailer = $this->get('mailer');
+                $message = \Swift_Message::newInstance(null, null, "text/html")
+                    ->setSubject('Обратная связь')
+                    ->setFrom("aditus777@gmail.com")
+                    ->setTo($user->getUsername())
+                    ->setBody('<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body>' .
+                    'Поздравляем Вас с успешной регистрацией!<br>' .
+                    'Ваш логин ' . $user->getUsername() . '<br>' .
+                    'Ваш пароль ' . $forconf . '<br>' .
+                    'Перейдите по ссылке для подтверждения вашего e-mail адреса:<br><a href="http://' . $_SERVER['HTTP_HOST'] . '/regconf?id=' . $user->getId() . '&hash=' . $hash . '">http://' . $_SERVER['HTTP_HOST'] . '/regconf?id=' . $user->getId() . '&hash=' . $hash . '</a><br>' .
+                    '(если не можете нажать на нее, скопируйте ее в адресную строку Вашего браузера)<br>' .
+                    'Добро пожаловать на ADITUS.ru!<br><br>' .
+                    'Данное сообщение было выслано автоматически. Это сообщение является служебным письмом, которое связано с вашей учётной записью на ADITUS. Если у вас есть вопросы или вам необходима помощь, вы можете обратиться в службу поддержки ADITUS.<br><br>' .
+                    'Если Вы считаете, что данное сообщение послано Вам ошибочно, проигнорируйте его и все данные будут автоматически удалены.');
+                $mailer->send($message);
 
                 return $this->redirect($this->generateUrl('index'));
             }
@@ -225,11 +227,12 @@ class MainController extends Controller
 
         if ($request->isMethod("GET")) {
             $id = $request->get("id");
-            $hash = $request->get("code");
+            $hash = $request->get("hash");
             $user = $this->getDoctrine()->getRepository("CronCronBundle:User")->findOneById($id);
             if (!$user instanceof User)
                 $this->render("CronCronBundle:Main:registration_confirmation.html.twig", array('title' => 'Подтверждение регистрации', 'curUser' => $this->getUser(), 'success' => $success));
-            if (md5($user->getId() + $user->getBirthDate() + $user->getUsername()) == $hash) {
+            if (md5($user->getId() + $user->getNick() + $user->getUsername()) == $hash)
+            {
                 $user->setIsActive(true);
 
                 $em = $this->getDoctrine()->getManager();
@@ -245,6 +248,11 @@ class MainController extends Controller
 
     public function convertFilesize($input_filesize)
     {
+        /*$sizeStr = array("байт", "Кб", "МБ", "ГБ");
+        $index = log($input_filesize, 1024);
+
+        return $sizeStr[floor($index)];*/
+
         $filesize = $input_filesize;
         if($filesize > 1024){
             $filesize = ($filesize/1024);

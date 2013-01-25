@@ -1,36 +1,48 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#question_country').change(function(){
+        $('#new_country').change(function(){
             if($(this).val()){
                 $.ajax({
                     type: "POST",
                     data: "country_id=" + $(this).val(),
                     url: "{{ path('getStates') }}",
                     success: function(data){
-                        $('#question_state option:gt(0)').remove();
-                        $('#question_state').append(data);
+                        $('#new_state option:gt(0)').remove();
+                        $('#new_state').append(data);
+                        document.getElementById('new_state').disabled=false;
                     }
                 });
+            } else {
+                $('#new_state option:gt(0)').remove();
+                document.getElementById('new_state').disabled=true;
+                $('#new_city option:gt(0)').remove();
+                document.getElementById('new_city').disabled=true;
             }
         });
-        $('#question_state').change(function(){
+        $('#new_state').change(function(){
             if($(this).val()){
                 $.ajax({
                     type: "POST",
                     data: "state_id=" + $(this).val(),
                     url: "{{ path('getCities') }}",
                     success: function(data){
-                        $('#question_city option:gt(0)').remove();
-                        $('#question_city').append(data);
+                        $('#new_city option:gt(0)').remove();
+                        $('#new_city').append(data);
+                        document.getElementById('new_city').disabled=false;
                     }
                 });
             }
+            else {
+                $('#new_city option:gt(0)').remove();
+                document.getElementById('new_city').disabled=true;
+            }
         });
+        $('[id="categoryScripture"]').after($('#new_category_1, [for="new_category_1"]'));
     });
 </script>
 
-<form action="{{ path('index') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('new') }}" method="post" {{ form_enctype(form) }}>
 {{ form_widget(form) }}
 
 <input type="submit" />

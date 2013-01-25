@@ -1,4 +1,5 @@
 /www/bundles/
+/www/files/*
 /app/bootstrap*
 /app/cache/*
 /app/logs/*

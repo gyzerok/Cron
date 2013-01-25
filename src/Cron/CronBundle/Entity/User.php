@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Cron\CronBundle\Entity\User
  *
  * @ORM\Table(name="user")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Cron\CronBundle\Service\UserRepository")
  */
 class User implements UserInterface, \Serializable
 {
