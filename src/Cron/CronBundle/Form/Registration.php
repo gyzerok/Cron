@@ -22,11 +22,11 @@ class Registration extends AbstractType
         for ($i = date('Y') - 62; $i <= date('Y'); $i++)
             $years[$i] = $i;
 
-        $builder->add('username', 'email', array('label' => 'Email', 'required' => true))
-                ->add('password', 'repeated', array('required' => true, 'first_name' => 'Password', 'second_name' => 'Confirm', 'type' => 'password'))
-                ->add('nick', null, array('label' => 'Ваше имя', 'required' => true))
-                ->add('gender', 'choice', array('label' => 'Пол', 'choices' => array(1 => 'Мужской', 2 => 'Женский'), 'expanded' => true, 'required' => true))
-                ->add('birthDate', 'birthday', array('label' => 'Дата рождения', 'format' => 'dd MMM yyyy', 'years' => $years, 'required' => true))
+        $builder->add('username', 'text', array('label' => 'Email', 'required' => false))
+                ->add('password', 'repeated', array('required' => false, 'first_name' => 'Password', 'second_name' => 'Confirm', 'type' => 'password'))
+                ->add('nick', null, array('label' => 'Ваше имя', 'required' => false))
+                ->add('gender', 'choice', array('label' => 'Пол', 'choices' => array(1 => 'Мужской', 2 => 'Женский'), 'expanded' => true, 'required' => false))
+                ->add('birthDate', 'birthday', array('label' => 'Дата рождения', 'format' => 'dd MMM yyyy', 'years' => $years, 'required' => false))
                 ->add('country', 'entity', array('label' => 'Страна', 'class' => 'CronCronBundle:Country', 'property' => 'name', 'empty_value' => 'Все страны', 'required' => false))
                 ->add('state', 'entity', array('label' => 'Регион', 'class' => 'CronCronBundle:State', 'property' => 'name', 'empty_value' => 'Все регионы', 'disabled' => true, 'required' => false))
                 ->add('city', 'entity', array('label' => 'Город', 'class' => 'CronCronBundle:City', 'property' => 'name', 'empty_value' => 'Все города', 'disabled' => true, 'required' => false))
