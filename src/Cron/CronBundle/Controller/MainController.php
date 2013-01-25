@@ -240,7 +240,7 @@ class MainController extends Controller
                     'Поздравляем Вас с успешной регистрацией!<br>' .
                     'Ваш логин ' . $user->getUsername() . '<br>' .
                     'Ваш пароль ' . $forconf . '<br>' .
-                    'Перейдите по ссылке для подтверждения вашего e-mail адреса:<br><a href="http://cron.ru/regconf?id=' . $user->getId() . '&hash=' . $hash . '">http://cron.ru/regconf?id=' . $user->getId() . '&hash=' . $hash . '</a><br>' .
+                    'Перейдите по ссылке для подтверждения вашего e-mail адреса:<br><a href="http://' . $_SERVER['HTTP_HOST'] . '/regconf?id=' . $user->getId() . '&hash=' . $hash . '">http://' . $_SERVER['HTTP_HOST'] . '/regconf?id=' . $user->getId() . '&hash=' . $hash . '</a><br>' .
                     '(если не можете нажать на нее, скопируйте ее в адресную строку Вашего браузера)<br>' .
                     'Добро пожаловать на ADITUS.ru!<br><br>' .
                     'Данное сообщение было выслано автоматически. Это сообщение является служебным письмом, которое связано с вашей учётной записью на ADITUS. Если у вас есть вопросы или вам необходима помощь, вы можете обратиться в службу поддержки ADITUS.<br><br>' .
