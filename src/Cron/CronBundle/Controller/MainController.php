@@ -9,7 +9,6 @@ use Cron\CronBundle\Entity\File;
 use Cron\CronBundle\Form\NewQuestion;
 use Cron\CronBundle\Form\NewAnswer;
 use Cron\CronBundle\Form\Registration;
-use Cron\CronBundle\Form\New1;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -46,51 +45,19 @@ class MainController extends Controller
         $userQuestions = null;
         if ($user instanceof User)
             $userQuestions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
-                ->createQueryBuilder('question')
-                ->where('question.user = :uid  AND question.status <> :status')
-                ->setParameter('status', '2')
-                ->setParameter('uid', $user->getId())
-                ->getQuery()
-                ->getResult();
+                                                 ->createQueryBuilder('question')
+                                                 ->where('question.user = :uid  AND question.status <> :status')
+                                                 ->setParameter('status', '2')
+                                                 ->setParameter('uid', $user->getId())
+                                                 ->getQuery()
+                                                 ->getResult();
 
         return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Главная',
-                'curUser' => $this->getUser(),
-                'userQuestions' => $userQuestions,
-                'form' => $form->createView())
+                                                                          'curUser' => $this->getUser(),
+                                                                          'userQuestions' => $userQuestions,
+                                                                          'form' => $form->createView())
         );
 
-    }
-
-    //test
-    public function newAction(Request $request)
-    {
-        $question = new Question();
-        $form = $this->createForm(new New1(), $question);
-
-        if ($request->isMethod('POST'))
-        {
-            $form->bind($request);
-
-            if ($form->isValid())
-            {
-                $user = $this->getUser();
-                if (!$user instanceof User)
-                    $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
-
-                $question->setUser($user);
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($question);
-                $em->flush();
-
-                return $this->redirect($this->generateUrl('new'));
-            }
-        }
-
-        return $this->render("CronCronBundle:Main:index_temp.html.twig", array('title' => 'Главная',
-            'curUser' => $this->getUser(),
-            'form' => $form->createView())
-        );
     }
 
     public function categoryAction(Request $request)
@@ -106,18 +73,18 @@ class MainController extends Controller
         }
 
         $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Question")
-            ->createQueryBuilder('question')
-            ->innerJoin('question.user', 'user')
-            ->where('question.category > :cid  AND question.status <> :status')
-            ->setParameter('cid', '1')
-            ->setParameter('status', '2')
-            ->getQuery()
-            ->getResult();
+                                           ->createQueryBuilder('question')
+                                           ->innerJoin('question.user', 'user')
+                                           ->where('question.category > :cid  AND question.status <> :status')
+                                           ->setParameter('cid', '1')
+                                           ->setParameter('status', '2')
+                                           ->getQuery()
+                                           ->getResult();
 
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'По категориям',
-                'questions' => $categorized,
-                'curUser' => $this->getUser(),
-                'form' => $form->createView())
+                                                                             'questions' => $categorized,
+                                                                             'curUser' => $this->getUser(),
+                                                                             'form' => $form->createView())
         );
     }
 
@@ -134,18 +101,18 @@ class MainController extends Controller
         }
 
         $rush = $this->getDoctrine()->getRepository("CronCronBundle:Question")
-            ->createQueryBuilder('question')
-            ->innerJoin('question.user', 'user')
-            ->where('question.category = :cid  AND question.status <> :status')
-            ->setParameter('cid', '1')
-            ->setParameter('status', '2')
-            ->getQuery()
-            ->getResult();
+                                    ->createQueryBuilder('question')
+                                    ->innerJoin('question.user', 'user')
+                                    ->where('question.category = :cid  AND question.status <> :status')
+                                    ->setParameter('cid', '1')
+                                    ->setParameter('status', '2')
+                                    ->getQuery()
+                                    ->getResult();
 
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'Срочные',
-                'questions' => $rush,
-                'curUser' => $this->getUser(),
-                'form' => $form->createView())
+                                                                             'questions' => $rush,
+                                                                             'curUser' => $this->getUser(),
+                                                                             'form' => $form->createView())
         );
     }
     public function diskAction($file_hash)
@@ -155,8 +122,8 @@ class MainController extends Controller
         if (!$file_hash){
             if (!$user instanceof User) {
                 return $this->render("CronCronBundle:Main:disk.html.twig", array('title' => 'Кибердиск',
-                        'curUser' => $user,
-                        'isAuth' => 0)
+                                                                                 'curUser' => $user,
+                                                                                 'isAuth' => 0)
                 );
             } else {
                 $total_filesize = $this->getDoctrine()->getRepository("CronCronBundle:File")

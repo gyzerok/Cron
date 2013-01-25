@@ -22,14 +22,14 @@ class Registration extends AbstractType
         for ($i = date('Y') - 62; $i <= date('Y'); $i++)
             $years[$i] = $i;
 
-        $builder->add('username', 'email', array('label' => 'Email', 'required' => true))
-                ->add('password', 'repeated', array('required' => true, 'first_name' => 'Password', 'second_name' => 'Confirm', 'type' => 'password'))
-                ->add('nick', null, array('label' => 'Ваше имя', 'required' => true))
-                ->add('gender', 'choice', array('label' => 'Пол', 'choices' => array(1 => 'Мужской', 2 => 'Женский'), 'expanded' => true, 'required' => true))
-                ->add('birthDate', 'birthday', array('label' => 'Дата рождения', 'format' => 'dd MMM yyyy', 'years' => $years, 'required' => true))
-                ->add('country', 'entity', array('label' => 'Страна', 'class' => 'CronCronBundle:Country', 'property' => 'name', 'empty_value' => 'Все страны', 'required' => true))
-                ->add('state', 'entity', array('label' => 'Регион', 'class' => 'CronCronBundle:State', 'property' => 'name', 'empty_value' => 'Все регионы', 'disabled' => true, 'required' => true))
-                ->add('city', 'entity', array('label' => 'Город', 'class' => 'CronCronBundle:City', 'property' => 'name', 'empty_value' => 'Все города', 'disabled' => true, 'required' => true))
+        $builder->add('username', 'text', array('label' => 'Email', 'required' => false))
+                ->add('password', 'repeated', array('required' => false, 'first_name' => 'Password', 'second_name' => 'Confirm', 'type' => 'password'))
+                ->add('nick', null, array('label' => 'Ваше имя', 'required' => false))
+                ->add('gender', 'choice', array('label' => 'Пол', 'choices' => array(1 => 'Мужской', 2 => 'Женский'), 'expanded' => true, 'required' => false))
+                ->add('birthDate', 'birthday', array('label' => 'Дата рождения', 'format' => 'dd MMMM yyyy', 'years' => $years, 'required' => false))
+                ->add('country', 'entity', array('label' => 'Страна', 'class' => 'CronCronBundle:Country', 'property' => 'name', 'empty_value' => 'Все страны', 'required' => false))
+                ->add('state', 'entity', array('label' => 'Регион', 'class' => 'CronCronBundle:State', 'property' => 'name', 'empty_value' => 'Все регионы', 'disabled' => true, 'required' => false))
+                ->add('city', 'entity', array('label' => 'Город', 'class' => 'CronCronBundle:City', 'property' => 'name', 'empty_value' => 'Все города', 'disabled' => true, 'required' => false))
                 ->add('agreement', null, array('label' => 'Правила', 'required' => true));
 
         $factory = $builder->getFormFactory();
@@ -38,8 +38,8 @@ class Registration extends AbstractType
         {
             $form->add($factory->createNamed('state', 'entity', null, array(
                 'class'         => 'Cron\CronBundle\Entity\State',
-                'property'      => 'state',
-                'empty_value'   => 'Все регионы',
+                'property'      => 'name',
+                'empty_value'   => 'Выберите регион',
                 'query_builder' => function (EntityRepository $repository) use ($country)
                 {
                     $qb = $repository->createQueryBuilder('state')
@@ -64,8 +64,8 @@ class Registration extends AbstractType
         {
             $form->add($factory->createNamed('city', 'entity', null, array(
                 'class'         => 'Cron\CronBundle\Entity\City',
-                'property'      => 'city',
-                'empty_value'   => 'Все регионы',
+                'property'      => 'name',
+                'empty_value'   => 'Выберите город',
                 'query_builder' => function (EntityRepository $repository) use ($state)
                 {
                     $qb = $repository->createQueryBuilder('city')
@@ -88,22 +88,22 @@ class Registration extends AbstractType
 
         $setCountry = function ($form, $country) use ($factory)
         {
-            $form->add($factory->createNamed('entity', 'country', null, array(
+            $form->add($factory->createNamed('country', 'entity', null, array(
                 'class'         => 'CronCronBundle:Country',
-                'property'      => 'country',
+                'property'      => 'name',
                 'property_path' => false,
-                'empty_value'   => 'Все страны',
+                'empty_value'   => 'Выберите страну',
                 'data'          => $country,
             )));
         };
 
         $setState = function ($form, $state) use ($factory)
         {
-            $form->add($factory->createNamed('entity', 'state', null, array(
+            $form->add($factory->createNamed('state', 'entity', null, array(
                 'class'         => 'CronCronBundle:State',
-                'property'      => 'state',
+                'property'      => 'name',
                 'property_path' => false,
-                'empty_value'   => 'Все регионы',
+                'empty_value'   => 'Выберите регион',
                 'data'          => $state,
             )));
         };
