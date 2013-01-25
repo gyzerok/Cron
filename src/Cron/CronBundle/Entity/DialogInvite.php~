@@ -1,0 +1,51 @@
+<?php
+
+namespace Cron\CronBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * Cron\CronBundle\Entity\DialogInvite
+ *
+ * @ORM\Table(name="dialog_invite")
+ * @ORM\Entity
+ */
+class DialogInvite {
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    protected $id;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user1", referencedColumnName="id", nullable=false)
+     * })
+     */
+    protected $user1;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user2", referencedColumnName="id", nullable=false)
+     * })
+     */
+    protected $user2;
+
+    /**
+     * @var \DateTime $invite_date
+     *
+     * @ORM\Column(name="invite_date", type="datetime", nullable=false)
+     */
+    protected $invite_date;
+
+}

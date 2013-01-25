@@ -1,0 +1,61 @@
+<?php
+
+namespace Cron\CronBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * Cron\CronBundle\Entity\ChatInvite
+ *
+ * @ORM\Table(name="chat_invite")
+ * @ORM\Entity
+ */
+class ChatInvite {
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    protected $id;
+
+    /**
+     * @var Chat
+     *
+     * @ORM\ManyToOne(targetEntity="Chat")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="chat", referencedColumnName="id", nullable=false)
+     * })
+     */
+    protected $chat;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user1", referencedColumnName="id", nullable=false)
+     * })
+     */
+    protected $user1;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user2", referencedColumnName="id", nullable=false)
+     * })
+     */
+    protected $user2;
+
+    /**
+     * @var \DateTime $invite_date
+     *
+     * @ORM\Column(name="invite_date", type="datetime", nullable=false)
+     */
+    protected $invite_date;
+
+}

@@ -23,8 +23,8 @@
 				<div class="portuguese"><a href="{{ path('locale', { 'locale': 'pt_PT' }) }}"></a></div>
 			</div>
 			<div class="users">
-			<p>Пользователей на сайте: <span>1234567</span></p>
-			<p>В сети: <span>1234567</span></p>
+			<p><span>12 345 678 </span><span class="onSite">На сайте</span></p>
+			<p><span>345 678 </span><span class="online">В сети</span></p>
 			</div>
 		</div>
 	    {% endblock %}
@@ -51,15 +51,12 @@
 			<p class="myQuestions"><a href="">Мои вопросы</a></p>
 			<p class="myQuestions"><a href="">Входящие вопросы</a></p>
 			{% else %}
-			<!--<form action="{{ path('login') }}">
-				<input type="submit" value="Логин" />
-			</form>!-->
 			<form action="{{ path('login_check') }}" method="post">
 				<input type="text" id="username" name="_username" value="" placeholder="логин" />
 
 				<input type="password" id="password" name="_password" placeholder="пароль" />
 
-				<input class="enterButton" type="submit" name="login" value="Вход" />
+				<input class="enterButton" type="submit" name="login" value="Войти" />
 			</form>
 			<form action="{{ path('register') }}" style="height: 0px;" type="text">
 				<input class="registerButtonOnIndex" type="submit" name="" value="Регистрация" />

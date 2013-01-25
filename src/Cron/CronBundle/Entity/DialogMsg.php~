@@ -1,0 +1,65 @@
+<?php
+
+namespace Cron\CronBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * Cron\CronBundle\Entity\DialogMsg
+ *
+ * @ORM\Table(name="dialog_msg")
+ * @ORM\Entity
+ */
+class DialogMsg {
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    protected $id;
+
+    /**
+     * @var Dialog
+     *
+     * @ORM\ManyToOne(targetEntity="Dialog")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="dialog", referencedColumnName="id", nullable=false)
+     * })
+     */
+    protected $dialog;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user", referencedColumnName="id", nullable=false)
+     * })
+     */
+    protected $user;
+
+    /**
+     * @var string $msg_text
+     *
+     * @ORM\Column(name="msg_text", type="string", length=5000, nullable=false)
+     */
+    protected $msg_text;
+
+    /**
+     * @var boolean $read_flag
+     *
+     * @ORM\Column(name="read_flag", type="boolean")
+     */
+    protected $read_flag;
+
+    /**
+     * @var \DateTime $msg_date
+     *
+     * @ORM\Column(name="msg_date", type="datetime", nullable=false)
+     */
+    protected $msg_date;
+
+}

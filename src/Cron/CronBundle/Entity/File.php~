@@ -190,4 +190,53 @@ class File {
     {
         return $this->hash;
     }
+
+    /**
+     * Set filesize
+     *
+     * @param integer $filesize
+     * @return File
+     */
+    public function setFilesize($filesize)
+    {
+        $this->filesize = $filesize;
+    
+        return $this;
+    }
+
+    public function getHashUrl()
+    {
+        return 'http://'.$_SERVER['HTTP_HOST'].'/disk/'.$this->hash;
+    }
+
+    /**
+     * Get filesize
+     *
+     * @return integer 
+     */
+    public function getFilesize()
+    {
+        $filesize = $this->filesize;
+        if($filesize > 1024){
+            $filesize = ($filesize/1024);
+            if($filesize > 1024){
+                $filesize = ($filesize/1024);
+                if($filesize > 1024){
+                    $filesize = ($filesize/1024);
+                    $filesize = round($filesize, 1);
+                    return $filesize." ГБ";
+                } else {
+                    $filesize = round($filesize, 1);
+                    return $filesize." MБ";
+                }
+            } else {
+                $filesize = round($filesize, 1);
+                return $filesize." Кб";
+            }
+        } else {
+            $filesize = round($filesize, 1);
+            return $filesize." байт";
+        }
+//        return $this->filesize;
+    }
 }
