@@ -18,6 +18,8 @@ class MainController extends Controller
 {
     public function indexAction(Request $request)
     {
+        $request->setLocale($request->getSession()->get('_locale'));
+
         $question = new Question();
         $form = $this->createForm(new NewQuestion(), $question);
 
@@ -62,6 +64,8 @@ class MainController extends Controller
 
     public function categoryAction(Request $request)
     {
+        $request->setLocale($request->getSession()->get('_locale'));
+
         $answer = new Answer();
         $form = $this->createForm(new NewAnswer(), $answer);
         if ($request->isMethod('POST')) {
@@ -90,6 +94,8 @@ class MainController extends Controller
 
     public function rushAction(Request $request)
     {
+        $request->setLocale($request->getSession()->get('_locale'));
+
         $answer = new Answer();
         $form = $this->createForm(new NewAnswer(), $answer);
         if ($request->isMethod('POST')) {
@@ -117,6 +123,8 @@ class MainController extends Controller
     }
     public function diskAction($file_hash)
     {
+        $request->setLocale($request->getSession()->get('_locale'));
+
         $user = $this->getUser();
 
         if (!$file_hash){
@@ -179,6 +187,8 @@ class MainController extends Controller
 
     public function registerAction(Request $request)
     {
+        $request->setLocale($request->getSession()->get('_locale'));
+
         $user = new User();
         $form = $this->createForm(new Registration(), $user);
         if ($request->isMethod('POST')) {
@@ -223,6 +233,8 @@ class MainController extends Controller
 
     public function regconfAction(Request $request)
     {
+        $request->setLocale($request->getSession()->get('_locale'));
+
         $success = false;
 
         if ($request->isMethod("GET")) {
@@ -244,6 +256,13 @@ class MainController extends Controller
         }
 
         return $this->render("CronCronBundle:Main:registration_confirmation.html.twig", array('title' => 'Подтверждение регистрации', 'curUser' => $this->getUser(), 'success' => $success));
+    }
+
+    public function localeAction(Request $request, $locale)
+    {
+        $request->getSession()->set('_locale', $locale);
+
+        return $this->redirect($request->headers->get('referer'));
     }
 
     public function convertFilesize($input_filesize)

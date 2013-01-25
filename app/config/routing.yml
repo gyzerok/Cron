@@ -18,6 +18,9 @@ disk:
   pattern: /disk/{file_hash}
   defaults: { _controller: CronCronBundle:Main:disk, "file_hash":"" }
 
+locale:
+  pattern: /locale/{locale}
+  defaults: { _controller: CronCronBundle:Main:locale }
 #disk:
   #pattern: /disk/
   #defaults: { _controller: CronCronBundle:Main:disk }
