@@ -683,7 +683,7 @@ h2.categoryH2 {
 .questionText{
 	display: block;
 	width: 650px;
-	margin: 3px 0 5px 5px;
+	margin: 3px 0 0px 5px;
 	overflow: hidden;
 	font-family: 'Cambria';
 	
@@ -854,6 +854,7 @@ h3.registrationH3 {
 	overflow: hidden;
 	margin-top: 15px;
 	margin-bottom: 25px;
+	position: relative;
 }
 
 .registrationField label {
@@ -884,7 +885,7 @@ h3.registrationH3 {
 span.fieldHelp {
 	display: block;
 	font-size: 14px;
-	margin: 53px 0 0 220px;
+	margin: 17px 0 0 220px;
 	color: #828282;
 	font-family: 'Arial';
 	text-align: left;
@@ -900,7 +901,7 @@ span.fieldHelp {
 .registrationFieldPass input {
 	border: 1px solid #52648A;
 	border-radius: 3px;
-	margin-top: 20px;
+	margin-top: 35px;
 	margin-bottom: 20px;
 	width: 500px;
 	font-size: 18px;
@@ -924,7 +925,7 @@ span.fieldHelpPass {
 	width: 415px;
 	font-size: 14px;
 	overflow: hidden;
-	top: -82px;
+	top: -98px;
 	left: 217px;
 	color: #828282;
 	font-family: 'Arial';
@@ -978,6 +979,7 @@ span.birtDateDescription {
 	width: 100%;
 	overflow: hidden;
 	margin-top: -26px;
+	position: relative;
 }
 
 .genderLabel {
@@ -1002,6 +1004,7 @@ span.birtDateDescription {
 
 .registrationFieldPlace {
 	width: 100%;
+	position: relative;
 }
 
 span.placeLabel {
@@ -1034,12 +1037,12 @@ span.placeLabel {
 }
 
 span.agreementLabel {
-	width: 386px;
 	display: block;
 	float: left;
-	margin: 25px 0 0 23px;
-	font-size: 20px;
-	color: #52648A;		
+	margin: 16px 0 0 4px;
+	font-size: 24px;
+	color: #52648A;
+	font-family: 'Cambria';
 }
 
 span.agreementLabel a {
@@ -1052,19 +1055,86 @@ span.agreementLabel a {
 
 .emailError {
 	font-family: 'Arial';
-	font-size: 18px;
+	font-size: 16.9px;
 	color: #ff5151;
 	width: 225px;
 	display: block;
-	position: relative;
-	left: 668px;
-	top: 44px;
+	position: absolute;
+	left: 725px;
+	top: 24px;
 	margin: 0;
 	padding: 0;
 }
 
-.emailError ul {
+.nickError {
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #ff5151;
+	position: absolute;
+	right: 51px;
+	top: 25px;
+	margin: 0;
+	padding: 0;
+}
 
+.genderError {
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #ff5151;
+	position: absolute;
+	right: 455px;
+	top: 36px;
+	margin: 0;
+	padding: 0;
+}
+
+.countryError {
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #ff5151;
+	position: absolute;
+	right: 273px;
+	top: 5px;
+	margin: 0;
+	padding: 0;
+}
+
+.stateError {
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #ff5151;
+	position: absolute;
+	right: 273px;
+	top: 46px;
+	margin: 0;
+	padding: 0;
+}
+.cityError {
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #ff5151;
+	position: absolute;
+	right: 273px;
+	top: 85px;
+	margin: 0;
+	padding: 0;
+}
+
+.agreementError {
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #ff5151;
+	position: absolute;
+	right: 66px;
+	top: 4px;
+	margin: 0;
+	padding: 0;
+}
+
+.agreementError ul {
+	display: block;
+	width: 172px;
+	height: 62px;
 }
 
 input.registerButton {
@@ -1078,6 +1148,10 @@ input.registerButton {
 	display: block;
 	margin: 0 auto;
 	text-transform: uppercase;
+}
+
+input.registerButton:hover {
+	border: 2px solid #00A3D4;
 }
 
 #username {
@@ -1144,8 +1218,8 @@ a.forgotPassword {
 
 a.closeRegisterButton {
 	display: block;
-	width: 30px;
-	height: 30px;
+	width: 18px;
+	height: 19px;
 	float: right;
 	background: url(/i/closeRegisterButton.png) no-repeat;
 }
@@ -1230,10 +1304,11 @@ a.closeRegisterButton {
 	border-top: 2px solid #52648A;
 	border-bottom: 2px solid #52648A;
 	border-left: 2px solid #52648A;
-	border-radius: 5px 0 0 5px; 
-	width: 600px;
+	border-radius: 5px 0 0 5px;
+	width: 571px;
 	position: relative;
 	margin: 5px 0 0 7px;
+	overflow: hidden;
 }
 #progress .bar {
 	height: 35px;
@@ -1253,9 +1328,9 @@ a.closeRegisterButton {
 	margin: 5px 0px 0 -3px;
 	border-radius: 5px;
 	height: 39px;
-	width: 100px;
-	color: #383838;
-	font-size: 20px;
+	width: 127px;
+	color: #010101;
+	font-size: 26px;
 	font-family: 'Cambria';
 	cursor: pointer;
 }
@@ -1269,18 +1344,29 @@ a.closeRegisterButton {
 
 .file-link-wrap div {
 	margin-bottom: 5px;
+	color: #000;
+	font-size: 24px;
+	font-family: 'Cambria';
 }
 
 #d_clip_button {
-	text-decoration: underline;
+	display: block;
+	width: 24px;
+	height: 25px;
+	background: url('../i/copy1.png') no-repeat;
+	float: left;
+	margin: 3px 0 0 3px;
 }
 
 #d_clip_button:hover {
-	text-decoration: none;
+	background: url('../i/copy.png') no-repeat;
+	display: block;
+	width: 24px;
+	height: 25px;
 }
 
 .total-size-wrap {
-	margin: 25px 36px 0 0px;
+	margin: 25px 81px 0 0px;
 	color: #52648A;
 	font-size: 20px;
 	font-family: 'Cambria';	
@@ -1289,18 +1375,25 @@ a.closeRegisterButton {
 
 .my-files {
 	clear: both;
+	margin-top: 22px;
 }
 .my-file {
-	padding: 1px 0 1px 5px;
-	margin: 8px 0;
+	padding: 6px 0 1px 5px;
+	margin: 8px auto 0 auto;
 	border-radius: 4px;
 	border: 1px solid #003580;
+	width: 666px;
+	height: 22px;
+	overflow: hidden;
 }
 .my-file:hover {
 	background: #f0f0f0;
 }
 .my-file table td {
-	vertical-align: middle;
+	vertical-align: top;
+	color: #000;
+	font-size: 21px;
+	font-family: 'Cambria';	
 }
 
 .download-my-file{
@@ -1328,7 +1421,13 @@ a.closeRegisterButton {
 	float: right;
 }
 #file-path-field {
-	width: 250px;
+	padding: 4px;
+	width: 323px;
 	border-radius: 3px;
 	border: 1px solid #52648A;
+	height: 22px;
+	font-family: 'Cambria';
+	font-size: 21px;
+	color: #000;
+	float: left;
 }
