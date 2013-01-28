@@ -1389,6 +1389,9 @@ a.closeRegisterButton {
 .my-file:hover {
 	background: #f0f0f0;
 }
+.my-file.selected {
+    background: #e8e8e8;
+}
 .my-file table td {
 	vertical-align: top;
 	color: #000;
