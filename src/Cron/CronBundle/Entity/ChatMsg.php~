@@ -62,4 +62,129 @@ class ChatMsg {
      */
     protected $msg_date;
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set msg_text
+     *
+     * @param string $msgText
+     * @return ChatMsg
+     */
+    public function setMsgText($msgText)
+    {
+        $this->msg_text = $msgText;
+    
+        return $this;
+    }
+
+    /**
+     * Get msg_text
+     *
+     * @return string 
+     */
+    public function getMsgText()
+    {
+        return $this->msg_text;
+    }
+
+    /**
+     * Set read_flag
+     *
+     * @param boolean $readFlag
+     * @return ChatMsg
+     */
+    public function setReadFlag($readFlag)
+    {
+        $this->read_flag = $readFlag;
+    
+        return $this;
+    }
+
+    /**
+     * Get read_flag
+     *
+     * @return boolean 
+     */
+    public function getReadFlag()
+    {
+        return $this->read_flag;
+    }
+
+    /**
+     * Set msg_date
+     *
+     * @param \DateTime $msgDate
+     * @return ChatMsg
+     */
+    public function setMsgDate($msgDate)
+    {
+        $this->msg_date = $msgDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get msg_date
+     *
+     * @return \DateTime 
+     */
+    public function getMsgDate()
+    {
+        return $this->msg_date;
+    }
+
+    /**
+     * Set chat
+     *
+     * @param Cron\CronBundle\Entity\Chat $chat
+     * @return ChatMsg
+     */
+    public function setChat(\Cron\CronBundle\Entity\Chat $chat)
+    {
+        $this->chat = $chat;
+    
+        return $this;
+    }
+
+    /**
+     * Get chat
+     *
+     * @return Cron\CronBundle\Entity\Chat 
+     */
+    public function getChat()
+    {
+        return $this->chat;
+    }
+
+    /**
+     * Set user
+     *
+     * @param Cron\CronBundle\Entity\User $user
+     * @return ChatMsg
+     */
+    public function setUser(\Cron\CronBundle\Entity\User $user)
+    {
+        $this->user = $user;
+    
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return Cron\CronBundle\Entity\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }

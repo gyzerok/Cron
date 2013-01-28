@@ -123,7 +123,7 @@ class MainController extends Controller
     }
     public function diskAction($file_hash)
     {
-        $request->setLocale($request->getSession()->get('_locale'));
+        //$request->setLocale($request->getSession()->get('_locale'));
 
         $user = $this->getUser();
 

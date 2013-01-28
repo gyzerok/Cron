@@ -75,6 +75,81 @@ updateFilesize:
   pattern:  /ajax/updateFilesize
   defaults: { _controller: CronCronBundle:Ajax:updateFilesize }
 
+# Chat routes
+
+loadChat:
+  pattern:  /chat/loadChat
+  defaults: { _controller: CronCronBundle:Chat:loadChat }
+
+updateChat:
+  pattern:  /chat/updateChat
+  defaults: { _controller: CronCronBundle:Chat:updateChat }
+
+getSrvMsg:
+  pattern:  /chat/getSrvMsg
+  defaults: { _controller: CronCronBundle:Chat:getSrvMsg }
+
+getDialogList:
+  pattern:  /chat/getDialogList
+  defaults: { _controller: CronCronBundle:Chat:getDialogList }
+
+getDialogMsgs:
+  pattern:  /chat/getDialogMsgs
+  defaults: { _controller: CronCronBundle:Chat:getDialogMsgs }
+
+getChatMsgs:
+  pattern:  /chat/getChatMsgs
+  defaults: { _controller: CronCronBundle:Chat:getChatMsgs }
+
+getMyChat:
+  pattern:  /chat/getMyChat
+  defaults: { _controller: CronCronBundle:Chat:getMyChat }
+
+getIncomeChats:
+  pattern:  /chat/getIncomeChats
+  defaults: { _controller: CronCronBundle:Chat:getIncomeChats }
+
+sendDialogMsg:
+  pattern:  /chat/sendDialogMsg
+  defaults: { _controller: CronCronBundle:Chat:sendDialogMsg }
+
+sendChatMsg:
+  pattern:  /chat/sendChatMsg
+  defaults: { _controller: CronCronBundle:Chat:sendChatMsg }
+
+deleteDialog:
+  pattern:  /chat/deleteDialog
+  defaults: { _controller: CronCronBundle:Chat:deleteDialog }
+
+checkDialogAsSpam:
+  pattern:  /chat/checkDialogAsSpam
+  defaults: { _controller: CronCronBundle:Chat:checkDialogAsSpam }
+
+acceptChatInvite:
+  pattern:  /chat/acceptChatInvite
+  defaults: { _controller: CronCronBundle:Chat:acceptChatInvite }
+
+declineChatInvite:
+  pattern:  /chat/declineChatInvite
+  defaults: { _controller: CronCronBundle:Chat:declineChatInvite }
+
+finishChat:
+  pattern:  /chat/finishChat
+  defaults: { _controller: CronCronBundle:Chat:finishChat }
+
+leaveChat:
+  pattern:  /chat/leaveChat
+  defaults: { _controller: CronCronBundle:Chat:leaveChat }
+
+sendChatInvite:
+  pattern:  /chat/sendChatInvite
+  defaults: { _controller: CronCronBundle:Chat:sendChatInvite }
+
+deleteChatMember:
+  pattern:  /chat/deleteChatMember
+  defaults: { _controller: CronCronBundle:Chat:deleteChatMember }
+
+
 # Security routes
 
 login:

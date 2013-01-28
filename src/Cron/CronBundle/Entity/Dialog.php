@@ -70,6 +70,20 @@ class Dialog {
     protected $spam2;
 
     /**
+     * @var boolean $open1
+     *
+     * @ORM\Column(name="open1", type="boolean")
+     */
+    protected $open1;
+
+    /**
+     * @var boolean $open2
+     *
+     * @ORM\Column(name="open2", type="boolean")
+     */
+    protected $open2;
+
+    /**
      * @var \DateTime $start_date
      *
      * @ORM\Column(name="start_date", type="datetime", nullable=false)
@@ -246,5 +260,51 @@ class Dialog {
     public function getUser2()
     {
         return $this->user2;
+    }
+
+    /**
+     * Set open1
+     *
+     * @param boolean $open1
+     * @return Dialog
+     */
+    public function setOpen1($open1)
+    {
+        $this->open1 = $open1;
+    
+        return $this;
+    }
+
+    /**
+     * Get open1
+     *
+     * @return boolean 
+     */
+    public function getOpen1()
+    {
+        return $this->open1;
+    }
+
+    /**
+     * Set open2
+     *
+     * @param boolean $open2
+     * @return Dialog
+     */
+    public function setOpen2($open2)
+    {
+        $this->open2 = $open2;
+    
+        return $this;
+    }
+
+    /**
+     * Get open2
+     *
+     * @return boolean 
+     */
+    public function getOpen2()
+    {
+        return $this->open2;
     }
 }
