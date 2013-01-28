@@ -7,7 +7,7 @@
             <div class="file-name"></div>
         </div>
         <input id="fileupload" type="file" name="file" data-url="{{ path('uploadFile') }}" style="/*visibility: hidden;*/position:absolute;left:-9999px;">
-        <input type="button" value="Добавить" id="add-file-button">
+        <input type="button" value="добавить" id="add-file-button">
         <script src="js/vendor/jquery.ui.widget.js"></script>
         <script src="js/jquery.iframe-transport.js"></script>
         <script src="js/jquery.fileupload.js"></script>
@@ -126,7 +126,7 @@
             <div class="file-link-wrap" style="float:left;/*visibility: hidden;*/">
                 <div>Адрес файла</div>
                 <input type="text" id="file-path-field">
-                <span id="d_clip_button">Copy To Clipboard</span>
+                <span id="d_clip_button"></span>
             </div>
             <div class="total-size-wrap" style="float:right;">
                 <span id="total-size-values">{{ total_filesize }} / {{ total_filesize_left }}</span>

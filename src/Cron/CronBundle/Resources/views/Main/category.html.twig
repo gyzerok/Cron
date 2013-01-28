@@ -19,13 +19,6 @@
 		});
 		
 		var answerFormNavigation = $('.answerFormNavigation');
-		answerFormNavigation.hide();
-		$('.answerTextarea').focus(function() {
-			$(this).next('.answerFormNavigation').slideDown(500);
-			$(this).css({
-				'border-bottom':'0'
-			});
-		});
 		$('.cancelButton').click(function() {
 			$(this).closest('.answerForm').slideUp(500);
 		});
