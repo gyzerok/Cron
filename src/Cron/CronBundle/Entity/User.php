@@ -417,7 +417,7 @@ class User implements UserInterface, \Serializable
 
     public function __toString()
     {
-        return $this->getUsername();
+        return $this->getNick();
     }
 
     function equals(UserInterface $user)
