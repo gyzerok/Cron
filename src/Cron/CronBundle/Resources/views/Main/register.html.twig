@@ -51,7 +51,7 @@
 		$('#register_password > div:first > label').remove();
 		$('#register_password > div:last > label').css({
 			'position': 'relative',
-			'top':'21px',
+			'top':'49px',
 			'left': '-1px'
 		}).text('Повторите пароль');
 		$('.genderLabel > label').css({
@@ -64,11 +64,10 @@
 			'width':'13px',
 			'border': 'none',
 			'border-radius': '0',
-			'margin-top': '0',
 			'font-size': '0',
-			'float': 'none',
-			'margin-left': '40px',
-			'margin-top':'29px'
+			'margin-right': '244px',
+			'margin-top':'18px',
+			'margin-bottom':'11px'
 		});
 		
 		//Отключение input'а 
@@ -81,7 +80,6 @@
 		});
 		
 		//Сравнение полей с паролем
-		$('#register_password_Password').change(testPass).keyup(testPass);
 		$('#register_password_Confirm').change(testPass).keyup(testPass);
 		
 		
@@ -142,10 +140,10 @@
 			<div style="clear:both;"></div>	
 			<div class="registrationField">
 				{{ form_label(form.username) }}
+				{{ form_widget(form.username) }}
 				<div class="emailError">
 				{{ form_errors(form.username) }}
 				</div>
-				{{ form_widget(form.username) }}
 				<span class="fieldHelp">Укажите реальный и действующий e-mail адрес.<br> Он потребуется для входа на сайт и для получения уведомлений.</span>
 			</div>
 			<div class="registrationFieldPass">
@@ -157,17 +155,21 @@
 			</div>
 			<div class="registrationField">
 				{{ form_label(form.nick) }}
-				{{ form_errors(form.nick) }}
 				{{ form_widget(form.nick) }}
+				<div class="nickError">
+				{{ form_errors(form.nick) }}
+				</div>
 				<span class="fieldHelp">Укажите ваше имя или никнейм; <br> От 2 до 12 символов - нельзя использовать цифры.</span>
 			</div>
 			<div class="registrationFieldGender">
 				<div class="genderLabel">
 				{{ form_label(form.gender) }}
 				</div>
-				{{ form_errors(form.gender) }}
 				<div class="genderRadio">
 				{{ form_widget(form.gender) }}
+				</div>
+				<div class="genderError">
+				{{ form_errors(form.gender) }}
 				</div>
 			</div>
 			<div class="registrationField">
@@ -178,28 +180,35 @@
 				{{ form_widget(form.birthDate) }}
 				</div>
 			</div>
-			<div class="registrationFieldPlace">
-				<span class="placeLabel">Местонахождение</span>
-				<div class="placeSelects">
-				{{ form_label(form.country) }}	
-				{{ form_errors(form.country) }}
-				{{ form_widget(form.country) }}
-				{{ form_label(form.state) }}	
-				{{ form_errors(form.state) }}
-				{{ form_widget(form.state) }}
-				{{ form_label(form.city) }}	
-				{{ form_errors(form.city) }}
-				{{ form_widget(form.city) }}
-				</div>
+	<div class="registrationFieldPlace">
+		<span class="placeLabel">Местонахождение</span>
+		<div class="placeSelects">
+			{{ form_label(form.country) }}	
+			{{ form_widget(form.country) }}
+			<div class="countryError">
+			{{ form_errors(form.country) }}
 			</div>
-			<div class="registrationField">
-				<span class="agreementLabel">Я согласен с <a href="#" title="Для продолжения регистрации ознакомьтесь с пользовательским соглашением">пользовательским соглашением</a></span>
-				{{ form_errors(form.agreement) }}
-				{{ form_widget(form.agreement) }}
+			{{ form_label(form.state) }}	
+			{{ form_widget(form.state) }}
+			<div class="stateError">				
+			{{ form_errors(form.state) }}
 			</div>
+			{{ form_label(form.city) }}	
+			{{ form_widget(form.city) }}
+			<div class="cityError">					
+			{{ form_errors(form.city) }}
+			</div>
+		</div>
+		<div class="registrationField">
+			<span class="agreementLabel">Пожалуйста, ознакомьтесь с <a href="#" title="Для продолжения регистрации ознакомьтесь с пользовательским соглашением">пользовательским соглашением</a></span>
+			{{ form_widget(form.agreement) }}
+			<div class="agreementError">
+			{{ form_errors(form.agreement) }}
+			</div>
+		</div>
 
 			{{ form_rest(form) }}
-		<input class="registerButton" type="submit" value="Зарегестрироваться">
+		<input class="registerButton" type="submit" value="Зарегистрироваться">
 		</form>
 	</div>
 	

@@ -854,6 +854,7 @@ h3.registrationH3 {
 	overflow: hidden;
 	margin-top: 15px;
 	margin-bottom: 25px;
+	position: relative;
 }
 
 .registrationField label {
@@ -884,7 +885,7 @@ h3.registrationH3 {
 span.fieldHelp {
 	display: block;
 	font-size: 14px;
-	margin: 53px 0 0 220px;
+	margin: 17px 0 0 220px;
 	color: #828282;
 	font-family: 'Arial';
 	text-align: left;
@@ -900,7 +901,7 @@ span.fieldHelp {
 .registrationFieldPass input {
 	border: 1px solid #52648A;
 	border-radius: 3px;
-	margin-top: 20px;
+	margin-top: 35px;
 	margin-bottom: 20px;
 	width: 500px;
 	font-size: 18px;
@@ -924,7 +925,7 @@ span.fieldHelpPass {
 	width: 415px;
 	font-size: 14px;
 	overflow: hidden;
-	top: -82px;
+	top: -98px;
 	left: 217px;
 	color: #828282;
 	font-family: 'Arial';
@@ -978,6 +979,7 @@ span.birtDateDescription {
 	width: 100%;
 	overflow: hidden;
 	margin-top: -26px;
+	position: relative;
 }
 
 .genderLabel {
@@ -1002,6 +1004,7 @@ span.birtDateDescription {
 
 .registrationFieldPlace {
 	width: 100%;
+	position: relative;
 }
 
 span.placeLabel {
@@ -1034,12 +1037,12 @@ span.placeLabel {
 }
 
 span.agreementLabel {
-	width: 386px;
 	display: block;
 	float: left;
-	margin: 25px 0 0 23px;
-	font-size: 20px;
-	color: #52648A;		
+	margin: 16px 0 0 4px;
+	font-size: 24px;
+	color: #52648A;
+	font-family: 'Cambria';
 }
 
 span.agreementLabel a {
@@ -1056,15 +1059,82 @@ span.agreementLabel a {
 	color: #ff5151;
 	width: 225px;
 	display: block;
-	position: relative;
-	left: 668px;
-	top: 44px;
+	position: absolute;
+	left: 725px;
+	top: 24px;
 	margin: 0;
 	padding: 0;
 }
 
-.emailError ul {
+.nickError {
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #ff5151;
+	position: absolute;
+	right: 51px;
+	top: 25px;
+	margin: 0;
+	padding: 0;
+}
 
+.genderError {
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #ff5151;
+	position: absolute;
+	right: 455px;
+	top: 36px;
+	margin: 0;
+	padding: 0;
+}
+
+.countryError {
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #ff5151;
+	position: absolute;
+	right: 273px;
+	top: 5px;
+	margin: 0;
+	padding: 0;
+}
+
+.stateError {
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #ff5151;
+	position: absolute;
+	right: 273px;
+	top: 46px;
+	margin: 0;
+	padding: 0;
+}
+.cityError {
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #ff5151;
+	position: absolute;
+	right: 273px;
+	top: 85px;
+	margin: 0;
+	padding: 0;
+}
+
+.agreementError {
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #ff5151;
+	position: absolute;
+	right: 66px;
+	top: 4px;
+	margin: 0;
+	padding: 0;
+}
+
+.agreementError ul {
+	display: block;
+	width: 172px;
+	height: 62px;
 }
 
 input.registerButton {
@@ -1078,6 +1148,10 @@ input.registerButton {
 	display: block;
 	margin: 0 auto;
 	text-transform: uppercase;
+}
+
+input.registerButton:hover {
+	border: 2px solid #00A3D4;
 }
 
 #username {
@@ -1144,8 +1218,8 @@ a.forgotPassword {
 
 a.closeRegisterButton {
 	display: block;
-	width: 30px;
-	height: 30px;
+	width: 18px;
+	height: 19px;
 	float: right;
 	background: url(/i/closeRegisterButton.png) no-repeat;
 }
