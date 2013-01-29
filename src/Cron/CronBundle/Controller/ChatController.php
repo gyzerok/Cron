@@ -20,7 +20,7 @@ class ChatController extends Controller
 {
 
     public function loadChatAction(Request $request){
-        if ($request->isMethod('POST') && ($user = $this->getUser() instanceof User)){
+        if (/*$request->isMethod('POST') && */($user = $this->getUser() instanceof User)){
             return $this->render("CronCronBundle:Chat:chatwindow.html.twig", array(
 
                 )
@@ -42,7 +42,7 @@ class ChatController extends Controller
 
     public function getDialogListAction(Request $request){
         $user = $this->getUser();
-        if ($request->isMethod('POST') && ($user instanceof User)){
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
             $dialogs = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')
                 ->createQueryBuilder('dialog')
                 ->where('dialog.user1 = :uid OR dialog.user2 = :uid')
