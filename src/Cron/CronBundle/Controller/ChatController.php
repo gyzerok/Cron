@@ -57,6 +57,23 @@ class ChatController extends Controller
         }
     }
 
+    public function getInviteListAction(Request $request){
+        $user = $this->getUser();
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
+            $invites = $this->getDoctrine()->getRepository('CronCronBundle:ChatInvite')
+                ->createQueryBuilder('chat_invite')
+                ->where('chat_invite.user2 = :uid')
+                ->setParameter('uid', $user->getId())
+                ->orderBy('chat_invite.invite_date', 'DESC')
+                ->getQuery()
+                ->getResult();
+            return $this->render("CronCronBundle:Chat:invites.html.twig", array(
+                    "invites" => $invites
+                )
+            );
+        }
+    }
+
     public function getDialogMsgsAction(Request $request){
         if ($request->isMethod('POST') && ($user = $this->getUser() instanceof User)){
             $dialog = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')->findOneBy(array('id' => $request->get('dialog')));
