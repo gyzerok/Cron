@@ -93,6 +93,10 @@ getDialogList:
   pattern:  /chat/getDialogList
   defaults: { _controller: CronCronBundle:Chat:getDialogList }
 
+getInviteList:
+  pattern:  /chat/getInviteList
+  defaults: { _controller: CronCronBundle:Chat:getInviteList }
+  
 getDialogMsgs:
   pattern:  /chat/getDialogMsgs
   defaults: { _controller: CronCronBundle:Chat:getDialogMsgs }
