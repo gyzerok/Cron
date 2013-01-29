@@ -58,6 +58,22 @@ class ChatController extends Controller
 //            echo '<pre>';
 //            print_r($dialogs);
 //            echo '</pre>';
+            foreach ($dialogs as $dialog) {
+                $unreads = $this->getDoctrine()->getRepository('CronCronBundle:DialogMsg')
+                    ->createQueryBuilder('dm')
+                    ->select('COUNT(dm.dialog) as unreads')
+                    ->where('dm.dialog = :did AND dm.read_flag = 0 AND dm.user = :uid')
+                    ->setParameter('did', $dialog->getId())
+                    ->setParameter('uid', ($dialog->getUser1()==$user ? $dialog->getUser2()->getId():$dialog->getUser1()->getId()))
+//                    ->setParameter('uid', $dialog->getUser2())
+                    ->groupBy('dm.dialog')
+                    ->getQuery()
+                    ->getResult();
+                if ($unreads[0])
+                    $dialog->unreads = '('.$unreads[0]['unreads'].')';
+//                print_r($unreads);
+            }
+
             return $this->render("CronCronBundle:Chat:dialogs.html.twig", array(
                     "dialogs" => $dialogs,
                     "curUser" => $user
@@ -235,9 +251,10 @@ class ChatController extends Controller
 
             $em = $this->getDoctrine()->getManager();
 
-            $invite = $this->getDoctrine()->getRepository('CronCronBundle:ChatInvite')->findOneBy(array('chat' => $request->get('chat'), 'user2' => $user->getId()));
+            $invite = $this->getDoctrine()->getRepository('CronCronBundle:ChatInvite')->findOneBy(array('id' => $request->get('invite')));
 
-            $chat = $this->getDoctrine()->getRepository('CronCronBundle:Chat')->findOneBy(array('id' => $request->get('chat')));
+//            $chat = $this->getDoctrine()->getRepository('CronCronBundle:Chat')->findOneBy(array('id' => $request->get('chat')));
+            $chat = $invite->getChat();
             if (!$chat instanceof \Cron\CronBundle\Entity\Chat){
                 //СОздать Chat и добавить двух ChatMember
                 $new_chat = new Chat();
@@ -279,7 +296,7 @@ class ChatController extends Controller
         $user = $this->getUser();
         if (/*$request->isMethod('POST') && */($user instanceof User)){
 
-            $invite = $this->getDoctrine()->getRepository('CronCronBundle:ChatInvite')->findOneBy(array('chat' => $request->get('chat'), 'user2' => $user->getId()));
+            $invite = $this->getDoctrine()->getRepository('CronCronBundle:ChatInvite')->findOneBy(array('id' => $request->get('invite')));
             $em = $this->getDoctrine()->getManager();
             $em->remove($invite);
             $em->flush();

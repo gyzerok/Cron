@@ -1,4 +1,4 @@
-<html> 
+{#<html>
 <head>
 	<link href="/css/style.css" rel="stylesheet">
 	<link href="/css/reset.css" rel="stylesheet">
@@ -11,12 +11,15 @@
 	<body>
 		<div class="chatInviteWindow">
 			<div class="closeInviteWindow"><a href=""></a></div>
-			<h2 class="chatInviteTitle">Приглашения в чат</h2>
-			<div class="singleInvite">
-				<div class="InviteUsername">Катерина</div>
-				<input type="button" value="отклонить" />
-				<input type="button" value="подтвердить" />
-			</div>
+			<h2 class="chatInviteTitle">Приглашения в чат</h2>#}
+            {% for invite in invites %}
+                <div class="singleInvite" data-invite="{{ invite.getId() }}">
+                    <div class="InviteUsername">{{ invite.user1.getNick() }}</div>
+                    <input type="button" class="decline-invite" value="отклонить" />
+                    <input type="button" class="accept-invite" value="подтвердить" />
+                </div>
+            {% endfor %}
+{#
 		</div>
 	</body>
- </html>
+ </html>#}

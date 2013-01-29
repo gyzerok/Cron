@@ -1537,8 +1537,13 @@ h2.dialogTitle {
 	width: 660px;
 	height: 300px;
 	border: 2px solid #52648A;
+    background: #ffffff;
 	border-radius: 8px;
 	margin: 0 auto;
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    margin-left: -330px;
 }
 
 .closeInviteWindow {
@@ -1572,6 +1577,9 @@ h2.chatInviteTitle{
 	border-radius: 5px;
 	margin: 15px auto;
 }
+.invites-empty-text {
+    padding: 17px;
+}
 
 .InviteUsername {
 	width: 215px;
@@ -1592,4 +1600,5 @@ h2.chatInviteTitle{
 	background-color: #EFEFEF;
 	font-family: 'Cambria';
 	font-size: 17px;
+    cursor: pointer;
 }
