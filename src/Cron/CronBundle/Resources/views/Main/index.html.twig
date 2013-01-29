@@ -117,7 +117,8 @@
 			function(){
 				questionSubs.slideUp();
 				document.forms.writeQuestion.reset();
-				$('.greeting').fadeIn(500);			
+				$('.greeting').fadeIn(500);
+				questionPrivateCost.hide()				
 			}
 		);
 		$('.writeQuestion').click(function(e){
@@ -159,16 +160,19 @@
 	questionPrivateCost.hide();
 	
 
-	$('#question_private').toggle(
-	function() {
-	questionPrivateCost.show();
-	$('#question_private').attr('checked', true);
-	},
-	function() {
-	questionPrivateCost.hide();		
+	$('#question_private').click(function() {
+	if ($(this).attr('checked')) {
+	questionPrivateCost.show()
 	}
-	);
+	else {
+	questionPrivateCost.hide()
+	}
 	});
+	
+	
+	});
+	
+	
 	
 </script>
 
