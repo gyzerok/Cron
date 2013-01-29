@@ -1,4 +1,4 @@
-<html> 
+{#<html>
 <head>
 	<link href="/css/style.css" rel="stylesheet">
 	<link href="/css/reset.css" rel="stylesheet">
@@ -11,13 +11,22 @@
 	<body>
 	<div class="dialogsWrapper">
 		<div class="closeDialogWindow"><a href=""></a></div>
-		<h2 class="dialogTitle">Диалоги</h2>
-		<div class="singleDialog">
-			<div class="dialogUsername">Катерина</div>
-			<div class="messagesAmount">(1)</div>
-			<div class="closeDialogs"><a href=""></a></div>
-			<div class="spamDialogs"><a href=""></a></div>
-		</div>
+		<h2 class="dialogTitle">Диалоги</h2>#}
+        {% for dialog in dialogs %}
+            <div class="singleDialog" data-dialog="{{ dialog.getId() }}">
+                <div class="dialogUsername">
+                    {% if dialog.user1==curUser %}
+                        {{ dialog.user2.getNick() }}
+                    {% else %}
+                        {{ dialog.user1.getNick() }}
+                    {% endif %}
+                </div>
+                <div class="messagesAmount">{{ dialog.unreads }}</div>
+                <div class="closeDialogs"><a href=""></a></div>
+                <div class="spamDialogs"><a href=""></a></div>
+            </div>
+        {% endfor %}
+{#
 	</div>
 	</body>
- </html>
+ </html>#}

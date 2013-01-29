@@ -9,6 +9,99 @@
 	<script src="/js/jquery.validate.min.js"></script>
 	<!--<script src="js/showmessages.js"></script>!-->
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".open-dialog-list").bind('click', function(){
+                $.ajax({
+                    url: '{{ path('getDialogList') }}',
+                    success: function(response){
+                        if (!$.trim(response))
+                            response = '<div class="dialogs-empty-text">Диалогов нет.</div>';
+                        $(".dialogsWrapper .dialogs-container").html(response);
+                    }
+                });
+                $(".dialogsWrapper .dialogs-container").html('<div class="dialogs-empty-text">Загрузка...</div>');
+                $(".dialogsWrapper").toggle();
+            });
+            $(".closeDialogWindow a").bind('click', function(){
+                $(".dialogsWrapper").hide();
+                return false;
+            });
+            $(".closeDialogs a").live('click', function(){
+                if (confirm('Удалить диалог?')) {
+                    var singleDialog = $(this).closest('.singleDialog');
+                    $.ajax({
+                        url:'{{ path('deleteDialog') }}',
+                        method: 'POST',
+                        data: { dialog:singleDialog.data('dialog') }
+                    });
+                    removeSingleDialog(singleDialog);
+                }
+                return false;
+            });
+            $(".spamDialogs a").live('click', function(){
+                if (confirm('Пометить как спам?')) {
+                    var singleDialog = $(this).closest('.singleDialog');
+                    $.ajax({
+                        url:'{{ path('checkDialogAsSpam') }}',
+                        method: 'POST',
+                        data: { dialog:singleDialog.data('dialog') }
+                    });
+                    removeSingleDialog(singleDialog);
+                }
+                return false;
+            });
+            function removeSingleDialog (obj) {
+                obj.remove();
+                if (!$(".singleDialog").size()){
+                    $(".dialogsWrapper .dialogs-container").html('<div class="dialogs-empty-text">Диалогов нет.</div>');
+                }
+            }
+
+            $(".chatInvite").bind('click', function(){
+                $.ajax({
+                    url: '{{ path('getInviteList') }}',
+                    success: function(response){
+                        if (!$.trim(response))
+                            response = '<div class="invites-empty-text">Приглашений нет.</div>';
+                        $(".chatInviteWindow .invites-container").html(response);
+                    }
+                });
+                $(".invites-container").html('<div class="invites-empty-text">Загрузка...</div>');
+                $(".chatInviteWindow").toggle();
+            });
+            $(".closeInviteWindow a").bind('click', function(){
+                $(".chatInviteWindow").hide();
+                return false;
+            });
+            $(".decline-invite").live('click', function(){
+                var singleInvite = $(this).closest('.singleInvite');
+                $.ajax({
+                    url:'{{ path('declineChatInvite') }}',
+                    method: 'POST',
+                    data: { invite:singleInvite.data('invite') }
+                });
+                removeSingleInvite(singleInvite);
+                return false;
+            });
+            $(".accept-invite").live('click', function(){
+                var singleInvite = $(this).closest('.singleInvite');
+                $.ajax({
+                    url:'{{ path('acceptChatInvite') }}',
+                    method: 'POST',
+                    data: { invite:singleInvite.data('invite') }
+                });
+                removeSingleInvite(singleInvite);
+                return false;
+            });
+            function removeSingleInvite (obj) {
+                obj.remove();
+                if (!$(".singleInvite").size()){
+                    $(".chatInviteWindow .invites-container").html('<div class="invites-empty-text">Приглашений нет.</div>');
+                }
+            }
+        });
+    </script>
   </head>
   <body>
 	{% block wrapper %}
@@ -69,7 +162,18 @@
 		
 		<div id="main">
 		{% block content %}
-		{% endblock %}			
+		{% endblock %}
+            <div class="dialogsWrapper" style="display:none;">
+                <div class="closeDialogWindow"><a href=""></a></div>
+                <h2 class="dialogTitle">Диалоги</h2>
+                <div class="dialogs-container"></div>
+            </div>
+
+            <div class="chatInviteWindow" style="display:none;">
+                <div class="closeInviteWindow"><a href=""></a></div>
+                <h2 class="chatInviteTitle">Приглашения в чат</h2>
+                <div class="invites-container"></div>
+            </div>
 		</div>
 		
 	    {% block menu %}		
@@ -95,7 +199,7 @@
 				<li>Заметки</li>
 				<li>Информация</li>
 				<li><a class="menuNavigationLink" href="/disk">Кибердиск</a></li>
-				<li>Сообщения</li>
+				<li class="open-dialog-list">Сообщения</li>
 				<li class="chatInvite">Приглашение в чат</li>
 			</ul>			
 		</div>
