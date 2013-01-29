@@ -21,7 +21,10 @@ class ChatController extends Controller
 
     public function loadChatAction(Request $request){
         if ($request->isMethod('POST') && ($user = $this->getUser() instanceof User)){
-            return new Response('SUCCESS');
+            return $this->render("CronCronBundle:Chat:chatwindow.html.twig", array(
+
+                )
+            );
         }
     }
 
@@ -47,7 +50,10 @@ class ChatController extends Controller
                 ->orderBy('dialog.start_date', 'DESC')
                 ->getQuery()
                 ->getResult();
-            return new Response(serialize($dialogs));
+            return $this->render("CronCronBundle:Chat:dialogs.html.twig", array(
+                    "dialogs" => $dialogs
+                )
+            );
         }
     }
 
