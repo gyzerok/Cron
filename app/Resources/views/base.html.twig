@@ -102,7 +102,26 @@
 		<div style="clear: both"></div>
 	    {% endblock %}
 		{% block chat %}
-		<div class="chatWindow">Окно чата</div>
+		  <script type="text/javascript">
+			$(document).ready(function () {
+				//Открытие чата
+				var openChat = $('.openChat');
+				openChat.hide();
+				$('.chatUpButton').click(function() {
+					openChat.fadeIn();	
+				});
+				$('.closeChat').click(function() {
+					openChat.fadeOut();			
+				});
+			});
+		  </script>
+		<div class="openChat">
+			<div class="closeChat"></div>
+		</div>
+		<div class="chatWindow">
+		<span>Окно чата</span>
+		<div class="chatUpButton"></div>
+		</div>
 		{% endblock %}
 	</div>
 	{% endblock %}
