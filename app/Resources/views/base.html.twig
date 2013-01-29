@@ -9,6 +9,56 @@
 	<script src="/js/jquery.validate.min.js"></script>
 	<!--<script src="js/showmessages.js"></script>!-->
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".open-dialog-list").bind('click', function(){
+                $.ajax({
+                    url: '{{ path('getDialogList') }}',
+                    success: function(response){
+                        if (!$.trim(response))
+                            response = '<div class="dialogs-empty-text">Диалогов нет.</div>';
+                        $(".dialogsWrapper .dialogs-container").html(response);
+                    }
+                });
+                $(".dialogsWrapper .dialogs-container").html('<div class="dialogs-empty-text">Загрузка...</div>');
+                $(".dialogsWrapper").show();
+            });
+            $(".closeDialogWindow a").bind('click', function(){
+                $(".dialogsWrapper").hide();
+                return false;
+            });
+            $(".closeDialogs a").live('click', function(){
+                if (confirm('Удалить диалог?')) {
+                    var singleDialog = $(this).closest('.singleDialog');
+                    $.ajax({
+                        url:'{{ path('deleteDialog') }}',
+                        method: 'POST',
+                        data: { dialog:singleDialog.data('dialog') }
+                    });
+                    removeSingleDialog(singleDialog);
+                }
+                return false;
+            });
+            $(".spamDialogs a").live('click', function(){
+                if (confirm('Пометить как спам?')) {
+                    var singleDialog = $(this).closest('.singleDialog');
+                    $.ajax({
+                        url:'{{ path('checkDialogAsSpam') }}',
+                        method: 'POST',
+                        data: { dialog:singleDialog.data('dialog') }
+                    });
+                    removeSingleDialog(singleDialog);
+                }
+                return false;
+            });
+            function removeSingleDialog (obj) {
+                obj.remove();
+                if (!$(".singleDialog").size()){
+                    $(".dialogsWrapper .dialogs-container").html('<div class="dialogs-empty-text">Диалогов нет.</div>');
+                }
+            }
+        });
+    </script>
   </head>
   <body>
 	{% block wrapper %}
@@ -69,7 +119,14 @@
 		
 		<div id="main">
 		{% block content %}
-		{% endblock %}			
+		{% endblock %}
+            <div class="dialogsWrapper" style="display:none;">
+                <div class="closeDialogWindow"><a href=""></a></div>
+                <h2 class="dialogTitle">Диалоги</h2>
+                <div class="dialogs-container">
+
+                </div>
+            </div>
 		</div>
 		
 	    {% block menu %}		
@@ -95,7 +152,7 @@
 				<li>Заметки</li>
 				<li>Информация</li>
 				<li><a class="menuNavigationLink" href="/disk">Кибердиск</a></li>
-				<li>Сообщения</li>
+				<li class="open-dialog-list">Сообщения</li>
 				<li class="chatInvite">Приглашение в чат</li>
 			</ul>			
 		</div>

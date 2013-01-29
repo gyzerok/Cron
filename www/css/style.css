@@ -411,6 +411,7 @@
 	min-height: 800px;
 	margin: -40px 0 0 5px;
 	float: left;
+    position: relative;
 }
 
 #main form.writeQuestion {
@@ -1438,8 +1439,12 @@ a.closeRegisterButton {
 	width: 717px;
 	margin: 0 auto;
 	border: 2px solid #c85a3d;
+    background: #ffffff;
 	border-radius: 8px;
-	height: 600px;	
+	height: 600px;
+    position: absolute;
+    left: 0;
+    top: -10px;
 }
 
 h2.dialogTitle {	
@@ -1471,6 +1476,13 @@ h2.dialogTitle {
 	border: 2px solid #bb8989;
 	border-radius: 5px;
 	margin: 12px 0 0 10px;
+}
+.singleDialog:hover {
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+.dialogs-empty-text {
+    padding: 17px;
 }
 
 .dialogUsername {
