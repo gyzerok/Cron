@@ -1515,8 +1515,69 @@ h2.dialogTitle {
 
 .spamDialogs a {
 	display: block;
-	width: 34px;
+	width: 34px; 
 	height: 27px;
 	background: url(../i/spamDialogs.png) no-repeat;
 	cursor: pointer;
+}
+
+.chatInviteWindow {
+	width: 660px;
+	height: 300px;
+	border: 2px solid #52648A;
+	border-radius: 8px;
+	margin: 0 auto;
+}
+
+.closeInviteWindow {
+	width: 13px;
+	height: 13px;
+	float: right;
+	margin: 10px 14px 0 0;	
+}
+.closeInviteWindow a {
+	display: block;
+	width: 13px;
+	height: 13px;
+	background: url(../i/closeDialogs.png) no-repeat;
+	cursor: pointer;		
+}
+
+h2.chatInviteTitle{
+	font-size: 26px;
+	color: #7A2116;
+	font-family: "Cambria";
+	text-decoration: underline;
+	text-transform: uppercase;
+	text-align: center;
+	margin-top: 17px;
+}
+
+.singleInvite {
+	width: 620px;
+	height: 28px;
+	border: 1px solid #52648A;
+	border-radius: 5px;
+	margin: 15px auto;
+}
+
+.InviteUsername {
+	width: 215px;
+	height: 25px;
+	color: #000;
+	font-family: "Cambria";
+	font-size: 24px;
+	margin: 0px 0 0 5px;
+	float: left;	
+}
+
+.singleInvite input {
+	float: right;
+	width: 116px;
+	margin-right: 5px;
+	border: 1px solid #C6C6C6;
+	border-radius: 5px;
+	background-color: #EFEFEF;
+	font-family: 'Cambria';
+	font-size: 17px;
 }
