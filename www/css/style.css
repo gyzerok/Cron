@@ -1433,3 +1433,90 @@ a.closeRegisterButton {
 	color: #000;
 	float: left;
 }
+
+.dialogsWrapper {
+	width: 717px;
+	margin: 0 auto;
+	border: 2px solid #c85a3d;
+	border-radius: 8px;
+	height: 600px;	
+}
+
+h2.dialogTitle {	
+	font-size: 26px;
+	margin-left: 15px;
+	margin-top: 10px;
+	color: #ae361a;
+	text-transform: uppercase;
+}
+
+.closeDialogWindow {
+	width: 13px;
+	height: 13px;
+	float: right;
+	margin: 16px 14px 0 0;	
+}
+
+.closeDialogWindow a {
+	display: block;
+	width: 13px;
+	height: 13px;
+	background: url(../i/closeDialogs.png) no-repeat;
+	cursor: pointer;	
+}
+
+.singleDialog{
+	width: 570px;
+	height: 27px;
+	border: 2px solid #bb8989;
+	border-radius: 5px;
+	margin: 12px 0 0 10px;
+}
+
+.dialogUsername {
+	width: 215px;
+	height: 25px;
+	color: #000;
+	font-family: "Cambria";
+	font-size: 24px;
+	margin: 0px 0 0 5px;
+	float: left;
+}
+
+.messagesAmount {
+	width: 50px;
+	font-family: "Cambria";
+	font-size: 24px;
+	color: #465173;
+	float: left;
+}
+
+.closeDialogs {
+	width: 13px;
+	height: 13px;
+	float: right;
+	margin: 7px 8px 0 0;
+}
+
+.closeDialogs a {
+	display: block;
+	width: 13px;
+	height: 13px;
+	background: url(../i/closeDialogs.png) no-repeat;
+	cursor: pointer;
+}
+
+.spamDialogs {
+	width: 34px;
+	height: 27px;
+	float: right;
+	margin-right: 5px;
+}
+
+.spamDialogs a {
+	display: block;
+	width: 34px;
+	height: 27px;
+	background: url(../i/spamDialogs.png) no-repeat;
+	cursor: pointer;
+}
