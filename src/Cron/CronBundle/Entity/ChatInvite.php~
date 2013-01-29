@@ -58,4 +58,106 @@ class ChatInvite {
      */
     protected $invite_date;
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set invite_date
+     *
+     * @param \DateTime $inviteDate
+     * @return ChatInvite
+     */
+    public function setInviteDate($inviteDate)
+    {
+        $this->invite_date = $inviteDate;
+    
+        return $this;
+    }
+
+    /**
+     * Get invite_date
+     *
+     * @return \DateTime 
+     */
+    public function getInviteDate()
+    {
+        return $this->invite_date;
+    }
+
+    /**
+     * Set chat
+     *
+     * @param Cron\CronBundle\Entity\Chat $chat
+     * @return ChatInvite
+     */
+    public function setChat(\Cron\CronBundle\Entity\Chat $chat)
+    {
+        $this->chat = $chat;
+    
+        return $this;
+    }
+
+    /**
+     * Get chat
+     *
+     * @return Cron\CronBundle\Entity\Chat 
+     */
+    public function getChat()
+    {
+        return $this->chat;
+    }
+
+    /**
+     * Set user1
+     *
+     * @param Cron\CronBundle\Entity\User $user1
+     * @return ChatInvite
+     */
+    public function setUser1(\Cron\CronBundle\Entity\User $user1)
+    {
+        $this->user1 = $user1;
+    
+        return $this;
+    }
+
+    /**
+     * Get user1
+     *
+     * @return Cron\CronBundle\Entity\User 
+     */
+    public function getUser1()
+    {
+        return $this->user1;
+    }
+
+    /**
+     * Set user2
+     *
+     * @param Cron\CronBundle\Entity\User $user2
+     * @return ChatInvite
+     */
+    public function setUser2(\Cron\CronBundle\Entity\User $user2)
+    {
+        $this->user2 = $user2;
+    
+        return $this;
+    }
+
+    /**
+     * Get user2
+     *
+     * @return Cron\CronBundle\Entity\User 
+     */
+    public function getUser2()
+    {
+        return $this->user2;
+    }
 }
