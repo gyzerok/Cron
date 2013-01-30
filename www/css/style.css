@@ -811,6 +811,8 @@ h2.categoryH2 {
 	font-size: 20px;
 	text-transform: uppercase;
 	color: #52648A;
+    position: fixed;
+    bottom: 0;
 }
 
 .chatWindow span {
@@ -837,6 +839,9 @@ h2.categoryH2 {
 	border-radius: 8px;
 	margin-top: -281px;
 	margin-bottom: 24px;
+    position: fixed;
+    bottom: 0;
+    z-index: 5;
 }
 
 .closeChat {
@@ -845,7 +850,8 @@ h2.categoryH2 {
 	float: right;
 	margin: 10px 14px 0 0;
 	background: url(../i/closeDialogs.png) no-repeat;
-	cursor: pointer;	
+	cursor: pointer;
+    z-index: 1;
 }
 
 
