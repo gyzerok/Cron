@@ -212,15 +212,46 @@
 				var openChat = $('.openChat');
 				openChat.hide();
 				$('.chatUpButton').click(function() {
+                    if (!$('.chat').size()){
+                        $.ajax({
+                            url: '{{ path('loadChat') }}',
+                            success: function(response){
+                                $(".chat-container").html(response);
+                                var objDiv = $('.chat');
+                                objDiv[0].scrollTop = objDiv[0].scrollHeight;
+                            }
+                        });
+                        $(".chat-container").html('<div class="chat-empty-text">Загрузка...</div>');
+                    }
 					openChat.fadeIn();
 				});
 				$('.closeChat').click(function() {
 					openChat.fadeOut();			
 				});
+                $(".kickUser").live('click', function(){
+                    $(this).closest('.singleUser').remove();
+                });
+                $(".chat-submit").live('click', function(){
+
+                });
+                $(".chat-input").live('keyup', function(e){
+                    var code= (e.keyCode ? e.keyCode : e.which);
+                    if (code == 13){
+                        var chatInput = $(this);
+                        if ($.trim(chatInput.val())){
+                            $(".chat > div").append('<div class="singleMessage"><div class="chatUsername">'+chatInput.data('nick')+'</div><div class="messageText">'+chatInput.val()+'</div></div>');
+                            chatInput.val('');
+                            var objDiv = $('.chat');
+                            objDiv[0].scrollTop = objDiv[0].scrollHeight;
+                        }
+                        return false;
+                    }
+                });
 			});
 		  </script>
 		<div class="openChat">
 			<div class="closeChat"></div>
+            <div class="chat-container"></div>
 		</div>
 		<div class="chatWindow">
 		<span>Окно чата</span>

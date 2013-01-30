@@ -834,7 +834,7 @@ h2.categoryH2 {
 
 .openChat {
 	width: 729px;
-	height: 250px;
+	height: 270px;
 	border: 2px solid #CC2A03;
 	border-radius: 8px;
 	margin-top: -281px;
@@ -842,6 +842,7 @@ h2.categoryH2 {
     position: fixed;
     bottom: 0;
     z-index: 5;
+    background: #ffffff;
 }
 
 .closeChat {
@@ -1586,6 +1587,7 @@ h2.dialogTitle {
 	border-radius: 8px;
 	margin: 0 auto;
     position: absolute;
+    /*z-index: 6;*/
     top: 150px;
     left: 50%;
     margin-left: -330px;

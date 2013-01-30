@@ -1,4 +1,4 @@
-<html> 
+{#<html>
 <head>
 	<link href="/css/style.css" rel="stylesheet">
 	<link href="/css/reset.css" rel="stylesheet">
@@ -8,7 +8,7 @@
 	<!--<script src="js/showmessages.js"></script>!-->
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 </head>
-	<body>
+	<body>#}
 	<div class="chatTabs">
 		<div class="singleTab">Мой чат</div>
 		<div class="singleInboxTab">
@@ -17,6 +17,15 @@
 			<div class="numberOnTab">2</div>
 			<div class="numberOnTab">3</div>
 		</div>
+        {% for dialog in dialogs %}
+            <div class="singleTab">
+                {% if dialog.user1==curUser %}
+                    {{ dialog.user2.getNick() }}
+                {% else %}
+                    {{ dialog.user1.getNick() }}
+                {% endif %}
+            </div>
+        {% endfor %}
 	</div>
 	<div class="mainWindow">
 		<div class="chat">
@@ -49,41 +58,42 @@
 				<div class="kickUser"></div>
 			</div>
 			<div class="singleUser">
-				<div class="singleUsername">Светлана</div>
+				<div class="singleUsername">Игорь</div>
 				<div class="kickUser"></div>
 			</div>
 			<div class="singleUser">
-				<div class="singleUsername">Светлана</div>
+				<div class="singleUsername">Марина</div>
 				<div class="kickUser"></div>
 			</div>
 			<div class="singleUser">
-				<div class="singleUsername">Светлана</div>
+				<div class="singleUsername">Маша</div>
 				<div class="kickUser"></div>
 			</div>
 			<div class="singleUser">
-				<div class="singleUsername">Светлана</div>
+				<div class="singleUsername">Виктор</div>
 				<div class="kickUser"></div>
 			</div>
 			<div class="singleUser">
-				<div class="singleUsername">Светлана</div>
+				<div class="singleUsername">Сергей</div>
 				<div class="kickUser"></div>
 			</div>
 			<div class="singleUser">
-				<div class="singleUsername">Светлана</div>
+				<div class="singleUsername">Антон</div>
 				<div class="kickUser"></div>
 			</div>
 		</div>
 	</div>
 	<div class="typeText">
 		<div class="enterArea">
-			<textarea> Текст текст текст</textarea>
+			<textarea class="chat-input" data-user="{{ curUser.getId() }}" data-nick="{{ curUser.getNick() }}"></textarea>
 			<div class="switch"></div>
-			<input type="checkbox"  />
+			<input class="chat-submit" type="checkbox" />
 		</div>
 		<div class="finishConversation">
 			<input type="button" value="закончить
 общение" />
 		</div>
 	</div>
+{#
 	</body>
- </html>
+ </html>#}
