@@ -10,6 +10,9 @@ Cron\CronBundle\Entity\User:
     username:
       - NotBlank:   { message: "поле не заполнено" }
       - Email:      { message: "некорректное заполнение" }
+    password:
+      - NotBlank:   { message: "некорректное заполнение" }
+      #- MinLength:  { limit: 4, message: "некорректное заполнение" }
     nick:
       - NotBlank:   { message: "поле не заполнено" }
     gender:
