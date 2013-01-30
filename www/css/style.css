@@ -811,8 +811,6 @@ h2.categoryH2 {
 	font-size: 20px;
 	text-transform: uppercase;
 	color: #52648A;
-    position: fixed;
-    bottom: 0;
 }
 
 .chatWindow span {
@@ -1099,7 +1097,7 @@ span.agreementLabel a {
 
 .emailError {
 	font-family: 'Arial';
-	font-size: 16.9px;
+	font-size: 18px;
 	color: #ff5151;
 	width: 225px;
 	display: block;
@@ -1405,6 +1403,15 @@ a.closeRegisterButton {
 }
 
 #d_clip_button {
+	display: block;
+	width: 24px;
+	height: 25px;
+	background: url('../i/copy1.png') no-repeat;
+	float: left;
+	margin: 3px 0 0 3px;
+}
+
+#d_clip_button a {
 	display: block;
 	width: 24px;
 	height: 25px;

@@ -49,9 +49,12 @@
 		//Русский язык в форме регистрации. Отображение некоторых эдементов
 		$('.registrationFieldPass > label').text('Пароль');
 		$('#register_password > div:first > label').remove();
+		$('.registrationFieldPass > label').css({
+			'margin-top': '35px'
+		});
 		$('#register_password > div:last > label').css({
 			'position': 'relative',
-			'top':'49px',
+			'top':'36px',
 			'left': '-1px'
 		}).text('Повторите пароль');
 		$('.genderLabel > label').css({
@@ -76,8 +79,11 @@
 		'display':'block',
 		'font-family': 'Arial',
 		'font-size': '18px',
-		'color': '#ff5151'
+		'color': '#ff5151',
+		'right': '51px',
+		'top': '37px'
 		});
+		$('#register_password > div:first > ul > li').text('поле не заполнено');
 		
 		//Отключение input'а 
 		$("#register_agreement").attr('disabled','disabled');
