@@ -411,6 +411,7 @@
 	min-height: 800px;
 	margin: -40px 0 0 5px;
 	float: left;
+    position: relative;
 }
 
 #main form.writeQuestion {
@@ -804,10 +805,47 @@ h2.categoryH2 {
 .chatWindow {
 	width: 723px;
 	height: 20px;
-	border: 2px solid #C88B79;
-	margin: -30px 0 0 5px;
+	border: 2px solid #A33A1C;
+	margin: -23px 0 0 5px;
 	text-align: center;
 	font-size: 20px;
+	text-transform: uppercase;
+	color: #52648A;
+}
+
+.chatWindow span {
+	display: block;
+	width: 120px;
+	float: left;
+	text-align: center;
+	margin-left: 262px;
+}
+
+.chatUpButton {
+	width: 15px;
+	height: 20px;
+	background: url(../i/UpChat.png) no-repeat;
+	cursor: pointer;
+	float: left;
+	margin-left: 20px;
+}
+
+.openChat {
+	width: 729px;
+	height: 250px;
+	border: 2px solid #CC2A03;
+	border-radius: 8px;
+	margin-top: -281px;
+	margin-bottom: 24px;
+}
+
+.closeChat {
+	width: 13px;
+	height: 13px;
+	float: right;
+	margin: 10px 14px 0 0;
+	background: url(../i/closeDialogs.png) no-repeat;
+	cursor: pointer;	
 }
 
 
@@ -1406,6 +1444,7 @@ a.closeRegisterButton {
 	font-family: 'Cambria';
 	cursor: pointer;
 	border-radius: 3px;
+	margin-top: -2px;
 }
 .delete-my-file {
 	border: 1px solid #C6C6C6;
@@ -1415,6 +1454,7 @@ a.closeRegisterButton {
 	font-family: 'Cambria';
 	cursor: pointer;
 	border-radius: 3px;
+	margin-top: -2px;
 }
 .my-file input[type=button] {
 	float: right;
@@ -1433,3 +1473,206 @@ a.closeRegisterButton {
 	color: #000;
 	float: left;
 }
+
+.dialogsWrapper {
+	width: 717px;
+	margin: 0 auto;
+	border: 2px solid #c85a3d;
+    background: #ffffff;
+	border-radius: 8px;
+	height: 600px;
+    position: absolute;
+    left: 0;
+    top: -10px;
+}
+
+h2.dialogTitle {	
+	font-size: 26px;
+	margin-left: 15px;
+	margin-top: 10px;
+	color: #ae361a;
+	text-transform: uppercase;
+}
+
+.closeDialogWindow {
+	width: 13px;
+	height: 13px;
+	float: right;
+	margin: 16px 14px 0 0;	
+}
+
+.closeDialogWindow a {
+	display: block;
+	width: 13px;
+	height: 13px;
+	background: url(../i/closeDialogs.png) no-repeat;
+	cursor: pointer;	
+}
+
+.singleDialog{
+	width: 570px;
+	height: 27px;
+	border: 2px solid #bb8989;
+	border-radius: 5px;
+	margin: 12px 0 0 10px;
+}
+.singleDialog:hover {
+    cursor: pointer;
+    background-color: #f0f0f0;
+}
+.dialogs-empty-text {
+    padding: 17px;
+}
+
+.dialogUsername {
+	width: 215px;
+	height: 25px;
+	color: #000;
+	font-family: "Cambria";
+	font-size: 24px;
+	margin: 0px 0 0 5px;
+	float: left;
+}
+
+.messagesAmount {
+	width: 50px;
+	font-family: "Cambria";
+	font-size: 24px;
+	color: #465173;
+	float: left;
+}
+
+.closeDialogs {
+	width: 13px;
+	height: 13px;
+	float: right;
+	margin: 7px 8px 0 0;
+}
+
+.closeDialogs a {
+	display: block;
+	width: 13px;
+	height: 13px;
+	background: url(../i/closeDialogs.png) no-repeat;
+	cursor: pointer;
+}
+
+.spamDialogs {
+	width: 34px;
+	height: 27px;
+	float: right;
+	margin-right: 5px;
+}
+
+.spamDialogs a {
+	display: block;
+	width: 34px; 
+	height: 27px;
+	background: url(../i/spamDialogs.png) no-repeat;
+	cursor: pointer;
+}
+
+.chatInviteWindow {
+	width: 660px;
+	height: 300px;
+	border: 2px solid #52648A;
+    background: #ffffff;
+	border-radius: 8px;
+	margin: 0 auto;
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    margin-left: -330px;
+}
+
+.closeInviteWindow {
+	width: 13px;
+	height: 13px;
+	float: right;
+	margin: 10px 14px 0 0;	
+}
+.closeInviteWindow a {
+	display: block;
+	width: 13px;
+	height: 13px;
+	background: url(../i/closeDialogs.png) no-repeat;
+	cursor: pointer;		
+}
+
+h2.chatInviteTitle{
+	font-size: 26px;
+	color: #7A2116;
+	font-family: "Cambria";
+	text-decoration: underline;
+	text-transform: uppercase;
+	text-align: center;
+	margin-top: 17px;
+}
+
+.singleInvite {
+	width: 620px;
+	height: 28px;
+	border: 1px solid #52648A;
+	border-radius: 5px;
+	margin: 15px auto;
+}
+.invites-empty-text {
+    padding: 17px;
+}
+
+.InviteUsername {
+	width: 215px;
+	height: 25px;
+	color: #000;
+	font-family: "Cambria";
+	font-size: 24px;
+	margin: 0px 0 0 5px;
+	float: left;	
+}
+
+.singleInvite input {
+	float: right;
+	width: 116px;
+	margin-right: 5px;
+	border: 1px solid #C6C6C6;
+	border-radius: 5px;
+	background-color: #EFEFEF;
+	font-family: 'Cambria';
+	font-size: 17px;
+}
+
+.chatTabs {
+	width: 576px;
+	margin: 0 auto;
+}
+
+.singleTab {
+	width: 118px;
+	height: 24px;
+	border: 2px solid #5d6787;
+	border-radius: 15px 15px 0 0;
+	font-size: 18px;
+	font-family: 'Cambria';
+	color: #000;
+	text-align: center;
+	text-transform: uppercase;
+	line-height: 150%;
+	cursor: pointer;
+	float: left;
+}
+
+.singleInboxTab {
+	width: 237px;
+	height: 24px;
+	border: 2px solid #5d6787;
+	border-radius: 15px 15px 0 0;
+	font-size: 18px;
+	font-family: 'Cambria';
+	color: #000;
+	text-align: left;
+	text-transform: uppercase;
+	line-height: 150%;
+	cursor: pointer;
+	float: left;
+	margin-left: 1px;
+	padding-left: 3px;

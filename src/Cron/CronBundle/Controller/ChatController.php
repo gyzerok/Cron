@@ -21,6 +21,7 @@ class ChatController extends Controller
 
     public function loadChatAction(Request $request){
         if (/*$request->isMethod('POST') && */($user = $this->getUser() instanceof User)){
+
             return $this->render("CronCronBundle:Chat:chatwindow.html.twig", array(
 
                 )
@@ -29,13 +30,13 @@ class ChatController extends Controller
     }
 
     public function updateChatAction(Request $request){
-        if ($request->isMethod('POST') && ($user = $this->getUser() instanceof User)){
+        if (/*$request->isMethod('POST') && */($user = $this->getUser() instanceof User)){
             return new Response('SUCCESS');
         }
     }
 
     public function getSrvMsgAction(Request $request){
-        if ($request->isMethod('POST') && ($user = $this->getUser() instanceof User)){
+        if (/*$request->isMethod('POST') && */($user = $this->getUser() instanceof User)){
             return new Response('SUCCESS');
         }
     }
@@ -45,20 +46,64 @@ class ChatController extends Controller
         if (/*$request->isMethod('POST') && */($user instanceof User)){
             $dialogs = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')
                 ->createQueryBuilder('dialog')
-                ->where('dialog.user1 = :uid OR dialog.user2 = :uid')
+//                ->select('id, user1, user2, start_date, COUNT(dm.id) as unreads')
+//                ->leftJoin('Cron\CronBundle\Entity\DialogMsg', 'dm', 'WITH', 'dialog.id = dm.dialog')
+//                ->leftJoin('dialog.id', 'dialogmsg')
+                ->where('(dialog.user1 = :uid AND dialog.del1 = 0 AND dialog.spam1 = 0) OR (dialog.user2 = :uid AND dialog.del2 = 0 AND dialog.spam2 = 0)')
                 ->setParameter('uid', $user->getId())
                 ->orderBy('dialog.start_date', 'DESC')
+//                ->groupBy('dm.dialog')
                 ->getQuery()
                 ->getResult();
+//            echo '<pre>';
+//            print_r($dialogs);
+//            echo '</pre>';
+            foreach ($dialogs as $dialog) {
+                $unreads = $this->getDoctrine()->getRepository('CronCronBundle:DialogMsg')
+                    ->createQueryBuilder('dm')
+                    ->select('COUNT(dm.dialog) as unreads')
+                    ->where('dm.dialog = :did AND dm.read_flag = 0 AND dm.user = :uid')
+                    ->setParameter('did', $dialog->getId())
+                    ->setParameter('uid', ($dialog->getUser1()==$user ? $dialog->getUser2()->getId():$dialog->getUser1()->getId()))
+//                    ->setParameter('uid', $dialog->getUser2())
+                    ->groupBy('dm.dialog')
+                    ->getQuery()
+                    ->getResult();
+                if ($unreads[0])
+                    $dialog->unreads = '('.$unreads[0]['unreads'].')';
+//                print_r($unreads);
+            }
+
             return $this->render("CronCronBundle:Chat:dialogs.html.twig", array(
-                    "dialogs" => $dialogs
+                    "dialogs" => $dialogs,
+                    "curUser" => $user
+                )
+            );
+        }
+    }
+
+    public function getInviteListAction(Request $request){
+        $user = $this->getUser();
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
+            $invites = $this->getDoctrine()->getRepository('CronCronBundle:ChatInvite')
+                ->createQueryBuilder('chat_invite')
+                ->where('chat_invite.user2 = :uid')
+                ->setParameter('uid', $user->getId())
+                ->orderBy('chat_invite.invite_date', 'DESC')
+                ->getQuery()
+                ->getResult();
+
+            //todo srvmsg
+
+            return $this->render("CronCronBundle:Chat:invites.html.twig", array(
+                    "invites" => $invites
                 )
             );
         }
     }
 
     public function getDialogMsgsAction(Request $request){
-        if ($request->isMethod('POST') && ($user = $this->getUser() instanceof User)){
+        if (/*$request->isMethod('POST') && */($user = $this->getUser() instanceof User)){
             $dialog = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')->findOneBy(array('id' => $request->get('dialog')));
             if ($dialog instanceof \Cron\CronBundle\Entity\Dialog){
                 $messages = $this->getDoctrine()->getRepository('CronCronBundle:DialogMsg')
@@ -74,7 +119,7 @@ class ChatController extends Controller
     }
 
     public function getChatMsgsAction(Request $request){
-        if ($request->isMethod('POST') && ($user = $this->getUser() instanceof User)){
+        if (/*$request->isMethod('POST') && */($user = $this->getUser() instanceof User)){
 
             $chat = $this->getDoctrine()->getRepository('CronCronBundle:Chat')->findOneBy(array('id' => $request->get('chat')));
             if ($chat instanceof \Cron\CronBundle\Entity\Chat){
@@ -91,7 +136,7 @@ class ChatController extends Controller
     }
 
     public function getMyChatAction(Request $request){
-        if ($request->isMethod('POST') && ($user = $this->getUser() instanceof User)){
+        if (/*$request->isMethod('POST') && */($user = $this->getUser() instanceof User)){
 
             //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -100,7 +145,7 @@ class ChatController extends Controller
     }
 
     public function getIncomeChatsAction(Request $request){
-        if ($request->isMethod('POST') && ($user = $this->getUser() instanceof User)){
+        if (/*$request->isMethod('POST') && */($user = $this->getUser() instanceof User)){
 
             //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -110,28 +155,36 @@ class ChatController extends Controller
 
     public function sendDialogMsgAction(Request $request){
         $user = $this->getUser();
-        if ($request->isMethod('POST') && ($user instanceof User)){
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
+
+            $em = $this->getDoctrine()->getManager();
 
             $dialog = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')->findOneBy(array('id' => $request->get('dialog')));
-            if ($dialog instanceof \Cron\CronBundle\Entity\Dialog){
-                $dialog_msg = new DialogMsg();
-                $dialog_msg->setDialog($dialog);
-                $dialog_msg->setUser($user);
-                $dialog_msg->setMsgDate(new \DateTime());
-                $dialog_msg->setMsgText($request->get('message'));
-                $dialog_msg->setReadFlag(0);
+            if (!$dialog instanceof \Cron\CronBundle\Entity\Dialog){
+                $dialog = new Dialog();
+                $dialog->setUser1($user->getId());
+                $dialog->setUser2($request->get('to_user'));
+                $dialog->setStartDate(new \DateTime());
 
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($dialog_msg);
+                $em->persist($dialog);
                 $em->flush();
             }
+            $dialog_msg = new DialogMsg();
+            $dialog_msg->setDialog($dialog);
+            $dialog_msg->setUser($user);
+            $dialog_msg->setMsgDate(new \DateTime());
+            $dialog_msg->setMsgText($request->get('message'));
+            $dialog_msg->setReadFlag(0);
+
+            $em->persist($dialog_msg);
+            $em->flush();
             return new Response('SUCCESS');
         }
     }
 
     public function sendChatMsgAction(Request $request){
         $user = $this->getUser();
-        if ($request->isMethod('POST') && ($user instanceof User)){
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
 
             $chat = $this->getDoctrine()->getRepository('CronCronBundle:Chat')->findOneBy(array('id' => $request->get('chat')));
             if ($chat instanceof \Cron\CronBundle\Entity\Chat){
@@ -152,7 +205,7 @@ class ChatController extends Controller
 
     public function deleteDialogAction(Request $request){
         $user = $this->getUser();
-        if ($request->isMethod('POST') && ($user instanceof User)){
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
 
             $dialog = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')->findOneBy(array('id' => $request->get('dialog')));
             if ($dialog->getUser1() == $user){
@@ -173,7 +226,7 @@ class ChatController extends Controller
 
     public function checkDialogAsSpamAction(Request $request){
         $user = $this->getUser();
-        if ($request->isMethod('POST') && ($user instanceof User)){
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
 
             $dialog = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')->findOneBy(array('id' => $request->get('dialog')));
             if ($dialog->getUser1() == $user){
@@ -194,13 +247,14 @@ class ChatController extends Controller
 
     public function acceptChatInviteAction(Request $request){
         $user = $this->getUser();
-        if ($request->isMethod('POST') && ($user instanceof User)){
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
 
             $em = $this->getDoctrine()->getManager();
 
-            $invite = $this->getDoctrine()->getRepository('CronCronBundle:ChatInvite')->findOneBy(array('chat' => $request->get('chat'), 'user2' => $user->getId()));
+            $invite = $this->getDoctrine()->getRepository('CronCronBundle:ChatInvite')->findOneBy(array('id' => $request->get('invite')));
 
-            $chat = $this->getDoctrine()->getRepository('CronCronBundle:Chat')->findOneBy(array('id' => $request->get('chat')));
+//            $chat = $this->getDoctrine()->getRepository('CronCronBundle:Chat')->findOneBy(array('id' => $request->get('chat')));
+            $chat = $invite->getChat();
             if (!$chat instanceof \Cron\CronBundle\Entity\Chat){
                 //СОздать Chat и добавить двух ChatMember
                 $new_chat = new Chat();
@@ -240,9 +294,9 @@ class ChatController extends Controller
 
     public function declineChatInviteAction(Request $request){
         $user = $this->getUser();
-        if ($request->isMethod('POST') && ($user instanceof User)){
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
 
-            $invite = $this->getDoctrine()->getRepository('CronCronBundle:ChatInvite')->findOneBy(array('chat' => $request->get('chat'), 'user2' => $user->getId()));
+            $invite = $this->getDoctrine()->getRepository('CronCronBundle:ChatInvite')->findOneBy(array('id' => $request->get('invite')));
             $em = $this->getDoctrine()->getManager();
             $em->remove($invite);
             $em->flush();
@@ -254,7 +308,7 @@ class ChatController extends Controller
     }
 
     public function finishChatAction(Request $request){
-        if ($request->isMethod('POST') && ($user = $this->getUser() instanceof User)){
+        if (/*$request->isMethod('POST') && */($user = $this->getUser() instanceof User)){
 
             $chat = $this->getDoctrine()->getRepository('CronCronBundle:Chat')->findOneBy(array('id' => $request->get('chat'), 'owner' => $request->get("user")));
             $chat->setIsActive(0);
@@ -270,7 +324,7 @@ class ChatController extends Controller
 
     public function leaveChatAction(Request $request){
         $user = $this->getUser();
-        if ($request->isMethod('POST') && ($user instanceof User)){
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
 
             $chat_member = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findOneBy(array('chat' => $request->get('chat'), 'user' => $user));
             $em = $this->getDoctrine()->getManager();
@@ -285,7 +339,7 @@ class ChatController extends Controller
 
     public function sendChatInviteAction(Request $request){
         $user = $this->getUser();
-        if ($request->isMethod('POST') && ($user instanceof User)){
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
 
             $chat_id = $request->get("chat");
             $user2_id = $request->get("user");
@@ -328,7 +382,7 @@ class ChatController extends Controller
     }
 
     public function deleteChatMemberAction(Request $request){
-        if ($request->isMethod('POST') && ($user = $this->getUser() instanceof User)){
+        if (/*$request->isMethod('POST') && */($user = $this->getUser() instanceof User)){
 
             $chat_member = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findOneBy(array('chat' => $request->get('chat'), 'user' => $request->get("user")));
             $em = $this->getDoctrine()->getManager();

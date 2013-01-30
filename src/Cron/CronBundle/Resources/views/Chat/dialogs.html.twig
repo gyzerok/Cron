@@ -1,5 +1,32 @@
-{% extends '::base.html.twig' %}
-	
-	{% block content %}
-
-	{% endblock %}
+{#<html>
+<head>
+	<link href="/css/style.css" rel="stylesheet">
+	<link href="/css/reset.css" rel="stylesheet">
+	<link href="/css/jquery-ui-1.9.2.custom.css" rel="stylesheet" />
+	<script src="/js/jquery.js"></script>
+	<script src="/js/jquery.validate.min.js"></script>
+	<!--<script src="js/showmessages.js"></script>!-->
+	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+</head>
+	<body>
+	<div class="dialogsWrapper">
+		<div class="closeDialogWindow"><a href=""></a></div>
+		<h2 class="dialogTitle">Диалоги</h2>#}
+        {% for dialog in dialogs %}
+            <div class="singleDialog" data-dialog="{{ dialog.getId() }}">
+                <div class="dialogUsername">
+                    {% if dialog.user1==curUser %}
+                        {{ dialog.user2.getNick() }}
+                    {% else %}
+                        {{ dialog.user1.getNick() }}
+                    {% endif %}
+                </div>
+                <div class="messagesAmount">{{ dialog.unreads }}</div>
+                <div class="closeDialogs"><a href=""></a></div>
+                <div class="spamDialogs"><a href=""></a></div>
+            </div>
+        {% endfor %}
+{#
+	</div>
+	</body>
+ </html>#}

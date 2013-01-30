@@ -159,16 +159,25 @@
 	var questionPrivateCost = $('p.questionPrivateCost');
 	questionPrivateCost.hide();
 	
-
+	//Стоимость приватного вопроса
 	$('#question_private').click(function() {
 	if ($(this).attr('checked')) {
-	questionPrivateCost.show()
+		questionPrivateCost.show()
 	}
 	else {
-	questionPrivateCost.hide()
+		questionPrivateCost.hide()
 	}
 	});
 	
+	//Открытие чата
+	var openChat = $('.openChat');
+	openChat.hide();
+	$('.chatUpButton').click(function() {
+		openChat.fadeIn();	
+	});
+	$('.closeChat').click(function() {
+		openChat.fadeOut();			
+	});
 	
 	});
 	
@@ -251,7 +260,7 @@
 				</div>
 			</div>
 			<div class="myAnswer">
-				<div class="singleAnswer">
+				<div class="singleAnswer" data-user="1">
 					<div class="userName">Ivan</div>
 					<div class="answerDate">15:15:16 14.01.2013</div>
 					<div style="clear: both;"></div>
@@ -260,8 +269,8 @@
 						<div class="socialIcons">
 							<div class="spamButton"></div>
 							<div class="likeButton"></div>
-							<div class="arrowButton"></div>
-							<div class="letterButton"></div>
+							<div class="arrowButton" class="inviteUser"></div>
+							<div class="letterButton" class="sendMessage"></div>
 						</div>
 					</div>
 				</div>
