@@ -940,6 +940,7 @@ span.fieldHelp {
 	width: 100%;
 	overflow: hidden;
 	margin-top: -19px;
+	position: relative;
 }
 
 .registrationFieldPass input {
@@ -1173,6 +1174,17 @@ span.agreementLabel a {
 	top: 4px;
 	margin: 0;
 	padding: 0;
+}
+
+.passwordError {
+	font-family: 'Arial';
+	font-size: 18px;
+	color: #ff5151;
+	position: absolute;
+	right: 66px;
+	top: 4px;
+	margin: 0;
+	padding: 0;	
 }
 
 .agreementError ul {
