@@ -1642,8 +1642,9 @@ h2.chatInviteTitle{
 }
 
 .chatTabs {
-	width: 576px;
+	width: 689px;
 	margin: 0 auto;
+	overflow: hidden;
 }
 
 .singleTab {
@@ -1666,13 +1667,173 @@ h2.chatInviteTitle{
 	height: 24px;
 	border: 2px solid #5d6787;
 	border-radius: 15px 15px 0 0;
-	font-size: 18px;
-	font-family: 'Cambria';
-	color: #000;
 	text-align: left;
-	text-transform: uppercase;
-	line-height: 150%;
 	cursor: pointer;
 	float: left;
 	margin-left: 1px;
 	padding-left: 3px;
+}
+
+.singleInboxTab span {
+	display: block;
+	width: 139px;
+	height: 19px;
+	font-size: 18px;
+	font-family: 'Cambria';
+	color: #000;
+	text-transform: uppercase;
+	margin-top: 5px;
+	margin-left: 10px;
+	float: left;
+}
+
+.numberOnTab {
+	width: 18px;
+	height: 18px;
+	float: left;
+	border: 1px solid #adc7de;
+	border-radius: 4px;
+	background-color: #fff;
+	text-align: center;
+	color: #adc7de;
+	font-family: 'Cambria';
+	margin: 3px 0 0 3px;
+}
+
+.numberOnTab:hover {
+	border: 1px solid #646e89;
+	border-radius: 4px;
+	background-color: #e8f2f3;
+	color: #425073;
+	font-family: 'Cambria';
+}
+
+.mainWindow{
+	margin: 0 auto;
+	width: 727px;
+	height: 166px;
+	overflow: hidden;
+}
+
+.chat {
+	width: 597px;
+	height: 162px;
+	float: left;
+	overflow-y: scroll;
+	border: 2px solid #465176;
+}
+
+.singleMessage {
+	width: 575px;
+	border: 1px solid #cadced;
+	border-radius: 5px;
+	margin-bottom: 2px;
+}
+
+.chatUsername {
+	width: 88px;
+	height: 14px;
+	overflow: hidden;
+	border: 1px solid #e0eaf5;
+	text-align: center;
+	border-radius: 3px;
+	font-family: 'Cambria';
+	font-size: 11px;
+	line-height: 130%;
+	margin-left: 3px;
+}
+
+.messageText {
+	font-family: 'Cambria';
+	font-size: 19px;
+	margin-left: 3px;
+}
+
+.usersInChat {
+	width: 123px;
+	height: 159px;
+	float: left;
+	margin-left: 3px;
+	overflow: hidden;
+}
+
+.singleUser {
+	width: 120px;
+	height: 19px;
+	border: 1px solid #9198b1;
+	border-radius: 2px;
+	margin-bottom: 2px;
+}
+
+.singleUsername {
+	margin-top: 3px;
+	margin-left: 3px;
+	width: 101px;
+	font-size: 13px;
+	font-family: 'Cambria';
+	overflow: hidden;
+	float: left;
+}
+
+.kickUser{
+	width: 13px;
+	height: 13px;
+	background: url(../i/kickUser.png) no-repeat;
+	float: left;
+	margin: 3px 0 0 0;
+	cursor: pointer;
+}
+
+.typeText {
+	width: 728px;
+	height: 56px;
+	margin: 0 auto;
+}
+
+.enterArea{
+	width: 586px;
+	height: 56px;
+	margin-top: 2px;
+	float: left;
+}
+
+.enterArea textarea {
+	width: 582px;
+	height: 31px;
+	border: 2px solid #989eb7;
+	border-radius: 2px;
+	font-size: 19px;
+	font-family: 'Cambria';
+	resize: none;
+}
+
+.enterArea input {
+	float: right;
+	margin-top: 5px;
+}
+
+.switch {
+	width: 27px;
+	height: 19px;
+	background: url(../i/switch.png) no-repeat;
+	float: right;
+	margin-right: 10px;
+}
+
+.finishConversation {
+	float: left;
+	width: 115px;
+}
+
+.finishConversation input {
+	width: 118px;
+	height: 42px;
+	border: 1px solid #dee0e3;
+	background-color: #f0f0f1;
+	border-radius: 5px;
+	font-size: 19px;
+	font-family: 'Cambria';
+	line-height: 90%;
+	cursor: pointer;
+	margin: 0px 0 0 14px;
+}
