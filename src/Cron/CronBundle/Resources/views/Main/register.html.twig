@@ -67,7 +67,16 @@
 			'font-size': '0',
 			'margin-right': '244px',
 			'margin-top':'18px',
-			'margin-bottom':'11px'
+			'margin-bottom':'11px',
+			'top': '38px',
+			'right': '-1px'
+		});
+		$('#register_password > div:first > ul').css({
+		'position':'absolute',
+		'display':'block',
+		'font-family': 'Arial',
+		'font-size': '18px',
+		'color': '#ff5151'
 		});
 		
 		//Отключение input'а 
@@ -148,7 +157,6 @@
 			</div>
 			<div class="registrationFieldPass">
 				{{ form_label(form.password) }}
-				{{ form_errors(form.password) }}
 				{{ form_widget(form.password) }}
 				<span class="fieldHelpPass">Придумайте сложный пароль, который нельзя подобрать; <br> От 4 до 12 символов — цифры и латинские буквы.</span>
 				<span class="checkPassword"></span>
