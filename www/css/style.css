@@ -836,7 +836,6 @@ h2.categoryH2 {
 	border: 2px solid #CC2A03;
 	border-radius: 8px;
 	margin-top: -281px;
-	margin-bottom: 24px;
     position: fixed;
     bottom: 0;
     z-index: 5;
@@ -1725,6 +1724,7 @@ h2.chatInviteTitle{
 	color: #adc7de;
 	font-family: 'Cambria';
 	margin: 3px 0 0 3px;
+	font-size: 18px;
 }
 
 .numberOnTab:hover {

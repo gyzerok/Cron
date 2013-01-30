@@ -124,8 +124,8 @@
 	    {% block navigation %}		
 		<div id="nav">
 			<div class="orderQuestions"><a href="{{ path('index') }}">{% trans %}Главная{% endtrans %}</a></div>
-			<div class="categoryQuestions"><a href="{{ path('category') }}">по категориям</a></div>
-			<div class="expressQuestions"><a href="{{ path('rush') }}">срочные</a></div>
+			<div class="categoryQuestions"><a href="{{ path('category') }}">{% trans %}по категориям{% endtrans %}</a></div>
+			<div class="expressQuestions"><a href="{{ path('rush') }}">{% trans %}срочные{% endtrans %}</a></div>
 		</div>
 	    {% endblock %}
 		
