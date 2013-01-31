@@ -211,7 +211,7 @@
 				//Открытие чата
 				var openChat = $('.openChat');
 				openChat.hide();
-				$('.chatUpButton').click(function() {
+				$('.chatWindow').click(function() {
                     if (!$('.chat').size()){
                         $.ajax({
                             url: '{{ path('loadChat') }}',

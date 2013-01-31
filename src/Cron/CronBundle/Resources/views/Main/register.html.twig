@@ -116,13 +116,13 @@
 	  $(function() {
 		$( "#terms" ).dialog({
 		  autoOpen: false,
-		  show: "blind",
-		  hide: "clip",
+		  show: "fade",
+		  hide: "fade",
 		  width: '955',
-		  height: '500',
+		  height: '1000',
 		  modal: true,
 		  resizable: false,
-		  position: 'top'
+		  position: 'bottom'
 		});
 	 
 	$( ".agreementLabel > a" ).click(function() {
@@ -189,7 +189,7 @@
 			<div class="registrationField">
 				{{ form_label(form.birthDate) }}
 				{{ form_errors(form.birthDate) }}
-				<span class="birtDateDescription">День&nbsp;&nbsp; Месяц &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Год</span>
+				<span class="birtDateDescription">День&nbsp;&nbsp; Месяц &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Год</span>
 				<div class="birthDateSelect">
 				{{ form_widget(form.birthDate) }}
 				</div>

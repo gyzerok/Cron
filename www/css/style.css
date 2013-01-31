@@ -280,7 +280,8 @@
 .usersProfile p.myQuestions a {
 	text-align: right;
 	color: #526493;
-	text-decoration: underline;
+	text-decoration: none;
+	font-family: 'Candara';
 	font-size: 16px;
 }
 
@@ -344,12 +345,15 @@
 	color: #383838;
 }
 
+#menu ul.menuNavigation li.chatInvite:hover {
+	background-color: #FFDDDB;
+}
+
 #menu ul.menuNavigation li ul.subMenuNavigation {
   display:none;
   position:absolute;
   z-index:100;
   width:180px;
-  border: 2px solid #EF5928;
   background-color: #FFDDDB;
   margin-left: 5px;
 }
@@ -511,7 +515,7 @@
 	margin-right: 11px;
 	cursor: pointer;
 	border-radius: 6px;
-	margin-bottom: 5px;
+	margin-bottom: 7px;
 	vertical-align: middle;
 	text-align: center;
 	margin-top: 57px;
@@ -570,16 +574,15 @@ p.questionPrivateCost {
 }
 
 .rushWrapper {
-	width: 450px;
+	width: 404px;
 	overflow: hidden;
-	outline: 2px solid #A33A1C;
-
+	margin-left: 276px;
 }
 
 .chosePlace {
 	width: 273px;
 	float: left;
-	margin-left: 75px;
+	margin-left: 25px;
 	overflow: hidden;
 }
 
@@ -626,8 +629,8 @@ p.questionCost {
 
 h2.categoryH2 {
 	font-size: 24px;
-	margin-left: 15px;
-	margin-top: 0;
+	margin-left: 17px;
+	margin-top: -2px;
 	color: #7A2116;
 	text-transform: uppercase;
 }
@@ -811,6 +814,7 @@ h2.categoryH2 {
 	font-size: 20px;
 	text-transform: uppercase;
 	color: #52648A;
+	cursor: pointer;
 }
 
 .chatWindow span {
@@ -831,15 +835,15 @@ h2.categoryH2 {
 }
 
 .openChat {
-	width: 729px;
+	width: 730px;
 	height: 270px;
 	border: 2px solid #CC2A03;
 	border-radius: 8px;
 	margin-top: -281px;
-    position: fixed;
-    bottom: 0;
-    z-index: 5;
-    background: #ffffff;
+	position: fixed;
+	bottom: 0;
+	z-index: 5;
+	background: #ffffff;
 }
 
 .closeChat {
@@ -912,11 +916,12 @@ h3.registrationH3 {
 	border: 1px solid #52648A;
 	border-radius: 3px;
 	margin-top: 20px;
-	width: 500px;
+	width: 495px;
 	font-size: 20px;
 	font-family: 'Arial';
 	float: right;
-	margin-right: 217px;;
+	margin-right: 217px;
+	padding-left: 5px;
 }
 
 .registrationField select {
@@ -1037,11 +1042,13 @@ span.birtDateDescription {
 	color: #52648A;
 	font-size: 24px;
 	font-family: 'Cambria';
+	margin-top: -2px;
 }
 
 .registrationFieldGender input {
 	float: left;
 	display: block;
+	margin-top: 5px;
 }
 
 .registrationFieldPlace {
@@ -1076,6 +1083,7 @@ span.placeLabel {
 .registrationFieldPlace select {
 	display: block;
 	width: 272px;
+	margin-bottom: 6px;
 }
 
 span.agreementLabel {
@@ -1093,6 +1101,10 @@ span.agreementLabel a {
 	cursor: pointer;
 	display: inline-block;
 	height: 22px;
+}
+
+span.agreementLabel a:hover {
+	text-decoration: none;
 }
 
 .emailError {
@@ -1147,7 +1159,7 @@ span.agreementLabel a {
 	color: #ff5151;
 	position: absolute;
 	right: 273px;
-	top: 46px;
+	top: 49px;
 	margin: 0;
 	padding: 0;
 }
@@ -1157,7 +1169,7 @@ span.agreementLabel a {
 	color: #ff5151;
 	position: absolute;
 	right: 273px;
-	top: 85px;
+	top: 94px;
 	margin: 0;
 	padding: 0;
 }
@@ -1205,6 +1217,7 @@ input.registerButton {
 
 input.registerButton:hover {
 	border: 2px solid #00A3D4;
+	background-color: #F8FBFE;
 }
 
 #username {
@@ -1267,6 +1280,10 @@ a.forgotPassword {
 	text-decoration: none;
 	font-size: 18px;
 	font-family: 'Cambria';
+}
+
+a.forgotPassword:hover {	
+	color: #0093CB;
 }
 
 a.closeRegisterButton {
@@ -1406,7 +1423,7 @@ a.closeRegisterButton {
 	display: block;
 	width: 24px;
 	height: 25px;
-	background: url('../i/copy1.png') no-repeat;
+	/*background: url('../i/copy1.png') no-repeat;*/
 	float: left;
 	margin: 3px 0 0 3px;
 }
@@ -1420,24 +1437,26 @@ a.closeRegisterButton {
 	margin: 3px 0 0 3px;
 }
 
-#d_clip_button:hover {
+#d_clip_button a:hover {
 	background: url('../i/copy.png') no-repeat;
 	display: block;
 	width: 24px;
 	height: 25px;
 }
 
+
 .total-size-wrap {
-	margin: 25px 81px 0 0px;
+	margin: 31px 81px 0 0px;
 	color: #52648A;
 	font-size: 20px;
-	font-family: 'Cambria';	
-	margin-bottom: 8px;
+	font-family: 'Cambria';
+	margin-bottom: 0px;
 }
 
 .my-files {
 	clear: both;
 	margin-top: 22px;
+	margin-left: -15px;
 }
 .my-file {
 	padding: 6px 0 1px 5px;
@@ -1458,28 +1477,29 @@ a.closeRegisterButton {
 	vertical-align: top;
 	color: #000;
 	font-size: 21px;
-	font-family: 'Cambria';	
+	font-family: 'Cambria';
+	width: 100px;
 }
 
 .download-my-file{
 	border: 1px solid #C6C6C6;
 	background-color: #EFEFEF;
 	color: #383838;
-	font-size: 14px;
+	font-size: 18px;
 	font-family: 'Cambria';
 	cursor: pointer;
 	border-radius: 3px;
-	margin-top: -2px;
+	margin-top: -5px;
 }
 .delete-my-file {
 	border: 1px solid #C6C6C6;
 	background-color: #EFEFEF;
 	color: #383838;
-	font-size: 14px;
+	font-size: 18px;
 	font-family: 'Cambria';
 	cursor: pointer;
 	border-radius: 3px;
-	margin-top: -2px;
+	margin-top: -5px;
 }
 .my-file input[type=button] {
 	float: right;
@@ -1669,7 +1689,7 @@ h2.chatInviteTitle{
 
 .chatTabs {
 	width: 689px;
-	margin: 0 auto;
+	margin: 4px auto;
 	overflow: hidden;
 }
 
@@ -1677,7 +1697,7 @@ h2.chatInviteTitle{
 	width: 118px;
 	height: 24px;
 	border: 2px solid #5d6787;
-	border-radius: 15px 15px 0 0;
+	border-radius: 5px 5px 0 0;
 	font-size: 18px;
 	font-family: 'Cambria';
 	color: #000;
@@ -1689,10 +1709,10 @@ h2.chatInviteTitle{
 }
 
 .singleInboxTab {
-	width: 237px;
+	width: 224px;
 	height: 24px;
 	border: 2px solid #5d6787;
-	border-radius: 15px 15px 0 0;
+	border-radius: 5px 5px 0 0;
 	text-align: left;
 	cursor: pointer;
 	float: left;
@@ -1709,7 +1729,7 @@ h2.chatInviteTitle{
 	color: #000;
 	text-transform: uppercase;
 	margin-top: 5px;
-	margin-left: 10px;
+	margin-left: 4px;
 	float: left;
 }
 
@@ -1759,14 +1779,14 @@ h2.chatInviteTitle{
 
 .chatUsername {
 	width: 88px;
-	height: 14px;
+	height: 11px;
 	overflow: hidden;
 	border: 1px solid #e0eaf5;
 	text-align: center;
 	border-radius: 3px;
 	font-family: 'Cambria';
 	font-size: 11px;
-	line-height: 130%;
+	line-height: 105%;
 	margin-left: 3px;
 }
 
@@ -1774,6 +1794,7 @@ h2.chatInviteTitle{
 	font-family: 'Cambria';
 	font-size: 19px;
 	margin-left: 3px;
+	margin-bottom: 3px;
 }
 
 .usersInChat {
