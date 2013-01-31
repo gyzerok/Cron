@@ -31,6 +31,18 @@ class ChatController extends Controller
                 ->getQuery()
                 ->getResult();
 
+            foreach ($dialogs as $id=>$dialog) {
+                $messages = $this->getDoctrine()->getRepository('CronCronBundle:DialogMsg')
+                    ->createQueryBuilder('dialog_msg')
+                    ->where('dialog_msg.dialog = :did')
+                    ->setParameter('did', $dialog->getId())
+                    ->orderBy('dialog_msg.msg_date', 'ASC')
+                    ->getQuery()
+                    ->getResult();
+                $dialogs[$id]->messages = $messages;
+            }
+
+
             return $this->render("CronCronBundle:Chat:chatwindow.html.twig", array(
                     "dialogs" => $dialogs,
                     "curUser" => $user
@@ -79,8 +91,12 @@ class ChatController extends Controller
                     ->groupBy('dm.dialog')
                     ->getQuery()
                     ->getResult();
-                if ($unreads[0])
-                    $dialog->unreads = '('.$unreads[0]['unreads'].')';
+                $dialog->unreads = '';
+                if ($unreads){
+                    if ($unreads[0]){
+                        $dialog->unreads = '('.$unreads[0]['unreads'].')';
+                    }
+                }
 //                print_r($unreads);
             }
 
