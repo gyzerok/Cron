@@ -178,10 +178,14 @@ class AjaxController extends Controller
 
     public function uploadFileAction(Request $request)
     {
-        if ($request->isMethod('POST')){
-            move_uploaded_file($_FILES['file']['tmp_name'], $_SERVER['DOCUMENT_ROOT'].'/files/'.$_FILES['file']['name']);
+        $user = $this->getUser();
+        if ($request->isMethod('POST') && ($user instanceof User)){
+            $files_dir = $_SERVER['DOCUMENT_ROOT'].'/files/'.$user->getId().'/';
+            if (!is_dir($files_dir))
+                mkdir($files_dir);
+            $file_name = iconv("utf-8", "cp1251", $_FILES['file']['name']);
+            move_uploaded_file($_FILES['file']['tmp_name'], $files_dir.$file_name);
 
-            $user = $this->getUser();
             $total_filesize = $this->getDoctrine()->getRepository("CronCronBundle:File")
                 ->createQueryBuilder('file')
                 ->select('SUM(file.filesize) as value')
@@ -195,12 +199,12 @@ class AjaxController extends Controller
             if (!empty($total_filesize)){
                 $total_size_left = 52428800 - $total_filesize[0]['value'];
             }
-            if (filesize($_SERVER['DOCUMENT_ROOT'].'/files/'.$_FILES['file']['name']) <= $total_size_left){
+            if (filesize($files_dir.$file_name) <= $total_size_left){
                 $file = new File();
                 $file->setFilename($_FILES['file']['name']);
-                $file->setUrl('http://'.$_SERVER['HTTP_HOST'].'/files/'.$_FILES['file']['name']);
-                $file->setHash(md5(file_get_contents($_SERVER['DOCUMENT_ROOT'].'/files/'.$_FILES['file']['name'])));
-                $file->setFilesize(filesize($_SERVER['DOCUMENT_ROOT'].'/files/'.$_FILES['file']['name']));
+                $file->setUrl('http://'.$_SERVER['HTTP_HOST'].'/files/'.$user->getId().'/'.$_FILES['file']['name']);
+                $file->setHash(substr(md5(file_get_contents($files_dir.$file_name)),0,8));
+                $file->setFilesize(filesize($files_dir.$file_name));
                 $file->setUploadDate(new \DateTime());
                 $user = $this->getUser();
                 if (!$user instanceof User)
@@ -212,10 +216,10 @@ class AjaxController extends Controller
                 $em->flush();
                 return new Response($file->getId());
             } else {
-                @unlink($_SERVER['DOCUMENT_ROOT'].'/files/'.$_FILES['file']['name']);
+                @unlink($files_dir.$file_name);
                 return new Response('FAIL', 403);
             }
-        }
+        } else return new Response('FAIL', 403);
     }
 
     public function deleteFileAction(Request $request)
@@ -227,7 +231,8 @@ class AjaxController extends Controller
         $em->remove($file);
         $em->flush();
 
-        @unlink($_SERVER['DOCUMENT_ROOT'].'/files/'.$file->getFilename());
+        $files_dir = $_SERVER['DOCUMENT_ROOT'].'/files/'.$user->getId().'/';
+        @unlink($files_dir.iconv("utf-8", "cp1251", $file->getFilename()));
         return new Response('SUCCESS');
     }
 

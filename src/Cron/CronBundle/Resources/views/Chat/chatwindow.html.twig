@@ -10,15 +10,15 @@
 </head>
 	<body>#}
 	<div class="chatTabs">
-		<div class="singleTab">Мой чат</div>
+		<div class="singleTab chat-tab" data-tab="my">Мой чат</div>
 		<div class="singleInboxTab">
 			<span>Входящий чат</span>
-			<div class="numberOnTab">1</div>
-			<div class="numberOnTab">2</div>
-			<div class="numberOnTab">3</div>
+			<div class="numberOnTab chat-tab" data-tab="in1">1</div>
+			<div class="numberOnTab chat-tab" data-tab="in2">2</div>
+			<div class="numberOnTab chat-tab" data-tab="in3">3</div>
 		</div>
         {% for dialog in dialogs %}
-            <div class="singleTab">
+            <div class="singleTab chat-tab" data-tab="d{{ dialog.getId() }}">
                 {% if dialog.user1==curUser %}
                     {{ dialog.user2.getNick() }}
                 {% else %}
@@ -28,60 +28,126 @@
         {% endfor %}
 	</div>
 	<div class="mainWindow">
-		<div class="chat">
-			<div style="width: 578px; 	border-right: 2px solid #465176">
-				<div class="singleMessage">
-					<div class="chatUsername">Светлана</div>
-					<div class="messageText">Привет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела?</div>
-				</div>
-				<div class="singleMessage">
-					<div class="chatUsername">Светлана</div>
-					<div class="messageText">Привет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела?</div>
-				</div>
-				<div class="singleMessage">
-					<div class="chatUsername">Светлана</div>
-					<div class="messageText">Привет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела?</div>
-				</div>
-				<div class="singleMessage">
-					<div class="chatUsername">Светлана</div>
-					<div class="messageText">Привет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела?</div>
-				</div>
-				<div class="singleMessage">
-					<div class="chatUsername">Светлана</div>
-					<div class="messageText">Привет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела?</div>
-				</div>
-			</div>
-		</div>
-		<div class="usersInChat">
-			<div class="singleUser">
-				<div class="singleUsername">Светлана</div>
-				<div class="kickUser"></div>
-			</div>
-			<div class="singleUser">
-				<div class="singleUsername">Игорь</div>
-				<div class="kickUser"></div>
-			</div>
-			<div class="singleUser">
-				<div class="singleUsername">Марина</div>
-				<div class="kickUser"></div>
-			</div>
-			<div class="singleUser">
-				<div class="singleUsername">Маша</div>
-				<div class="kickUser"></div>
-			</div>
-			<div class="singleUser">
-				<div class="singleUsername">Виктор</div>
-				<div class="kickUser"></div>
-			</div>
-			<div class="singleUser">
-				<div class="singleUsername">Сергей</div>
-				<div class="kickUser"></div>
-			</div>
-			<div class="singleUser">
-				<div class="singleUsername">Антон</div>
-				<div class="kickUser"></div>
-			</div>
-		</div>
+		<div class="chat-content" tab="my">
+            <div class="chat" style="width: 597px;">
+                <div style="width: 578px;border-right: 2px solid #465176">
+                    <div class="singleMessage">
+                        <div class="chatUsername">Светлана</div>
+                        <div class="messageText">Привет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела?</div>
+                    </div>
+                    <div class="singleMessage">
+                        <div class="chatUsername">Светлана</div>
+                        <div class="messageText">Привет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела?</div>
+                    </div>
+                    <div class="singleMessage">
+                        <div class="chatUsername">Светлана</div>
+                        <div class="messageText">Привет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела?</div>
+                    </div>
+                    <div class="singleMessage">
+                        <div class="chatUsername">Светлана</div>
+                        <div class="messageText">Привет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела?</div>
+                    </div>
+                    <div class="singleMessage">
+                        <div class="chatUsername">Светлана</div>
+                        <div class="messageText">Привет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела?</div>
+                    </div>
+                </div>
+            </div>
+            <div class="usersInChat">
+                <div class="singleUser">
+                    <div class="singleUsername">Светлана</div>
+                    <div class="kickUser"></div>
+                </div>
+                <div class="singleUser">
+                    <div class="singleUsername">Игорь</div>
+                    <div class="kickUser"></div>
+                </div>
+                <div class="singleUser">
+                    <div class="singleUsername">Марина</div>
+                    <div class="kickUser"></div>
+                </div>
+                <div class="singleUser">
+                    <div class="singleUsername">Маша</div>
+                    <div class="kickUser"></div>
+                </div>
+                <div class="singleUser">
+                    <div class="singleUsername">Виктор</div>
+                    <div class="kickUser"></div>
+                </div>
+                <div class="singleUser">
+                    <div class="singleUsername">Сергей</div>
+                    <div class="kickUser"></div>
+                </div>
+                <div class="singleUser">
+                    <div class="singleUsername">Антон</div>
+                    <div class="kickUser"></div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-content" tab="in1">
+            <div class="chat">
+                <div style="width: 704px;border-right: 2px solid #465176">
+                    <div class="singleMessage">
+                        <div class="chatUsername">Светлана</div>
+                        <div class="messageText">Привет! Как дела?</div>
+                    </div>
+                    <div class="singleMessage">
+                        <div class="chatUsername">Светлана</div>
+                        <div class="messageText">Ау!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-content" tab="in2">
+            <div class="chat">
+                <div style="width: 704px;border-right: 2px solid #465176">
+                    <div class="singleMessage">
+                        <div class="chatUsername">Игорь</div>
+                        <div class="messageText">Привет!</div>
+                    </div>
+                    <div class="singleMessage">
+                        <div class="chatUsername">Игорь</div>
+                        <div class="messageText"> Как дела?</div>
+                    </div>
+                    <div class="singleMessage">
+                        <div class="chatUsername">Игорь</div>
+                        <div class="messageText">Есть тут кто?</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="chat-content" tab="in3">
+            <div class="chat">
+                <div style="width: 704px;border-right: 2px solid #465176">
+                    <div class="singleMessage">
+                        <div class="chatUsername">Маша</div>
+                        <div class="messageText">WHAAATS!</div>
+                    </div>
+                    <div class="singleMessage">
+                        <div class="chatUsername">Маша</div>
+                        <div class="messageText"> How u doing?</div>
+                    </div>
+                    <div class="singleMessage">
+                        <div class="chatUsername">Маша</div>
+                        <div class="messageText">anybody?</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% for dialog in dialogs %}
+            <div class="chat-content" tab="d{{ dialog.getId() }}" data-dialog-id="{{ dialog.getId() }}" data-to-user="{% if dialog.user1==curUser %}{{ dialog.user2.getId() }}{% else %}{{ dialog.user1.getId() }}{% endif %}">
+                <div class="chat">
+                    <div style="width: 704px;border-right: 2px solid #465176">
+                        {% for message in dialog.messages %}
+                            <div class="singleMessage{% if message.getUser()==curUser %} my-message{% endif %}">
+                                <div class="chatUsername">{{ message.getUser().getNick() }}</div>
+                                <div class="messageText">{{ message.getMsgText() }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
 	</div>
 	<div class="typeText">
 		<div class="enterArea">
