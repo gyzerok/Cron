@@ -100,6 +100,9 @@ class ChatController extends Controller
 //            echo '<pre>';
 //            print_r($dialogs);
 //            echo '</pre>';
+
+            $total_unreads = 0;
+
             foreach ($dialogs as $dialog) {
                 $unreads = $this->getDoctrine()->getRepository('CronCronBundle:DialogMsg')
                     ->createQueryBuilder('dm')
@@ -115,6 +118,7 @@ class ChatController extends Controller
                 if ($unreads){
                     if ($unreads[0]){
                         $dialog->unreads = '('.$unreads[0]['unreads'].')';
+                        $total_unreads += $unreads[0]['unreads'];
                     }
                 }
 //                print_r($unreads);
@@ -122,6 +126,7 @@ class ChatController extends Controller
 
             return $this->render("CronCronBundle:Chat:dialogs.html.twig", array(
                     "dialogs" => $dialogs,
+                    "total_unreads" => $total_unreads,
                     "curUser" => $user
                 )
             );
@@ -515,6 +520,7 @@ class ChatController extends Controller
     public function sendChatInviteAction(Request $request){
         $user = $this->getUser();
         if (/*$request->isMethod('POST') && */($user instanceof User)){
+            $em = $this->getDoctrine()->getManager();
 
 //            $chat_id = $request->get("chat");
             $user2_id = $request->get("user");
@@ -524,6 +530,9 @@ class ChatController extends Controller
                 $chat = $this->createChat($user);
                 //return new Response('Fail');
             }
+            $chat->setIsActive(1);
+            $em->persist($chat);
+
 
             $user2 = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneById($user2_id);
             if (!$user2 instanceof \Cron\CronBundle\Entity\User)
@@ -537,11 +546,12 @@ class ChatController extends Controller
                 $invite->setUser2($user2);
                 $invite->setInviteDate(new \DateTime());
 
-                $em = $this->getDoctrine()->getManager();
                 $em->persist($invite);
-                $em->flush();
+
                 //todo srvmsg
             }
+
+            $em->flush();
 
 
             return new Response('SUCCESS');
