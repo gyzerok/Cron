@@ -1788,6 +1788,7 @@ h2.chatInviteTitle{
 .mainWindow{
 	margin: 0 auto;
 	width: 727px;
+	min-height: 166px;
 	overflow: hidden;
 }
 
