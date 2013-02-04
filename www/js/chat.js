@@ -183,11 +183,15 @@ $(document).ready(function(){
                     if (chat_container.is('.open-new-income-chat')){
                         $(".numberOnTab.chat-tab:last").click();
                         chat_container.removeClass('open-new-income-chat');
+                    } else {
+                        chat_container.find(".chat-tab").first().click();
                     }
                 }
             });
 
             chat_container.html('<div class="chat-empty-text">Загрузка...</div>');
+        } else {
+            chat_container.find(".chat-tab").first().click();
         }
 //        openChat.fadeIn();
         openChat.show();
@@ -215,13 +219,10 @@ $(document).ready(function(){
     });
     $(".chat-input").live('keyup', function(e){
         var code= (e.keyCode ? e.keyCode : e.which);
-        if (code == 13 && e.shiftKey){
-            /*var content = this.value;
-            var caret = getCaret(this);
-            this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length-1);
-            e.stopPropagation();*/
+        var new_line_switch = $("#chat-nl-switch").attr('checked');
+        if (code == 13 && e.shiftKey && !new_line_switch){
 
-        } else if(code == 13){
+        } else if((code == 13 && e.shiftKey && new_line_switch) || (code == 13 && !new_line_switch)){
             var chatInput = $(this);
             if ($.trim(chatInput.val())){
                 var current_chat = $(".chat-content:visible");
@@ -250,17 +251,33 @@ $(document).ready(function(){
             }
             return false;
         }
+
     });
     $(".chat-tab").live('click', function(){
         $(".chat-tab").removeClass('active');
         $(this).addClass('active');
         $(".chat-content").hide();
-        var active_chat = $(".chat-content[tab="+$(this).data('tab')+"]");
+        var tab_id = $(this).data('tab');
+
+        var active_chat = $(".chat-content[tab="+tab_id+"]");
         active_chat.show();
+
         var objDiv = active_chat.find(".chat");
         if (objDiv.size())
             objDiv[0].scrollTop = objDiv[0].scrollHeight;
         $(".chat-input").focus();
+
+        var first_char_tab_id = tab_id.substr(0,1);
+        if (first_char_tab_id=='m'){
+            $(".leaveConversation").hide();
+            $(".finishConversation").show();
+        } else if (first_char_tab_id=='i') {
+            $(".leaveConversation").show();
+            $(".finishConversation").hide();
+        } else {
+            $(".leaveConversation").hide();
+            $(".finishConversation").hide();
+        }
     });
 
     $(".closeDialogTab").live('click', function(){
@@ -277,6 +294,30 @@ $(document).ready(function(){
         cur_tab.remove();
         prev_tab.click();
         return false;
+    });
+
+    $(".finishConversation input").live('click', function(){
+        var current_chat = $(".chat-content:visible");
+        $.ajax({
+            url: '/chat/finishChat',
+            data: {
+                chat:current_chat.data('chat-id')
+            }
+        });
+        $(".usersInChat .singleUser").remove();
+        $(".chat-tab.active").remove();
+        $(".chat-tab").first().click();
+    });
+    $(".leaveConversation input").live('click', function(){
+        var current_chat = $(".chat-content:visible");
+        $.ajax({
+            url: '/chat/leaveChat',
+            data: {
+                chat:current_chat.data('chat-id')
+            }
+        });
+        $(".chat-tab.active").removeClass('chat-tab');
+        $(".chat-tab").first().click();
     });
 
     //Загруза окна чата сразу после озагрузки страницы
@@ -298,27 +339,6 @@ $(document).ready(function(){
 function temp_uploadChat(){
 
     return true;
-}
-
-function getCaret(el) {
-    if (el.selectionStart) {
-        return el.selectionStart;
-    } else if (document.selection) {
-        el.focus();
-
-        var r = document.selection.createRange();
-        if (r == null) {
-            return 0;
-        }
-
-        var re = el.createTextRange(),
-            rc = re.duplicate();
-        re.moveToBookmark(r.getBookmark());
-        rc.setEndPoint('EndToStart', re);
-
-        return rc.text.length;
-    }
-    return 0;
 }
 
 function nl2br (str, is_xhtml) {
