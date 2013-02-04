@@ -37,7 +37,7 @@
         {% if mychat %}
             <div class="chat-content" tab="my" data-chat-id="{{ mychat.getId() }}">
                 <div class="chat" style="width: 597px;">
-                    <div style="width: 578px;border-right: 2px solid #465176">
+                    <div class="messageWrap" style="width: 578px;>
                         {% for message in mychat.messages %}
                             <div class="singleMessage">
                                 <div class="chatUsername">{{ message.getUser().getNick() }}</div>
@@ -61,7 +61,7 @@
         {% for in_chat in income_chats %}
             <div class="chat-content" tab="in{{ counter }}" data-chat-id="{{ in_chat.getChat().getId() }}">
                 <div class="chat">
-                    <div style="border-right: 2px solid #465176">
+                    <div class="messageWrap" >
                         {% for message in in_chat.messages %}
                             <div class="singleMessage">
                                 <div class="chatUsername">{{ message.getUser().getNick() }}</div>
@@ -77,7 +77,7 @@
         {% for dialog in dialogs %}
             <div class="chat-content" tab="d{{ dialog.getId() }}" data-dialog-id="{{ dialog.getId() }}" data-to-user="{% if dialog.user1==curUser %}{{ dialog.user2.getId() }}{% else %}{{ dialog.user1.getId() }}{% endif %}">
                 <div class="chat">
-                    <div style="border-right: 2px solid #465176">
+                    <div class="messageWrap">
                         {% for message in dialog.messages %}
                             <div class="singleMessage{% if message.getUser()==curUser %} my-message{% endif %}">
                                 <div class="chatUsername">{{ message.getUser().getNick() }}</div>

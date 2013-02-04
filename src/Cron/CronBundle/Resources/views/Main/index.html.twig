@@ -170,15 +170,28 @@
 	});
 	
 	//Открытие чата
-/*	var openChat = $('.openChat');
+	var openChat = $('.openChat');
 	openChat.hide();
+	$('.chatWrapper').hide();
 	$('.chatUpButton').click(function() {
 		openChat.fadeIn();	
+		$('.chatWrapper').fadeIn();
 	});
 	$('.closeChat').click(function() {
-		openChat.fadeOut();			
+		openChat.fadeOut();
+		$('.chatWrapper').fadeOut();		
 	});
-	*/
+	
+	//Растягиваемое окошко чата
+	$('.openChat').resizable({
+	handles:"n",
+	maxHeight: 529,
+	minHeight: 270,
+	alsoResize: ".mainWindow",	
+	alsoResize: ".messageWrap",
+	alsoResize: ".chat"
+	});
+	
 	});
 	
 	

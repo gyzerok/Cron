@@ -837,14 +837,20 @@ h2.categoryH2 {
 	margin-left: 20px;
 }
 
+.chatWrapper {
+	width: 730px;
+	height: 270px;
+	position: fixed;
+	bottom: 0px;
+	z-index: 5;
+	background: #ffffff;
+}
+
 .openChat {
 	width: 730px;
 	height: 270px;
 	border: 2px solid #CC2A03;
 	border-radius: 8px;
-	margin-top: -281px;
-	position: fixed;
-	bottom: 50px;
 	z-index: 5;
 	background: #ffffff;
 }
@@ -1782,7 +1788,6 @@ h2.chatInviteTitle{
 .mainWindow{
 	margin: 0 auto;
 	width: 727px;
-	height: 166px;
 	overflow: hidden;
 }
 
