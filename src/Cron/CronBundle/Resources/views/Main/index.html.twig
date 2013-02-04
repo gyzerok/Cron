@@ -170,15 +170,28 @@
 	});
 	
 	//Открытие чата
-/*	var openChat = $('.openChat');
+	var openChat = $('.openChat');
 	openChat.hide();
+	$('.chatWrapper').hide();
 	$('.chatUpButton').click(function() {
 		openChat.fadeIn();	
+		$('.chatWrapper').fadeIn();
 	});
 	$('.closeChat').click(function() {
-		openChat.fadeOut();			
+		openChat.fadeOut();
+		$('.chatWrapper').fadeOut();		
 	});
-	*/
+	
+	//Растягиваемое окошко чата
+	$('.openChat').resizable({
+	handles:"n",
+	maxHeight: 529,
+	minHeight: 270,
+	alsoResize: ".mainWindow",	
+	alsoResize: ".messageWrap",
+	alsoResize: ".chat"
+	});
+	
 	});
 	
 	
@@ -262,7 +275,7 @@
 			<div class="myAnswer">
 				<div class="singleAnswer" data-user="8">
 					<div class="userName">Ivan</div>
-					<div class="answerDate">15:15:16 14.01.2013</div>
+					<div class="answerDate">14.01.2013 15:15:16</div>
 					<div style="clear: both;"></div>
 					<div class="questionText">
 						ответ1
@@ -276,7 +289,7 @@
 				</div>
 				<div class="singleAnswer" data-user="3">
 					<div class="userName">Fedor</div>
-					<div class="answerDate">15:15:16 14.01.2013</div>
+					<div class="answerDate">14.01.2013 15:15:16 </div>
 					<div style="clear: both;"></div>
 					<div class="questionText">
 						ответ2
@@ -290,7 +303,7 @@
 				</div>
 				<div class="singleAnswer" data-user="4">
 					<div class="userName">Alekseys</div>
-					<div class="answerDate">15:15:16 14.01.2013</div>
+					<div class="answerDate">14.01.2013 15:15:16 </div>
 					<div style="clear: both;"></div>
 					<div class="questionText">
 						ответ3

@@ -644,10 +644,10 @@ h2.categoryH2 {
 
 
 .singleQuestion {
-	width: 680px;
+	width: 709px;
 	border: 1px solid #965565;
 	border-radius: 7px;
-	margin-top: 10px;
+	margin: 10px auto 0px auto;
 	overflow: hidden;
 }
 
@@ -667,9 +667,12 @@ h2.categoryH2 {
 	float: left;
 	overflow: hidden;
 	font-size: 13px;
-	margin-left: 450px;
+	margin-left: 482px;
 	margin-right: 0;
-	color: #999999;
+	color: #7e7f7f;
+	font-family: 'Cambria';
+	font-size: 10px;
+	margin-top: 3px;		
 }
 
 .closeButton {
@@ -678,18 +681,18 @@ h2.categoryH2 {
 	float: left;
 	background: url(/i/closeButton.png) no-repeat;
 	background-size: 100%;
-	margin-left: 0px;
+	margin-left: -5px;
 	cursor: pointer;
-
+	margin-top: 3px;
 }
 
 .questionText{
 	display: block;
-	width: 650px;
+	width: 676px;
 	margin: 3px 0 0px 5px;
 	overflow: hidden;
 	font-family: 'Cambria';
-	
+	font-size: 14px;
 }
 
 .socialIcons {
@@ -834,14 +837,20 @@ h2.categoryH2 {
 	margin-left: 20px;
 }
 
+.chatWrapper {
+	width: 730px;
+	height: 270px;
+	position: fixed;
+	bottom: 0px;
+	z-index: 5;
+	background: #ffffff;
+}
+
 .openChat {
 	width: 730px;
 	height: 270px;
 	border: 2px solid #CC2A03;
 	border-radius: 8px;
-	margin-top: -281px;
-	position: fixed;
-	bottom: 50px;
 	z-index: 5;
 	background: #ffffff;
 }
@@ -1346,15 +1355,16 @@ a.closeRegisterButton {
 }
 
 .myAnswer {
-	width: 682px;
+	width: 690px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	border: 1px solid #965565;
+	margin: 0 auto;
 }
 
 .singleAnswer {
-	margin: 6px 0 0 12px;
-	width: 650px;
+	margin: 6px 0 0 5px;
+	width: 665px;
 	border: 1px solid #965565;
 	border-radius: 7px;
 	overflow: hidden;
@@ -1364,9 +1374,10 @@ a.closeRegisterButton {
 	width: 105px;
 	float: left;
 	overflow: hidden;
-	font-size: 13px;
-	margin-left: 416px;
-	color: #999999;
+	margin-left: 438px;
+	color: #7e7f7f;
+	font-family: 'Cambria';
+	font-size: 10px;
 }
 
 #progress {
@@ -1780,7 +1791,6 @@ h2.chatInviteTitle{
 .mainWindow{
 	margin: 0 auto;
 	width: 727px;
-	height: 166px;
 	overflow: hidden;
 }
 
