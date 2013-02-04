@@ -125,6 +125,18 @@ deleteDialog:
   pattern:  /chat/deleteDialog
   defaults: { _controller: CronCronBundle:Chat:deleteDialog }
 
+createDialog:
+  pattern:  /chat/createDialog
+  defaults: { _controller: CronCronBundle:Chat:createDialog }
+
+openDialog:
+  pattern:  /chat/openDialog
+  defaults: { _controller: CronCronBundle:Chat:openDialog }
+
+closeDialog:
+  pattern:  /chat/closeDialog
+  defaults: { _controller: CronCronBundle:Chat:closeDialog }
+
 checkDialogAsSpam:
   pattern:  /chat/checkDialogAsSpam
   defaults: { _controller: CronCronBundle:Chat:checkDialogAsSpam }
@@ -144,6 +156,10 @@ finishChat:
 leaveChat:
   pattern:  /chat/leaveChat
   defaults: { _controller: CronCronBundle:Chat:leaveChat }
+
+kickUser:
+  pattern:  /chat/kickUser
+  defaults: { _controller: CronCronBundle:Chat:kickUser }
 
 sendChatInvite:
   pattern:  /chat/sendChatInvite

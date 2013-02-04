@@ -844,7 +844,7 @@ h2.categoryH2 {
 	border-radius: 8px;
 	margin-top: -281px;
 	position: fixed;
-	bottom: 0;
+	bottom: 50px;
 	z-index: 5;
 	background: #ffffff;
 }
@@ -1711,10 +1711,24 @@ h2.chatInviteTitle{
 	line-height: 150%;
 	cursor: pointer;
 	float: left;
+    position: relative;
+}
+.closeDialogTab {
+    background: url(../i/closeDialogs.png);
+    /*display: block;*/
+    width: 13px;
+    height: 13px;
+    position: absolute;
+    right: 2px;
+    top:5px;
+    display: none;
+}
+.singleTab:hover .closeDialogTab, .singleTab.active .closeDialogTab {
+    display: block;
 }
 
 .singleInboxTab {
-	width: 224px;
+	/*width: 224px;*/
 	height: 24px;
 	border: 2px solid #5d6787;
 	border-radius: 5px 5px 0 0;
@@ -1723,6 +1737,7 @@ h2.chatInviteTitle{
 	float: left;
 	margin-left: 1px;
 	padding-left: 3px;
+	padding-right: 5px;
 }
 
 .singleInboxTab span {

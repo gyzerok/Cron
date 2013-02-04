@@ -10,15 +10,21 @@
 </head>
 	<body>#}
 	<div class="chatTabs">
-		<div class="singleTab chat-tab" data-tab="my">Мой чат</div>
-		<div class="singleInboxTab">
+        {% if mychat %}
+            <div class="singleTab chat-tab active" data-tab="my">Мой чат</div>
+        {% endif %}
+
+        <div class="singleInboxTab">
 			<span>Входящий чат</span>
-			<div class="numberOnTab chat-tab" data-tab="in1">1</div>
-			<div class="numberOnTab chat-tab" data-tab="in2">2</div>
-			<div class="numberOnTab chat-tab" data-tab="in3">3</div>
+            {% set counter = 1 %}
+            {% for in_chat in income_chats %}
+                <div class="numberOnTab chat-tab" data-tab="in{{ counter }}">{{ counter }}</div>
+                {% set counter = counter + 1 %}
+            {% endfor %}
 		</div>
         {% for dialog in dialogs %}
             <div class="singleTab chat-tab" data-tab="d{{ dialog.getId() }}">
+                <a href="#" class="closeDialogTab"></a>
                 {% if dialog.user1==curUser %}
                     {{ dialog.user2.getNick() }}
                 {% else %}
@@ -28,120 +34,54 @@
         {% endfor %}
 	</div>
 	<div class="mainWindow">
-		<div class="chat-content" tab="my">
-            <div class="chat" style="width: 597px;">
-                <div style="width: 578px;border-right: 2px solid #465176">
-                    <div class="singleMessage">
-                        <div class="chatUsername">Светлана</div>
-                        <div class="messageText">Привет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела?</div>
+        {% if mychat %}
+            <div class="chat-content" tab="my" data-chat-id="{{ mychat.getId() }}">
+                <div class="chat" style="width: 597px;">
+                    <div style="width: 578px;border-right: 2px solid #465176">
+                        {% for message in mychat.messages %}
+                            <div class="singleMessage">
+                                <div class="chatUsername">{{ message.getUser().getNick() }}</div>
+                                <div class="messageText">{{ message.getMsgText()|nl2br }}</div>
+                            </div>
+                        {% endfor %}
                     </div>
-                    <div class="singleMessage">
-                        <div class="chatUsername">Светлана</div>
-                        <div class="messageText">Привет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела?</div>
+                </div>
+                <div class="usersInChat">
+                    {% for member in mychat.members %}
+                    <div class="singleUser" data-user="{{ member.getUser().getId() }}">
+                        <div class="singleUsername">{{ member.getUser().getNick() }}</div>
+                        <div class="kickUser"></div>
                     </div>
-                    <div class="singleMessage">
-                        <div class="chatUsername">Светлана</div>
-                        <div class="messageText">Привет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела?</div>
-                    </div>
-                    <div class="singleMessage">
-                        <div class="chatUsername">Светлана</div>
-                        <div class="messageText">Привет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела?</div>
-                    </div>
-                    <div class="singleMessage">
-                        <div class="chatUsername">Светлана</div>
-                        <div class="messageText">Привет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела? ривет! Как дела?</div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        {% set counter = 1 %}
+        {% for in_chat in income_chats %}
+            <div class="chat-content" tab="in{{ counter }}" data-chat-id="{{ in_chat.getChat().getId() }}">
+                <div class="chat">
+                    <div style="border-right: 2px solid #465176">
+                        {% for message in in_chat.messages %}
+                            <div class="singleMessage">
+                                <div class="chatUsername">{{ message.getUser().getNick() }}</div>
+                                <div class="messageText">{{ message.getMsgText()|nl2br }}</div>
+                            </div>
+                        {% endfor %}
                     </div>
                 </div>
             </div>
-            <div class="usersInChat">
-                <div class="singleUser">
-                    <div class="singleUsername">Светлана</div>
-                    <div class="kickUser"></div>
-                </div>
-                <div class="singleUser">
-                    <div class="singleUsername">Игорь</div>
-                    <div class="kickUser"></div>
-                </div>
-                <div class="singleUser">
-                    <div class="singleUsername">Марина</div>
-                    <div class="kickUser"></div>
-                </div>
-                <div class="singleUser">
-                    <div class="singleUsername">Маша</div>
-                    <div class="kickUser"></div>
-                </div>
-                <div class="singleUser">
-                    <div class="singleUsername">Виктор</div>
-                    <div class="kickUser"></div>
-                </div>
-                <div class="singleUser">
-                    <div class="singleUsername">Сергей</div>
-                    <div class="kickUser"></div>
-                </div>
-                <div class="singleUser">
-                    <div class="singleUsername">Антон</div>
-                    <div class="kickUser"></div>
-                </div>
-            </div>
-        </div>
-        <div class="chat-content" tab="in1">
-            <div class="chat">
-                <div style="width: 704px;border-right: 2px solid #465176">
-                    <div class="singleMessage">
-                        <div class="chatUsername">Светлана</div>
-                        <div class="messageText">Привет! Как дела?</div>
-                    </div>
-                    <div class="singleMessage">
-                        <div class="chatUsername">Светлана</div>
-                        <div class="messageText">Ау!</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="chat-content" tab="in2">
-            <div class="chat">
-                <div style="width: 704px;border-right: 2px solid #465176">
-                    <div class="singleMessage">
-                        <div class="chatUsername">Игорь</div>
-                        <div class="messageText">Привет!</div>
-                    </div>
-                    <div class="singleMessage">
-                        <div class="chatUsername">Игорь</div>
-                        <div class="messageText"> Как дела?</div>
-                    </div>
-                    <div class="singleMessage">
-                        <div class="chatUsername">Игорь</div>
-                        <div class="messageText">Есть тут кто?</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="chat-content" tab="in3">
-            <div class="chat">
-                <div style="width: 704px;border-right: 2px solid #465176">
-                    <div class="singleMessage">
-                        <div class="chatUsername">Маша</div>
-                        <div class="messageText">WHAAATS!</div>
-                    </div>
-                    <div class="singleMessage">
-                        <div class="chatUsername">Маша</div>
-                        <div class="messageText"> How u doing?</div>
-                    </div>
-                    <div class="singleMessage">
-                        <div class="chatUsername">Маша</div>
-                        <div class="messageText">anybody?</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+            {% set counter = counter + 1 %}
+        {% endfor %}
+
         {% for dialog in dialogs %}
             <div class="chat-content" tab="d{{ dialog.getId() }}" data-dialog-id="{{ dialog.getId() }}" data-to-user="{% if dialog.user1==curUser %}{{ dialog.user2.getId() }}{% else %}{{ dialog.user1.getId() }}{% endif %}">
                 <div class="chat">
-                    <div style="width: 704px;border-right: 2px solid #465176">
+                    <div style="border-right: 2px solid #465176">
                         {% for message in dialog.messages %}
                             <div class="singleMessage{% if message.getUser()==curUser %} my-message{% endif %}">
                                 <div class="chatUsername">{{ message.getUser().getNick() }}</div>
-                                <div class="messageText">{{ message.getMsgText() }}</div>
+                                <div class="messageText">{{ message.getMsgText()|nl2br }}</div>
                             </div>
                         {% endfor %}
                     </div>
@@ -153,7 +93,7 @@
 		<div class="enterArea">
 			<textarea class="chat-input" data-user="{{ curUser.getId() }}" data-nick="{{ curUser.getNick() }}"></textarea>
 			<div class="switch"></div>
-			<input class="chat-submit" type="checkbox" />
+			<input class="chat-nl-trigger" type="checkbox" />
 		</div>
 		<div class="finishConversation">
 			<input type="button" value="закончить
