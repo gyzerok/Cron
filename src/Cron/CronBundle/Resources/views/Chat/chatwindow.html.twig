@@ -11,7 +11,9 @@
 	<body>#}
 	<div class="chatTabs">
         {% if mychat %}
-            <div class="singleTab chat-tab active" data-tab="my">Мой чат</div>
+            {% if mychat.getIsActive() %}
+                <div class="singleTab chat-tab active" data-tab="my">Мой чат</div>
+            {% endif %}
         {% endif %}
 
         {% if income_chats %}
@@ -40,7 +42,7 @@
         {% if mychat %}
             <div class="chat-content" tab="my" data-chat-id="{{ mychat.getId() }}">
                 <div class="chat" style="width: 597px;">
-                    <div class="messageWrap" style="width: 578px;>
+                    <div class="messageWrap" style="width: 578px;">
                         {% for message in mychat.messages %}
                             <div class="singleMessage">
                                 <div class="chatUsername">{{ message.getUser().getNick() }}</div>

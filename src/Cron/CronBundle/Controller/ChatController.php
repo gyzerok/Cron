@@ -465,9 +465,15 @@ class ChatController extends Controller
 //            $em->flush();
 
             $chat_members = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findBy(array('chat' => $chat->getId()));
+            foreach ($chat_members as $member) {
+                $em->remove($member);
+            }
+
             $chat_invites = $this->getDoctrine()->getRepository('CronCronBundle:ChatInvite')->findBy(array('chat' => $chat->getId()));
-            $em->remove($chat_members);
-            $em->remove($chat_invites);
+            foreach ($chat_invites as $invite) {
+                $em->remove($invite);
+            }
+//            $em->remove($chat_invites);
             $em->flush();
 
             //todo srvmsg

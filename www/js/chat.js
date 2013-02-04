@@ -17,7 +17,7 @@ $(document).ready(function(){
     });
 
     $(".singleDialog").live('click', function(event){
-        $(".chatUpButton").click();
+        $(".chatWindow").click();
         var existed_tab = $(".chat-container .chat-tab[data-tab=d"+$(this).data('dialog')+"]");
         if (!$(event.target).closest(".closeDialogs").length && !$(event.target).closest(".spamDialogs").length && !existed_tab.size()){
             var new_tab = $('<div class="singleTab chat-tab" data-tab="d'+$(this).data('dialog')+'"><a href="#" class="closeDialogTab"></a>'+$(this).find(".dialogUsername").text()+'</div>');
@@ -39,7 +39,7 @@ $(document).ready(function(){
     });
     $(".sendMessage").live('click', function () {
         var singleAnswer = $(this).closest('.singleAnswer');
-        $(".chatUpButton").click();
+        $(".chatWindow").click();
         $.ajax({
             url:'/chat/createDialog',
             data:{to_user:singleAnswer.data('user')},
@@ -137,7 +137,7 @@ $(document).ready(function(){
             data: { invite:singleInvite.data('invite') },
             success:function(){
                 $(".chat-container").addClass('open-new-income-chat').empty();
-                $(".chatUpButton").click();
+                $(".chatWindow").click();
 //                var existed_tab = $(".chat-container .chat-tab[data-tab=d"+$(this).data('dialog')+"]");
 //                if (!$(event.target).closest(".closeDialogs").length && !$(event.target).closest(".spamDialogs").length && !existed_tab.size()){
                     /*$(".chat-container .chatTabs").append(new_tab);
@@ -171,8 +171,18 @@ $(document).ready(function(){
     var openChat = $('.openChat');
     openChat.hide();
 
+    //Растягиваемое окошко чата
+    openChat.resizable({
+        handles:"n",
+        maxHeight: 529,
+        minHeight: 270,
+        alsoResize: ".mainWindow",
+        alsoResize: ".messageWrap",
+        alsoResize: ".chat"
+    });
+
     var chat_container = $(".chat-container");
-    $('.chatUpButton').click(function() {
+    $('.chatWindow').click(function() {
         if (!$('.chat').size()){
             $.ajax({
                 url: '/chat/loadChat',
@@ -194,11 +204,13 @@ $(document).ready(function(){
             chat_container.find(".chat-tab").first().click();
         }
 //        openChat.fadeIn();
+        $('.chatWrapper').fadeIn();
         openChat.show();
         $(".chat-input").focus();
     });
     $('.closeChat').click(function() {
 //        openChat.fadeOut();
+        $('.chatWrapper').fadeOut();
         openChat.hide();
     });
     $(".kickUser").live('click', function(){
@@ -333,7 +345,8 @@ $(document).ready(function(){
 
 
 
-//    $('.chatUpButton').click();
+
+//    $('.chatWindow').click();
 });
 
 function temp_uploadChat(){

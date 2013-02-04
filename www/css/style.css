@@ -844,6 +844,7 @@ h2.categoryH2 {
 	bottom: 0px;
 	z-index: 5;
 	background: #ffffff;
+    display: none;
 }
 
 .openChat {
