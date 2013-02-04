@@ -455,12 +455,25 @@ class ChatController extends Controller
     }
 
     public function finishChatAction(Request $request){
-        if (/*$request->isMethod('POST') && */($user = $this->getUser() instanceof User)){
-
-            $chat = $this->getDoctrine()->getRepository('CronCronBundle:Chat')->findOneBy(array('id' => $request->get('chat'), 'owner' => $request->get("user")));
-            $chat->setIsActive(0);
+        $user = $this->getUser();
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
             $em = $this->getDoctrine()->getManager();
+
+            $chat = $this->getDoctrine()->getRepository('CronCronBundle:Chat')->findOneBy(array('id' => $request->get('chat'), 'owner' => $user->getId()));
+            $chat->setIsActive(0);
             $em->persist($chat);
+//            $em->flush();
+
+            $chat_members = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findBy(array('chat' => $chat->getId()));
+            foreach ($chat_members as $member) {
+                $em->remove($member);
+            }
+
+            $chat_invites = $this->getDoctrine()->getRepository('CronCronBundle:ChatInvite')->findBy(array('chat' => $chat->getId()));
+            foreach ($chat_invites as $invite) {
+                $em->remove($invite);
+            }
+//            $em->remove($chat_invites);
             $em->flush();
 
             //todo srvmsg
@@ -473,7 +486,7 @@ class ChatController extends Controller
         $user = $this->getUser();
         if (/*$request->isMethod('POST') && */($user instanceof User)){
 
-            $chat_member = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findOneBy(array('chat' => $request->get('chat'), 'user' => $user));
+            $chat_member = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findOneBy(array('chat' => $request->get('chat'), 'user' => $user->getId()));
             $em = $this->getDoctrine()->getManager();
             $em->remove($chat_member);
             $em->flush();

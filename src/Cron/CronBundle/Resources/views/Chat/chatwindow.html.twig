@@ -11,17 +11,22 @@
 	<body>#}
 	<div class="chatTabs">
         {% if mychat %}
-            <div class="singleTab chat-tab active" data-tab="my">Мой чат</div>
+            {% if mychat.getIsActive() %}
+                <div class="singleTab chat-tab active" data-tab="my">Мой чат</div>
+            {% endif %}
         {% endif %}
 
-        <div class="singleInboxTab">
-			<span>Входящий чат</span>
-            {% set counter = 1 %}
-            {% for in_chat in income_chats %}
-                <div class="numberOnTab chat-tab" data-tab="in{{ counter }}">{{ counter }}</div>
-                {% set counter = counter + 1 %}
-            {% endfor %}
-		</div>
+        {% if income_chats %}
+            <div class="singleInboxTab">
+                <span>Входящий чат</span>
+                {% set counter = 1 %}
+                {% for in_chat in income_chats %}
+                    <div class="numberOnTab chat-tab" data-tab="in{{ counter }}">{{ counter }}</div>
+                    {% set counter = counter + 1 %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
         {% for dialog in dialogs %}
             <div class="singleTab chat-tab" data-tab="d{{ dialog.getId() }}">
                 <a href="#" class="closeDialogTab"></a>
@@ -93,12 +98,16 @@
 		<div class="enterArea">
 			<textarea class="chat-input" data-user="{{ curUser.getId() }}" data-nick="{{ curUser.getNick() }}"></textarea>
 			<div class="switch"></div>
-			<input class="chat-nl-trigger" type="checkbox" />
+			<input id="chat-nl-switch" type="checkbox" />
 		</div>
 		<div class="finishConversation">
 			<input type="button" value="закончить
 общение" />
 		</div>
+        <div class="leaveConversation" style="display:none;">
+            <input type="button" value="выйти
+из чата" />
+        </div>
 	</div>
 {#
 	</body>
