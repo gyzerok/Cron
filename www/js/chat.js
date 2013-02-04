@@ -15,6 +15,62 @@ $(document).ready(function(){
         $(".dialogsWrapper").hide();
         return false;
     });
+
+    $(".singleDialog").live('click', function(event){
+        $(".chatUpButton").click();
+        var existed_tab = $(".chat-container .chat-tab[data-tab=d"+$(this).data('dialog')+"]");
+        if (!$(event.target).closest(".closeDialogs").length && !$(event.target).closest(".spamDialogs").length && !existed_tab.size()){
+            var new_tab = $('<div class="singleTab chat-tab" data-tab="d'+$(this).data('dialog')+'"><a href="#" class="closeDialogTab"></a>'+$(this).find(".dialogUsername").text()+'</div>');
+            $(".chat-container .chatTabs").append(new_tab);
+            new_tab.click();
+            $.ajax({
+                url: '/chat/openDialog',
+                data: {dialog:$(this).data('dialog')},
+                success: function(response){
+                    if (!$.trim(response))
+                        response = '<div class="dialogs-empty-text">Сообщения нет.</div>';
+                    $(".chat-container .mainWindow").append(response);
+                    new_tab.click();
+                }
+            });
+        }
+        existed_tab.click();
+        $(".chat-input").focus();
+    });
+    $(".sendMessage").live('click', function () {
+        var singleAnswer = $(this).closest('.singleAnswer');
+        $(".chatUpButton").click();
+        $.ajax({
+            url:'/chat/createDialog',
+            data:{to_user:singleAnswer.data('user')},
+            success:function (dialog) {
+                var new_tab = $('<div class="singleTab chat-tab" data-tab="d' + dialog + '"><a href="#" class="closeDialogTab"></a>' + singleAnswer.find(".userName").text() + '</div>');
+                $(".chat-container .chatTabs").append(new_tab);
+                new_tab.click();
+                $.ajax({
+                    url:'/chat/openDialog',
+                    data:{dialog:$(this).data('dialog')},
+                    success:function (response) {
+                        if (!$.trim(response))
+                            response = '<div class="dialogs-empty-text">Сообщений нет.</div>';
+                        $(".chat-container .mainWindow").append(response);
+                        new_tab.click();
+                    }
+                });
+            }
+        });
+        $(".chat-input").focus();
+    });
+    $(".inviteUser").live('click', function () {
+        var singleAnswer = $(this).closest('.singleAnswer');
+        $.ajax({
+            url:'/chat/sendChatInvite',
+            data:{user:singleAnswer.data('user')},
+            success:function (dialog) {
+                alert('Приглашение в чат отправлено.');
+            }
+        });
+    });
     $(".closeDialogs a").live('click', function(){
         if (confirm('Удалить диалог?')) {
             var singleDialog = $(this).closest('.singleDialog');
@@ -40,6 +96,7 @@ $(document).ready(function(){
         return false;
     });
     function removeSingleDialog (obj) {
+        $(".chat-container .chat-tab[data-tab=d"+obj.data('dialog')+"] .closeDialogTab").click();
         obj.remove();
         if (!$(".singleDialog").size()){
             $(".dialogsWrapper .dialogs-container").html('<div class="dialogs-empty-text">Диалогов нет.</div>');
@@ -77,7 +134,28 @@ $(document).ready(function(){
         $.ajax({
             url:'/chat/acceptChatInvite',
             method: 'POST',
-            data: { invite:singleInvite.data('invite') }
+            data: { invite:singleInvite.data('invite') },
+            success:function(){
+                $(".chat-container").addClass('open-new-income-chat').empty();
+                $(".chatUpButton").click();
+//                var existed_tab = $(".chat-container .chat-tab[data-tab=d"+$(this).data('dialog')+"]");
+//                if (!$(event.target).closest(".closeDialogs").length && !$(event.target).closest(".spamDialogs").length && !existed_tab.size()){
+                    /*$(".chat-container .chatTabs").append(new_tab);
+                    new_tab.click();
+                    $.ajax({
+                        url: '/chat/openDialog',
+                        data: {dialog:$(this).data('dialog')},
+                        success: function(response){
+                            if (!$.trim(response))
+                                response = '<div class="dialogs-empty-text">Сообщения нет.</div>';
+                            $(".chat-container .mainWindow").append(response);
+                            new_tab.click();
+                        }
+                    });*/
+//                }
+//                existed_tab.click();
+//                $(".chat-input").focus();
+            }
         });
         removeSingleInvite(singleInvite);
         return false;
@@ -88,52 +166,84 @@ $(document).ready(function(){
             $(".chatInviteWindow .invites-container").html('<div class="invites-empty-text">Приглашений нет.</div>');
         }
     }
+
     //Открытие чата
     var openChat = $('.openChat');
     openChat.hide();
+
+    var chat_container = $(".chat-container");
     $('.chatUpButton').click(function() {
         if (!$('.chat').size()){
             $.ajax({
                 url: '/chat/loadChat',
                 success: function(response){
-                    $(".chat-container").html(response);
+                    chat_container.html(response);
                     var objDiv = $('.chat');
                     objDiv[0].scrollTop = objDiv[0].scrollHeight;
+                    if (chat_container.is('.open-new-income-chat')){
+                        $(".numberOnTab.chat-tab:last").click();
+                        chat_container.removeClass('open-new-income-chat');
+                    }
                 }
             });
-            $(".chat-container").html('<div class="chat-empty-text">Загрузка...</div>');
+
+            chat_container.html('<div class="chat-empty-text">Загрузка...</div>');
         }
-        openChat.fadeIn();
+//        openChat.fadeIn();
+        openChat.show();
+        $(".chat-input").focus();
     });
     $('.closeChat').click(function() {
-        openChat.fadeOut();
+//        openChat.fadeOut();
+        openChat.hide();
     });
     $(".kickUser").live('click', function(){
-        $(this).closest('.singleUser').remove();
+        if (confirm('Выгнать пользователя?')) {
+            var current_chat = $(".chat-content:visible");
+            $.ajax({
+                url:'/chat/kickUser',
+                data:{
+                    chat:current_chat.data('chat-id'),
+                    user:$(this).parent().data('user')
+                }
+            });
+            $(this).closest('.singleUser').remove();
+        }
     });
     $(".chat-submit").live('click', function(){
 
     });
     $(".chat-input").live('keyup', function(e){
         var code= (e.keyCode ? e.keyCode : e.which);
-        if (code == 13){
+        if (code == 13 && e.shiftKey){
+            /*var content = this.value;
+            var caret = getCaret(this);
+            this.value = content.substring(0,caret)+"\n"+content.substring(caret,content.length-1);
+            e.stopPropagation();*/
+
+        } else if(code == 13){
             var chatInput = $(this);
             if ($.trim(chatInput.val())){
                 var current_chat = $(".chat-content:visible");
-                $.ajax({
-                    url: '/chat/sendDialogMsg',
-                    data: {
-                        dialog:current_chat.data('dialog-id'),
-                        to_user:current_chat.data('to-user'),
-                        message:chatInput.val()
-                    },
-                    success: function(response){
-                        /*$(".chat-container").html(response);
-                        var objDiv = $('.chat');
-                        objDiv[0].scrollTop = objDiv[0].scrollHeight;*/
-                    }
-                });
-                current_chat.find(".chat > div").append('<div class="singleMessage"><div class="chatUsername">'+chatInput.data('nick')+'</div><div class="messageText">'+chatInput.val()+'</div></div>');
+                if (current_chat.data('dialog-id')){
+                    $.ajax({
+                        url: '/chat/sendDialogMsg',
+                        data: {
+                            dialog:current_chat.data('dialog-id'),
+                            to_user:current_chat.data('to-user'),
+                            message:chatInput.val()
+                        }
+                    });
+                } else {
+                    $.ajax({
+                        url: '/chat/sendChatMsg',
+                        data: {
+                            chat:current_chat.data('chat-id'),
+                            message:chatInput.val()
+                        }
+                    });
+                }
+                current_chat.find(".chat > div").append('<div class="singleMessage"><div class="chatUsername">'+chatInput.data('nick')+'</div><div class="messageText">'+nl2br(chatInput.val())+'</div></div>');
                 chatInput.val('');
                 var objDiv = current_chat.find(".chat");
                 objDiv[0].scrollTop = objDiv[0].scrollHeight;
@@ -148,6 +258,70 @@ $(document).ready(function(){
         var active_chat = $(".chat-content[tab="+$(this).data('tab')+"]");
         active_chat.show();
         var objDiv = active_chat.find(".chat");
-        objDiv[0].scrollTop = objDiv[0].scrollHeight;
+        if (objDiv.size())
+            objDiv[0].scrollTop = objDiv[0].scrollHeight;
+        $(".chat-input").focus();
     });
+
+    $(".closeDialogTab").live('click', function(){
+        var cur_tab = $(this).parent();
+        var prev_tab = cur_tab.prevAll('.chat-tab');
+        var current_chat = $(".chat-content:visible");
+        $.ajax({
+            url: '/chat/closeDialog',
+            data: {
+                dialog:current_chat.data('dialog-id')
+            }
+        });
+        $(".chat-content[tab="+cur_tab.data('tab')+"]").remove();
+        cur_tab.remove();
+        prev_tab.click();
+        return false;
+    });
+
+    //Загруза окна чата сразу после озагрузки страницы
+    $.ajax({
+        url: '/chat/loadChat',
+        success: function(response){
+            $(".chat-container").html(response);
+            var objDiv = $('.chat');
+            objDiv[0].scrollTop = objDiv[0].scrollHeight;
+        }
+    });
+
+
+
+
+//    $('.chatUpButton').click();
 });
+
+function temp_uploadChat(){
+
+    return true;
+}
+
+function getCaret(el) {
+    if (el.selectionStart) {
+        return el.selectionStart;
+    } else if (document.selection) {
+        el.focus();
+
+        var r = document.selection.createRange();
+        if (r == null) {
+            return 0;
+        }
+
+        var re = el.createTextRange(),
+            rc = re.duplicate();
+        re.moveToBookmark(r.getBookmark());
+        rc.setEndPoint('EndToStart', re);
+
+        return rc.text.length;
+    }
+    return 0;
+}
+
+function nl2br (str, is_xhtml) {
+    var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
+    return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
+}

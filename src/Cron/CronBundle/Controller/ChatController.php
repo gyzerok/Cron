@@ -23,6 +23,31 @@ class ChatController extends Controller
         $user = $this->getUser();
         if (/*$request->isMethod('POST') && */($user instanceof User)){
 
+            $mychat = $this->getDoctrine()->getRepository('CronCronBundle:Chat')->findOneBy(array("owner" => $user->getId()));
+
+            if ($mychat instanceof \Cron\CronBundle\Entity\Chat){
+
+                $mychat_members = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findBy(array("chat" => $mychat->getId()));
+
+                $mychat->members = $mychat_members;
+
+                $chat_messages = $this->getDoctrine()->getRepository('CronCronBundle:ChatMsg')->findBy(array("chat" => $mychat->getId()), array("msg_date" => "ASC"));
+
+                $mychat->messages = $chat_messages;
+            }
+
+
+
+            $income_chats = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findBy(array("user" => $user->getId()), array("id" => "DESC"), 3);
+
+            foreach ($income_chats as $id=>$in_chat) {
+                $income_chat_messages = $this->getDoctrine()->getRepository('CronCronBundle:ChatMsg')->findBy(array("chat" => $in_chat->getChat()->getId()), array("msg_date" => "ASC"));
+                $income_chats[$id]->messages = $income_chat_messages;
+            }
+
+
+
+
             $dialogs = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')
                 ->createQueryBuilder('dialog')
                 ->where('(dialog.user1 = :uid AND dialog.del1 = 0 AND dialog.spam1 = 0 AND dialog.open1 = 1) OR (dialog.user2 = :uid AND dialog.del2 = 0 AND dialog.spam2 = 0 AND dialog.open2 = 1)')
@@ -32,18 +57,13 @@ class ChatController extends Controller
                 ->getResult();
 
             foreach ($dialogs as $id=>$dialog) {
-                $messages = $this->getDoctrine()->getRepository('CronCronBundle:DialogMsg')
-                    ->createQueryBuilder('dialog_msg')
-                    ->where('dialog_msg.dialog = :did')
-                    ->setParameter('did', $dialog->getId())
-                    ->orderBy('dialog_msg.msg_date', 'ASC')
-                    ->getQuery()
-                    ->getResult();
+                $messages = $this->getDoctrine()->getRepository('CronCronBundle:DialogMsg')->findBy(array("dialog" => $dialog->getId()), array("msg_date" => "ASC"));
                 $dialogs[$id]->messages = $messages;
             }
 
-
             return $this->render("CronCronBundle:Chat:chatwindow.html.twig", array(
+                    "mychat" => $mychat,
+                    "income_chats" => $income_chats,
                     "dialogs" => $dialogs,
                     "curUser" => $user
                 )
@@ -188,7 +208,7 @@ class ChatController extends Controller
             $dialog = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')->findOneBy(array('id' => $request->get('dialog')));
             if (!$dialog instanceof \Cron\CronBundle\Entity\Dialog){
                 $dialog = new Dialog();
-                $dialog->setUser1($user->getId());
+                $dialog->setUser1($user);
                 $dialog->setUser2($request->get('to_user'));
                 $dialog->setStartDate(new \DateTime());
 
@@ -225,6 +245,107 @@ class ChatController extends Controller
                 $em->persist($chat_msg);
                 $em->flush();
             }
+            return new Response('SUCCESS');
+        }
+    }
+
+    public function createDialogAction(Request $request){
+        $user = $this->getUser();
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
+            $em = $this->getDoctrine()->getManager();
+
+            $user2 = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneBy(array('id' => $request->get('to_user')));
+
+            $dialog = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')->findOneBy(array('user1' => $user->getId(), 'user2' => $user2->getId()));
+            if (!$dialog instanceof Dialog){
+                $dialog = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')->findOneBy(array('user2' => $user->getId(), 'user1' => $user2->getId()));
+                if (!$dialog instanceof Dialog){
+                    $dialog = new Dialog();
+                    $dialog->setUser1($user);
+                    $dialog->setUser2($user2);
+                    $dialog->setOpen1(1);
+                    $dialog->setOpen2(0);
+                    $dialog->setDel1(0);
+                    $dialog->setDel2(0);
+                    $dialog->setSpam1(0);
+                    $dialog->setSpam2(0);
+                    $dialog->setStartDate(new \DateTime());
+
+                    $em->persist($dialog);
+                    $em->flush();
+                }
+            }
+
+            return new Response($dialog->getId());
+        }
+    }
+
+    public function openDialogAction(Request $request){
+        $user = $this->getUser();
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
+            $em = $this->getDoctrine()->getManager();
+
+            $dialog = array();
+            if ($request->get('dialog')>0){
+                $dialog = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')->findOneBy(array('id' => $request->get('dialog')));
+            }
+
+            if (!$dialog instanceof Dialog){
+                $dialog = new Dialog();
+                $dialog->setUser1($user);
+                $user2 = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneBy(array('id' => $request->get('to_user')));
+                $dialog->setUser2($user2);
+                $dialog->setStartDate(new \DateTime());
+
+                $em->persist($dialog);
+                $em->flush();
+            }
+
+            if ($dialog->getUser1() == $user){
+                $dialog->setOpen1(1);
+            } elseif ($dialog->getUser2() == $user){
+                $dialog->setOpen2(1);
+            }
+
+//            $em = $this->getDoctrine()->getManager();
+            $em->persist($dialog);
+            $em->flush();
+
+            $messages = $this->getDoctrine()->getRepository('CronCronBundle:DialogMsg')
+                ->createQueryBuilder('dialog_msg')
+                ->where('dialog_msg.dialog = :did')
+                ->setParameter('did', $dialog->getId())
+                ->orderBy('dialog_msg.msg_date', 'ASC')
+                ->getQuery()
+                ->getResult();
+
+            $html = '<div class="chat-content" tab="d'.$dialog->getId().'" data-dialog-id="'.$dialog->getId().'" data-to-user="{% if dialog.user1==curUser %}{{ dialog.user2.getId() }}{% else %}{{ dialog.user1.getId() }}{% endif %}"><div class="chat"><div style="border-right: 2px solid #465176">';
+            foreach ($messages as $message) {
+                $html .= '<div class="singleMessage'.($message->getUser()!=$user?:' my-message').'">
+                            <div class="chatUsername">'.$message->getUser()->getNick().'</div>
+                            <div class="messageText">'.$message->getMsgText().'</div>
+                        </div>';
+            }
+            $html .='</div></div></div>';
+            return new Response($html);
+        }
+    }
+
+    public function closeDialogAction(Request $request){
+        $user = $this->getUser();
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
+
+            $dialog = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')->findOneBy(array('id' => $request->get('dialog')));
+            if ($dialog->getUser1() == $user){
+                $dialog->setOpen1(0);
+            } elseif ($dialog->getUser2() == $user){
+                $dialog->setOpen2(0);
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($dialog);
+            $em->flush();
+
             return new Response('SUCCESS');
         }
     }
@@ -363,14 +484,29 @@ class ChatController extends Controller
         }
     }
 
+    public function kickUserAction(Request $request){
+        $user = $this->getUser();
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
+
+            $chat_member = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findOneBy(array('chat' => $request->get('chat'), 'user' => $request->get('user')));
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($chat_member);
+            $em->flush();
+
+            //todo srvmsg
+
+            return new Response('SUCCESS');
+        }
+    }
+
     public function sendChatInviteAction(Request $request){
         $user = $this->getUser();
         if (/*$request->isMethod('POST') && */($user instanceof User)){
 
-            $chat_id = $request->get("chat");
+//            $chat_id = $request->get("chat");
             $user2_id = $request->get("user");
 
-            $chat = $this->getDoctrine()->getRepository('CronCronBundle:Chat')->findOneById($chat_id);
+            $chat = $this->getDoctrine()->getRepository('CronCronBundle:Chat')->findOneBy(array("owner" => $user->getId()));
             if (!$chat instanceof \Cron\CronBundle\Entity\Chat){
                 $chat = $this->createChat($user);
                 //return new Response('Fail');
@@ -380,17 +516,20 @@ class ChatController extends Controller
             if (!$user2 instanceof \Cron\CronBundle\Entity\User)
                 return new Response('Fail');
 
-            $invite = new ChatInvite();
-            $invite->setChat($chat);
-            $invite->setUser1($user);
-            $invite->setUser2($user2);
-            $invite->setInviteDate(new \DateTime());
+            $invite = $this->getDoctrine()->getRepository('CronCronBundle:ChatInvite')->findOneBy(array("chat" => $chat->getId(), "user1" => $user->getId(), "user2" => $user2->getId()));
+            if (!$invite instanceof \Cron\CronBundle\Entity\ChatInvite){
+                $invite = new ChatInvite();
+                $invite->setChat($chat);
+                $invite->setUser1($user);
+                $invite->setUser2($user2);
+                $invite->setInviteDate(new \DateTime());
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($invite);
-            $em->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($invite);
+                $em->flush();
+                //todo srvmsg
+            }
 
-            //todo srvmsg
 
             return new Response('SUCCESS');
         }
