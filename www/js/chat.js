@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $(".open-dialog-list").bind('click', function(){
-        $.ajax({
+        /*$.ajax({
             url: '/chat/getDialogList',
             success: function(response){
                 if (!$.trim(response))
@@ -8,8 +8,9 @@ $(document).ready(function(){
                 $(".dialogsWrapper .dialogs-container").html(response);
             }
         });
-        $(".dialogsWrapper .dialogs-container").html('<div class="dialogs-empty-text">Загрузка...</div>');
+        $(".dialogsWrapper .dialogs-container").html('<div class="dialogs-empty-text">Загрузка...</div>');*/
         $(".dialogsWrapper").toggle();
+        $(this).removeClass('indicate');
     });
     $(".closeDialogWindow a").bind('click', function(){
         $(".dialogsWrapper").hide();
@@ -104,15 +105,16 @@ $(document).ready(function(){
     }
 
     $(".chatInvite").bind('click', function(){
-        $.ajax({
+        /*$.ajax({
             url: '/chat/getInviteList',
             success: function(response){
                 if (!$.trim(response))
                     response = '<div class="invites-empty-text">Приглашений нет.</div>';
                 $(".chatInviteWindow .invites-container").html(response);
             }
-        });
-        $(".invites-container").html('<div class="invites-empty-text">Загрузка...</div>');
+        });*/
+//        $(".invites-container").html('<div class="invites-empty-text">Загрузка...</div>');
+        $(this).removeClass('indicate');
         $(".chatInviteWindow").toggle();
     });
     $(".closeInviteWindow a").bind('click', function(){
@@ -332,6 +334,18 @@ $(document).ready(function(){
         $(".chat-tab").first().click();
     });
 
+
+
+
+    temp_loadChat();
+
+
+
+
+//    $('.chatWindow').click();
+});
+
+function temp_loadChat(){
     //Загруза окна чата сразу после озагрузки страницы
     $.ajax({
         url: '/chat/loadChat',
@@ -341,12 +355,37 @@ $(document).ready(function(){
             objDiv[0].scrollTop = objDiv[0].scrollHeight;
         }
     });
-	
-	
-
 
 //    $('.chatWindow').click();
 });
+
+    //Загрузка приглашений в чат
+    $.ajax({
+        url: '/chat/getInviteList',
+        success: function(response){
+            if (!$.trim(response)){
+                response = '<div class="invites-empty-text">Приглашений нет.</div>';
+            } else {
+                $(".chatInvite").addClass('indicate');
+            }
+            $(".chatInviteWindow .invites-container").html(response);
+        }
+    });
+
+    //Загрузка диалогов
+    $.ajax({
+        url: '/chat/getDialogList',
+        success: function(response){
+            if (!$.trim(response))
+                response = '<div class="dialogs-empty-text">Диалогов нет.</div>';
+            var dialogs_container = $(".dialogsWrapper .dialogs-container");
+            dialogs_container.html(response);
+            if (dialogs_container.find('.messagesAmount').text()!=''){
+                $(".open-dialog-list").addClass('indicate');
+            }
+        }
+    });
+}
 
 function temp_uploadChat(){
 
