@@ -9,6 +9,7 @@
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 </head>
 	<body>#}
+    <div id="chat-last-update" value="{{ chatlastupdate|date("Y-m-d H:i:s") }}"></div>
 	<div class="chatTabs">
         {% if mychat %}
             {% if mychat.getIsActive() %}

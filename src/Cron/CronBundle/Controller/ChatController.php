@@ -12,6 +12,7 @@ use Cron\CronBundle\Entity\Chat;
 use Cron\CronBundle\Entity\ChatInvite;
 use Cron\CronBundle\Entity\ChatMember;
 use Cron\CronBundle\Entity\ChatMsg;
+use Cron\CronBundle\Entity\ChatSrvMsg;
 
 use Cron\CronBundle\Entity\Dialog;
 use Cron\CronBundle\Entity\DialogMsg;
@@ -65,6 +66,7 @@ class ChatController extends Controller
                     "mychat" => $mychat,
                     "income_chats" => $income_chats,
                     "dialogs" => $dialogs,
+                    "chatlastupdate" => new \DateTime(),
                     "curUser" => $user
                 )
             );
@@ -72,14 +74,261 @@ class ChatController extends Controller
     }
 
     public function updateChatAction(Request $request){
-        if (/*$request->isMethod('POST') && */($user = $this->getUser() instanceof User)){
+        $user = $this->getUser();
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
+            $dialogs = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')
+                ->createQueryBuilder('dialog')
+                ->where('(dialog.user1 = :uid AND dialog.del1 = 0 AND dialog.spam1 = 0 AND dialog.open1 = 0) OR (dialog.user2 = :uid AND dialog.del2 = 0 AND dialog.spam2 = 0 AND dialog.open2 = 0)')
+                ->setParameter('uid', $user->getId())
+                ->orderBy('dialog.start_date', 'DESC')
+                ->getQuery()
+                ->getResult();
+
+            $new_unreads = 0;
+
+            foreach ($dialogs as $dialog) {
+                $unreads = $this->getDoctrine()->getRepository('CronCronBundle:DialogMsg')
+                    ->createQueryBuilder('dm')
+                    ->select('COUNT(dm.dialog) as unreads')
+                    ->where('dm.dialog = :did AND dm.read_flag = 0 AND dm.user = :uid')
+                    ->setParameter('did', $dialog->getId())
+                    ->setParameter('uid', ($dialog->getUser1()==$user ? $dialog->getUser2()->getId():$dialog->getUser1()->getId()))
+                    ->groupBy('dm.dialog')
+                    ->getQuery()
+                    ->getResult();
+                if ($unreads){
+                    if ($unreads[0]){
+                        $new_unreads += $unreads[0]['unreads'];
+                    }
+                }
+            }
+
+            $invites = $this->getDoctrine()->getRepository('CronCronBundle:ChatInvite')->findBy(array("user2"=>$user->getId()), array("invite_date"=>"DESC"));
+            $invites = count($invites);
+
+            $next_chat_last_update = new \DateTime();
+
+            $srvmsgs = array();
+
+            $chats = array();
+            foreach (explode(';', $request->get("chats")) as $chat_id) {
+                $chat = $this->getDoctrine()->getRepository('CronCronBundle:Chat')->findOneBy(array('id' => $chat_id));
+                if ($chat instanceof Chat){
+                    $messages = $this->getDoctrine()->getRepository('CronCronBundle:ChatMsg')
+                        ->createQueryBuilder('chat_msg')
+                        ->where('chat_msg.chat = :cid AND chat_msg.msg_date > :lid AND chat_msg.user != :myid')
+                        ->setParameter('cid', $chat_id)
+                        ->setParameter('lid', $request->get("chat_last_update"))
+                        ->setParameter('myid', $user->getId())
+                        ->orderBy('chat_msg.msg_date', 'ASC')
+                        ->getQuery()
+                        ->getResult();
+                    if (count($messages)){
+                        foreach ($messages as $msg) {
+                            $chats[$chat_id][$msg->getId()] = array("user_id"=>$msg->getUser()->getId(), "user_name"=>$msg->getUser()->getNick(), "msg_text"=>nl2br($msg->getMsgText()));
+                        }
+                    }
+                    $srv_messages = $this->getDoctrine()->getRepository('CronCronBundle:ChatSrvMsg')
+                        ->createQueryBuilder('chat_srvmsg')
+                        ->where('chat_srvmsg.chat = :cid AND chat_srvmsg.msg_date > :lid AND chat_srvmsg.to_user = :myid')
+                        ->setParameter('cid', $chat_id)
+                        ->setParameter('lid', $request->get("chat_last_update"))
+                        ->setParameter('myid', $user->getId())
+                        ->orderBy('chat_srvmsg.msg_date', 'ASC')
+                        ->getQuery()
+                        ->getResult();
+                    if (count($srv_messages)){
+                        foreach ($srv_messages as $msg) {
+                            $srvmsgs['chats'][$chat_id][$msg->getId()] = array("msg_text"=>$this->getSrvMsg($msg));
+                        }
+                    }
+                }
+            }
+
+            $dialogs = array();
+            foreach (explode(';', $request->get("dialogs")) as $dialog_id) {
+                $dialog = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')->findOneBy(array('id' => $dialog_id));
+                if ($dialog instanceof Dialog){
+                    $messages = $this->getDoctrine()->getRepository('CronCronBundle:DialogMsg')
+                        ->createQueryBuilder('dialog_msg')
+                        ->where('dialog_msg.dialog = :did AND dialog_msg.msg_date > :lid AND dialog_msg.user != :myid')
+                        ->setParameter('did', $dialog_id)
+                        ->setParameter('lid', $request->get("chat_last_update"))
+                        ->setParameter('myid', $user->getId())
+                        ->orderBy('dialog_msg.msg_date', 'ASC')
+                        ->getQuery()
+                        ->getResult();
+                    if (count($messages)){
+                        foreach ($messages as $msg) {
+                            $dialogs[$dialog_id][$msg->getId()] = array("user_id"=>$msg->getUser()->getId(), "user_name"=>$msg->getUser()->getNick(), "msg_text"=>nl2br($msg->getMsgText()));
+                        }
+                    }
+                    $srv_messages = $this->getDoctrine()->getRepository('CronCronBundle:ChatSrvMsg')
+                        ->createQueryBuilder('chat_srvmsg')
+                        ->where('chat_srvmsg.dialog = :did AND chat_srvmsg.msg_date > :lid AND chat_srvmsg.to_user = :myid')
+                        ->setParameter('did', $dialog_id)
+                        ->setParameter('lid', $request->get("chat_last_update"))
+                        ->setParameter('myid', $user->getId())
+                        ->orderBy('chat_srvmsg.msg_date', 'ASC')
+                        ->getQuery()
+                        ->getResult();
+                    if (count($srv_messages)){
+                        foreach ($srv_messages as $msg) {
+                            $srvmsgs['dialogs'][$dialog_id][$msg->getId()] = array("msg_text"=>$this->getSrvMsg($msg));
+                        }
+                    }
+                }
+            }
+
+            return new Response(json_encode(array(
+                "chat_last_update" => $next_chat_last_update->format('Y-m-d H:i:s'),
+                "new_dialogs" => $new_unreads,
+                "invites" => $invites,
+                "chats" => $chats,
+                "dialogs" => $dialogs,
+                "srvmsgs" => $srvmsgs
+            )));
+        }
+    }
+
+    public function getSrvMsg($srvmsg){
+        $user = $this->getUser();
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
+            switch($srvmsg->getMsgTextId()){
+                case "1":
+                    return sprintf('В чат вошел %s.', $srvmsg->getAboutUser()->getNick());
+                    break;
+                case "2":
+                    return sprintf('В чат добавлен %s.', $srvmsg->getAboutUser()->getNick());
+                    break;
+                case "3":
+                    return sprintf('Чат покинул %s.', $srvmsg->getAboutUser()->getNick());
+                    break;
+                case "4":
+                    return "Вы были удалены из чата.";
+                    break;
+                case "5":
+                    return sprintf('Из чата был удален %s.', $srvmsg->getAboutUser()->getNick());
+                    break;
+                case "6":
+                    return "Чат завершен автором вопроса.";
+                    break;
+                case "7":
+                    return "Чат завершен.";
+                    break;
+                case "8":
+                    return sprintf('%s прекратил общение с вами.', $srvmsg->getAboutUser()->getNick());
+                    break;
+                default:
+                    break;
+            }
             return new Response('SUCCESS');
         }
     }
 
-    public function getSrvMsgAction(Request $request){
-        if (/*$request->isMethod('POST') && */($user = $this->getUser() instanceof User)){
-            return new Response('SUCCESS');
+    public function sendChatSrvMsg($type, $params){
+        $user = $this->getUser();
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
+            $em = $this->getDoctrine()->getManager();
+
+            $srvmsg = new ChatSrvMsg();
+            $srvmsg->setMsgDate(new \DateTime());
+            switch($type){
+                case "IdontWantToTalk":
+                    $srvmsg->setDialog($params['dialog'])
+                        ->setToUser($params['to_user'])
+                        ->setAboutUser($params['about_user'])
+                        ->setMsgTextId(8);
+                    $em->persist($srvmsg);
+                    $em->flush();
+                    break;
+                case "UserAdded2TheChat":
+                    $srvmsg->setChat($params['chat'])
+                        ->setToUser($params['chat']->getOwner())
+                        ->setAboutUser($params['about_user'])
+                        ->setMsgTextId(2);
+                    $em->persist($srvmsg);
+                    $em->flush();
+
+                    $chat_members = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findBy(array('chat' => $params['chat']->getId()));
+                    foreach ($chat_members as $member) {
+                        $sub_srvmsg = new ChatSrvMsg();
+                        $sub_srvmsg->setMsgDate(new \DateTime())
+                            ->setChat($params['chat'])
+                            ->setToUser($member->getUser())
+                            ->setAboutUser($params['about_user'])
+                            ->setMsgTextId(1);
+                        $em->persist($sub_srvmsg);
+                        $em->flush();
+                    }
+                    break;
+                case "ChatIsFinished":
+                    $srvmsg->setChat($params['chat'])
+                        ->setToUser($params['chat']->getOwner())
+                        ->setMsgTextId(7);
+                    $em->persist($srvmsg);
+                    $em->flush();
+
+                    $chat_members = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findBy(array('chat' => $params['chat']->getId()));
+                    foreach ($chat_members as $member) {
+                        $sub_srvmsg = new ChatSrvMsg();
+                        $sub_srvmsg->setMsgDate(new \DateTime())
+                            ->setChat($params['chat'])
+                            ->setToUser($member->getUser())
+                            ->setMsgTextId(6);
+                        $em->persist($sub_srvmsg);
+                        $em->flush();
+                    }
+                    break;
+                case "UserLeavesTheChat":
+                    $srvmsg->setChat($params['chat'])
+                        ->setToUser($params['chat']->getOwner())
+                        ->setAboutUser($params['about_user'])
+                        ->setMsgTextId(3);
+                    $em->persist($srvmsg);
+                    $em->flush();
+
+                    $chat_members = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findBy(array('chat' => $params['chat']->getId()));
+                    foreach ($chat_members as $member) {
+                        $sub_srvmsg = new ChatSrvMsg();
+                        $sub_srvmsg->setMsgDate(new \DateTime())
+                            ->setChat($params['chat'])
+                            ->setToUser($member->getUser())
+                            ->setMsgTextId(3);
+                        $em->persist($sub_srvmsg);
+                        $em->flush();
+                    }
+                    break;
+                case "UserWasKicked":
+                    $srvmsg->setChat($params['chat'])
+                        ->setToUser($params['chat']->getOwner())
+                        ->setAboutUser($params['about_user'])
+                        ->setMsgTextId(5);
+                    $em->persist($srvmsg);
+                    $em->flush();
+
+                    $sub_srvmsg = new ChatSrvMsg();
+                    $sub_srvmsg->setMsgDate(new \DateTime())
+                        ->setChat($params['chat'])
+                        ->setToUser($params['about_user'])
+                        ->setMsgTextId(4);
+                    $em->persist($sub_srvmsg);
+                    $em->flush();
+
+                    $chat_members = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findBy(array('chat' => $params['chat']->getId()));
+                    foreach ($chat_members as $member) {
+                        $sub_srvmsg = new ChatSrvMsg();
+                        $sub_srvmsg->setMsgDate(new \DateTime())
+                            ->setChat($params['chat'])
+                            ->setAboutUser($params['about_user'])
+                            ->setToUser($member->getUser())
+                            ->setMsgTextId(5);
+                        $em->persist($sub_srvmsg);
+                        $em->flush();
+                    }
+                    break;
+                default:break;
+            }
         }
     }
 
@@ -88,18 +337,11 @@ class ChatController extends Controller
         if (/*$request->isMethod('POST') && */($user instanceof User)){
             $dialogs = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')
                 ->createQueryBuilder('dialog')
-//                ->select('id, user1, user2, start_date, COUNT(dm.id) as unreads')
-//                ->leftJoin('Cron\CronBundle\Entity\DialogMsg', 'dm', 'WITH', 'dialog.id = dm.dialog')
-//                ->leftJoin('dialog.id', 'dialogmsg')
                 ->where('(dialog.user1 = :uid AND dialog.del1 = 0 AND dialog.spam1 = 0) OR (dialog.user2 = :uid AND dialog.del2 = 0 AND dialog.spam2 = 0)')
                 ->setParameter('uid', $user->getId())
                 ->orderBy('dialog.start_date', 'DESC')
-//                ->groupBy('dm.dialog')
                 ->getQuery()
                 ->getResult();
-//            echo '<pre>';
-//            print_r($dialogs);
-//            echo '</pre>';
 
             $total_unreads = 0;
 
@@ -110,7 +352,6 @@ class ChatController extends Controller
                     ->where('dm.dialog = :did AND dm.read_flag = 0 AND dm.user = :uid')
                     ->setParameter('did', $dialog->getId())
                     ->setParameter('uid', ($dialog->getUser1()==$user ? $dialog->getUser2()->getId():$dialog->getUser1()->getId()))
-//                    ->setParameter('uid', $dialog->getUser2())
                     ->groupBy('dm.dialog')
                     ->getQuery()
                     ->getResult();
@@ -121,7 +362,6 @@ class ChatController extends Controller
                         $total_unreads += $unreads[0]['unreads'];
                     }
                 }
-//                print_r($unreads);
             }
 
             return $this->render("CronCronBundle:Chat:dialogs.html.twig", array(
@@ -143,8 +383,6 @@ class ChatController extends Controller
                 ->orderBy('chat_invite.invite_date', 'DESC')
                 ->getQuery()
                 ->getResult();
-
-            //todo srvmsg
 
             return $this->render("CronCronBundle:Chat:invites.html.twig", array(
                     "invites" => $invites
@@ -355,22 +593,44 @@ class ChatController extends Controller
         }
     }
 
+    public function readDialogMsgsAction(Request $request){
+        $user = $this->getUser();
+        if (/*$request->isMethod('POST') && */($user instanceof User)){
+            $em = $this->getDoctrine()->getManager();
+
+            $dialog_msgs = $this->getDoctrine()->getRepository('CronCronBundle:DialogMsg')->findBy(array('dialog' => $request->get('dialog')));
+            foreach ($dialog_msgs as $dialog_msg) {
+                if ($dialog_msg->getUser()!=$user){
+                    $dialog_msg->setReadFlag(1);
+                    $em->persist($dialog_msg);
+                }
+            }
+
+            $em->flush();
+
+            return new Response('SUCCESS');
+        }
+    }
+
     public function deleteDialogAction(Request $request){
         $user = $this->getUser();
         if (/*$request->isMethod('POST') && */($user instanceof User)){
+            $to_user = null;
 
             $dialog = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')->findOneBy(array('id' => $request->get('dialog')));
             if ($dialog->getUser1() == $user){
                 $dialog->setDel1(1);
+                $to_user = $dialog->getUser2();
             } elseif ($dialog->getUser2() == $user){
                 $dialog->setDel2(1);
+                $to_user = $dialog->getUser1();
             }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($dialog);
             $em->flush();
 
-            //todo srvmsg
+            $this->sendChatSrvMsg('IdontWantToTalk', array("dialog"=>$dialog, "to_user"=>$to_user, "about_user"=>$user));
 
             return new Response('SUCCESS');
         }
@@ -379,19 +639,22 @@ class ChatController extends Controller
     public function checkDialogAsSpamAction(Request $request){
         $user = $this->getUser();
         if (/*$request->isMethod('POST') && */($user instanceof User)){
+            $to_user = null;
 
             $dialog = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')->findOneBy(array('id' => $request->get('dialog')));
             if ($dialog->getUser1() == $user){
                 $dialog->setSpam1(1);
+                $to_user = $dialog->getUser2()->getId();
             } elseif ($dialog->getUser2() == $user){
                 $dialog->setSpam2(1);
+                $to_user = $dialog->getUser1()->getId();
             }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($dialog);
             $em->flush();
 
-            //todo srvmsg
+            $this->sendChatSrvMsg('IdontWantToTalk', array("dialog"=>$dialog, "to_user"=>$to_user, "about_user"=>$user));
 
             return new Response('SUCCESS');
         }
@@ -425,7 +688,7 @@ class ChatController extends Controller
             $em->remove($invite);
             $em->flush();
 
-            //todo srvmsg
+            $this->sendChatSrvMsg('UserAdded2TheChat', array("chat"=>$chat, "about_user"=>$user));
 
             return new Response('SUCCESS');
         }
@@ -453,8 +716,6 @@ class ChatController extends Controller
             $em->remove($invite);
             $em->flush();
 
-            //todo srvmsg
-
             return new Response('SUCCESS');
         }
     }
@@ -481,7 +742,7 @@ class ChatController extends Controller
 //            $em->remove($chat_invites);
             $em->flush();
 
-            //todo srvmsg
+            $this->sendChatSrvMsg('ChatIsFinished', array("chat"=>$chat));
 
             return new Response('SUCCESS');
         }
@@ -496,7 +757,7 @@ class ChatController extends Controller
             $em->remove($chat_member);
             $em->flush();
 
-            //todo srvmsg
+            $this->sendChatSrvMsg('UserLeavesTheChat', array("chat"=>$chat_member->getChat(), "about_user"=>$user));
 
             return new Response('SUCCESS');
         }
@@ -511,7 +772,7 @@ class ChatController extends Controller
             $em->remove($chat_member);
             $em->flush();
 
-            //todo srvmsg
+            $this->sendChatSrvMsg('UserWasKicked', array("chat"=>$chat_member->getChat(), "about_user"=>$user));
 
             return new Response('SUCCESS');
         }
@@ -548,7 +809,6 @@ class ChatController extends Controller
 
                 $em->persist($invite);
 
-                //todo srvmsg
             }
 
             $em->flush();
@@ -569,17 +829,4 @@ class ChatController extends Controller
         return $my_chat;
     }
 
-    public function deleteChatMemberAction(Request $request){
-        if (/*$request->isMethod('POST') && */($user = $this->getUser() instanceof User)){
-
-            $chat_member = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findOneBy(array('chat' => $request->get('chat'), 'user' => $request->get("user")));
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($chat_member);
-            $em->flush();
-            
-            //todo srvmsg
-            
-            return new Response('SUCCESS');
-        }
-    }
 }

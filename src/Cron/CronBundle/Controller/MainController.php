@@ -121,6 +121,7 @@ class MainController extends Controller
                                                                              'form' => $form->createView())
         );
     }
+
     public function diskAction($file_hash)
     {
         //$request->setLocale($request->getSession()->get('_locale'));
@@ -183,6 +184,116 @@ class MainController extends Controller
 //            return header("Location: ".$file->getUrl());
             /**/
         }
+    }
+
+    public function settingsAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            return $this->redirect("/");
+        }
+
+        $request->setLocale($request->getSession()->get('_locale'));
+
+        $categories = $this->getDoctrine()->getRepository("CronCronBundle:Category")->findAll();
+
+        $user_settings = $this->getDoctrine()->getRepository("CronCronBundle:UserSettings")->findOneBy(array("user" => $user->getId()));
+
+        //Settings converting (temporarily)
+        $settings = array();
+
+        $incomeCats = $user_settings->getIncomeCats();
+        if (!count($incomeCats) || !$incomeCats){
+            foreach ($categories as $cat)
+                $settings['income_cats'][$cat->getId()] = 'checked="checked"';
+        } else {
+            foreach ($categories as $cat)
+                $settings['income_cats'][$cat->getId()] = '';
+            foreach ($incomeCats as $id=>$cat)
+                $settings['income_cats'][$id] = 'checked="checked"';
+        }
+
+        $incomeLocale = $user_settings->getIncomeLocale();
+        if (!count($incomeLocale) || !$incomeLocale){
+            $settings['income_locale']['ru'] = 'checked="checked"';
+            $settings['income_locale']['en'] = 'checked="checked"';
+            $settings['income_locale']['pt'] = 'checked="checked"';
+        } else {
+            foreach ($incomeLocale as $id=>$locale){
+                if ($locale)
+                    $settings['income_locale'][$id] = 'checked="checked"';
+                else
+                    $settings['income_locale'][$id] = '';
+            }
+        }
+
+        $viewCats = $user_settings->getViewCats();
+        if (!count($viewCats) || !$viewCats){
+            foreach ($categories as $cat)
+                $settings['view_cats'][$cat->getId()] = 'checked="checked"';
+        } else {
+            foreach ($categories as $cat)
+                $settings['view_cats'][$cat->getId()] = '';
+            foreach ($viewCats as $id=>$cat)
+                $settings['view_cats'][$id] = 'checked="checked"';
+        }
+
+        $viewLocale = $user_settings->getViewLocale();
+        if (!count($viewLocale) || !$viewLocale){
+            $settings['view_locale']['ru'] = 'checked="checked"';
+            $settings['view_locale']['en'] = 'checked="checked"';
+            $settings['view_locale']['pt'] = 'checked="checked"';
+        } else {
+            foreach ($viewLocale as $id=>$locale){
+                if ($locale)
+                    $settings['view_locale'][$id] = 'checked="checked"';
+                else
+                    $settings['view_locale'][$id] = '';
+            }
+        }
+
+        $viewByTime = $user_settings->getViewByTime();
+        $settings['view_by_time']['day'] = '';
+        $settings['view_by_time']['week'] = '';
+        $settings['view_by_time']['month'] = '';
+        $settings['view_by_time']['all'] = '';
+        switch($viewByTime){
+            case 'day':
+                $settings['view_by_time']['day'] = 'checked="checked"';
+                break;
+            case 'week':
+                $settings['view_by_time']['week'] = 'checked="checked"';
+                break;
+            case 'month':
+                $settings['view_by_time']['month'] = 'checked="checked"';
+                break;
+            case 'all':
+            default:
+                $settings['view_by_time']['all'] = 'checked="checked"';
+                break;
+        }
+        $sounds = $user_settings->getSounds();
+        if (!count($sounds) || !$sounds){
+            $settings['sounds']['cats'] = 'checked="checked"';
+            $settings['sounds']['rush'] = 'checked="checked"';
+            $settings['sounds']['invite'] = 'checked="checked"';
+            $settings['sounds']['chat'] = 'checked="checked"';
+            $settings['sounds']['dialog'] = 'checked="checked"';
+        } else {
+            foreach ($sounds as $id=>$sound_setting) {
+                if($sound_setting)
+                    $settings['sounds'][$id] = 'checked="checked"';
+                else
+                    $settings['sounds'][$id] = '';
+            }
+        }
+
+
+        return $this->render("CronCronBundle:Main:settings.html.twig", array('title' => 'Настройки',
+                'categories' => $categories,
+                'settings' => $settings,
+                'curUser' => $user
+        ));
     }
 
     public function registerAction(Request $request)

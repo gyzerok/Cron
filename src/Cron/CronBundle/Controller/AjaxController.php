@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Cron\CronBundle\Entity\Answer;
 use Cron\CronBundle\Entity\File;
 use Cron\CronBundle\Entity\User;
+use Cron\CronBundle\Entity\UserSettings;
 
 class AjaxController extends Controller
 {
@@ -272,6 +273,53 @@ class AjaxController extends Controller
                 </table>
             </div>';
         return new Response($html);
+    }
+
+    public function saveSettingsAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            return new Response("Fail");
+        }
+
+        $user_settings = $this->getDoctrine()->getRepository("CronCronBundle:UserSettings")->findOneBy(array('user' => $user->getId()));
+        if (!$user_settings instanceof UserSettings){
+            $user_settings = new UserSettings();
+            $user_settings->setUser($user);
+        }
+
+        switch($request->get("group")){
+            case "income":
+                $incomeCats = array();
+                foreach ($request->get("cat") as $id=>$cat) {
+                    $incomeCats[$id] = (bool)$cat;
+                }
+                $user_settings->setIncomeCats($incomeCats);
+                $user_settings->setIncomeLocale(array("ru"=>(bool)$request->get("ru"), "en"=>(bool)$request->get("en"), "pt"=>(bool)$request->get("pt")));
+                break;
+
+            case "view":
+                $viewCats = array();
+                foreach ($request->get("cat") as $id=>$cat) {
+                    $viewCats[$id] = (bool)$cat;
+                }
+                $user_settings->setViewCats($viewCats);
+                $user_settings->setViewLocale(array("ru"=>(bool)$request->get("ru"), "en"=>(bool)$request->get("en"), "pt"=>(bool)$request->get("pt")));
+                $user_settings->setViewByTime($request->get("by_time"));
+                break;
+
+            case "sound":
+                $user_settings->setSounds(array("cats"=>(bool)$request->get("cats"), "rush"=>(bool)$request->get("rush"), "invite"=>(bool)$request->get("invite"), "chat"=>(bool)$request->get("chat"), "dialog"=>(bool)$request->get("dialog")));
+                break;
+
+            default:break;
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user_settings);
+        $em->flush();
+
+        return new Response("SUCCESS");
     }
 
     public function convertFilesize($input_filesize)

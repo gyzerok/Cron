@@ -264,12 +264,18 @@
 	margin-top: 1px;
 }
 
-.usersProfile form.profileNavigation input {
+.usersProfile form.profileNavigation input, .usersProfile form.profileNavigation a {
 	border: 1px solid gray;
 	border-radius: 5px;
 	background-color: #EFEFEF;
 	cursor: pointer;
 	font-weight: bold;
+    text-decoration: none;
+    color: #383838;
+    font-size: 13px;
+    padding: 1px 6px;
+    margin: 2px;
+    display: inline-block;
 }
 
 .usersProfile p.myQuestions {
@@ -1797,6 +1803,10 @@ h2.chatInviteTitle{
 	color: #425073;
 	font-family: 'Cambria';
 }
+.chat-tab.indicate {
+    background-color: #000000;
+    color: #ff0000;
+}
 
 .mainWindow{
 	margin: 0 auto;
@@ -1819,6 +1829,9 @@ h2.chatInviteTitle{
 	border: 1px solid #cadced;
 	border-radius: 5px;
 	margin-bottom: 2px;
+}
+.singleMessage.chatSrvMsg {
+    color: #999999;
 }
 
 .chatUsername {

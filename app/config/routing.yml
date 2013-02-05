@@ -18,6 +18,10 @@ disk:
   pattern: /disk/{file_hash}
   defaults: { _controller: CronCronBundle:Main:disk, "file_hash":"" }
 
+settings:
+  pattern: /settings
+  defaults: { _controller: CronCronBundle:Main:settings }
+
 locale:
   pattern: /locale/{locale}
   defaults: { _controller: CronCronBundle:Main:locale }
@@ -75,6 +79,11 @@ updateFilesize:
   pattern:  /ajax/updateFilesize
   defaults: { _controller: CronCronBundle:Ajax:updateFilesize }
 
+saveSettings:
+  pattern:  /ajax/saveSettings
+  defaults: { _controller: CronCronBundle:Ajax:saveSettings }
+
+
 # Chat routes
 
 loadChat:
@@ -121,6 +130,10 @@ sendChatMsg:
   pattern:  /chat/sendChatMsg
   defaults: { _controller: CronCronBundle:Chat:sendChatMsg }
 
+readDialogMsgs:
+  pattern:  /chat/readDialogMsgs
+  defaults: { _controller: CronCronBundle:Chat:readDialogMsgs }
+
 deleteDialog:
   pattern:  /chat/deleteDialog
   defaults: { _controller: CronCronBundle:Chat:deleteDialog }
@@ -164,11 +177,6 @@ kickUser:
 sendChatInvite:
   pattern:  /chat/sendChatInvite
   defaults: { _controller: CronCronBundle:Chat:sendChatInvite }
-
-deleteChatMember:
-  pattern:  /chat/deleteChatMember
-  defaults: { _controller: CronCronBundle:Chat:deleteChatMember }
-
 
 # Security routes
 

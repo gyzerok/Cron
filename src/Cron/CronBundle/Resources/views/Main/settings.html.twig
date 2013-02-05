@@ -1,0 +1,99 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <style type="text/css">
+        .settingsGroup {
+            display: none;
+        }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".toggleSettingsGroup").bind('click', function(){
+                $(this).next(".settingsGroup").slideToggle("fast");
+                return false;
+            });
+            $(".closeSettingsGroup").bind('click', function(){
+                $(this).closest(".settingsGroup").slideUp("fast");
+                return false;
+            });
+            $(".settingsSubmit").bind('click', function(){
+                $(this).closest('form').ajaxSubmit({
+                    success: function(){
+                        $(".saving-settings").remove();
+                        alert('Настройки сохранены.');
+                    }
+                });
+//                $(this).closest(".settingsGroup").slideUp("fast");
+                $(this).closest(".settingsGroup").append('<span class="saving-settings">Сохранение...</span>');
+                return false;
+            });
+        });
+    </script>
+    <h2 class="categoryH2">Настройки</h2>
+    <div class="settingsGroupWrap">
+        <a class="toggleSettingsGroup" href="#">Входящие вопросы</a>
+        <div class="settingsGroup">
+            <form action="/ajax/saveSettings" method="post">
+                <input type="hidden" name="group" value="income">
+                <div style="float:left;">
+                    <div class="settingsGroupHeader">по категориям</div>
+                    {% for category in categories %}
+                        <input type="checkbox" name="cat[{{ category.getId() }}]" id="income_{{ category.getId() }}" {{ settings.income_cats[category.getId()] }}> <label for="income_{{ category.getId() }}">{{ category.getName() }}</label><br>
+                    {% endfor %}
+                </div>
+                <div style="float:left;">
+                    <div class="settingsGroupHeader">по языкам</div>
+                    <input type="checkbox" name="ru" id="income_ru" {{ settings.income_locale.ru }}> <label for="income_ru">на русском</label><br>
+                    <input type="checkbox" name="en" id="income_en" {{ settings.income_locale.en }}> <label for="income_en">на английском</label><br>
+                    <input type="checkbox" name="pt" id="income_pt" {{ settings.income_locale.pt }}> <label for="income_pt">на португальском</label><br>
+                </div>
+                <div style="clear:both;"></div>
+                <input type="submit" class="settingsSubmit" value="сохранить">
+                <input type="button" class="closeSettingsGroup" value="отмена">
+            </form>
+        </div>
+    </div>
+    <div class="settingsGroupWrap">
+        <a class="toggleSettingsGroup" href="#">Просмотр всех тем</a>
+        <div class="settingsGroup">
+            <form action="/ajax/saveSettings" method="post">
+                <input type="hidden" name="group" value="view">
+                <div style="float:left;">
+                    <div class="settingsGroupHeader">по категориям</div>
+                    {% for category in categories %}
+                        <input type="checkbox" name="cat[{{ category.getId() }}]" id="view_{{ category.getId() }}"  {{ settings.view_cats[category.getId()] }}> <label for="view_{{ category.getId() }}">{{ category.getName() }}</label><br>
+                    {% endfor %}
+                </div>
+                <div style="float:left;">
+                    <div class="settingsGroupHeader">по языкам</div>
+                    <input type="checkbox" name="ru" id="view_ru" {{ settings.view_locale.ru }}> <label for="view_ru">на русском</label><br>
+                    <input type="checkbox" name="en" id="view_en" {{ settings.view_locale.en }}> <label for="view_en">на английском</label><br>
+                    <input type="checkbox" name="pt" id="view_pt" {{ settings.view_locale.pt }}> <label for="view_pt">на португальском</label><br>
+                    <br>
+                    <div class="settingsGroupHeader">по времени</div>
+                    <input type="radio" name="by_time" id="view_day" value="day" {{ settings.view_by_time.day }}> <label for="view_day">за сутки</label><br>
+                    <input type="radio" name="by_time" id="view_week" value="week" {{ settings.view_by_time.week }}> <label for="view_week">за неделю</label><br>
+                    <input type="radio" name="by_time" id="view_month" value="month" {{ settings.view_by_time.month }}> <label for="view_month">за месяц</label><br>
+                    <input type="radio" name="by_time" id="view_all" value="all" {{ settings.view_by_time.all }}> <label for="view_all">все</label><br>
+                </div>
+                <div style="clear:both;"></div>
+                <input type="submit" class="settingsSubmit" value="сохранить">
+                <input type="button" class="closeSettingsGroup" value="отмена">
+            </form>
+        </div>
+    </div>
+    <div class="settingsGroupWrap">
+        <a class="toggleSettingsGroup" href="#">Звуковая схема</a>
+        <div class="settingsGroup">
+            <form action="/ajax/saveSettings" method="post">
+                <input type="hidden" name="group" value="sound">
+                <input type="checkbox" name="cats" id="sound_cats" {{ settings.sounds.cats }}> <label for="sound_cats">вопросы по категориям</label><br>
+                <input type="checkbox" name="rush" id="sound_rush" {{ settings.sounds.rush }}> <label for="sound_rush">срочные вопросы</label><br>
+                <input type="checkbox" name="invite" id="sound_invite" {{ settings.sounds.invite }}> <label for="sound_invite">приглашения в чат</label><br>
+                <input type="checkbox" name="chat" id="sound_chat" {{ settings.sounds.chat }}> <label for="sound_chat">новая строка в чате</label><br>
+                <input type="checkbox" name="dialog" id="sound_dialog" {{ settings.sounds.dialog }}> <label for="sound_dialog">личные сообщения</label><br>
+                <input type="submit" class="settingsSubmit" value="сохранить">
+                <input type="button" class="closeSettingsGroup" value="отмена">
+            </form>
+        </div>
+    </div>
+{% endblock %}
