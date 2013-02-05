@@ -350,7 +350,7 @@ $(document).ready(function(){
 
     temp_loadChat();
 
-    var chat_update_interval = setInterval('temp_updateChat()', 5000);
+    var chat_update_interval = setInterval('temp_updateChat()', 10000);
 
 
 //    $('.chatWindow').click();

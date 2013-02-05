@@ -10,6 +10,11 @@
 </head>
 	<body>#}
     <div id="chat-last-update" value="{{ chatlastupdate|date("Y-m-d H:i:s") }}"></div>
+	<script>
+		$(function(){
+			$('.enterArea > textarea').autosize();
+		});
+	</script>
 	<div class="chatTabs">
         {% if mychat %}
             {% if mychat.getIsActive() %}

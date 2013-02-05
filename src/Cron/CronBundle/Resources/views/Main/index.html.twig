@@ -41,27 +41,7 @@
         });
 		$('[id="categoryScripture"]').after($('#question_category_1, [for="question_category_1"]'));
 		
-	//Resable textarea on Index page
-	$(function() {
-	var txt = $('#question_text'),
-	hiddenDiv = $(document.createElement('div')),
-	content = null;
 
-	txt.addClass('noscroll');
-	hiddenDiv.addClass('hiddenWriteQuestion');
-
-	$('body').append(hiddenDiv);
-
-	txt.bind('keyup', function() {
-
-	    content = txt.val();
-	    content = content.replace(/\n/g, '<br>');
-	    hiddenDiv.html(content);
-
-	    txt.css('height', hiddenDiv.height());
-		});
-	
-	});	
 	//Скрытия блоков с информацией о вопросе
 	var questionHidddenDivs = $('#questionsType').add('.writeQuestionDiv');
 	questionHidddenDivs.hide();
@@ -82,8 +62,8 @@
 		'border-bottom':'none'
 		});
 		$('.writeQuestionDiv').css({
-		'border-bottom': '2px solid #A33A1C',
-		'border-left': '2px solid #A33A1C'
+		'border-bottom': '2px solid #CC2A03',
+		'border-left': '2px solid #CC2A03'
 		});
 		document.getElementById('question_category_1').checked = false;
 	});
@@ -93,8 +73,8 @@
 		$('#question_category').hide();
 		$('.writeQuestionDiv').slideDown();
 		$('.rushWrapper').css({
-		'outline':'2px solid #A33A1C',
-		'border-bottom':'2px solid #A33A1C',
+		'outline':'2px solid #CC2A03',
+		'border-bottom':'2px solid #CC2A03',
 		});
 		$('.writeQuestionDiv').css({
 		'border-bottom': 'none',
@@ -168,6 +148,10 @@
 		questionPrivateCost.hide()
 	}
 	});
+	
+	$(function(){
+		$('#question_text').autosize();
+	});
 
 	});
 	
@@ -183,7 +167,8 @@
 		{{ form_widget(form.text) }}
 	</div>
 		<div id="questionsType">
-				<input id="categoryRadioButton" class="radioButton" name="Radio" value="Радио кнопка" type="radio"><span id="categoryScripture">по категориям<span>
+				<input id="categoryRadioButton" class="radioButton" name="Radio" value="Радио кнопка" type="radio">
+				<label for="categoryRadioButton" id="categoryScripture">по категориям</label>
 			<div class="privateButton">
 				{{ form_label(form.private) }}
 				{{ form_errors(form.private) }}
