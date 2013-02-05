@@ -9,6 +9,11 @@
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 </head>
 	<body>#}
+	<script>
+		$(function(){
+			$('.enterArea > textarea').autosize();
+		});
+	</script>
 	<div class="chatTabs">
         {% if mychat %}
             {% if mychat.getIsActive() %}

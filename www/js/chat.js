@@ -341,9 +341,8 @@ $(document).ready(function(){
             objDiv[0].scrollTop = objDiv[0].scrollHeight;
         }
     });
-
-
-
+	
+	
 
 
 //    $('.chatWindow').click();
