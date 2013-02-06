@@ -394,6 +394,7 @@ function temp_loadChat(){
             }
         }
     });
+}
 
 //Обновление чата
 function temp_updateChat(){
