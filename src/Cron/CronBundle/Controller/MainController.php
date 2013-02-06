@@ -54,6 +54,13 @@ class MainController extends Controller
                                                  ->getQuery()
                                                  ->getResult();
 
+        if ($userQuestions){
+            foreach ($userQuestions as $id=>$question) {
+                $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
+                $userQuestions[$id]->answers = $answers;
+            }
+        }
+
         return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Главная',
                                                                           'curUser' => $this->getUser(),
                                                                           'userQuestions' => $userQuestions,
@@ -119,6 +126,11 @@ class MainController extends Controller
                                     ->setParameter('status', '2')
                                     ->getQuery()
                                     ->getResult();
+
+        foreach ($rush as $id=>$question) {
+            $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
+            $rush[$id]->answers = $answers;
+        }
 
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'Срочные',
                                                                              'questions' => $rush,
