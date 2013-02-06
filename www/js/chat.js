@@ -392,11 +392,6 @@ function temp_loadChat(){
         }
     });
 
-<<<<<<< HEAD
-=======
-}
->>>>>>> d3f52a5bfe1cf77e83a9f936e61e7a4724eb9b6e
-
 //Обновление чата
 function temp_updateChat(){
     var chats = '';

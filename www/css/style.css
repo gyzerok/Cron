@@ -47,19 +47,18 @@
 }
 
 .russian {
-	width: 26px;
-	height: 26px;
 	margin-right: 4px;
-	outline: 1px solid #000;
 	float: left;
 	background: url(/i/russian.png) no-repeat;
-	background-size: 100%;
+	background-position: center;
 }
 
 .russian a {
+	border: 1px solid #000;
+	border-radius: 5px;
 	display: block;
-	width: 26px;
-	height: 26px;
+	width: 21px;
+	height: 20px;
 	cursor: pointer;
 }
 
@@ -67,16 +66,16 @@
 	width: 26px;
 	height: 26px;
 	margin-right: 4px;
-	outline: 1px solid #000;
 	float: left;
 	background: url(/i/english.png) no-repeat;
-	background-size: 100%;
 }
 
 .english a {
+	border: 1px solid #000;
+	border-radius: 5px;
 	display: block;
-	width: 26px;
-	height: 26px;
+	width: 21px;
+	height: 19px;
 	cursor: pointer;
 }
 
@@ -84,17 +83,17 @@
 	width: 26px;
 	height: 26px;
 	margin-right: 4px;
-	outline: 1px solid #000;
 	float: left;
 	background: url(/i/portuguese.png) no-repeat;
-	background-size: 100%;
 }
 
 .portuguese a {
 	display: block;
-	width: 26px;
-	height: 26px;
+	width: 19px;
+	height: 19px;
 	cursor: pointer;
+	border: 1px solid #000;
+	border-radius: 5px;	
 }
 
 .users {
@@ -1514,7 +1513,6 @@ a.closeRegisterButton {
 	color: #000;
 	font-size: 21px;
 	font-family: 'Cambria';
-	width: 100px;
 }
 
 .download-my-file{
