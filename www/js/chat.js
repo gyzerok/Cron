@@ -363,7 +363,7 @@ function temp_loadChat(){
             objDiv[0].scrollTop = objDiv[0].scrollHeight;
         }
     });
-};
+
 
     //Загрузка приглашений в чат
     $.ajax({
@@ -392,10 +392,7 @@ function temp_loadChat(){
         }
     });
 
-<<<<<<< HEAD
-=======
 }
->>>>>>> d3f52a5bfe1cf77e83a9f936e61e7a4724eb9b6e
 
 //Обновление чата
 function temp_updateChat(){

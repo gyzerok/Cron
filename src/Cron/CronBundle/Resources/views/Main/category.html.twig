@@ -14,19 +14,34 @@
 	
 		var answerFrom = $('.answerForm');
 		$('.answerButton').click(function() {
-			$(this).closest('.singleQuestion').next('.answerForm').slideDown(500);
+			$(this).closest('.singleQuestion').nextAll('.answerForm').first().slideDown(500);
 		});
 		
-		var answerFormNavigation = $('.answerFormNavigation');
+//		var answerFormNavigation = $('.answerFormNavigation');
 		$('.cancelButton').click(function() {
 			$(this).closest('.answerForm').slideUp(500);
 		});
+        $(".submitAnswerButton").live('click', function(){
+            var answerForm = $(this).closest('.answerForm');
+            $.ajax({
+                url: '/ajax/postAnswer',
+                type: 'post',
+                data: {
+                    id: answerForm.prevAll(".singleQuestion").data('id'),
+                    text: answerForm.find('.answerTextarea').val()
+                },
+                success: function(response){
+                    answerForm.prevAll('.myAnswer').first().append(response);
+                }
+            });
+            return false;
+        });
 	});
 	</script>
 		<h2 class="categoryH2">Category name</h2>
 		<div id="showQuestion">
 			{% for item in questions %}
-				<div class="singleQuestion">
+				<div class="singleQuestion" data-id="{{ item.getId() }}">
 					<div class="userName">{{ item.user }}</div>
 					<div class="questionDate">{{ item.datetime|date('d.m.Y H:i') }}</div>
 					<div class="closeButton"></div>
@@ -43,10 +58,13 @@
 						</div>
 					</div>
 				</div>
+                <div class="myAnswer">
+
+                </div>
 				<form class="answerForm">
 					<textarea class="answerTextarea" ></textarea>
 					<div class="answerFormNavigation">
-						<input type="submit" value="отправить" />
+						<input class="submitAnswerButton" type="submit" value="отправить" />
 						<input class="cancelButton" type="button" value="отменить" />
 					</div>
 				</form>

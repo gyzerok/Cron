@@ -163,7 +163,21 @@ class AjaxController extends Controller
             $em->persist($answer);
             $em->flush();
 
-            return new Response('SUCCESS');
+            $html = '<div class="singleAnswer" data-user="'.$user->getId().'">
+					<div class="userName">'.$user->getNick().'</div>
+					<div class="answerDate">'.$answer->getPubDate()->format("Y-m-d H:i:s").'</div>
+					<div style="clear: both;"></div>
+					<div class="questionText">
+						'.$answer->getText().'
+						<div class="socialIcons">
+							<div class="spamButton"></div>
+							<div class="likeButton"></div>
+							<div class="arrowButton inviteUser"></div>
+							<div class="letterButton sendMessage"></div>
+						</div>
+					</div>
+				</div>';
+            return new Response($html);
         }
     }
 
