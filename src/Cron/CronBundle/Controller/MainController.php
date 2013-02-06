@@ -54,9 +54,11 @@ class MainController extends Controller
                                                  ->getQuery()
                                                  ->getResult();
 
-        foreach ($userQuestions as $id=>$question) {
-            $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
-            $userQuestions[$id]->answers = $answers;
+        if ($userQuestions){
+            foreach ($userQuestions as $id=>$question) {
+                $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
+                $userQuestions[$id]->answers = $answers;
+            }
         }
 
         return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Главная',
