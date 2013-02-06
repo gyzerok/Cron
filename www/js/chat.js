@@ -191,7 +191,8 @@ $(document).ready(function(){
                 success: function(response){
                     chat_container.html(response);
                     var objDiv = $('.chat');
-                    objDiv[0].scrollTop = objDiv[0].scrollHeight;
+                    if (objDiv.size())
+                        objDiv[0].scrollTop = objDiv[0].scrollHeight;
                     if (chat_container.is('.open-new-income-chat')){
                         $(".numberOnTab.chat-tab:last").click();
                         chat_container.removeClass('open-new-income-chat');
@@ -360,7 +361,9 @@ function temp_loadChat(){
         success: function(response){
             $(".chat-container").html(response);
             var objDiv = $('.chat');
-            objDiv[0].scrollTop = objDiv[0].scrollHeight;
+            if (objDiv.size()){
+                objDiv[0].scrollTop = objDiv[0].scrollHeight;
+            }
         }
     });
 
