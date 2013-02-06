@@ -15,11 +15,13 @@
 		var answerFrom = $('.answerForm');
 		$('.answerButton').click(function() {
 			$(this).closest('.singleQuestion').nextAll('.answerForm').first().slideDown(500);
+			$(this).closest('.singleQuestion').nextAll('.myAnswer').first().slideDown(500);
 		});
 		
 //		var answerFormNavigation = $('.answerFormNavigation');
 		$('.cancelButton').click(function() {
 			$(this).closest('.answerForm').slideUp(500);
+			$(this).closest('.answerForm').prevAll('.myAnswer').first().slideUp(500);
 		});
         $(".submitAnswerButton").live('click', function(){
             var answerForm = $(this).closest('.answerForm');
@@ -32,6 +34,7 @@
                 },
                 success: function(response){
                     answerForm.prevAll('.myAnswer').first().append(response);
+					
                 }
             });
             answerForm.find('.answerTextarea').val('');
@@ -68,10 +71,10 @@
                             <div class="questionText">
                                 {{ answer.getText() }}
                                 <div class="socialIcons">
-                                    <div class="spamButton"></div>
-                                    <div class="likeButton"></div>
-                                    <div class="arrowButton inviteUser"></div>
-                                    <div class="letterButton sendMessage"></div>
+                                    <div class="spamButton" title="Пометить как спам"></div>
+                                    <div class="likeButton" title="Мне нравится!"></div>
+                                    <div class="arrowButton inviteUser" title="Отправить приглашение в чат"></div>
+                                    <div class="letterButton sendMessage" title="Отправить сообщение"></div>
                                 </div>
                             </div>
                         </div>
