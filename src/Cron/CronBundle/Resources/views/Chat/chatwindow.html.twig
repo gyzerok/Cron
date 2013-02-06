@@ -16,11 +16,12 @@
 		});
 	</script>
 	<div class="chatTabs">
-        {% if mychat %}
+        <div class="singleTab chat-tab active" data-tab="my">Мой чат</div>
+        {#{% if mychat %}
             {% if mychat.getIsActive() %}
                 <div class="singleTab chat-tab active" data-tab="my">Мой чат</div>
             {% endif %}
-        {% endif %}
+        {% endif %}#}
 
         {% if income_chats %}
             <div class="singleInboxTab">
@@ -30,6 +31,13 @@
                     <div class="numberOnTab chat-tab" data-tab="in{{ counter }}">{{ counter }}</div>
                     {% set counter = counter + 1 %}
                 {% endfor %}
+            </div>
+        {% else %}
+            <div class="singleInboxTab">
+                <span>Входящий чат</span>
+                <div class="numberOnTab" data-tab="in1">1</div>
+                <div class="numberOnTab" data-tab="in2">2</div>
+                <div class="numberOnTab" data-tab="in3">3</div>
             </div>
         {% endif %}
 

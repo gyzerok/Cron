@@ -14,9 +14,13 @@
 	
 		var answerFrom = $('.answerForm');
 		$('.answerButton').click(function() {
-			$(this).closest('.singleQuestion').nextAll('.answerForm').first().slideToggle(500);
-			$(this).closest('.singleQuestion').nextAll('.myAnswer').first().slideToggle(500);
-		});
+            var cur_answerForm = $(this).closest('.singleQuestion').nextAll('.answerForm').first();
+            $(".answerForm").not(cur_answerForm).slideUp(500);
+            cur_answerForm.slideToggle(500);
+            var cur_myAnswer = $(this).closest('.singleQuestion').nextAll('.myAnswer').first();
+            cur_myAnswer.slideToggle(500);
+            $(".myAnswer").not(cur_myAnswer).slideUp(500);
+        });
 		
 //		var answerFormNavigation = $('.answerFormNavigation');
 		$('.cancelButton').click(function() {
@@ -63,22 +67,24 @@
 					</div>
 				</div>
                 <div class="myAnswer {% if item.answers==null %}no-border{% endif %}">
-                    {% for answer in item.answers %}
-                        <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}">
-                            <div class="userName">{{ answer.getUser().getNick() }}</div>
-                            <div class="answerDate">{{ answer.getPubDate()|date("Y-m-d H:i:s") }}</div>
-                            <div style="clear: both;"></div>
-                            <div class="questionText">
-                                {{ answer.getText() }}
-                                <div class="socialIcons">
-                                    <div class="spamButton" title="Пометить как спам"></div>
-                                    <div class="likeButton" title="Мне нравится!"></div>
-                                    <div class="arrowButton inviteUser" title="Отправить приглашение в чат"></div>
-                                    <div class="letterButton sendMessage" title="Отправить сообщение"></div>
+                    {#{% if item.getPrivate()>0 %}#}
+                        {% for answer in item.answers %}
+                            <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}">
+                                <div class="userName">{{ answer.getUser().getNick() }}</div>
+                                <div class="answerDate">{{ answer.getPubDate()|date("Y-m-d H:i:s") }}</div>
+                                <div style="clear: both;"></div>
+                                <div class="questionText">
+                                    {{ answer.getText() }}
+                                    <div class="socialIcons">
+                                        <div class="spamButton" title="Пометить как спам"></div>
+                                        <div class="likeButton" title="Мне нравится!"></div>
+                                        <div class="arrowButton inviteUser" title="Отправить приглашение в чат"></div>
+                                        <div class="letterButton sendMessage" title="Отправить сообщение"></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    {% endfor %}
+                        {% endfor %}
+                    {#{% endif %}#}
                 </div>
 				<form class="answerForm">
 					<textarea class="answerTextarea" ></textarea>

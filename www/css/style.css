@@ -1493,6 +1493,10 @@ a.closeRegisterButton {
 	margin-bottom: 0px;
 }
 
+.my-files-wrap {
+    height: 300px;
+    overflow-y: scroll;
+}
 .my-files {
 	clear: both;
 	margin-top: 22px;
@@ -1518,6 +1522,7 @@ a.closeRegisterButton {
 	color: #000;
 	font-size: 21px;
 	font-family: 'Cambria';
+    /*white-space: nowrap;*/
 }
 
 .download-my-file{
