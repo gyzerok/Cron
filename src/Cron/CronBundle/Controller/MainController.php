@@ -5,6 +5,7 @@ namespace Cron\CronBundle\Controller;
 use Cron\CronBundle\Entity\Question;
 use Cron\CronBundle\Entity\Answer;
 use Cron\CronBundle\Entity\User;
+use Cron\CronBundle\Entity\UserSettings;
 use Cron\CronBundle\Entity\File;
 use Cron\CronBundle\Form\NewQuestion;
 use Cron\CronBundle\Form\NewAnswer;
@@ -219,7 +220,15 @@ class MainController extends Controller
         //Settings converting (temporarily)
         $settings = array();
 
-        $incomeCats = $user_settings->getIncomeCats();
+        $incomeCats = null;
+        $incomeLocale = null;
+        $viewCats = null;
+        $viewLocale = null;
+        $viewByTime = null;
+        $sounds = null;
+
+        if ($user_settings instanceof UserSettings)
+            $incomeCats = $user_settings->getIncomeCats();
         if (!count($incomeCats) || !$incomeCats){
             foreach ($categories as $cat)
                 $settings['income_cats'][$cat->getId()] = 'checked="checked"';
@@ -230,7 +239,8 @@ class MainController extends Controller
                 $settings['income_cats'][$id] = 'checked="checked"';
         }
 
-        $incomeLocale = $user_settings->getIncomeLocale();
+        if ($user_settings instanceof UserSettings)
+            $incomeLocale = $user_settings->getIncomeLocale();
         if (!count($incomeLocale) || !$incomeLocale){
             $settings['income_locale']['ru'] = 'checked="checked"';
             $settings['income_locale']['en'] = 'checked="checked"';
@@ -244,7 +254,8 @@ class MainController extends Controller
             }
         }
 
-        $viewCats = $user_settings->getViewCats();
+        if ($user_settings instanceof UserSettings)
+            $viewCats = $user_settings->getViewCats();
         if (!count($viewCats) || !$viewCats){
             foreach ($categories as $cat)
                 $settings['view_cats'][$cat->getId()] = 'checked="checked"';
@@ -255,7 +266,8 @@ class MainController extends Controller
                 $settings['view_cats'][$id] = 'checked="checked"';
         }
 
-        $viewLocale = $user_settings->getViewLocale();
+        if ($user_settings instanceof UserSettings)
+            $viewLocale = $user_settings->getViewLocale();
         if (!count($viewLocale) || !$viewLocale){
             $settings['view_locale']['ru'] = 'checked="checked"';
             $settings['view_locale']['en'] = 'checked="checked"';
@@ -269,7 +281,8 @@ class MainController extends Controller
             }
         }
 
-        $viewByTime = $user_settings->getViewByTime();
+        if ($user_settings instanceof UserSettings)
+            $viewByTime = $user_settings->getViewByTime();
         $settings['view_by_time']['day'] = '';
         $settings['view_by_time']['week'] = '';
         $settings['view_by_time']['month'] = '';
@@ -289,7 +302,9 @@ class MainController extends Controller
                 $settings['view_by_time']['all'] = 'checked="checked"';
                 break;
         }
-        $sounds = $user_settings->getSounds();
+
+        if ($user_settings instanceof UserSettings)
+            $sounds = $user_settings->getSounds();
         if (!count($sounds) || !$sounds){
             $settings['sounds']['cats'] = 'checked="checked"';
             $settings['sounds']['rush'] = 'checked="checked"';

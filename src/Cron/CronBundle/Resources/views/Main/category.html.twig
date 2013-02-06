@@ -14,8 +14,8 @@
 	
 		var answerFrom = $('.answerForm');
 		$('.answerButton').click(function() {
-			$(this).closest('.singleQuestion').nextAll('.answerForm').first().slideDown(500);
-			$(this).closest('.singleQuestion').nextAll('.myAnswer').first().slideDown(500);
+			$(this).closest('.singleQuestion').nextAll('.answerForm').first().slideToggle(500);
+			$(this).closest('.singleQuestion').nextAll('.myAnswer').first().slideToggle(500);
 		});
 		
 //		var answerFormNavigation = $('.answerFormNavigation');
@@ -62,7 +62,7 @@
 						</div>
 					</div>
 				</div>
-                <div class="myAnswer">
+                <div class="myAnswer {% if item.answers==null %}no-border{% endif %}">
                     {% for answer in item.answers %}
                         <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}">
                             <div class="userName">{{ answer.getUser().getNick() }}</div>

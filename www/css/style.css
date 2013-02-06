@@ -1393,6 +1393,9 @@ a.closeRegisterButton {
 	margin: 0 auto;
 	display: none;
 }
+.myAnswer.no-border {
+    border: none;
+}
 
 .singleAnswer {
 	margin: 6px 0 0 5px;

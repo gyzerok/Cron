@@ -232,7 +232,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="myAnswer">
+			<div class="myAnswer {% if item.answers==null %}no-border{% endif %}">
                 {% for answer in item.answers %}
                     <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}">
                         <div class="userName">{{ answer.getUser().getNick() }}</div>
