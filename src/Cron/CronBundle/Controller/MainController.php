@@ -85,6 +85,11 @@ class MainController extends Controller
                                            ->getQuery()
                                            ->getResult();
 
+        foreach ($categorized as $id=>$question) {
+            $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
+            $categorized[$id]->answers = $answers;
+        }
+
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'По категориям',
                                                                              'questions' => $categorized,
                                                                              'curUser' => $this->getUser(),
