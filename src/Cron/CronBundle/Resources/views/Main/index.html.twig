@@ -233,48 +233,22 @@
 				</div>
 			</div>
 			<div class="myAnswer">
-				<div class="singleAnswer" data-user="8">
-					<div class="userName">Ivan</div>
-					<div class="answerDate">14.01.2013 15:15:16</div>
-					<div style="clear: both;"></div>
-					<div class="questionText">
-						ответ1
-						<div class="socialIcons">
-							<div class="spamButton"></div>
-							<div class="likeButton"></div>
-							<div class="arrowButton inviteUser"></div>
-							<div class="letterButton sendMessage"></div>
-						</div>
-					</div>
-				</div>
-				<div class="singleAnswer" data-user="3">
-					<div class="userName">Fedor</div>
-					<div class="answerDate">14.01.2013 15:15:16 </div>
-					<div style="clear: both;"></div>
-					<div class="questionText">
-						ответ2
-						<div class="socialIcons">
-							<div class="spamButton"></div>
-							<div class="likeButton"></div>
-							<div class="arrowButton inviteUser"></div>
-							<div class="letterButton sendMessage"></div>
-						</div>
-					</div>
-				</div>
-				<div class="singleAnswer" data-user="4">
-					<div class="userName">Alekseys</div>
-					<div class="answerDate">14.01.2013 15:15:16 </div>
-					<div style="clear: both;"></div>
-					<div class="questionText">
-						ответ3
-						<div class="socialIcons">
-							<div class="spamButton"></div>
-							<div class="likeButton"></div>
-							<div class="arrowButton inviteUser"></div>
-							<div class="letterButton sendMessage"></div>
-						</div>
-					</div>
-				</div>
+                {% for answer in item.answers %}
+                    <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}">
+                        <div class="userName">{{ answer.getUser().getNick() }}</div>
+                        <div class="answerDate">{{ answer.getPubDate()|date("Y-m-d H:i:s") }}</div>
+                        <div style="clear: both;"></div>
+                        <div class="questionText">
+                            {{ answer.getText() }}
+                            <div class="socialIcons">
+                                <div class="spamButton"></div>
+                                <div class="likeButton"></div>
+                                <div class="arrowButton inviteUser"></div>
+                                <div class="letterButton sendMessage"></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
 			</div>
 			{% endfor %}
 	{% endif %}
