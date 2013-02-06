@@ -479,6 +479,7 @@
 	-webkit-transition: height 0.2s;
 	-moz-transition: height 0.2s;
 	transition: height 0.2s;
+	max-height: 81px;
 }
 
 
@@ -491,6 +492,7 @@
 	border-right: 2px solid #CC2A03;
 	overflow: hidden;
 	margin: 0 auto;
+	display: none;
 }
 
 #questionsType label {
@@ -509,6 +511,7 @@
 	margin: 0 auto;
 	font-size: 18px;
 	overflow: hidden;
+	display: none;
 }
 
 .writeQuestionDiv input.radioButton {
@@ -824,15 +827,19 @@ h2.categoryH2 {
 }
 
 .chatWindow {
-	width: 723px;
+	width: 726px;
 	height: 20px;
-	border: 2px solid #A33A1C;
-	margin: -23px 0 0 5px;
+	border: 2px solid #CC2A03;
+	margin: -23px 0 0 2px;
 	text-align: center;
 	font-size: 20px;
 	text-transform: uppercase;
 	color: #52648A;
 	cursor: pointer;
+}
+
+.chatWindow:hover {
+	background-color: #F0F0F0;
 }
 
 .chatWindow span {
@@ -1335,6 +1342,7 @@ a.closeRegisterButton {
 .answerForm {
 	width: 693px;
 	margin: 0 0 0 8px;
+	display: none;
 }
 
 .answerTextarea {
@@ -1453,7 +1461,7 @@ a.closeRegisterButton {
 	height: 25px;
 	/*background: url('../i/copy1.png') no-repeat;*/
 	float: left;
-	margin: 3px 0 0 3px;
+	margin: 1px 0 0 -30px;
 }
 
 #d_clip_button a {

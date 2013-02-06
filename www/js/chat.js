@@ -340,9 +340,6 @@ $(document).ready(function(){
     temp_loadChat();
 
 
-
-
-//    $('.chatWindow').click();
 });
 
 function temp_loadChat(){
@@ -355,9 +352,7 @@ function temp_loadChat(){
             objDiv[0].scrollTop = objDiv[0].scrollHeight;
         }
     });
-
-//    $('.chatWindow').click();
-});
+};
 
     //Загрузка приглашений в чат
     $.ajax({
@@ -385,7 +380,7 @@ function temp_loadChat(){
             }
         }
     });
-}
+
 
 function temp_uploadChat(){
 

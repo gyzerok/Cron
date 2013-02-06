@@ -138,7 +138,7 @@
         <div class="my-files" style="">
             {% for file in user_files %}
                 <div class="my-file" fileid="{{ file.id }}" filepath="{{ file.getHashUrl() }}">
-                    <table width="100%">
+                    <table width="100%" cellspacing="0">
                         <tr>
                             <td>{{ file.filename }}</td>
                             <td><div class="my-file-size">{{ file.filesize }}</div></td>

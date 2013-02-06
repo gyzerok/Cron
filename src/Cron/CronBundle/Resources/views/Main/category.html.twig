@@ -13,7 +13,6 @@
 	$(document).ready(function() {
 	
 		var answerFrom = $('.answerForm');
-		answerFrom.hide();
 		$('.answerButton').click(function() {
 			$(this).closest('.singleQuestion').next('.answerForm').slideDown(500);
 		});

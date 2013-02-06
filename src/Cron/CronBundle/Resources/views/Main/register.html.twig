@@ -96,19 +96,21 @@
 		
 		//Сравнение полей с паролем
 		$('#register_password_Confirm').change(testPass).keyup(testPass);
-		
+		var timer;
 		
 		function testPass() {
-			
-			var p1 = $("#register_password_Password").val(); 
-			var p2 = $("#register_password_Confirm").val();
-			
-			if(p1 == p2) { 
-				$(".checkPassword").html('<span style="color:green;">Пароли совпадают</span>'); 
-			} 
-			else { 
-				$(".checkPassword").html('<span style="color:red;">Пароли не совпадают</span>'); 
-			}
+			clearTimeout(timer);
+			timer = setTimeout(function(){
+				var p1 = $("#register_password_Password").val(); 
+				var p2 = $("#register_password_Confirm").val();
+				
+				if(p1 == p2) { 
+					$(".checkPassword").html('<span style="color:green;">Пароли совпадают</span>'); 
+				} 
+				else { 
+					$(".checkPassword").html('<span style="color:red;">Пароли не совпадают</span>'); 
+				}
+			}, 2000);
 		}
 		
 	  //Всплывающее пользовательское соглашение
