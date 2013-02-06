@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $(".open-dialog-list").bind('click', function(){
-        /*$.ajax({
+        $.ajax({
             url: '/chat/getDialogList',
             success: function(response){
                 if (!$.trim(response))
@@ -8,7 +8,7 @@ $(document).ready(function(){
                 $(".dialogsWrapper .dialogs-container").html(response);
             }
         });
-        $(".dialogsWrapper .dialogs-container").html('<div class="dialogs-empty-text">Загрузка...</div>');*/
+        $(".dialogsWrapper .dialogs-container").html('<div class="dialogs-empty-text">Загрузка...</div>');
         $(".dialogsWrapper").toggle();
         $(this).removeClass('indicate');
     });
@@ -209,6 +209,7 @@ $(document).ready(function(){
         $('.chatWrapper').fadeIn();
         openChat.show();
         $(".chat-input").focus();
+        $(".open-dialog-list").removeClass('indicate');
     });
     $('.closeChat').click(function() {
 //        openChat.fadeOut();
@@ -269,12 +270,22 @@ $(document).ready(function(){
     });
     $(".chat-tab").live('click', function(){
         $(".chat-tab").removeClass('active');
-        $(this).addClass('active');
+        $(this).removeClass('indicate').addClass('active');
         $(".chat-content").hide();
         var tab_id = $(this).data('tab');
 
         var active_chat = $(".chat-content[tab="+tab_id+"]");
         active_chat.show();
+
+        if (active_chat.data('dialog-id')){
+            $.ajax({
+                url: '/chat/readDialogMsgs',
+                data: {
+                    dialog:active_chat.data('dialog-id')
+                }
+            });
+            $(".dialogsWrapper .dialogs-container .singleDialog[data-dialog="+active_chat.data('dialog-id')+"] .messagesAmount").text('');
+        }
 
         var objDiv = active_chat.find(".chat");
         if (objDiv.size())
@@ -334,12 +345,12 @@ $(document).ready(function(){
         $(".chat-tab").first().click();
     });
 
-
-
-
     temp_loadChat();
 
+    var chat_update_interval = setInterval('temp_updateChat()', 10000);
 
+
+//    $('.chatWindow').click();
 });
 
 function temp_loadChat(){
@@ -381,9 +392,75 @@ function temp_loadChat(){
         }
     });
 
+<<<<<<< HEAD
+=======
+}
+>>>>>>> d3f52a5bfe1cf77e83a9f936e61e7a4724eb9b6e
 
-function temp_uploadChat(){
+//Обновление чата
+function temp_updateChat(){
+    var chats = '';
+    var dialogs = '';
+    $(".chat-content").each(function(i){
+        if ($(this).data('chat-id'))
+            chats += $(this).data('chat-id')+';';
+        else if ($(this).data('dialog-id'))
+            dialogs += $(this).data('dialog-id')+';';
+    });
+    $.ajax({
+        url: '/chat/updateChat',
+        type: 'post',
+        dataType: 'json',
+        data: {
+            chat_last_update: $("#chat-last-update").attr('value'),
+            chats:  chats.substr(0,chats.length-1),
+            dialogs: dialogs.substr(0,dialogs.length-1)
+        },
+        success: function(data){
+            if (data.invites){
+                $(".chatInvite").addClass('indicate');
+            }
+            if (data.new_dialogs){
+                $(".open-dialog-list").addClass('indicate');
+            }
 
+            $("#chat-last-update").attr('value', data.chat_last_update);
+
+            for (var i in data.chats){
+                var cur_chat = $(".chat-content[data-chat-id="+i+"]");
+                for (var j in data.chats[i]){
+                    $(".chat-tab:not(.active)[data-tab="+cur_chat.attr('tab')+"]").addClass('indicate');
+                    cur_chat.find(".messageWrap").append('<div class="singleMessage"><div class="chatUsername">'+data.chats[i][j].user_name+'</div><div class="messageText">'+data.chats[i][j].msg_text+'</div></div>');
+                }
+            }
+            for (var i in data.dialogs){
+                var cur_chat = $(".chat-content[data-dialog-id="+i+"]");
+                for (var j in data.dialogs[i]){
+                    $(".chat-tab:not(.active)[data-tab="+cur_chat.attr('tab')+"]").addClass('indicate');
+                    cur_chat.find(".messageWrap").append('<div class="singleMessage"><div class="chatUsername">'+data.dialogs[i][j].user_name+'</div><div class="messageText">'+data.dialogs[i][j].msg_text+'</div></div>');
+                }
+            }
+
+            for (var i in data.srvmsgs.chats){
+                var cur_chat = $(".chat-content[data-dialog-id="+i+"]");
+                for (var j in data.srvmsgs.chats[i]){
+//                    $(".chat-tab:not(.active)[data-tab="+cur_chat.attr('tab')+"]").addClass('indicate');
+                    cur_chat.find(".messageWrap").append('<div class="singleMessage chatSrvMsg"><div class="messageText">'+data.srvmsgs.chats[i][j].msg_text+'</div></div>');
+                }
+            }
+            for (var i in data.srvmsgs.dialogs){
+                var cur_chat = $(".chat-content[data-dialog-id="+i+"]");
+                for (var j in data.srvmsgs.dialogs[i]){
+//                    $(".chat-tab:not(.active)[data-tab="+cur_chat.attr('tab')+"]").addClass('indicate');
+                    cur_chat.find(".messageWrap").append('<div class="singleMessage chatSrvMsg"><div class="messageText">'+data.srvmsgs.dialogs[i][j].msg_text+'</div></div>');
+                }
+            }
+
+            $('.chat').each(function(){
+                $(this)[0].scrollTop = $(this)[0].scrollHeight;
+            });
+        }
+    });
     return true;
 }
 

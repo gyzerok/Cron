@@ -49,13 +49,6 @@ class ChatMsg {
     protected $msg_text;
 
     /**
-     * @var boolean $read_flag
-     *
-     * @ORM\Column(name="read_flag", type="boolean")
-     */
-    protected $read_flag;
-
-    /**
      * @var \DateTime $msg_date
      *
      * @ORM\Column(name="msg_date", type="datetime", nullable=false)
@@ -94,29 +87,6 @@ class ChatMsg {
     public function getMsgText()
     {
         return $this->msg_text;
-    }
-
-    /**
-     * Set read_flag
-     *
-     * @param boolean $readFlag
-     * @return ChatMsg
-     */
-    public function setReadFlag($readFlag)
-    {
-        $this->read_flag = $readFlag;
-    
-        return $this;
-    }
-
-    /**
-     * Get read_flag
-     *
-     * @return boolean 
-     */
-    public function getReadFlag()
-    {
-        return $this->read_flag;
     }
 
     /**
