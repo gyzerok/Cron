@@ -363,7 +363,7 @@ function temp_loadChat(){
             objDiv[0].scrollTop = objDiv[0].scrollHeight;
         }
     });
-};
+
 
     //Загрузка приглашений в чат
     $.ajax({
