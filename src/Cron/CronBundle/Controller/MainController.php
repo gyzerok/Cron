@@ -332,6 +332,43 @@ class MainController extends Controller
         ));
     }
 
+    public function articlesAction($category_id, $article_id)
+    {
+//        $request->setLocale($request->getSession()->get('_locale'));
+
+        $user = $this->getUser();
+
+        if ($category_id>0 && $article_id>0){
+            $cur_category = $this->getDoctrine()->getRepository("CronCronBundle:ArticleCategory")->find($category_id);
+
+            $cur_article = $this->getDoctrine()->getRepository("CronCronBundle:Article")->find($article_id);
+
+            return $this->render("CronCronBundle:Articles:single_article.html.twig", array('title' => 'Статьи / '.$cur_category->getName().' / '.$cur_article->getHeader(),
+                'category' => $cur_category,
+                'article' => $cur_article,
+                'curUser' => $user
+            ));
+        } elseif ($category_id>0){
+            $cur_category = $this->getDoctrine()->getRepository("CronCronBundle:ArticleCategory")->find($category_id);
+
+            $articles = $this->getDoctrine()->getRepository("CronCronBundle:Article")->findBy(array("category"=>$category_id));
+
+            return $this->render("CronCronBundle:Articles:article_list.html.twig", array('title' => 'Статьи / '.$cur_category->getName(),
+                'category' => $cur_category,
+                'articles' => $articles,
+                'curUser' => $user
+            ));
+        } else {
+            $article_categories = $this->getDoctrine()->getRepository("CronCronBundle:ArticleCategory")->findAll();
+
+            return $this->render("CronCronBundle:Articles:article_categories.html.twig", array('title' => 'Статьи',
+                'categories' => $article_categories,
+                'curUser' => $user
+            ));
+        }
+
+    }
+
     public function registerAction(Request $request)
     {
         $request->setLocale($request->getSession()->get('_locale'));

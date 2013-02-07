@@ -16,11 +16,15 @@ rush:
 
 disk:
   pattern: /disk/{file_hash}
-  defaults: { _controller: CronCronBundle:Main:disk, "file_hash":"" }
+  defaults: { _controller: CronCronBundle:Main:disk, "file_hash": "" }
 
 settings:
   pattern: /settings
   defaults: { _controller: CronCronBundle:Main:settings }
+
+articles:
+  pattern: /articles/{category_id}/{article_id}
+  defaults: { _controller: CronCronBundle:Main:articles, "category_id": "", "article_id": "" }
 
 locale:
   pattern: /locale/{locale}
@@ -177,6 +181,13 @@ kickUser:
 sendChatInvite:
   pattern:  /chat/sendChatInvite
   defaults: { _controller: CronCronBundle:Chat:sendChatInvite }
+
+# Admin routes
+
+newarticle:
+  pattern:  /admin/newarticle
+  defaults: { _controller: CronCronBundle:Admin:newarticle }
+
 
 # Security routes
 
