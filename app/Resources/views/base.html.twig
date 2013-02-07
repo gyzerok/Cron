@@ -7,8 +7,11 @@
 	<link href="/css/jquery-ui-1.9.2.custom.css" rel="stylesheet" />
 	<script src="/js/jquery.js"></script>
 	<script src="/js/jquery.validate.min.js"></script>
+	<script src="/js/jquery.form.js"></script>
 	<!--<script src="js/showmessages.js"></script>!-->
+
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	<script src="/js/jquery.autosize-min.js"></script>
     <script src="/js/chat.js"></script>
   </head>
   <body>
@@ -16,11 +19,11 @@
 	<div id="wrapper">
 	    {% block header %}
 		<div id="header">
-			<div class="logo"><a href=""></a></div>
+			<div class="logo" title="На главную"><a href="{{ path('index') }}"></a></div>
 			<div class="language">
-				<div class="russian"><a href="{{ path('locale', { 'locale': 'ru_RU' }) }}"></a></div>
-				<div class="english"><a href="{{ path('locale', { 'locale': 'en_US' }) }}"></a></div>
-				<div class="portuguese"><a href="{{ path('locale', { 'locale': 'pt_PT' }) }}"></a></div>
+				<div class="russian" title="русский"><a href="{{ path('locale', { 'locale': 'ru_RU' }) }}"></a></div>
+				<div class="english" title="английский"><a href="{{ path('locale', { 'locale': 'en_US' }) }}"></a></div>
+				<div class="portuguese" title="португальский"><a href="{{ path('locale', { 'locale': 'pt_PT' }) }}"></a></div>
 			</div>
 			<div class="users">
 			<p><span>12 345 678 </span><span class="onSite">На сайте</span></p>
@@ -45,7 +48,8 @@
 				<input type="submit"  value="Выйти" />
 			</form>
 			<form class="profileNavigation">
-				<input type="submit" value="Настройки" />
+				{#<input type="submit" value="Настройки" />#}
+				<a href="/settings">Настройки</a>
 			</form>
 			<p class="credits">Кредиты 123</p>
 			<p class="myQuestions"><a href="">Мои вопросы</a></p>
@@ -89,19 +93,19 @@
 			<ul class="menuNavigation">
 				<li>Вопросы
 					<ul class="subMenuNavigation">
-					  <li><a href="#">Семья, дом, дети</a></li>
-					  <li><a href="#">Любовь, отношения</a></li>
-					  <li><a href="#">Культура, досуг</a></li>
-					  <li><a href="#">Туризм</a></li>
-					  <li><a href="#">Компьютеры, интернет</a></li>
-					  <li><a href="#">Компьютерные игры</a></li>
-					  <li><a href="#">Техника</a></li>
-					  <li><a href="#">Знакомства, общение</a></li>
-					  <li><a href="#">Экономика</a></li>
-					  <li><a href="#">Юриспруденция</a></li>
-					  <li><a href="#">Опросы</a></li>
-					  <li><a href="#">Новости</a></li>
-					  <li><a href="#">Спорт</a></li>
+					  <li><a href="#">семья, дом, дети</a></li>
+					  <li><a href="#">любовь, отношения</a></li>
+					  <li><a href="#">культура, досуг</a></li>
+					  <li><a href="#">туризм</a></li>
+					  <li><a href="#">компьютеры, интернет</a></li>
+					  <li><a href="#">компьютерные игры</a></li>
+					  <li><a href="#">техника</a></li>
+					  <li><a href="#">знакомства, общение</a></li>
+					  <li><a href="#">экономика</a></li>
+					  <li><a href="#">юриспруденция</a></li>
+					  <li><a href="#">опросы</a></li>
+					  <li><a href="#">новости</a></li>
+					  <li><a href="#">спорт</a></li>
 					</ul>
 				</li>
 				<li>Заметки</li>

@@ -47,19 +47,18 @@
 }
 
 .russian {
-	width: 26px;
-	height: 26px;
 	margin-right: 4px;
-	outline: 1px solid #000;
 	float: left;
 	background: url(/i/russian.png) no-repeat;
-	background-size: 100%;
+	background-position: center;
 }
 
 .russian a {
+	border: 1px solid #000;
+	border-radius: 5px;
 	display: block;
-	width: 26px;
-	height: 26px;
+	width: 21px;
+	height: 20px;
 	cursor: pointer;
 }
 
@@ -67,16 +66,16 @@
 	width: 26px;
 	height: 26px;
 	margin-right: 4px;
-	outline: 1px solid #000;
 	float: left;
 	background: url(/i/english.png) no-repeat;
-	background-size: 100%;
 }
 
 .english a {
+	border: 1px solid #000;
+	border-radius: 5px;
 	display: block;
-	width: 26px;
-	height: 26px;
+	width: 21px;
+	height: 19px;
 	cursor: pointer;
 }
 
@@ -84,17 +83,17 @@
 	width: 26px;
 	height: 26px;
 	margin-right: 4px;
-	outline: 1px solid #000;
 	float: left;
 	background: url(/i/portuguese.png) no-repeat;
-	background-size: 100%;
 }
 
 .portuguese a {
 	display: block;
-	width: 26px;
-	height: 26px;
+	width: 19px;
+	height: 19px;
 	cursor: pointer;
+	border: 1px solid #000;
+	border-radius: 5px;	
 }
 
 .users {
@@ -144,7 +143,7 @@
 #nav {
 	width: 726px;
 	height: 30px;
-	border: 3px solid #A33A1C;
+	border: 3px solid #CC2A03;
 	border-radius: 7px;
 	margin-top: 4px;
 	float: left;
@@ -154,7 +153,7 @@
 #nav .orderQuestions {
 	width: 250px;
 	height: 30px;
-	border-right: 2px solid #A33A1C;
+	border-right: 2px solid #CC2A03;
 	float: left;
 	font-weight: bold;
 	font-size: 24px;
@@ -177,7 +176,7 @@
 #nav .categoryQuestions {
 	width: 236px;
 	height: 30px;
-	border-right: 2px solid #A33A1C;
+	border-right: 2px solid #CC2A03;
 	float: left;
 	font-size: 24px;
 	text-align: center;
@@ -230,7 +229,7 @@
 .usersProfile {
 	width: 220px;
 	height: 90px;
-	border: 3px solid #A33A1C;
+	border: 3px solid #CC2A03;
 	border-radius: 7px;
 	float: right;
 	margin-top: 4px;
@@ -264,17 +263,24 @@
 	margin-top: 1px;
 }
 
-.usersProfile form.profileNavigation input {
+.usersProfile form.profileNavigation input, .usersProfile form.profileNavigation a {
 	border: 1px solid gray;
 	border-radius: 5px;
 	background-color: #EFEFEF;
 	cursor: pointer;
 	font-weight: bold;
+    text-decoration: none;
+    color: #383838;
+    font-size: 13px;
+    padding: 1px 6px;
+    margin: 2px;
+    display: inline-block;
 }
 
 .usersProfile p.myQuestions {
 	overflow: hidden;
 	float: right;
+	margin-right: 10px;
 }
 
 .usersProfile p.myQuestions a {
@@ -289,7 +295,7 @@
 #menu {
 	width: 220px;
 	height: 800px;
-	border: 3px solid #A33A1C;
+	border: 3px solid #CC2A03;
 	border-radius: 7px;
 	float: right;
 	margin-top: 3px;
@@ -439,7 +445,7 @@
 #main form.writeQuestion textarea {
 	width: 680px;
 	height: 29px;
-	border: 3px solid #A33A1C;
+	border: 3px solid #CC2A03;
 	font-size: 24px;
 	padding: 0;
 	padding-left: 8px;
@@ -468,13 +474,17 @@
 
 .questionForm {
 	margin: 0 auto;
-	height: 35px;
 	width: 692px;
 }
 
 
 .questionForm textarea {
 	margin: 0;
+	vertical-align: top;
+	-webkit-transition: height 0.2s;
+	-moz-transition: height 0.2s;
+	transition: height 0.2s;
+	max-height: 81px;
 }
 
 
@@ -482,11 +492,12 @@
 	width: 680px;
 	height: 24px;
 	padding-top: 5px;
-	border-bottom: 2px solid #A33A1C;
-	border-left: 2px solid #A33A1C;
-	border-right: 2px solid #A33A1C;
+	border-bottom: 2px solid #CC2A03;
+	border-left: 2px solid #CC2A03;
+	border-right: 2px solid #CC2A03;
 	overflow: hidden;
 	margin: 0 auto;
+	display: none;
 }
 
 #questionsType label {
@@ -499,12 +510,13 @@
 
 .writeQuestionDiv {
 	width: 680px;
-	border-bottom: 2px solid #A33A1C;
-	border-left: 2px solid #A33A1C;
-	border-right: 2px solid #A33A1C;
+	border-bottom: 2px solid #CC2A03;
+	border-left: 2px solid #CC2A03;
+	border-right: 2px solid #CC2A03;
 	margin: 0 auto;
 	font-size: 18px;
 	overflow: hidden;
+	display: none;
 }
 
 .writeQuestionDiv input.radioButton {
@@ -541,6 +553,7 @@
 	font-size: 18px;
 	font-family: 'Cambria';
 	color: #000;
+	margin-left: -4px;
 }
 
 .privateButton {
@@ -705,7 +718,7 @@ h2.categoryH2 {
 }
 
 .socialIcons {
-	width: 144px;
+	width: 147px;
 	overflow: hidden;
 	float: right;
 }
@@ -805,8 +818,8 @@ h2.categoryH2 {
 }
 
 .socialIcons form.answer input {
-	width: 70px;
-	height: 15px;
+	width: 73px;
+	height: 20px;
 	border: 1px solid gray;
 	margin: 0;
 	cursor: pointer;
@@ -814,19 +827,24 @@ h2.categoryH2 {
 	margin-bottom: 5px;
 	vertical-align: middle;
 	text-align: center;
-	font-size: 10px;
+	font-size: 14px;
+	font-family: 'Arial';
 }
 
 .chatWindow {
-	width: 723px;
+	width: 726px;
 	height: 20px;
-	border: 2px solid #A33A1C;
-	margin: -23px 0 0 5px;
+	border: 2px solid #CC2A03;
+	margin: -23px 0 0 2px;
 	text-align: center;
 	font-size: 20px;
 	text-transform: uppercase;
 	color: #52648A;
 	cursor: pointer;
+}
+
+.chatWindow:hover {
+	background-color: #F0F0F0;
 }
 
 .chatWindow span {
@@ -852,7 +870,6 @@ h2.categoryH2 {
 	position: fixed;
 	bottom: 0px;
 	z-index: 5;
-	background: #ffffff;
     display: none;
 }
 
@@ -1328,8 +1345,9 @@ a.closeRegisterButton {
 }
 
 .answerForm {
-	width: 662px;
-	margin: 0 0 0 13px;
+	width: 683px;
+	margin: 0 0 0 14px;
+	display: none;
 }
 
 .answerTextarea {
@@ -1337,12 +1355,14 @@ a.closeRegisterButton {
 	border: 1px solid #965565;
 	height: 64px;
 	resize: none;
-	font-size: 15px;
 	outline: none;
+	font-size: 14px;
+	font-family: 'Cambria';
+	padding-left: 5px;
 }
 
 .answerFormNavigation {
-	width: 666px;
+	width: 690px;
 	border-bottom: 1px solid #965565;
 	border-right: 1px solid #965565;
 	border-left: 1px solid #965565;
@@ -1366,10 +1386,15 @@ a.closeRegisterButton {
 
 .myAnswer {
 	width: 690px;
+	max-height: 150px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	border: 1px solid #965565;
 	margin: 0 auto;
+	display: none;
+}
+.myAnswer.no-border {
+    border: none;
 }
 
 .singleAnswer {
@@ -1446,7 +1471,7 @@ a.closeRegisterButton {
 	height: 25px;
 	/*background: url('../i/copy1.png') no-repeat;*/
 	float: left;
-	margin: 3px 0 0 3px;
+	margin: 1px 0 0 -30px;
 }
 
 #d_clip_button a {
@@ -1458,22 +1483,20 @@ a.closeRegisterButton {
 	margin: 3px 0 0 3px;
 }
 
-#d_clip_button a:hover {
-	background: url('../i/copy.png') no-repeat;
-	display: block;
-	width: 24px;
-	height: 25px;
-}
 
 
 .total-size-wrap {
-	margin: 31px 81px 0 0px;
+	margin: 34px 81px 0 0px;
 	color: #52648A;
 	font-size: 20px;
 	font-family: 'Cambria';
 	margin-bottom: 0px;
 }
 
+.my-files-wrap {
+    height: 300px;
+    overflow-y: scroll;
+}
 .my-files {
 	clear: both;
 	margin-top: 22px;
@@ -1499,7 +1522,7 @@ a.closeRegisterButton {
 	color: #000;
 	font-size: 21px;
 	font-family: 'Cambria';
-	width: 100px;
+    /*white-space: nowrap;*/
 }
 
 .download-my-file{
@@ -1538,6 +1561,16 @@ a.closeRegisterButton {
 	font-size: 21px;
 	color: #000;
 	float: left;
+}
+
+#total-size-values {
+	margin-left: 13px;
+}
+
+span.spaceLeft {
+	margin-top: -2px;
+	display: block;
+	margin-left: 1px;
 }
 
 .dialogsWrapper {
@@ -1710,7 +1743,7 @@ h2.chatInviteTitle{
 
 .chatTabs {
 	width: 689px;
-	margin: 4px auto;
+	margin: 4px auto 0px auto;
 	overflow: hidden;
 }
 
@@ -1797,6 +1830,10 @@ h2.chatInviteTitle{
 	color: #425073;
 	font-family: 'Cambria';
 }
+.chat-tab.indicate {
+    background-color: #000000;
+    color: #ff0000;
+}
 
 .mainWindow{
 	margin: 0 auto;
@@ -1819,6 +1856,9 @@ h2.chatInviteTitle{
 	border: 1px solid #cadced;
 	border-radius: 5px;
 	margin-bottom: 2px;
+}
+.singleMessage.chatSrvMsg {
+    color: #999999;
 }
 
 .chatUsername {
@@ -1891,7 +1931,7 @@ h2.chatInviteTitle{
 
 .enterArea textarea {
 	width: 582px;
-	height: 31px;
+	height: 22px;
 	border: 2px solid #989eb7;
 	border-radius: 2px;
 	font-size: 19px;

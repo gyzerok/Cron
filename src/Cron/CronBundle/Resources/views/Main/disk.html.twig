@@ -131,22 +131,24 @@
             <div class="total-size-wrap" style="float:right;">
                 <span id="total-size-values">{{ total_filesize }} / {{ total_filesize_left }}</span>
                 <br>
-                занято / свободно
+                <span class="spaceLeft">занято / свободно</span>
             </div>
             <div style="clear:both;"></div>
         </div>
-        <div class="my-files" style="">
-            {% for file in user_files %}
-                <div class="my-file" fileid="{{ file.id }}" filepath="{{ file.getHashUrl() }}">
-                    <table width="100%">
-                        <tr>
-                            <td>{{ file.filename }}</td>
-                            <td><div class="my-file-size">{{ file.filesize }}</div></td>
-                            <td width="155"><input type="button" class="delete-my-file" value="удалить"><input type="button" class="download-my-file" value="загрузить"></td>
-                        </tr>
-                    </table>
-                </div>
-            {% endfor %}
+        <div class="my-files-wrap">
+            <div class="my-files" style="">
+                {% for file in user_files %}
+                    <div class="my-file" fileid="{{ file.id }}" filepath="{{ file.getHashUrl() }}">
+                        <table width="100%" cellspacing="0">
+                            <tr>
+                                <td>{{ file.filename }}</td>
+                                <td><div class="my-file-size">{{ file.filesize }}</div></td>
+                                <td width="190"><input type="button" class="delete-my-file" value="удалить"><input type="button" class="download-my-file" value="загрузить"></td>
+                            </tr>
+                        </table>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     {% else %}
         <div style="padding: 15px;">Необходимо авторизоваться, чтобы пользоваться кибердиском.</div>

@@ -41,31 +41,9 @@
         });
 		$('[id="categoryScripture"]').after($('#question_category_1, [for="question_category_1"]'));
 		
-	//Resable textarea on Index page
-	$(function() {
-	var txt = $('#question_text'),
-	hiddenDiv = $(document.createElement('div')),
-	content = null;
 
-	txt.addClass('noscroll');
-	hiddenDiv.addClass('hiddenWriteQuestion');
-
-	$('body').append(hiddenDiv);
-
-	txt.bind('keyup', function() {
-
-	    content = txt.val();
-	    content = content.replace(/\n/g, '<br>');
-	    hiddenDiv.html(content);
-
-	    txt.css('height', hiddenDiv.height());
-		});
-	
-	});	
 	//Скрытия блоков с информацией о вопросе
 	var questionHidddenDivs = $('#questionsType').add('.writeQuestionDiv');
-	questionHidddenDivs.hide();
-	questionHidddenDivs.hide();
 	
 	// Появление блока с типом вопросов
 	$('#question_text').focus(function() {
@@ -82,8 +60,8 @@
 		'border-bottom':'none'
 		});
 		$('.writeQuestionDiv').css({
-		'border-bottom': '2px solid #A33A1C',
-		'border-left': '2px solid #A33A1C'
+		'border-bottom': '2px solid #CC2A03',
+		'border-left': '2px solid #CC2A03'
 		});
 		document.getElementById('question_category_1').checked = false;
 	});
@@ -93,8 +71,8 @@
 		$('#question_category').hide();
 		$('.writeQuestionDiv').slideDown();
 		$('.rushWrapper').css({
-		'outline':'2px solid #A33A1C',
-		'border-bottom':'2px solid #A33A1C',
+		'outline':'2px solid #CC2A03',
+		'border-bottom':'2px solid #CC2A03',
 		});
 		$('.writeQuestionDiv').css({
 		'border-bottom': 'none',
@@ -168,6 +146,10 @@
 		questionPrivateCost.hide()
 	}
 	});
+	
+	$(function(){
+		$('#question_text').autosize();
+	});
 
 	});
 	
@@ -183,7 +165,8 @@
 		{{ form_widget(form.text) }}
 	</div>
 		<div id="questionsType">
-				<input id="categoryRadioButton" class="radioButton" name="Radio" value="Радио кнопка" type="radio"><span id="categoryScripture">по категориям<span>
+				<input id="categoryRadioButton" class="radioButton" name="Radio" value="Радио кнопка" type="radio">
+				<label for="categoryRadioButton" id="categoryScripture">по категориям</label>
 			<div class="privateButton">
 				{{ form_label(form.private) }}
 				{{ form_errors(form.private) }}
@@ -249,49 +232,23 @@
 					</div>
 				</div>
 			</div>
-			<div class="myAnswer">
-				<div class="singleAnswer" data-user="8">
-					<div class="userName">Ivan</div>
-					<div class="answerDate">14.01.2013 15:15:16</div>
-					<div style="clear: both;"></div>
-					<div class="questionText">
-						ответ1
-						<div class="socialIcons">
-							<div class="spamButton"></div>
-							<div class="likeButton"></div>
-							<div class="arrowButton inviteUser"></div>
-							<div class="letterButton sendMessage"></div>
-						</div>
-					</div>
-				</div>
-				<div class="singleAnswer" data-user="3">
-					<div class="userName">Fedor</div>
-					<div class="answerDate">14.01.2013 15:15:16 </div>
-					<div style="clear: both;"></div>
-					<div class="questionText">
-						ответ2
-						<div class="socialIcons">
-							<div class="spamButton"></div>
-							<div class="likeButton"></div>
-							<div class="arrowButton inviteUser"></div>
-							<div class="letterButton sendMessage"></div>
-						</div>
-					</div>
-				</div>
-				<div class="singleAnswer" data-user="4">
-					<div class="userName">Alekseys</div>
-					<div class="answerDate">14.01.2013 15:15:16 </div>
-					<div style="clear: both;"></div>
-					<div class="questionText">
-						ответ3
-						<div class="socialIcons">
-							<div class="spamButton"></div>
-							<div class="likeButton"></div>
-							<div class="arrowButton inviteUser"></div>
-							<div class="letterButton sendMessage"></div>
-						</div>
-					</div>
-				</div>
+			<div class="myAnswer {% if item.answers==null %}no-border{% endif %}">
+                {% for answer in item.answers %}
+                    <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}">
+                        <div class="userName">{{ answer.getUser().getNick() }}</div>
+                        <div class="answerDate">{{ answer.getPubDate()|date("Y-m-d H:i:s") }}</div>
+                        <div style="clear: both;"></div>
+                        <div class="questionText">
+                            {{ answer.getText() }}
+                            <div class="socialIcons">
+                                <div class="spamButton" title="Пометить как спам"></div>
+                                <div class="likeButton" title="Мне нравится!"></div>
+                                <div class="arrowButton inviteUser" title="Отправить приглашение в чат"></div>
+                                <div class="letterButton sendMessage" title="Отправить сообщение"></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
 			</div>
 			{% endfor %}
 	{% endif %}
