@@ -21,6 +21,10 @@ class MainController extends Controller
     {
         $request->setLocale($request->getSession()->get('_locale'));
 
+        /*$numAnswers = array(10 => '10', 20 => '20');
+        if ($this->getUser() instanceof User)
+            $numAnswers = array(10 => '10', 20 => '20', 50 => '50', 100 => '100', 1000 => '1000');*/
+
         $question = new Question();
         $form = $this->createForm(new NewQuestion(), $question);
 

@@ -21,7 +21,7 @@ class NewQuestion extends AbstractType
                 ->add('country', 'entity', array('label' => 'Страна', 'class' => 'CronCronBundle:Country', 'property' => 'name', 'empty_value' => 'Любая страна', 'required' => false))
                 ->add('state', 'entity', array('label' => 'Регион', 'class' => 'CronCronBundle:State', 'property' => 'name', 'empty_value' => 'Любой регион', 'disabled' => true, 'required' => false))
                 ->add('city', 'entity', array('label' => 'Город', 'class' => 'CronCronBundle:City', 'property' => 'name', 'empty_value' => 'Любой город', 'disabled' => true, 'required' => false))
-                ->add('boundary', 'choice', array('label' => 'Минимальная наполняемость ответами', 'choices' => array(10 => '10', 20 => '20', 30 => '30', 40 => '40', 50 => '50')));
+                ->add('boundary', 'choice', array('label' => 'Минимальная наполняемость ответами', 'choices' => array(10 => '10', 20 => '20', 50 => '50', 100 => '100', 1000 => '1000')));
 
         $factory = $builder->getFormFactory();
 
