@@ -1586,7 +1586,8 @@ a.closeRegisterButton {
 }
 
 .my-file-name {
-	
+	width: 350px;
+	overflow: hidden;	
 }
 
 span.spaceLeft {
@@ -2017,4 +2018,8 @@ h2.chatInviteTitle{
     line-height: 90%;
     cursor: pointer;
     margin: 0px 0 0 14px;
+}
+
+#article_header {
+	margin-left: 5px;
 }
