@@ -103,7 +103,6 @@ $(document).ready(function(){
             $(".dialogsWrapper .dialogs-container").html('<div class="dialogs-empty-text">Диалогов нет.</div>');
         }
     }
-}
 
     $(".chatInvite").bind('click', function(){
         /*$.ajax({
@@ -177,7 +176,7 @@ $(document).ready(function(){
     //Растягиваемое окошко чата
     openChat.resizable({
         handles:"n",
-        maxHeight: 529,
+        maxHeight: 665,
         minHeight: 270,
         alsoResize: ".mainWindow",
         alsoResize: ".messageWrap",
@@ -192,7 +191,8 @@ $(document).ready(function(){
                 success: function(response){
                     chat_container.html(response);
                     var objDiv = $('.chat');
-                    objDiv[0].scrollTop = objDiv[0].scrollHeight;
+                    if (objDiv.size())
+                        objDiv[0].scrollTop = objDiv[0].scrollHeight;
                     if (chat_container.is('.open-new-income-chat')){
                         $(".numberOnTab.chat-tab:last").click();
                         chat_container.removeClass('open-new-income-chat');
@@ -361,7 +361,9 @@ function temp_loadChat(){
         success: function(response){
             $(".chat-container").html(response);
             var objDiv = $('.chat');
-            objDiv[0].scrollTop = objDiv[0].scrollHeight;
+            if (objDiv.size()){
+                objDiv[0].scrollTop = objDiv[0].scrollHeight;
+            }
         }
     });
 
@@ -392,6 +394,7 @@ function temp_loadChat(){
             }
         }
     });
+}
 
 //Обновление чата
 function temp_updateChat(){

@@ -141,9 +141,9 @@
                     <div class="my-file" fileid="{{ file.id }}" filepath="{{ file.getHashUrl() }}">
                         <table width="100%" cellspacing="0">
                             <tr>
-                                <td>{{ file.filename }}</td>
-                                <td><div class="my-file-size">{{ file.filesize }}</div></td>
-                                <td width="190"><input type="button" class="delete-my-file" value="удалить"><input type="button" class="download-my-file" value="загрузить"></td>
+                                <td><div class="my-file-name">{{ file.filename }}</div></td>
+                                <td width="90"><div class="my-file-size">{{ file.filesize }}</div></td>
+                                <td width="210"><input type="button" class="delete-my-file" value="удалить"><input type="button" class="download-my-file" value="загрузить"></td>
                             </tr>
                         </table>
                     </div>

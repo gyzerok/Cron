@@ -80,11 +80,12 @@
 		});
 	});	
 	
-	// Уплывание формы и сброс полей
+	//Уплывание формы и сброс полей
 	$('input[name=cancelInformation]').click(function() {
 		$('.writeQuestionDiv').slideUp();		
 		$('#questionsType').slideUp();
 		$('.greeting').fadeIn(500);
+		$('.questionCost').hide();	
 		document.forms.writeQuestion.reset();
 	});
 	
@@ -96,7 +97,8 @@
 				questionSubs.slideUp();
 				document.forms.writeQuestion.reset();
 				$('.greeting').fadeIn(500);
-				questionPrivateCost.hide()				
+				questionPrivateCost.hide();
+				$('.questionCost').hide();					
 			}
 		);
 		$('.writeQuestion').click(function(e){
@@ -137,6 +139,9 @@
 	var questionPrivateCost = $('p.questionPrivateCost');
 	questionPrivateCost.hide();
 	
+	//Динамическое изменение текстовой области
+	$('#question_text').autosize();
+	
 	//Стоимость приватного вопроса
 	$('#question_private').click(function() {
 	if ($(this).attr('checked')) {
@@ -147,14 +152,18 @@
 	}
 	});
 	
-	$(function(){
-		$('#question_text').autosize();
+	$('#question_boundary').change(function() {
+		var check = $('#question_boundary').val();
+		if (check >= 50) {
+			$('.questionCost').show();
+		}
+		else {
+			$('.questionCost').hide();		
+		}
 	});
+	
 
-	});
-	
-	
-	
+	});	
 </script>
 
 <form name="writeQuestion" class="writeQuestion" action="{{ path('index') }}" method="post" {{ form_enctype(form) }}>
@@ -198,7 +207,7 @@
 				{{ form_errors(form.boundary) }}
 				{{ form_widget(form.boundary) }}
 			</div>
-			<p class="questionCost">Стоимость 0 кредитов</p>
+			<p class="questionCost">Стоимость 5 кредитов</p>
 			<input name="cancelInformation" class="submitButton" type="button" value="отмена" />			
 			<input class="submitButton" type="submit" value="отправить" />
 		</div>

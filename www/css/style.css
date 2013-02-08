@@ -39,7 +39,6 @@
 }
 
 .language {
-	width: 90px;
 	float: left;
 	overflow: hidden;
 	margin: 9px 0 0 550px;
@@ -49,51 +48,46 @@
 .russian {
 	margin-right: 4px;
 	float: left;
-	background: url(/i/russian.png) no-repeat;
-	background-position: center;
 }
 
 .russian a {
+	display: block;
+	width: 25px;
+	height: 25px;
+	cursor: pointer;
+	background: url(/i/RU1.jpg) no-repeat;
 	border: 1px solid #000;
 	border-radius: 5px;
-	display: block;
-	width: 21px;
-	height: 20px;
-	cursor: pointer;
 }
 
 .english {
-	width: 26px;
-	height: 26px;
 	margin-right: 4px;
 	float: left;
-	background: url(/i/english.png) no-repeat;
 }
 
 .english a {
+	display: block;
+	width: 25px;
+	height: 25px;
+	cursor: pointer;
+	background: url(/i/EN1.jpg) no-repeat;
 	border: 1px solid #000;
 	border-radius: 5px;
-	display: block;
-	width: 21px;
-	height: 19px;
-	cursor: pointer;
 }
 
 .portuguese {
-	width: 26px;
-	height: 26px;
 	margin-right: 4px;
 	float: left;
-	background: url(/i/portuguese.png) no-repeat;
 }
 
 .portuguese a {
 	display: block;
-	width: 19px;
-	height: 19px;
+	width: 25px;
+	height: 25px;
 	cursor: pointer;
+	background: url(/i/PT1.jpg) no-repeat;
 	border: 1px solid #000;
-	border-radius: 5px;	
+	border-radius: 5px;
 }
 
 .users {
@@ -431,6 +425,13 @@
 	margin: -40px 0 0 5px;
 	float: left;
     position: relative;
+	/*width: 733px;
+	min-height: 800px;
+	max-height: 820px;
+	margin: -40px 0 0 0px;
+	float: left;
+	position: relative;
+	overflow: auto;*/
 }
 
 #main form.writeQuestion {
@@ -556,6 +557,12 @@
 	margin-left: -4px;
 }
 
+#showQuestion {
+	max-height: 799px;
+	overflow: auto;
+	width: 728px;
+}
+
 .privateButton {
 	float: right;
 	margin-right: 5px;
@@ -640,10 +647,10 @@ p.questionPrivateCost {
 }
 
 p.questionCost {
-	display: block;
+	display: none;
 	width: 189px;
 	float: right;
-	margin: -20px 146px 0 0;
+	margin: -20px 135px 0 0;
 	font-family: 'Arial';
 	font-size: 18px;
 	color: #000;
@@ -1385,7 +1392,7 @@ a.closeRegisterButton {
 
 .myAnswer {
 	width: 690px;
-	max-height: 150px;
+	max-height: 510px;
 	overflow-y: scroll;
 	overflow-x: hidden;
 	border: 1px solid #965565;
@@ -1493,7 +1500,7 @@ a.closeRegisterButton {
 }
 
 .my-files-wrap {
-    height: 300px;
+    height: 680px;
     overflow-y: scroll;
 }
 .my-files {
@@ -1532,7 +1539,13 @@ a.closeRegisterButton {
 	font-family: 'Cambria';
 	cursor: pointer;
 	border-radius: 3px;
-	margin-top: -5px;
+	margin-top: -3px;
+	height: 21px;
+	width: 96px;
+	padding: 0px;
+	margin-left: 4px;
+	line-height: 0%;
+
 }
 .delete-my-file {
 	border: 1px solid #C6C6C6;
@@ -1542,7 +1555,13 @@ a.closeRegisterButton {
 	font-family: 'Cambria';
 	cursor: pointer;
 	border-radius: 3px;
-	margin-top: -5px;
+	margin-top: -3px;
+	height: 21px;
+	width: 96px;
+	padding: 0px;
+	margin-right: 5px;
+	margin-left: 4px;
+	line-height: 0%;
 }
 .my-file input[type=button] {
 	float: right;
@@ -1564,6 +1583,10 @@ a.closeRegisterButton {
 
 #total-size-values {
 	margin-left: 13px;
+}
+
+.my-file-name {
+	
 }
 
 span.spaceLeft {
@@ -1749,7 +1772,9 @@ h2.chatInviteTitle{
 .singleTab {
 	width: 118px;
 	height: 24px;
-	border: 2px solid #5d6787;
+	border-top: 2px solid #5d6787;
+	border-left: 2px solid #5d6787;
+	border-right: 2px solid #5d6787;
 	border-radius: 5px 5px 0 0;
 	font-size: 18px;
 	font-family: 'Cambria';
@@ -1760,6 +1785,7 @@ h2.chatInviteTitle{
 	cursor: pointer;
 	float: left;
     position: relative;
+	margin-top: 2px;
 }
 .closeDialogTab {
     background: url(../i/closeDialogs.png);
@@ -1778,7 +1804,6 @@ h2.chatInviteTitle{
 .singleInboxTab {
 	/*width: 224px;*/
 	height: 24px;
-	border: 2px solid #5d6787;
 	border-radius: 5px 5px 0 0;
 	text-align: left;
 	/*cursor: pointer;*/
@@ -1786,6 +1811,10 @@ h2.chatInviteTitle{
 	margin-left: 1px;
 	padding-left: 3px;
 	padding-right: 5px;
+	border-top: 2px solid #5d6787;
+	border-left: 2px solid #5d6787;
+	border-right: 2px solid #5d6787;
+	margin-top: 2px;
 }
 
 .singleInboxTab span {
@@ -1864,13 +1893,16 @@ h2.chatInviteTitle{
 	width: 88px;
 	height: 11px;
 	overflow: hidden;
-	border: 1px solid #e0eaf5;
+	border-bottom: 1px solid #e0eaf5;
+	border-left: 1px solid #e0eaf5;
+	border-right: 1px solid #e0eaf5;
 	text-align: center;
 	border-radius: 3px;
 	font-family: 'Cambria';
 	font-size: 11px;
 	line-height: 105%;
 	margin-left: 3px;
+	margin-top: -1px;
 }
 
 .messageText {
