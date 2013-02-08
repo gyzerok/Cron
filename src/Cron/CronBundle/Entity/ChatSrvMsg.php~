@@ -200,4 +200,27 @@ class ChatSrvMsg {
     {
         return $this->about_user;
     }
+
+    /**
+     * Set msg_text_id
+     *
+     * @param integer $msgTextId
+     * @return ChatSrvMsg
+     */
+    public function setMsgTextId($msgTextId)
+    {
+        $this->msg_text_id = $msgTextId;
+    
+        return $this;
+    }
+
+    /**
+     * Get msg_text_id
+     *
+     * @return integer 
+     */
+    public function getMsgTextId()
+    {
+        return $this->msg_text_id;
+    }
 }

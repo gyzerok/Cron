@@ -1,5 +1,6 @@
 /www/bundles/
 /www/files/*
+/www/articles_i/*
 /app/bootstrap*
 /app/cache/*
 /app/logs/*

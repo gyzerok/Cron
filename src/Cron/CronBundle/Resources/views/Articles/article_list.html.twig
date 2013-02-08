@@ -1,0 +1,22 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <h2 class="categoryH2"><a href="/articles">Статьи</a> / {{ category.getName() }}</h2>
+    <ul class="article-list">
+        {% for article in articles %}
+            <li>
+                <table>
+                    <tr>
+                        <td style="vertical-align:middle;">
+                            <a href="/articles/{{ category.getId() }}/{{ article.getId() }}"><img src="/articles_i/{{ article.getId() }}/img1.jpg" height="75" class="article-list-img" alt="{{ article.getHeader() }}"></a>
+
+                        </td>
+                        <td style="vertical-align:middle;">
+                            <a href="/articles/{{ category.getId() }}/{{ article.getId() }}"> <span class="article-list-header">{{ article.getHeader() }}</span></a>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
