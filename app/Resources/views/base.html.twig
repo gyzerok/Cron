@@ -128,9 +128,9 @@
 				<li>Информация
                     <ul class="subMenuNavigation">
                         <li><a href="/articles">Статьи</a></li>
-                        {% for link in curUser.getUserLinks() %}
+                        {#{% for link in curUser.getUserLinks() %}
                             <li><a href="{{ link.getUrl() }}">{{ link.getTitle() }}</a></li>
-                        {% endfor %}
+                        {% endfor %}#}
                         <li><a href="#" class="add-bookmark">Добавить ссылку</a></li>
                     </ul>
                 </li>
