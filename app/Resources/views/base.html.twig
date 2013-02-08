@@ -13,6 +13,7 @@
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	<script src="/js/jquery.autosize-min.js"></script>
     <script src="/js/chat.js"></script>
+    <script src="/js/script.js"></script>
   </head>
   <body>
 	{% block wrapper %}
@@ -86,6 +87,15 @@
                 <h2 class="chatInviteTitle">Приглашения в чат</h2>
                 <div class="invites-container"></div>
             </div>
+
+            <div class="userLinkAddWindow" style="display:none;">
+                <div class="closeUserLinkWindow"><a href=""></a></div>
+                <form action="/ajax/newUserLink" method="post">
+                    <label for="user-link-title">Заголовок:</label> <input type="text" id="user-link-title" name="title"><br/>
+                    <label for="user-link-url">Ссылка:</label> <input type="text" id="user-link-url" name="url"><br/>
+                    <input type="submit" class="saveUserLink" value="сохранить"> <input type="button" class="cancelUserLink" value="отменить">
+                </form>
+            </div>
 		</div>
 		
 	    {% block menu %}		
@@ -108,16 +118,29 @@
 					  <li><a href="#">спорт</a></li>
 					</ul>
 				</li>
-				<li>Заметки</li>
+				<li>Заметки
+                    <ul class="subMenuNavigation">
+                        <li><a href="/notes/questions">Вопросы</a></li>
+                        <li><a href="/notes/articles">Статьи</a></li>
+                        <li><a href="#" class="open-notepad">Блокнот</a></li>
+                    </ul>
+                </li>
 				<li>Информация
                     <ul class="subMenuNavigation">
                         <li><a href="/articles">Статьи</a></li>
+                        {% for link in curUser.getUserLinks() %}
+                            <li><a href="{{ link.getUrl() }}">{{ link.getTitle() }}</a></li>
+                        {% endfor %}
                         <li><a href="#" class="add-bookmark">Добавить ссылку</a></li>
                     </ul>
                 </li>
 				<li><a class="menuNavigationLink" href="/disk">Кибердиск</a></li>
 				<li class="open-dialog-list">Сообщения</li>
 				<li class="chatInvite">Приглашение в чат</li>
+                <div id="notepad" style="margin-top: 10px;display:none;">
+                    <div class="closeNotepad"><a href=""></a></div>
+                    <textarea id="notepad-text" style="height: 200px;resize: none;border: 2px solid #CC2A03;"></textarea>
+                </div>
 			</ul>			
 		</div>
 		<div style="clear: both"></div>

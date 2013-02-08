@@ -10,6 +10,7 @@ use Cron\CronBundle\Entity\Answer;
 use Cron\CronBundle\Entity\File;
 use Cron\CronBundle\Entity\User;
 use Cron\CronBundle\Entity\UserSettings;
+use Cron\CronBundle\Entity\UserLink;
 
 class AjaxController extends Controller
 {
@@ -280,9 +281,9 @@ class AjaxController extends Controller
         $html = '<div class="my-file" fileid="'.$last_file->getId().'" filepath="'.'http://'.$_SERVER['HTTP_HOST'].'/disk/'.$last_file->getHash().'">
                 <table width="100%">
                     <tr>
-                        <td>'.$last_file->getFilename().'</td>
-                        <td><div class="my-file-size">'.$last_file->getFilesize().'</div></td>
-                        <td width="155"><input type="button" class="delete-my-file" value="удалить"><input type="button" class="download-my-file" value="загрузить"></td>
+                        <td><div class="my-file-name">'.$last_file->getFilename().'</div></td>
+                        <td width="90"><div class="my-file-size">'.$last_file->getFilesize().'</div></td>
+                        <td width="210"><input type="button" class="delete-my-file" value="удалить"><input type="button" class="download-my-file" value="загрузить"></td>
                     </tr>
                 </table>
             </div>';
@@ -331,6 +332,151 @@ class AjaxController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($user_settings);
+        $em->flush();
+
+        return new Response("SUCCESS");
+    }
+
+    public function newUserLinkAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            return new Response("Fail", "403");
+        }
+
+        $link = new UserLink();
+        $link->setUser($user)
+            ->setTitle($request->get('title'))
+            ->setUrl($request->get('url'))
+            ->setDatetime(new \DateTime());
+
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($link);
+        $em->flush();
+
+        $html = '<li><a href="'.$request->get('url').'" target="_blank">'.$request->get('title').'</a></li>';
+
+        return new Response($html);
+    }
+
+    public function getUserLinksAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            return new Response("Fail", "403");
+        }
+
+        $links = $this->getDoctrine()->getRepository("CronCronBundle:UserLink")->findBy(array('user' => $user->getId()));
+
+        $html = '';
+        foreach ($links as $link) {
+            $html .= '<li><a href="'.$link->getUrl().'" target="_blank">'.$link->getTitle().'</a></li>';
+        }
+
+        return new Response($html);
+    }
+
+    public function repostQuestionAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            return new Response("Fail", "403");
+        }
+
+        $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($request->get('question'));
+
+        $notes_question = new \Cron\CronBundle\Entity\NotesQuestion();
+        $notes_question->setUser($user)
+            ->setQuestion($question)
+            ->setDatetime(new \DateTime());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($notes_question);
+        $em->flush();
+
+        return new Response("SUCCESS");
+    }
+
+    public function bookmarkArticleAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            return new Response("Fail", "403");
+        }
+
+        $article = $this->getDoctrine()->getRepository("CronCronBundle:Article")->find($request->get('article'));
+
+        $notes_article = new \Cron\CronBundle\Entity\NotesArticle();
+        $notes_article->setUser($user)
+            ->setArticle($article)
+            ->setDatetime(new \DateTime());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($notes_article);
+        $em->flush();
+
+        return new Response("SUCCESS");
+    }
+
+    public function unbookmarkArticleAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            return new Response("Fail", "403");
+        }
+
+        $article = $this->getDoctrine()->getRepository("CronCronBundle:NotesArticle")->find($request->get('article'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($article);
+        $em->flush();
+
+        return new Response("SUCCESS");
+    }
+
+    public function loadNotepadAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            return new Response("Fail", "403");
+        }
+
+        $notepad = $this->getDoctrine()->getRepository("CronCronBundle:Notepad")->findOneBy(array("user"=>$user->getId()));
+
+        if (!$notepad instanceof \Cron\CronBundle\Entity\Notepad){
+            $notepad = new \Cron\CronBundle\Entity\Notepad();
+            $notepad->setUser($user);
+            $notepad->setText('');
+        }
+        $notepad->setDatetime(new \DateTime());
+//        $notepad->setText('');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($notepad);
+        $em->flush();
+
+        return new Response($notepad->getText());
+    }
+
+    public function updateNotepadAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            return new Response("Fail", "403");
+        }
+
+        $notepad = $this->getDoctrine()->getRepository("CronCronBundle:Notepad")->findOneBy(array("user"=>$user->getId()));
+
+        if (!$notepad instanceof \Cron\CronBundle\Entity\Notepad){
+            $notepad = new \Cron\CronBundle\Entity\Notepad();
+            $notepad->setUser($user);
+        }
+        $notepad->setDatetime(new \DateTime());
+        $notepad->setText($request->get('text'));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($notepad);
         $em->flush();
 
         return new Response("SUCCESS");

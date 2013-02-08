@@ -1693,6 +1693,47 @@ h2.dialogTitle {
 	cursor: pointer;
 }
 
+.userLinkAddWindow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    margin-left: -200px;
+    height: 150px;
+    margin-top: -75px;
+    padding: 20px;
+    border: 1px solid #A02B1C;
+    background: #ffffff;
+}
+
+.closeUserLinkWindow {
+    width: 13px;
+    height: 13px;
+    float: right;
+    margin: 10px 14px 0 0;
+}
+.closeUserLinkWindow a {
+    display: block;
+    width: 13px;
+    height: 13px;
+    background: url(../i/closeDialogs.png) no-repeat;
+    cursor: pointer;
+}
+
+.closeNotepad {
+    width: 13px;
+    height: 13px;
+    float: right;
+    margin: 10px 14px 10px 0;
+}
+.closeNotepad a {
+    display: block;
+    width: 13px;
+    height: 13px;
+    background: url(../i/closeDialogs.png) no-repeat;
+    cursor: pointer;
+}
+
 .chatInviteWindow {
 	width: 660px;
 	height: 300px;

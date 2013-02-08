@@ -369,6 +369,36 @@ class MainController extends Controller
 
     }
 
+    public function notesAction($location)
+    {
+//        $request->setLocale($request->getSession()->get('_locale'));
+
+        $user = $this->getUser();
+
+        switch($location){
+            case 'questions':
+                $questions = $this->getDoctrine()->getRepository("CronCronBundle:NotesQuestion")->findBy(array("user"=>$user->getId()));
+//                print_r($questions);
+                foreach ($questions as $id=>$question) {
+                    $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getQuestion()->getId()));
+                    $questions[$id]->answers = $answers;
+                }
+                return $this->render("CronCronBundle:Notes:questions.html.twig", array('title' => 'Заметки / Статьи',
+                    'questions' => $questions,
+                    'curUser' => $user
+                ));
+                break;
+            case 'articles':
+                $articles = $this->getDoctrine()->getRepository("CronCronBundle:NotesArticle")->findBy(array("user"=>$user->getId()));
+                return $this->render("CronCronBundle:Notes:articles.html.twig", array('title' => 'Заметки / Статьи',
+                    'articles' => $articles,
+                    'curUser' => $user
+                ));
+                break;
+            default:break;
+        }
+    }
+
     public function registerAction(Request $request)
     {
         $request->setLocale($request->getSession()->get('_locale'));

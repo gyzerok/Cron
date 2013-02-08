@@ -4,6 +4,10 @@ namespace Cron\CronBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\Bundle\DoctrineBundle\Registry;
+//use Doctrine\ORM\EntityManager;
+//use Doctrine\ORM\EntityRepository;
+
 
 /**
  * Cron\CronBundle\Entity\User
@@ -114,6 +118,11 @@ class User implements UserInterface, \Serializable
      * })
      */
     private $country;
+
+    /*
+     * $var UserLink Array
+     */
+    private $user_links;
 
 
 
@@ -413,6 +422,10 @@ class User implements UserInterface, \Serializable
         $this->setRegDate(new \DateTime());
         $this->setLastVisit(new \DateTime());
         $this->setIsActive(false);
+
+        $user_links = $this->getDoctrine()->getRepository("CronCronBundle:UserLink")->findBy(array('user' => $this->getId()));
+
+        $this->setUserLinks($user_links);
     }
 
     public function __toString()
@@ -476,5 +489,28 @@ class User implements UserInterface, \Serializable
     public function getNick()
     {
         return $this->nick;
+    }
+
+    /**
+     * Set UserLinks
+     *
+     * @param array $user_links
+     * @return User
+     */
+    public function setUserLinks($user_links)
+    {
+        $this->user_links = $user_links;
+
+        return $this;
+    }
+
+    /**
+     * Get UserLinks
+     *
+     * @return array
+     */
+    public function getUserLinks()
+    {
+        return $this->user_links;
     }
 }
