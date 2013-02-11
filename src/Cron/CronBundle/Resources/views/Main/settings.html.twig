@@ -40,7 +40,7 @@
                         <input type="checkbox" name="cat[{{ category.getId() }}]" id="income_{{ category.getId() }}" {{ settings.income_cats[category.getId()] }}> <label for="income_{{ category.getId() }}">{{ category.getName() }}</label><br>
                     {% endfor %}
                 </div>
-                <div style="float:left;">
+                <div style="float:left; margin-left: 36px">
                     <div class="settingsGroupHeader">по языкам</div>
                     <input type="checkbox" name="ru" id="income_ru" {{ settings.income_locale.ru }}> <label for="income_ru">на русском</label><br>
                     <input type="checkbox" name="en" id="income_en" {{ settings.income_locale.en }}> <label for="income_en">на английском</label><br>
@@ -63,7 +63,7 @@
                         <input type="checkbox" name="cat[{{ category.getId() }}]" id="view_{{ category.getId() }}"  {{ settings.view_cats[category.getId()] }}> <label for="view_{{ category.getId() }}">{{ category.getName() }}</label><br>
                     {% endfor %}
                 </div>
-                <div style="float:left;">
+                <div style="float:left; margin-left: 36px">
                     <div class="settingsGroupHeader">по языкам</div>
                     <input type="checkbox" name="ru" id="view_ru" {{ settings.view_locale.ru }}> <label for="view_ru">на русском</label><br>
                     <input type="checkbox" name="en" id="view_en" {{ settings.view_locale.en }}> <label for="view_en">на английском</label><br>

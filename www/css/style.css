@@ -2020,6 +2020,81 @@ h2.chatInviteTitle{
     margin: 0px 0 0 14px;
 }
 
+#article {
+    font-size: 18px;
+    font-family: 'Cambria';	
+}
+
+#article div {
+    margin-bottom: 15px;
+}
+
 #article_header {
 	margin-left: 5px;
 }
+
+a.toggleSettingsGroup {
+	font-family: 'Cambria';
+	font-size: 30px;
+	color: #343434;
+	text-decoration: none;
+}
+
+a.toggleSettingsGroup:hover {
+	color: #000;
+}
+
+.settingsGroupWrap {
+	margin: 0 0 10px 30px;
+}
+
+.settingsGroup {
+	width: 443px;
+	border: 2px solid #bec1d1;
+	border-radius: 7px;
+	padding: 3px 15px 0 15px;
+}
+
+.settingsGroup label {
+	font-size: 18px;
+	font-family: 'Cambria';
+	color: #000;	
+}
+
+.settingsGroupHeader {
+	font-size: 26px;
+	font-family: 'Cambria';
+	color: #000;
+}
+
+.settingsSubmit {
+	margin-left: 255px;
+	margin-bottom: 10px;
+	width: 88px;
+	height: 20px;
+	border: 1px solid gray;
+	cursor: pointer;
+	border-radius: 6px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 14px;
+	background-color: #fff;
+}
+
+.closeSettingsGroup {
+	margin-bottom: 10px;
+	width: 88px;
+	height: 20px;
+	border: 1px solid gray;
+	cursor: pointer;
+	border-radius: 6px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 14px;
+	background-color: #fff;
+}
+
+input#income_15 {
+	
+}
+
