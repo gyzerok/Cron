@@ -664,6 +664,13 @@ h2.categoryH2 {
 	text-transform: uppercase;
 }
 
+.categoryH2 a {
+	font-size: 24px;
+	color: #7A2116;
+	text-transform: uppercase;
+	text-decoration: none;
+}
+
 .greeting {
 	font-size: 14px;
 	font-family: 'Tahoma';
@@ -1695,16 +1702,16 @@ h2.dialogTitle {
 }
 
 .userLinkAddWindow {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 400px;
-    margin-left: -200px;
-    height: 150px;
-    margin-top: -75px;
-    padding: 20px;
-    border: 1px solid #A02B1C;
-    background: #ffffff;
+	position: relative;
+	top: 20%;
+	left: 50%;
+	width: 400px;
+	margin-left: -200px;
+	height: 150px;
+	margin-top: -170px;
+	padding: 20px;
+	border: 1px solid #A02B1C;
+	background: #ffffff;
 }
 
 .closeUserLinkWindow {
@@ -2135,7 +2142,45 @@ a.toggleSettingsGroup:hover {
 	background-color: #fff;
 }
 
-input#income_15 {
-	
+.article-categories {
+	margin-left: 16px;
 }
 
+.article-categories li {
+	margin-top: 8px;
+}
+
+.article-categories a {
+	font-size: 30px;
+	font-family: 'Cambria';
+	color: #343434;
+	text-decoration: none;
+}
+
+.article-categories a:hover {
+	color: #000;
+}
+
+.article-li {
+	border: 2px solid #979db8;
+	border-radius: 5px;
+	height: 104px;
+	margin-top: 6px;	
+}
+
+.article-li a {
+	text-decoration: none;	
+}
+
+span.article-list-header {
+	font-size: 24px;
+	font-family: 'Cambria';
+	color: #000;
+	text-decoration: none;
+	margin-left: 20px;
+	line-height: 10%;	
+}
+
+a.unbookmarkArticle {
+	
+}
