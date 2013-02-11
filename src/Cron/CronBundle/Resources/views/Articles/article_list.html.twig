@@ -3,7 +3,7 @@
     <h2 class="categoryH2"><a href="/articles">Статьи</a> / {{ category.getName() }}</h2>
     <ul class="article-list">
         {% for article in articles %}
-            <li>
+            <li class="article-li" data-id="{{ article.getId() }}">
                 <table>
                     <tr>
                         <td style="vertical-align:middle;">
@@ -13,7 +13,9 @@
                         <td style="vertical-align:middle;">
                             <a href="/articles/{{ category.getId() }}/{{ article.getId() }}"> <span class="article-list-header">{{ article.getHeader() }}</span></a>
                         </td>
-                        <td></td>
+                        <td>
+                            <a href="#" class="bookmarkArticle">Добавить в заметки</a>
+                        </td>
                     </tr>
                 </table>
             </li>

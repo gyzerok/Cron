@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <h2 class="categoryH2">Заметки / Статьи</h2>
+    {% if articles %}
+        <ul class="article-list">
+            {% for notes_article in articles %}
+                {% set article = notes_article.getArticle() %}
+                <li data-id="{{ notes_article.getId() }}">
+                    <table>
+                        <tr>
+                            <td style="vertical-align:middle;">
+                                <a href="/articles/{{ article.getCategory().getId() }}/{{ article.getId() }}"> <span class="article-list-header">{{ article.getHeader() }}</span> </a>
+                            </td>
+                            <td> <a href="#" class="unbookmarkArticle">Удалить</a></td>
+                        </tr>
+                    </table>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="empty-notes">Нет избранных статей</div>
+    {% endif %}
+{% endblock %}

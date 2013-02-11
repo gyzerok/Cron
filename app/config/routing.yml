@@ -26,6 +26,10 @@ articles:
   pattern: /articles/{category_id}/{article_id}
   defaults: { _controller: CronCronBundle:Main:articles, "category_id": "", "article_id": "" }
 
+notes:
+  pattern: /notes/{location}
+  defaults: { _controller: CronCronBundle:Main:notes}
+
 locale:
   pattern: /locale/{locale}
   defaults: { _controller: CronCronBundle:Main:locale }
@@ -86,6 +90,34 @@ updateFilesize:
 saveSettings:
   pattern:  /ajax/saveSettings
   defaults: { _controller: CronCronBundle:Ajax:saveSettings }
+
+newUserLink:
+  pattern:  /ajax/newUserLink
+  defaults: { _controller: CronCronBundle:Ajax:newUserLink }
+
+getUserLinks:
+  pattern:  /ajax/getUserLinks
+  defaults: { _controller: CronCronBundle:Ajax:getUserLinks }
+
+repostQuestion:
+  pattern:  /ajax/repostQuestion
+  defaults: { _controller: CronCronBundle:Ajax:repostQuestion }
+
+bookmarkArticle:
+  pattern:  /ajax/bookmarkArticle
+  defaults: { _controller: CronCronBundle:Ajax:bookmarkArticle }
+
+unbookmarkArticle:
+  pattern:  /ajax/unbookmarkArticle
+  defaults: { _controller: CronCronBundle:Ajax:unbookmarkArticle }
+
+loadNotepad:
+  pattern:  /ajax/loadNotepad
+  defaults: { _controller: CronCronBundle:Ajax:loadNotepad }
+
+updateNotepad:
+  pattern:  /ajax/updateNotepad
+  defaults: { _controller: CronCronBundle:Ajax:updateNotepad }
 
 
 # Chat routes

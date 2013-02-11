@@ -4,6 +4,10 @@ namespace Cron\CronBundle\Entity;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+//use Doctrine\Bundle\DoctrineBundle\Registry;
+//use Doctrine\ORM\EntityManager;
+//use Doctrine\ORM\EntityRepository;
+
 
 /**
  * Cron\CronBundle\Entity\User
