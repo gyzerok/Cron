@@ -33,7 +33,7 @@ class Article {
     /**
      * @var string $locale
      *
-     * @ORM\Column(name="locale", type="string", length=2, nullable=false)
+     * @ORM\Column(name="locale", type="string", length=5, nullable=false)
      */
     private $locale;
 

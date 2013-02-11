@@ -16,10 +16,10 @@
     <script src="/js/script.js"></script>
   </head>
   <body>
+  {% set _locale = app.getSession().get('_locale') %}
 	{% block wrapper %}
 	<div id="wrapper">
 	    {% block header %}
-        {% set _locale = app.getSession().get('_locale') %}
 		<div id="header">
 			<div class="logo" title="На главную"><a href="{{ path('index') }}"></a></div>
 			<div class="language">
@@ -104,19 +104,19 @@
 			<ul class="menuNavigation">
 				<li>Вопросы
 					<ul class="subMenuNavigation">
-					  <li><a href="#">семья, дом, дети</a></li>
-					  <li><a href="#">любовь, отношения</a></li>
-					  <li><a href="#">культура, досуг</a></li>
-					  <li><a href="#">туризм</a></li>
-					  <li><a href="#">компьютеры, интернет</a></li>
-					  <li><a href="#">компьютерные игры</a></li>
-					  <li><a href="#">техника</a></li>
-					  <li><a href="#">знакомства, общение</a></li>
-					  <li><a href="#">экономика</a></li>
-					  <li><a href="#">юриспруденция</a></li>
-					  <li><a href="#">опросы</a></li>
-					  <li><a href="#">новости</a></li>
-					  <li><a href="#">спорт</a></li>
+					  <li><a href="/category/2">семья, дом, дети</a></li>
+					  <li><a href="/category/3">любовь, отношения</a></li>
+					  <li><a href="/category/5">культура, досуг</a></li>
+					  <li><a href="/category/6">туризм</a></li>
+					  <li><a href="/category/7">компьютеры, интернет</a></li>
+					  <li><a href="/category/8">компьютерные игры</a></li>
+					  <li><a href="/category/9">техника</a></li>
+					  <li><a href="/category/10">знакомства, общение</a></li>
+					  <li><a href="/category/11">экономика</a></li>
+					  <li><a href="/category/12">юриспруденция</a></li>
+					  <li><a href="/category/13">опросы</a></li>
+					  <li><a href="/category/14">новости</a></li>
+					  <li><a href="/category/15">спорт</a></li>
 					</ul>
 				</li>
 				<li>Заметки

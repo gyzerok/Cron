@@ -14,7 +14,9 @@
                             <a href="/articles/{{ category.getId() }}/{{ article.getId() }}"> <span class="article-list-header">{{ article.getHeader() }}</span></a>
                         </td>
                         <td>
-                            {#<a href="#" class="bookmarkArticle">Добавить в заметки</a>#}
+                            {% if curUser %}
+                                <a href="#" class="bookmarkArticle">Добавить в заметки</a>
+                            {% endif %}
                         </td>
                     </tr>
                 </table>
