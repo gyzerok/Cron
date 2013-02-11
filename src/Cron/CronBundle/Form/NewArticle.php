@@ -15,7 +15,7 @@ class NewArticle extends AbstractType
             ->add('img1', 'file', array('label' => 'Изображение 1', 'required' => true))
             ->add('img2', 'file', array('label' => 'Изображение 2', 'required' => false))
             ->add('img3', 'file', array('label' => 'Изображение 3', 'required' => false))
-            ->add('text', 'textarea', array('label' => 'Текст статьи', 'trim' => true, 'required' => true))
+            ->add('text', 'textarea', array('label' => 'Текст статьи', 'trim' => true, 'required' => false))
             ->add('link_type', 'choice', array('label' => 'Тип ссылки', 'choices' => array('1' => 'Источник', '2' => 'Ссылка', '3' => 'Автор статьи'), 'expanded' => true, 'required' => true))
             ->add('link_value', 'text', array('label' => 'Ссылка', 'required' => true));
     }
