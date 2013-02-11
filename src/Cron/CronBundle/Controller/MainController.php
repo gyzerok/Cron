@@ -425,6 +425,8 @@ class MainController extends Controller
     public function articlesAction($category_id, $article_id)
     {
         $_locale = $this->container->get('session')->get('_locale');
+        if (!$_locale)
+            $_locale = 'ru_RU';
 
         $user = $this->getUser();
 
