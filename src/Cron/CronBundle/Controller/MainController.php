@@ -74,7 +74,7 @@ class MainController extends Controller
 
     }
 
-    public function categoryAction(Request $request)
+    public function categoryAction($category_id, Request $request)
     {
         $request->setLocale($request->getSession()->get('_locale'));
 
@@ -88,24 +88,44 @@ class MainController extends Controller
             }
         }
 
-        $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Question")
-                                           ->createQueryBuilder('question')
-                                           ->innerJoin('question.user', 'user')
-                                           ->where('question.category > :cid  AND question.status <> :status')
-                                           ->setParameter('cid', '1')
-                                           ->setParameter('status', '2')
-                                           ->getQuery()
-                                           ->getResult();
-
-        foreach ($categorized as $id=>$question) {
-            $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
-            $categorized[$id]->answers = $answers;
+        if ($category_id!=''){
+            $categorized = array();
+            $categorized[0] = $this->getDoctrine()->getRepository("CronCronBundle:Category")->find($category_id);
+            $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
+                ->createQueryBuilder('question')
+                ->where('question.category = :cid AND question.status <> :status')
+                ->setParameter('cid', $category_id)
+                ->setParameter('status', '2')
+                ->getQuery()
+                ->getResult();
+            $categorized[0]->questions = $questions;
+        } else {
+            $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Category")->findAll();
+            foreach ($categorized as $id=>$category) {
+                if ($category->getId()==1){
+                    unset($categorized[$id]);
+                } else {
+                    $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
+                        ->createQueryBuilder('question')
+                        ->where('question.category = :cid AND question.status <> :status')
+                        ->setParameter('cid', $category->getId())
+                        ->setParameter('status', '2')
+                        ->getQuery()
+                        ->setMaxResults(5)
+                        ->getResult();
+                    if (count($questions)){
+                        $categorized[$id]->questions = $questions;
+                    } else {
+                        unset($categorized[$id]);
+                    }
+                }
+            }
         }
 
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'По категориям',
-                                                                             'questions' => $categorized,
-                                                                             'curUser' => $this->getUser(),
-                                                                             'form' => $form->createView())
+             'categorized_questions' => $categorized,
+             'curUser' => $this->getUser(),
+             'form' => $form->createView())
         );
     }
 
@@ -123,24 +143,28 @@ class MainController extends Controller
             }
         }
 
+        $rush_id = 1;
+        $categorized = array();
+        $categorized[0] = $this->getDoctrine()->getRepository("CronCronBundle:Category")->find($rush_id);
+
         $rush = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                                     ->createQueryBuilder('question')
-                                    ->innerJoin('question.user', 'user')
                                     ->where('question.category = :cid  AND question.status <> :status')
-                                    ->setParameter('cid', '1')
+                                    ->setParameter('cid', $rush_id)
                                     ->setParameter('status', '2')
                                     ->getQuery()
                                     ->getResult();
 
-        foreach ($rush as $id=>$question) {
+        $categorized[0]->questions = $rush;
+        /*foreach ($rush as $id=>$question) {
             $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
             $rush[$id]->answers = $answers;
-        }
+        }*/
 
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'Срочные',
-                                                                             'questions' => $rush,
-                                                                             'curUser' => $this->getUser(),
-                                                                             'form' => $form->createView())
+             'categorized_questions' => $categorized,
+             'curUser' => $this->getUser(),
+             'form' => $form->createView())
         );
     }
 
@@ -334,7 +358,7 @@ class MainController extends Controller
 
     public function articlesAction($category_id, $article_id)
     {
-//        $request->setLocale($request->getSession()->get('_locale'));
+        $_locale = $this->container->get('session')->get('_locale');
 
         $user = $this->getUser();
 
@@ -351,7 +375,8 @@ class MainController extends Controller
         } elseif ($category_id>0){
             $cur_category = $this->getDoctrine()->getRepository("CronCronBundle:ArticleCategory")->find($category_id);
 
-            $articles = $this->getDoctrine()->getRepository("CronCronBundle:Article")->findBy(array("category"=>$category_id));
+            $articles = $this->getDoctrine()->getRepository("CronCronBundle:Article")->findBy(array("category"=>$category_id, "locale"=> $_locale));
+
 
             return $this->render("CronCronBundle:Articles:article_list.html.twig", array('title' => 'Статьи / '.$cur_category->getName(),
                 'category' => $cur_category,

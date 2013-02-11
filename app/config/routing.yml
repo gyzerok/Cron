@@ -7,8 +7,8 @@ index:
   defaults: { _controller: CronCronBundle:Main:index }
 
 category:
-  pattern: /category
-  defaults: { _controller: CronCronBundle:Main:category }
+  pattern: /category/{category_id}
+  defaults: { _controller: CronCronBundle:Main:category, "category_id": "" }
 
 rush:
   pattern: /rush
