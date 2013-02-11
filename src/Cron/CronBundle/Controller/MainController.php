@@ -78,6 +78,8 @@ class MainController extends Controller
     {
         $request->setLocale($request->getSession()->get('_locale'));
 
+        $user = $this->getUser();
+
         $answer = new Answer();
         $form = $this->createForm(new NewAnswer(), $answer);
         if ($request->isMethod('POST')) {
@@ -89,27 +91,91 @@ class MainController extends Controller
         }
 
         if ($category_id!=''){
+            $viewbytime = new \DateTime();
+
+            if ($user instanceof User){
+                $my_settings = $this->getDoctrine()->getRepository("CronCronBundle:UserSettings")->findOneBy(array("user"=>$user->getId()));
+
+                switch($my_settings->getViewByTime()){
+                    case 'day':
+                        $viewbytime->modify("-1 day");
+                        break;
+                    case 'week':
+                        $viewbytime->modify("-1 week");
+                        break;
+                    case 'month':
+                        $viewbytime->modify("-1 month");
+                        break;
+                    case 'all':
+                    default:
+                        $viewbytime->modify("-100 years");
+                        break;
+                }
+            } else {
+                $viewbytime->modify("-100 years");
+            }
+
             $categorized = array();
             $categorized[0] = $this->getDoctrine()->getRepository("CronCronBundle:Category")->find($category_id);
             $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                 ->createQueryBuilder('question')
-                ->where('question.category = :cid AND question.status <> :status')
+                ->where('question.category = :cid AND question.status <> :status AND question.datetime > :viewbytime')
                 ->setParameter('cid', $category_id)
                 ->setParameter('status', '2')
+                ->setParameter('viewbytime', $viewbytime->format("Y-m-d H:i:s"))
                 ->getQuery()
                 ->getResult();
             $categorized[0]->questions = $questions;
         } else {
-            $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Category")->findAll();
+            $viewbytime = new \DateTime();
+
+            if ($user instanceof User){
+                $my_settings = $this->getDoctrine()->getRepository("CronCronBundle:UserSettings")->findOneBy(array("user"=>$user->getId()));
+
+                switch($my_settings->getViewByTime()){
+                    case 'day':
+                        $viewbytime->modify("-1 day");
+                        break;
+                    case 'week':
+                        $viewbytime->modify("-1 week");
+                        break;
+                    case 'month':
+                        $viewbytime->modify("-1 month");
+                        break;
+                    case 'all':
+                    default:
+                        $viewbytime->modify("-100 years");
+                        break;
+                }
+
+                $view_cats = array();
+                foreach ($my_settings->getViewCats() as $id=>$view_cat) {
+                    array_push($view_cats, $id);
+                }
+
+                $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Category")/*->findAll();*/
+                    ->createQueryBuilder('category')
+                    ->where('category.id IN (:cid)')
+                    ->setParameter('cid', $view_cats)
+                    ->getQuery()
+                    ->getResult();
+
+
+            } else {
+                $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Category")->findAll();
+                $viewbytime->modify("-100 years");
+            }
+
             foreach ($categorized as $id=>$category) {
                 if ($category->getId()==1){
                     unset($categorized[$id]);
                 } else {
                     $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                         ->createQueryBuilder('question')
-                        ->where('question.category = :cid AND question.status <> :status')
+                        ->where('question.category = :cid AND question.status <> :status AND question.datetime > :viewbytime')
                         ->setParameter('cid', $category->getId())
                         ->setParameter('status', '2')
+                        ->setParameter('viewbytime', $viewbytime->format("Y-m-d H:i:s"))
                         ->getQuery()
                         ->setMaxResults(5)
                         ->getResult();
@@ -359,6 +425,8 @@ class MainController extends Controller
     public function articlesAction($category_id, $article_id)
     {
         $_locale = $this->container->get('session')->get('_locale');
+        if (!$_locale)
+            $_locale = 'ru_RU';
 
         $user = $this->getUser();
 
