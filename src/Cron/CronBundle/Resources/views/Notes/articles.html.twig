@@ -2,16 +2,16 @@
 {% block content %}
     <h2 class="categoryH2">Заметки / Статьи</h2>
     {% if articles %}
-        <ul class="article-list">
+        <ul class="article-notes-list">
             {% for notes_article in articles %}
                 {% set article = notes_article.getArticle() %}
                 <li data-id="{{ notes_article.getId() }}">
-                    <table>
+                    <table width="100%">
                         <tr>
-                            <td style="vertical-align:middle;">
-                                <a href="/articles/{{ article.getCategory().getId() }}/{{ article.getId() }}"> <span class="article-list-header">{{ article.getHeader() }}</span> </a>
+                            <td width="688" style="vertical-align:middle; overflow:hidden;">
+                                <a href="/articles/{{ article.getCategory().getId() }}/{{ article.getId() }}"> <span class="article-notes-list">{{ article.getHeader() }}</span> </a>
                             </td>
-                            <td> <a href="#" class="unbookmarkArticle">Удалить</a></td>
+                            <td> <a href="#" class="unbookmarkArticle"></a></td>
                         </tr>
                     </table>
                 </li>

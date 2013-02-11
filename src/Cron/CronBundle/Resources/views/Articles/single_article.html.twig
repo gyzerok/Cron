@@ -3,15 +3,16 @@
     <h2 class="categoryH2"><a href="/articles">Статьи</a> / <a href="/articles/{{ category.getId() }}">{{ category.getName() }}</a> / <b>{{ article.getHeader() }}</b></h2>
     <div class="single-article">
         {% for id,img in article.getImgs() %}
-            <img src="/articles_i/{{article.getId() }}/{{ id }}.jpg" width="200" alt="">
+            <img src="/articles_i/{{article.getId() }}/{{ id }}.jpg" style="float: left; margin-right: 7px;" width="200" alt="">
         {% endfor %}
         <div class="single-article-text">{{ article.getText()|raw }}</div>
+		<div style="clear: both;"></div>
         <div class="single-article-source">
             <b>{{ article.getLinkTypeTextly() }}:</b><br/>
             {% if article.getLinkType()==3 %}
                 {{ article.getLinkValue() }}
             {% else %}
-                <a href="{{ article.getLinkValue() }}">{{ article.getLinkValue() }}</a>
+                <a style="color:#536AA8;" href="{{ article.getLinkValue() }}">{{ article.getLinkValue() }}</a>
             {% endif %}
         </div>
     </div>
