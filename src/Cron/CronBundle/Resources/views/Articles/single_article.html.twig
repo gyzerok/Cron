@@ -5,7 +5,7 @@
         {% for id,img in article.getImgs() %}
             <img src="/articles_i/{{article.getId() }}/{{ id }}.jpg" width="200" alt="">
         {% endfor %}
-        <div class="single-article-text">{{ article.getText() }}</div>
+        <div class="single-article-text">{{ article.getText()|raw }}</div>
         <div class="single-article-source">
             <b>{{ article.getLinkTypeTextly() }}:</b><br/>
             {% if article.getLinkType()==3 %}
