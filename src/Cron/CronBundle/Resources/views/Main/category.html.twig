@@ -10,7 +10,7 @@
 
 	{% block content %}
         {% for category in categorized_questions %}
-            <h2 class="categoryH2">{{ category.getName() }}</h2>
+            <h2 class="categoryTitle">{{ category.getName() }}</h2>
             <div id="showQuestion">
                 {% for item in category.questions %}
                     <div class="singleQuestion" data-id="{{ item.getId() }}">

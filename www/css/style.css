@@ -671,6 +671,14 @@ h2.categoryH2 {
 	text-decoration: none;
 }
 
+.categoryTitle {
+	font-size: 24px;
+	margin-left: 17px;
+	margin-top: 10px;
+	color: #323223;
+	text-transform: capitalize;	
+}
+
 .greeting {
 	font-size: 14px;
 	font-family: 'Tahoma';
@@ -683,7 +691,7 @@ h2.categoryH2 {
 	width: 709px;
 	border: 1px solid #965565;
 	border-radius: 7px;
-	margin: 10px auto 0px auto;
+	margin: 5px auto 0px auto;
 	overflow: hidden;
 }
 
