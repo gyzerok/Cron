@@ -14,7 +14,7 @@
             $('.spamButton').click(function(){
                 var question_id = $(this).closest('.singleQuestion').attr('data-id');
                 var that = $(this);
-                question_id = question_id.replace('data-', '');
+                //question_id = question_id.replace('data-', '');
                 $.ajax({'url': '{{ path("spamItem") }}', 'type':'post', 'data': 'question_id='+question_id,
                     'Success': function(){
                         that.css({
