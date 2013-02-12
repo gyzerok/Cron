@@ -11,18 +11,20 @@
 	{% block content %}
         <script type="text/javascript">
             //Спам
-            $('.spamButton').click(function(){
-                var question_id = $(this).closest('.singleQuestion').attr('data-id');
-                var that = $(this);
-                //question_id = question_id.replace('data-', '');
-                $.ajax({'url': '{{ path("spamItem") }}', 'type':'post', 'data': 'question_id='+question_id,
-                    'Success': function(){
-                        that.css({
-                            'background-image': 'url(../i/spamActive.jpg)'
-                        });
-                    }
-                });
-            });
+			$(document).ready(function(){
+				$('.spamButton').click(function(){
+					var question_id = $(this).closest('.singleQuestion').attr('data-id');
+					var that = $(this);
+					$.ajax({'url': '{{ path("spamItem") }}', 'type':'post', 'data': 'question_id='+question_id,
+						'Success': function(){
+							alert('После запроса!');
+							that.css({
+								'background-image': 'url(../i/spamActive.jpg)'
+							});
+						}
+					});
+				});
+			});
         </script>
         {% for category in categorized_questions %}
             <h2 class="categoryTitle">{{ category.getName() }}</h2>
