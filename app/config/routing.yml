@@ -230,8 +230,35 @@ sendChatInvite:
 
 newarticle:
   pattern:  /admin/newarticle
+  defaults: { _controller: CronCronBundle:Admin:newarticle, "article_id": "" }
+
+editarticle:
+  pattern:  /admin/editarticle/{article_id}
   defaults: { _controller: CronCronBundle:Admin:newarticle }
 
+adminArticles:
+  pattern:  /admin/articles
+  defaults: { _controller: CronCronBundle:Admin:articles }
+
+deleteArticle:
+  pattern:  /admin/deleteArticle
+  defaults: { _controller: CronCronBundle:Admin:deleteArticle }
+
+adminQuestions:
+  pattern:  /admin/questions
+  defaults: { _controller: CronCronBundle:Admin:questions }
+
+adminAnswers:
+  pattern:  /admin/answers
+  defaults: { _controller: CronCronBundle:Admin:answers }
+
+adminUsers:
+  pattern:  /admin/users
+  defaults: { _controller: CronCronBundle:Admin:users }
+
+adminCredits:
+  pattern:  /admin/credits
+  defaults: { _controller: CronCronBundle:Admin:credits }
 
 # Security routes
 

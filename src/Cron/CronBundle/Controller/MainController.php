@@ -151,7 +151,6 @@ class MainController extends Controller
             $income->questions = array();
             foreach ($my_answers as $my_answer) {
                 $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($my_answer->getQuestion()->getId());
-//                $question->answers = array();
                 $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"DESC"));
                 $question->answers = $answers;
                 array_push($income->questions, $question);
@@ -262,30 +261,6 @@ class MainController extends Controller
                 'form' => null
         ));
     }
-
-    /*public function incomeAction(Request $request)
-    {
-        $request->setLocale($request->getSession()->get('_locale'));
-
-        $user = $this->getUser();
-
-        $my = array();
-        if ($user instanceof User){
-            $my = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user"=>$user->getId()));
-            foreach ($my as $id=>$question) {
-                $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
-                $my[$id]->answers = $answers;
-            }
-        } else {
-            return $this->redirect("/");
-        }
-
-        return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Мои вопросы',
-            'userQuestions' => $my,
-            'curUser' => $this->getUser(),
-            'form' => null
-        ));
-    }*/
 
     public function diskAction($file_hash)
     {
