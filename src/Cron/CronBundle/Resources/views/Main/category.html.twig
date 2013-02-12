@@ -24,6 +24,19 @@
 						}
 					});
 				});
+				//Лайки
+				$('.likeButton').click(function(){
+					var question_id = $(this).closest('.singleQuestion').attr('data-id');
+					var that = $(this);
+					$.ajax({'url': '{{ path("likeItem") }}', 'type':'post', 'data': 'question_id='+question_id,
+						'Success': function(){
+							alert('После запроса!');
+							that.css({
+								'background-image': 'url(../i/likeActive.jpg)'
+							});
+						}
+					});
+				});			
 			});
         </script>
         {% for category in categorized_questions %}

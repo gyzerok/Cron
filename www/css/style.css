@@ -2026,6 +2026,8 @@ h2.chatInviteTitle{
 	font-size: 19px;
 	font-family: 'Cambria';
 	resize: none;
+	max-height: 60px;
+	overflow: auto;
 }
 
 .enterArea input {
