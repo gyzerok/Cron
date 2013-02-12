@@ -1710,13 +1710,13 @@ h2.dialogTitle {
 }
 
 .userLinkAddWindow {
-	position: relative;
-	top: 20%;
+	position: fixed;
+	top: 50%;
 	left: 50%;
 	width: 400px;
-	margin-left: -200px;
+	margin-left: -275px;
 	height: 150px;
-	margin-top: -170px;
+	margin-top: -100px;
 	padding: 20px;
 	border: 1px solid #A02B1C;
 	background: #ffffff;
