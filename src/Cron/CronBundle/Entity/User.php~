@@ -119,7 +119,6 @@ class User implements UserInterface, \Serializable
      */
     private $country;
 
-<<<<<<< HEAD
     /**
      * @var integer $role
      *
@@ -127,8 +126,6 @@ class User implements UserInterface, \Serializable
      */
     private $role = 0;
 
-=======
->>>>>>> 9feb619d23e785209efc7b1f646332bfbbb5546b
 
 
     /**
@@ -490,5 +487,28 @@ class User implements UserInterface, \Serializable
     public function getNick()
     {
         return $this->nick;
+    }
+
+    /**
+     * Set role
+     *
+     * @param integer $role
+     * @return User
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return integer 
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 }

@@ -9,6 +9,7 @@ use Cron\CronBundle\Entity\ArticleCategory;
 use Cron\CronBundle\Entity\User;
 use Cron\CronBundle\Entity\UserSettings;
 use Cron\CronBundle\Entity\File;
+use Cron\CronBundle\Entity\Feedback;
 use Cron\CronBundle\Form\NewArticle;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -84,7 +85,6 @@ class AdminController extends Controller
             'curUser' => $this->getUser(),
             'form' => $form->createView()
         ));
-
     }
 
     public function articlesAction(Request $request)
@@ -100,7 +100,6 @@ class AdminController extends Controller
             'articles' => $articles,
             'curUser' => $user
         ));
-
     }
 
     public function deleteArticleAction(Request $request)
@@ -114,12 +113,100 @@ class AdminController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($article);
         $em->flush();
-        /*return $this->render("CronCronBundle:Admin:articles.html.twig", array('title' => 'Статьи',
-            'articles' => $articles,
-            'curUser' => $user
-        ));*/
         return new Response("SUCCESS");
+    }
 
+    public function questionsAction(Request $request, $page)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $limit = 1000000;
+        $all_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array(), array("datetime"=>"DESC"), $limit, ($page-1)*$limit);
+
+        return $this->render("CronCronBundle:Admin:questions.html.twig", array('title' => 'Вопросы',
+            'questions' => $all_questions,
+            'curUser' => $user
+        ));
+    }
+
+    public function deleteQuestionAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($request->get("question"));
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($question);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
+    public function sendFeedbackAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User) {
+            return $this->redirect("/");
+        }
+
+        $feedback = new Feedback();
+        $feedback->setType($request->get('type'))
+            ->setUser($user)
+            ->setText($request->get('text'))
+            ->setDatetime(new \DateTime());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($feedback);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
+    public function deleteFeedbackAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->find($request->get("feedback"));
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($feedback);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
+    public function appealsAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->findBy(array("type"=>"appeal"), array("datetime"=>"DESC"));
+
+        return $this->render("CronCronBundle:Admin:support.html.twig", array('title' => 'Жалобы',
+            'feedback' => $feedback,
+            'curUser' => $user
+        ));
+    }
+
+    public function ideasAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->findBy(array("type"=>"idea"), array("datetime"=>"DESC"));
+
+        return $this->render("CronCronBundle:Admin:support.html.twig", array('title' => 'Предложения',
+            'feedback' => $feedback,
+            'curUser' => $user
+        ));
     }
 
 }

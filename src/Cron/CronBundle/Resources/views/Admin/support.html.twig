@@ -1,0 +1,45 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".delete-feedback").bind('click', function(){
+                if (confirm('Удалить халобу?')) {
+                    var cur_feedback = $(this).closest(".feedback-li");
+                    $.ajax({
+                        url: '/admin/support/deleteFeedback',
+                        data: {
+                            feedback: cur_feedback.data('id')
+                        }
+                    });
+                    cur_feedback.remove();
+                }
+                return false;
+            });
+        });
+    </script>
+    <h2 class="categoryH2">{{ title }}</a></h2>
+    <ul class="feedback-list">
+        {% if feedback|length>0 %}
+            {% for item in feedback %}
+                <li class="feedback-li" data-id="{{ item.getId() }}">
+                    <table>
+                        <tr>
+                            <td>
+                                {{ item.getUser().getNick() }}
+                            </td>
+                            <td>
+                                {{ item.getText() }}
+                            </td>
+                            <td>
+                                <a href="#">Ответить</a>
+                                <a href="#" class="delete-feedback">Удалить</a>
+                            </td>
+                        </tr>
+                    </table>
+                </li>
+            {% endfor %}
+        {% else %}
+            Пусто
+        {% endif %}
+    </ul>
+{% endblock %}

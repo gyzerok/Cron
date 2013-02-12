@@ -98,6 +98,19 @@
                     <input type="submit" class="saveUserLink" value="сохранить"> <input type="button" class="cancelUserLink" value="отменить">
                 </form>
             </div>
+
+            <div class="feedbackWindow" style="display:none;">
+                <div class="closeFeedbackWindow"><a href=""></a></div>
+                <form action="/ajax/sendFeedback" method="post">
+                    Обратная связь <br>
+                    <select name="type" id="feedback-type">
+                        <option value="appeal">Жалоба</option>
+                        <option value="idea">Предложение</option>
+                    </select><br>
+                    {#<label for="feedback-text">Текст:</label> #}<textarea name="text" id="feedback-text" cols="30" rows="5"></textarea><br/>
+                    <input type="submit" class="submit-feedback" value="отправить"> <input type="button" class="cancel-feedback" value="отменить">
+                </form>
+            </div>
 		</div>
 		
 	    {% block menu %}		
@@ -152,6 +165,14 @@
                             {% endif %}
                         </ul>
                         </li>
+                        {% if curUser.getRole()>1 %}
+                        <li>Поддержка
+                            <ul class="subMenuNavigation">
+                                <li><a href="/admin/support/appeals">Жалобы</a></li>
+                                <li><a href="/admin/support/ideas">Предложения</a></li>
+                            </ul>
+                        </li>
+                        {% endif %}
                     {% endif %}
                 {% endif %}
 				<li class="chatInvite">Приглашение в чат</li>
@@ -159,7 +180,8 @@
                     <div class="closeNotepad"><a href=""></a></div>
                     <textarea id="notepad-text" style="height: 200px;resize: none;border: 2px solid #CC2A03;"></textarea>
                 </div>
-			</ul>			
+			</ul>
+            <a href="#" class="open-feedback-window">Оставить отзыв</a>
 		</div>
 		<div style="clear: both"></div>
 	    {% endblock %}
