@@ -55,8 +55,8 @@
 				<a href="/settings">Настройки</a>
 			</form>
 			<p class="credits">Кредиты 123</p>
-			<p class="myQuestions"><a href="">Мои вопросы</a></p>
-			<p class="myQuestions"><a href="">Входящие вопросы</a></p>
+			<p class="myQuestions"><a href="/my">Мои вопросы</a></p>
+			<p class="myQuestions"><a href="/income">Входящие вопросы</a></p>
 			{% else %}
 			<form action="{{ path('login_check') }}" method="post">
 				<input type="text" id="username" name="_username" value="" placeholder="логин" />
@@ -138,6 +138,22 @@
                 </li>
 				<li><a class="menuNavigationLink" href="/disk">Кибердиск</a></li>
 				<li class="open-dialog-list">Сообщения</li>
+                {% if curUser %}
+                    {% if curUser.getRole()>0 %}
+                        <li>Админка
+                        <ul class="subMenuNavigation">
+                            <li><a href="/admin/questions">Вопросы</a></li>
+                            <li><a href="/admin/answers">Ответы</a></li>
+                            {% if curUser.getRole()>1 %}
+                                <li><a href="/admin/articles">Статьи</a></li>
+                                <li><a href="/admin/srvmsg">Серв. сообщ</a></li>
+                                <li><a href="/admin/users">Пользователи</a></li>
+                                <li><a href="/admin/credits">Кредиты</a></li>
+                            {% endif %}
+                        </ul>
+                        </li>
+                    {% endif %}
+                {% endif %}
 				<li class="chatInvite">Приглашение в чат</li>
                 <div id="notepad" style="margin-top: 10px;display:none;">
                     <div class="closeNotepad"><a href=""></a></div>

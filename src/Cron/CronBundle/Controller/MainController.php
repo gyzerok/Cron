@@ -4,6 +4,7 @@ namespace Cron\CronBundle\Controller;
 
 use Cron\CronBundle\Entity\Question;
 use Cron\CronBundle\Entity\Answer;
+use Cron\CronBundle\Entity\Category;
 use Cron\CronBundle\Entity\User;
 use Cron\CronBundle\Entity\UserSettings;
 use Cron\CronBundle\Entity\File;
@@ -95,34 +96,38 @@ class MainController extends Controller
         }
 
         $my_settings = new UserSettings();
-        if ($category_id!=''){
-            $viewbytime = new \DateTime();
-
-            if ($user instanceof User){
-                $my_settings = $this->getDoctrine()->getRepository("CronCronBundle:UserSettings")->findOneBy(array("user"=>$user->getId()));
-                if ($my_settings instanceof UserSettings){
-                    switch($my_settings->getViewByTime()){
-                        case 'day':
-                            $viewbytime->modify("-1 day");
-                            break;
-                        case 'week':
-                            $viewbytime->modify("-1 week");
-                            break;
-                        case 'month':
-                            $viewbytime->modify("-1 month");
-                            break;
-                        case 'all':
-                        default:
-                            $viewbytime->modify("-100 years");
-                            break;
-                    }
-                } else {
-                    $viewbytime->modify("-100 years");
+        $viewbytime = new \DateTime();
+        $view_cats = array();
+        if ($user instanceof User){
+            $my_settings = $this->getDoctrine()->getRepository("CronCronBundle:UserSettings")->findOneBy(array("user"=>$user->getId()));
+            if ($my_settings instanceof UserSettings){
+                switch($my_settings->getViewByTime()){
+                    case 'day':
+                        $viewbytime->modify("-1 day");
+                        break;
+                    case 'week':
+                        $viewbytime->modify("-1 week");
+                        break;
+                    case 'month':
+                        $viewbytime->modify("-1 month");
+                        break;
+                    case 'all':
+                    default:
+                        $viewbytime->modify("-100 years");
+                        break;
+                }
+                foreach ($my_settings->getViewCats() as $id=>$view_cat) {
+                    array_push($view_cats, $id);
                 }
             } else {
                 $viewbytime->modify("-100 years");
             }
+        } else {
+            $viewbytime->modify("-100 years");
+        }
 
+
+        if ($category_id>0){ //single category
             $categorized = array();
             $categorized[0] = $this->getDoctrine()->getRepository("CronCronBundle:Category")->find($category_id);
             $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
@@ -134,46 +139,36 @@ class MainController extends Controller
                 ->getQuery()
                 ->getResult();
             $categorized[0]->questions = $questions;
-        } else {
-            $viewbytime = new \DateTime();
+        } elseif ($category_id<0) { //income questions
+            if (!$user instanceof User){
+                return $this->redirect("/");
+            }
+            $categorized = array();
+            $income = new Category();
+            $income->setName("Входящие вопросы");
+            $my_answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("user"=>$user->getId()), array("pubDate"=>"DESC"));
 
-            if ($user instanceof User){
-                $my_settings = $this->getDoctrine()->getRepository("CronCronBundle:UserSettings")->findOneBy(array("user"=>$user->getId()));
-                if ($my_settings instanceof UserSettings){
-                    switch($my_settings->getViewByTime()){
-                        case 'day':
-                            $viewbytime->modify("-1 day");
-                            break;
-                        case 'week':
-                            $viewbytime->modify("-1 week");
-                            break;
-                        case 'month':
-                            $viewbytime->modify("-1 month");
-                            break;
-                        case 'all':
-                        default:
-                            $viewbytime->modify("-100 years");
-                            break;
-                    }
+            $income->questions = array();
+            foreach ($my_answers as $my_answer) {
+                $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($my_answer->getQuestion()->getId());
+//                $question->answers = array();
+                $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"DESC"));
+                $question->answers = $answers;
+                array_push($income->questions, $question);
+            }
+            $categorized[0] = $income;
 
-                    $view_cats = array();
-                    foreach ($my_settings->getViewCats() as $id=>$view_cat) {
-                        array_push($view_cats, $id);
-                    }
+        } else { //all categories
 
-                    $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Category")/*->findAll();*/
-                        ->createQueryBuilder('category')
-                        ->where('category.id IN (:cid)')
-                        ->setParameter('cid', $view_cats)
-                        ->getQuery()
-                        ->getResult();
-                } else {
-                    $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Category")->findAll();
-                    $viewbytime->modify("-100 years");
-                }
+            if (!empty($view_cats)){
+                $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Category")
+                    ->createQueryBuilder('category')
+                    ->where('category.id IN (:cid)')
+                    ->setParameter('cid', $view_cats)
+                    ->getQuery()
+                    ->getResult();
             } else {
                 $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Category")->findAll();
-                $viewbytime->modify("-100 years");
             }
 
             foreach ($categorized as $id=>$category) {
@@ -243,6 +238,54 @@ class MainController extends Controller
              'form' => $form->createView())
         );
     }
+
+    public function myAction(Request $request)
+    {
+        $request->setLocale($request->getSession()->get('_locale'));
+
+        $user = $this->getUser();
+
+        $my = array();
+        if ($user instanceof User){
+            $my = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user"=>$user->getId()));
+            foreach ($my as $id=>$question) {
+                $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
+                $my[$id]->answers = $answers;
+            }
+        } else {
+            return $this->redirect("/");
+        }
+
+        return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Мои вопросы',
+                'userQuestions' => $my,
+                'curUser' => $this->getUser(),
+                'form' => null
+        ));
+    }
+
+    /*public function incomeAction(Request $request)
+    {
+        $request->setLocale($request->getSession()->get('_locale'));
+
+        $user = $this->getUser();
+
+        $my = array();
+        if ($user instanceof User){
+            $my = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user"=>$user->getId()));
+            foreach ($my as $id=>$question) {
+                $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
+                $my[$id]->answers = $answers;
+            }
+        } else {
+            return $this->redirect("/");
+        }
+
+        return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Мои вопросы',
+            'userQuestions' => $my,
+            'curUser' => $this->getUser(),
+            'form' => null
+        ));
+    }*/
 
     public function diskAction($file_hash)
     {

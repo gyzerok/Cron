@@ -1,246 +1,254 @@
 {% extends '::base.html.twig' %}
-	{% block content %}
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#question_country').change(function(){
-            if($(this).val()){
-                $.ajax({
-                    type: "POST",
-                    data: "country_id=" + $(this).val(),
-                    url: "{{ path('getStates') }}",
-                    success: function(data){
-                        $('#question_state option:gt(0)').remove();
-                        $('#question_state').append(data);
-						document.getElementById('question_state').disabled=false;
-                    }
+{% block content %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#question_country').change(function () {
+                if ($(this).val()) {
+                    $.ajax({
+                        type:"POST",
+                        data:"country_id=" + $(this).val(),
+                        url:"{{ path('getStates') }}",
+                        success:function (data) {
+                            $('#question_state option:gt(0)').remove();
+                            $('#question_state').append(data);
+                            document.getElementById('question_state').disabled = false;
+                        }
+                    });
+                } else {
+                    $('#question_state option:gt(0)').remove();
+                    document.getElementById('question_state').disabled = true;
+                    $('#question_city option:gt(0)').remove();
+                    document.getElementById('question_city').disabled = true;
+                }
+            });
+            $('#question_state').change(function () {
+                if ($(this).val()) {
+                    $.ajax({
+                        type:"POST",
+                        data:"state_id=" + $(this).val(),
+                        url:"{{ path('getCities') }}",
+                        success:function (data) {
+                            $('#question_city option:gt(0)').remove();
+                            $('#question_city').append(data);
+                            document.getElementById('question_city').disabled = false;
+                        }
+                    });
+                }
+                else {
+                    $('#question_city option:gt(0)').remove();
+                    document.getElementById('question_city').disabled = true;
+                }
+            });
+            $('[id="categoryScripture"]').after($('#question_category_1, [for="question_category_1"]'));
+
+
+            //Скрытия блоков с информацией о вопросе
+            var questionHidddenDivs = $('#questionsType').add('.writeQuestionDiv');
+
+            // Появление блока с типом вопросов
+            $('#question_text').focus(function () {
+                $('#questionsType').slideDown();
+                $('.greeting').fadeOut(500);
+            });
+
+            // Появление блока с информацией о вопросе
+            $('#questionsType > input:first').click(function () {
+                $('.writeQuestionDiv').slideDown();
+                $('#question_category').show();
+                $('.rushWrapper').css({
+                    'outline':'none',
+                    'border-bottom':'none'
                 });
-            } else {
-                $('#question_state option:gt(0)').remove();
-				document.getElementById('question_state').disabled=true;
-				$('#question_city option:gt(0)').remove();
-				document.getElementById('question_city').disabled=true;				
-			}
-        });
-        $('#question_state').change(function(){
-            if($(this).val()){
-                $.ajax({
-                    type: "POST",
-                    data: "state_id=" + $(this).val(),
-                    url: "{{ path('getCities') }}",
-                    success: function(data){
-                        $('#question_city option:gt(0)').remove();
-                        $('#question_city').append(data);
-						document.getElementById('question_city').disabled=false;
-                    }
+                $('.writeQuestionDiv').css({
+                    'border-bottom':'2px solid #CC2A03',
+                    'border-left':'2px solid #CC2A03'
+                });
+                document.getElementById('question_category_1').checked = false;
+            });
+
+            $('#questionsType > input:last').click(function () {
+                document.getElementById('categoryRadioButton').checked = false;
+                $('#question_category').hide();
+                $('.writeQuestionDiv').slideDown();
+                $('.rushWrapper').css({
+                    'outline':'2px solid #CC2A03',
+                    'border-bottom':'2px solid #CC2A03',
+                });
+                $('.writeQuestionDiv').css({
+                    'border-bottom':'none',
+                    'border-left':'none'
+                });
+            });
+
+            //Уплывание формы и сброс полей
+            $('input[name=cancelInformation]').click(function () {
+                $('.writeQuestionDiv').slideUp();
+                $('#questionsType').slideUp();
+                $('.greeting').fadeIn(500);
+                $('.questionCost').hide();
+                document.forms.writeQuestion.reset();
+            });
+
+            //Уплывание формы по клику вне области
+            var questionSubs = $('#questionsType').add('.writeQuestionDiv');
+            if (questionSubs.length != 0) {
+                $('body').click(
+                        function () {
+                            questionSubs.slideUp();
+                            document.forms.writeQuestion.reset();
+                            $('.greeting').fadeIn(500);
+                            questionPrivateCost.hide();
+                            $('.questionCost').hide();
+                        }
+                );
+                $('.writeQuestion').click(function (e) {
+                    e.stopPropagation();
                 });
             }
-			else {
-				$('#question_city option:gt(0)').remove();
-				document.getElementById('question_city').disabled=true;					
-			}
+
+            //Развертывание ответов
+            var myAnswer = $('.myAnswer');
+            myAnswer.hide();
+            $('.answerButtonItalic').toggle(function () {
+                $(this).closest('.singleQuestion').next('.myAnswer').slideDown();
+                $(this).val('свернуть');
+            }, function () {
+                $(this).closest('.singleQuestion').next('.myAnswer').slideUp();
+                $(this).val('развернуть');
+            });
+
+            //Расположение элементов страницы
+            $('#questionsType > input:last').css({
+                'margin-left':'137px'
+            });
+            $('#question_category > input').css({
+                'margin-top':'5px'
+            });
+            $('#question_category > label').css({
+                'margin-top':'4px'
+            });
+            $('#question_category_2').css({
+                'margin-top':'2px'
+            });
+            $('#question_category_2 + label').css({
+                'margin-top':'0px'
+            });
+            $('#question_category_15').css({
+                'margin-bottom':'8px'
+            });
+            var questionPrivateCost = $('p.questionPrivateCost');
+            questionPrivateCost.hide();
+
+            //Динамическое изменение текстовой области
+            $('#question_text').autosize();
+
+            //Стоимость приватного вопроса
+            $('#question_private').click(function () {
+                if ($(this).attr('checked')) {
+                    questionPrivateCost.show()
+                }
+                else {
+                    questionPrivateCost.hide()
+                }
+            });
+
+            $('#question_boundary').change(function () {
+                var check = $('#question_boundary').val();
+                if (check >= 50) {
+                    $('.questionCost').show();
+                }
+                else {
+                    $('.questionCost').hide();
+                }
+            });
+
         });
-		$('[id="categoryScripture"]').after($('#question_category_1, [for="question_category_1"]'));
-		
+    </script>
+    {% if form %}
+        <form name="writeQuestion" class="writeQuestion" action="{{ path('index') }}"
+              method="post" {{ form_enctype(form) }}>
+            {{ form_errors(form) }}
 
-	//Скрытия блоков с информацией о вопросе
-	var questionHidddenDivs = $('#questionsType').add('.writeQuestionDiv');
-	
-	// Появление блока с типом вопросов
-	$('#question_text').focus(function() {
-		$('#questionsType').slideDown();
-		$('.greeting').fadeOut(500);
-	});
+            <div class="questionForm">
+                {{ form_errors(form.text) }}
+                {{ form_widget(form.text) }}
+            </div>
+            <div id="questionsType">
+                <input id="categoryRadioButton" class="radioButton" name="Radio" value="Радио кнопка" type="radio">
+                <label for="categoryRadioButton" id="categoryScripture">по категориям</label>
 
-	// Появление блока с информацией о вопросе
-	$('#questionsType > input:first').click(function() {
-		$('.writeQuestionDiv').slideDown();
-		$('#question_category').show();
-		$('.rushWrapper').css({
-		'outline':'none',
-		'border-bottom':'none'
-		});
-		$('.writeQuestionDiv').css({
-		'border-bottom': '2px solid #CC2A03',
-		'border-left': '2px solid #CC2A03'
-		});
-		document.getElementById('question_category_1').checked = false;
-	});
+                <div class="privateButton">
+                    {{ form_label(form.private) }}
+                    {{ form_errors(form.private) }}
+                    {{ form_widget(form.private) }}
+                    <p class="questionPrivateCost">стоимость 5 кредитов</p>
+                </div>
+            </div>
+            <div class="writeQuestionDiv">
+                <div class="category">
+                    {{ form_errors(form.category) }}
+                    {{ form_widget(form.category) }}
+                </div>
+                <div class="rushWrapper">
+                    <div class="chosePlace">
+                        {{ form_label(form.country) }}
+                        {{ form_errors(form.country) }}
+                        {{ form_widget(form.country) }}
 
-	$('#questionsType > input:last').click(function() {	
-		document.getElementById('categoryRadioButton').checked = false;
-		$('#question_category').hide();
-		$('.writeQuestionDiv').slideDown();
-		$('.rushWrapper').css({
-		'outline':'2px solid #CC2A03',
-		'border-bottom':'2px solid #CC2A03',
-		});
-		$('.writeQuestionDiv').css({
-		'border-bottom': 'none',
-		'border-left': 'none'
-		});
-	});	
-	
-	//Уплывание формы и сброс полей
-	$('input[name=cancelInformation]').click(function() {
-		$('.writeQuestionDiv').slideUp();		
-		$('#questionsType').slideUp();
-		$('.greeting').fadeIn(500);
-		$('.questionCost').hide();	
-		document.forms.writeQuestion.reset();
-	});
-	
-	//Уплывание формы по клику вне области
-	var questionSubs = $('#questionsType').add('.writeQuestionDiv');
-	if (questionSubs.length != 0){
-		$('body').click(
-			function(){
-				questionSubs.slideUp();
-				document.forms.writeQuestion.reset();
-				$('.greeting').fadeIn(500);
-				questionPrivateCost.hide();
-				$('.questionCost').hide();					
-			}
-		);
-		$('.writeQuestion').click(function(e){
-			e.stopPropagation();
-		});
-	}
-	
-	//Развертывание ответов
-	var myAnswer = $('.myAnswer');
-	myAnswer.hide();	
-	$('.answerButtonItalic').toggle(function() {
-		$(this).closest('.singleQuestion').next('.myAnswer').slideDown();
-		$(this).val('свернуть');
-	}, function(){
-		$(this).closest('.singleQuestion').next('.myAnswer').slideUp();
-		$(this).val('развернуть');	
-	});
-	
-	//Расположение элементов страницы
-	$('#questionsType > input:last').css({
-		'margin-left': '137px'
-	});
-	$('#question_category > input').css({
-	'margin-top':'5px'
-	});
-	$('#question_category > label').css({
-	'margin-top':'4px'
-	});	
-	$('#question_category_2').css({
-	'margin-top':'2px'
-	});
-	$('#question_category_2 + label').css({
-	'margin-top':'0px'
-	});
-	$('#question_category_15').css({
-	'margin-bottom':'8px'
-	});
-	var questionPrivateCost = $('p.questionPrivateCost');
-	questionPrivateCost.hide();
-	
-	//Динамическое изменение текстовой области
-	$('#question_text').autosize();
-	
-	//Стоимость приватного вопроса
-	$('#question_private').click(function() {
-	if ($(this).attr('checked')) {
-		questionPrivateCost.show()
-	}
-	else {
-		questionPrivateCost.hide()
-	}
-	});
-	
-	$('#question_boundary').change(function() {
-		var check = $('#question_boundary').val();
-		if (check >= 50) {
-			$('.questionCost').show();
-		}
-		else {
-			$('.questionCost').hide();		
-		}
-	});
+                        {{ form_label(form.state) }}
+                        {{ form_errors(form.state) }}
+                        {{ form_widget(form.state) }}
 
-	});	
-</script>
+                        {{ form_label(form.city) }}
+                        {{ form_errors(form.city) }}
+                        {{ form_widget(form.city) }}
+                    </div>
+                    <div class="additionalInformation">
+                        {{ form_label(form.boundary) }}
+                        {{ form_errors(form.boundary) }}
+                        {{ form_widget(form.boundary) }}
+                    </div>
+                    <p class="questionCost">Стоимость 5 кредитов</p>
+                    <input name="cancelInformation" class="submitButton" type="button" value="отмена"/>
+                    <input class="submitButton" type="submit" value="отправить"/>
+                </div>
+            </div>
 
-<form name="writeQuestion" class="writeQuestion" action="{{ path('index') }}" method="post" {{ form_enctype(form) }}>
-	{{ form_errors(form) }}
-	
-	<div class="questionForm">
-		{{ form_errors(form.text) }}
-		{{ form_widget(form.text) }}
-	</div>
-		<div id="questionsType">
-				<input id="categoryRadioButton" class="radioButton" name="Radio" value="Радио кнопка" type="radio">
-				<label for="categoryRadioButton" id="categoryScripture">по категориям</label>
-			<div class="privateButton">
-				{{ form_label(form.private) }}
-				{{ form_errors(form.private) }}
-				{{ form_widget(form.private) }}
-			<p class="questionPrivateCost">стоимость 5 кредитов</p>
-			</div>
-		</div>
-	<div class="writeQuestionDiv">
-		<div class="category">
-			{{ form_errors(form.category) }}
-			{{ form_widget(form.category) }}
-		</div>
-		<div class="rushWrapper">
-			<div class="chosePlace">
-				{{ form_label(form.country) }}	
-				{{ form_errors(form.country) }}
-				{{ form_widget(form.country) }}
+            {{ form_rest(form) }}
+        </form>
 
-				{{ form_label(form.state) }}
-				{{ form_errors(form.state) }}
-				{{ form_widget(form.state) }}
 
-				{{ form_label(form.city) }}
-				{{ form_errors(form.city) }}
-				{{ form_widget(form.city) }}
-			</div>
-			<div class="additionalInformation">
-				{{ form_label(form.boundary) }}
-				{{ form_errors(form.boundary) }}
-				{{ form_widget(form.boundary) }}
-			</div>
-			<p class="questionCost">Стоимость 5 кредитов</p>
-			<input name="cancelInformation" class="submitButton" type="button" value="отмена" />			
-			<input class="submitButton" type="submit" value="отправить" />
-		</div>
-	</div>	
-	
-	{{ form_rest(form) }}
-</form>
+        {% if curUser %}
+        {% else %}
+            <div class="greeting">
+                Здравствуйте! Этот ресурс создан для быстрого поиска людей, обладающих нужными Вам знаниями. Здесь Вы
+                можете найти интересных собеседников и обсуждать, интересующие Вас, вопросы. ADITUS сделает Вашу жизнь
+                проще и сэкономит Вам много времени.
+            </div>
+        {% endif %}
+    {% else %}
+        <h2 class="categoryTitle">Мои вопросы</h2>
+    {% endif %}
 
-	{% if curUser %}	
-	{% else %}
-	<div class="greeting">
-	Здравствуйте! Этот ресурс создан для быстрого поиска людей, обладающих нужными Вам знаниями. Здесь Вы можете найти интересных собеседников и обсуждать, интересующие Вас, вопросы. ADITUS сделает Вашу жизнь проще и сэкономит Вам много времени.
-	</div>
-	{% endif %}
-	
-	{% if userQuestions|length > 0 %}
-			{% for item in userQuestions %}
-			<div class="singleQuestion">
-				<div style="border: 1px solid #fff;" class="userName"></div>
-				<div class="questionDate">{{ item.datetime|date('H:i:s d.m.Y') }}</div>
-				<div class="closeButton"></div>
-				<div style="clear: both;"></div>
-				<div class="questionText">
-					{{ item.text }}
-					<div class="actionButton">
-						<form class="answer">
-							<input class="answerButton" type="button" value="закрыть" />
-							<input class="answerButton" type="button" value="удалить" />
-							<input class="answerButtonItalic" type="button" value="развернуть" />
-						</form>
-					</div>
-				</div>
-			</div>
-			<div class="myAnswer {% if item.answers==null %}no-border{% endif %}">
+    {% if userQuestions|length > 0 %}
+        {% for item in userQuestions %}
+            <div class="singleQuestion">
+                <div style="border: 1px solid #fff;" class="userName"></div>
+                <div class="questionDate">{{ item.datetime|date('H:i:s d.m.Y') }}</div>
+                <div class="closeButton"></div>
+                <div style="clear: both;"></div>
+                <div class="questionText">
+                    {{ item.text }}
+                    <div class="actionButton">
+                        <form class="answer">
+                            <input class="answerButton" type="button" value="закрыть"/>
+                            <input class="answerButton" type="button" value="удалить"/>
+                            <input class="answerButtonItalic" type="button" value="развернуть"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="myAnswer {% if item.answers==null %}no-border{% endif %}">
                 {% for answer in item.answers %}
                     <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}">
                         <div class="userName">{{ answer.getUser().getNick() }}</div>
@@ -257,7 +265,7 @@
                         </div>
                     </div>
                 {% endfor %}
-			</div>
-			{% endfor %}
-	{% endif %}
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
