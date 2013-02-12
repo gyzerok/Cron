@@ -156,7 +156,11 @@ class AjaxController extends Controller
                     return new Response('Fail');
                 //$user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
 
-                $question->addSpams($user);
+                $question->addSpam($user);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($question);
+                $em->flush();
 
                 return new Response('Success');
             }
