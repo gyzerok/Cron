@@ -90,6 +90,7 @@ class MainController extends Controller
             }
         }
 
+        $my_settings = new UserSettings();
         if ($category_id!=''){
             $viewbytime = new \DateTime();
 
