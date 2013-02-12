@@ -100,21 +100,24 @@ class MainController extends Controller
 
             if ($user instanceof User){
                 $my_settings = $this->getDoctrine()->getRepository("CronCronBundle:UserSettings")->findOneBy(array("user"=>$user->getId()));
-                // TODO if $my_settings not empty
-                switch($my_settings->getViewByTime()){
-                    case 'day':
-                        $viewbytime->modify("-1 day");
-                        break;
-                    case 'week':
-                        $viewbytime->modify("-1 week");
-                        break;
-                    case 'month':
-                        $viewbytime->modify("-1 month");
-                        break;
-                    case 'all':
-                    default:
-                        $viewbytime->modify("-100 years");
-                        break;
+                if ($my_settings instanceof UserSettings){
+                    switch($my_settings->getViewByTime()){
+                        case 'day':
+                            $viewbytime->modify("-1 day");
+                            break;
+                        case 'week':
+                            $viewbytime->modify("-1 week");
+                            break;
+                        case 'month':
+                            $viewbytime->modify("-1 month");
+                            break;
+                        case 'all':
+                        default:
+                            $viewbytime->modify("-100 years");
+                            break;
+                    }
+                } else {
+                    $viewbytime->modify("-100 years");
                 }
             } else {
                 $viewbytime->modify("-100 years");
@@ -136,36 +139,38 @@ class MainController extends Controller
 
             if ($user instanceof User){
                 $my_settings = $this->getDoctrine()->getRepository("CronCronBundle:UserSettings")->findOneBy(array("user"=>$user->getId()));
+                if ($my_settings instanceof UserSettings){
+                    switch($my_settings->getViewByTime()){
+                        case 'day':
+                            $viewbytime->modify("-1 day");
+                            break;
+                        case 'week':
+                            $viewbytime->modify("-1 week");
+                            break;
+                        case 'month':
+                            $viewbytime->modify("-1 month");
+                            break;
+                        case 'all':
+                        default:
+                            $viewbytime->modify("-100 years");
+                            break;
+                    }
 
-                switch($my_settings->getViewByTime()){
-                    case 'day':
-                        $viewbytime->modify("-1 day");
-                        break;
-                    case 'week':
-                        $viewbytime->modify("-1 week");
-                        break;
-                    case 'month':
-                        $viewbytime->modify("-1 month");
-                        break;
-                    case 'all':
-                    default:
-                        $viewbytime->modify("-100 years");
-                        break;
+                    $view_cats = array();
+                    foreach ($my_settings->getViewCats() as $id=>$view_cat) {
+                        array_push($view_cats, $id);
+                    }
+
+                    $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Category")/*->findAll();*/
+                        ->createQueryBuilder('category')
+                        ->where('category.id IN (:cid)')
+                        ->setParameter('cid', $view_cats)
+                        ->getQuery()
+                        ->getResult();
+                } else {
+                    $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Category")->findAll();
+                    $viewbytime->modify("-100 years");
                 }
-
-                $view_cats = array();
-                foreach ($my_settings->getViewCats() as $id=>$view_cat) {
-                    array_push($view_cats, $id);
-                }
-
-                $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Category")/*->findAll();*/
-                    ->createQueryBuilder('category')
-                    ->where('category.id IN (:cid)')
-                    ->setParameter('cid', $view_cats)
-                    ->getQuery()
-                    ->getResult();
-
-
             } else {
                 $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Category")->findAll();
                 $viewbytime->modify("-100 years");
