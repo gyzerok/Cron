@@ -21,12 +21,12 @@ class MainController extends Controller
     {
         $request->setLocale($request->getSession()->get('_locale'));
 
-        /*$numAnswers = array(10 => '10', 20 => '20');
+        $numAnswers = array(10 => '10', 20 => '20');
         if ($this->getUser() instanceof User)
-            $numAnswers = array(10 => '10', 20 => '20', 50 => '50', 100 => '100', 1000 => '1000');*/
+            $numAnswers = array(10 => '10', 20 => '20', 50 => '50', 100 => '100', 1000 => '1000');
 
         $question = new Question();
-        $form = $this->createForm(new NewQuestion(), $question);
+        $form = $this->createForm(new NewQuestion($this->getUser() instanceof User, $numAnswers), $question);
 
         if ($request->isMethod('POST'))
         {
@@ -36,7 +36,11 @@ class MainController extends Controller
             {
                 $user = $this->getUser();
                 if (!$user instanceof User)
+                {
                     $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+                    if ($question->getBoundary() > 20)
+                        $question->setBoundary(20);
+                }
 
                 $question->setUser($user);
 
@@ -96,7 +100,7 @@ class MainController extends Controller
 
             if ($user instanceof User){
                 $my_settings = $this->getDoctrine()->getRepository("CronCronBundle:UserSettings")->findOneBy(array("user"=>$user->getId()));
-
+                // TODO if $my_settings not empty
                 switch($my_settings->getViewByTime()){
                     case 'day':
                         $viewbytime->modify("-1 day");

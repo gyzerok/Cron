@@ -13,15 +13,24 @@ use Doctrine\ORM\EntityRepository;
 
 class NewQuestion extends AbstractType
 {
+    protected $userAuth;
+    protected $numAnswers;
+
+    public function __construct($userAuth, $numAnswers)
+    {
+        $this->userAuth = $userAuth;
+        $this->numAnswers = $numAnswers;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('text', 'textarea', array('label' => 'Вопрос', 'max_length' => 130))
                 ->add('category', null, array('label' => 'Категория', 'expanded' => true))
-                ->add('private', 'checkbox', array('label' => 'закрытый', 'required' => false))
+                ->add('private', 'checkbox', array('label' => 'закрытый', 'required' => false, 'disabled' => !$this->userAuth))
                 ->add('country', 'entity', array('label' => 'Страна', 'class' => 'CronCronBundle:Country', 'property' => 'name', 'empty_value' => 'Любая страна', 'required' => false))
                 ->add('state', 'entity', array('label' => 'Регион', 'class' => 'CronCronBundle:State', 'property' => 'name', 'empty_value' => 'Любой регион', 'disabled' => true, 'required' => false))
                 ->add('city', 'entity', array('label' => 'Город', 'class' => 'CronCronBundle:City', 'property' => 'name', 'empty_value' => 'Любой город', 'disabled' => true, 'required' => false))
-                ->add('boundary', 'choice', array('label' => 'Минимальная наполняемость ответами', 'choices' => array(10 => '10', 20 => '20', 50 => '50', 100 => '100', 1000 => '1000')));
+                ->add('boundary', 'choice', array('label' => 'Минимальная наполняемость ответами', 'choices' => $this->numAnswers));
 
         $factory = $builder->getFormFactory();
 
