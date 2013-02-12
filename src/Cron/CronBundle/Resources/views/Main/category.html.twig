@@ -12,9 +12,9 @@
         <script type="text/javascript">
             //Спам
             $('.spamButton').click(function(){
-                var question_id = $(this).closest('.singleQuestion').attr('id');
+                var question_id = $(this).closest('.singleQuestion').attr('data-id');
                 var that = $(this);
-                question_id = id.replace('question_', '');
+                question_id = question_id.replace('data-', '');
                 $.ajax({'url': '{{ path("spamItem") }}', 'type':'post', 'data': 'question_id='+question_id,
                     'Success': function(){
                         that.css({
