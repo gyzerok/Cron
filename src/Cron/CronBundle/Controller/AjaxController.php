@@ -121,7 +121,7 @@ class AjaxController extends Controller
     {
         if ($request->isMethod('POST'))
         {
-            if ($questionId = $request->get("question_id"))
+            if ($questionId = $request->get('question_id'))
             {
                 $question = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findOneById($questionId);
                 if (!$question instanceof \Cron\CronBundle\Entity\Question)
@@ -134,7 +134,31 @@ class AjaxController extends Controller
 
                 $question->addLikes($user);
 
-                return new Response('Succsess');
+                return new Response('Success');
+            }
+        }
+
+        return new Response('Fail');
+    }
+
+    public function spamItemAction(Request $request)
+    {
+        if ($request->isMethod('POST'))
+        {
+            if ($questionId = $request->get('question_id'))
+            {
+                $question = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findOneById($questionId);
+                if (!$question instanceof \Cron\CronBundle\Entity\Question)
+                    return new Response('Fail');
+
+                $user = $this->getUser();
+                if (!$user instanceof User)
+                    return new Response('Fail');
+                //$user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+
+                $question->addSpams($user);
+
+                return new Response('Success');
             }
         }
 
