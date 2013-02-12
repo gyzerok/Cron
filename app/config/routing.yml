@@ -67,6 +67,10 @@ likeItem:
   pattern:  /ajax/likeItem
   defaults: { _controller: CronCronBundle:Ajax:likeItem }
 
+spamItem:
+  pattern:  /ajax/spamItem
+  defaults: { _controller: CronCronBundle:Ajax:spamItem }
+
 postAnswer:
   pattern:  /ajax/postAnswer
   defaults: { _controller: CronCronBundle:Ajax:postAnswer }

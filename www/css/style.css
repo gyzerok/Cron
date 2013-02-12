@@ -671,6 +671,14 @@ h2.categoryH2 {
 	text-decoration: none;
 }
 
+.categoryTitle {
+	font-size: 24px;
+	margin-left: 17px;
+	margin-top: 10px;
+	color: #323223;
+	text-transform: capitalize;	
+}
+
 .greeting {
 	font-size: 14px;
 	font-family: 'Tahoma';
@@ -683,7 +691,7 @@ h2.categoryH2 {
 	width: 709px;
 	border: 1px solid #965565;
 	border-radius: 7px;
-	margin: 10px auto 0px auto;
+	margin: 5px auto 0px auto;
 	overflow: hidden;
 }
 
@@ -1612,6 +1620,7 @@ span.spaceLeft {
     position: absolute;
     left: 0;
     top: -10px;
+	overflow: auto;
 }
 
 h2.dialogTitle {	
@@ -1701,13 +1710,13 @@ h2.dialogTitle {
 }
 
 .userLinkAddWindow {
-	position: relative;
-	top: 20%;
+	position: fixed;
+	top: 50%;
 	left: 50%;
 	width: 400px;
-	margin-left: -200px;
+	margin-left: -275px;
 	height: 150px;
-	margin-top: -170px;
+	margin-top: -100px;
 	padding: 20px;
 	border: 1px solid #A02B1C;
 	background: #ffffff;
@@ -1753,6 +1762,7 @@ h2.dialogTitle {
     top: 150px;
     left: 50%;
     margin-left: -330px;
+	overflow: auto;
 }
 
 .closeInviteWindow {
@@ -2141,6 +2151,13 @@ a.toggleSettingsGroup:hover {
 	background-color: #fff;
 }
 
+.article-list {
+	width: 728px;
+	display: inline-block;
+	max-height: 790px;
+	overflow: auto;
+}
+
 .article-categories {
 	margin-left: 16px;
 }
@@ -2203,6 +2220,9 @@ a.unbookmarkArticle {
 	font-family: 'Cambria';
 	color: #000;
 	margin-left: 5px;
+	width: 712px;
+	max-height: 790px;
+	overflow: auto;
 }
 
 .article-notes-list a {

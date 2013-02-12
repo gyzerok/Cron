@@ -1,5 +1,5 @@
 {% extends '::base.html.twig' %}
-	
+
 	{% block navigation %}		
 	<div id="nav">
 		<div class="orderQuestions"><a href="{{ path('index') }}">{% trans %}Главная{% endtrans %}</a></div>
@@ -9,12 +9,29 @@
 	{% endblock %}
 
 	{% block content %}
+        <script type="text/javascript">
+            //Спам
+			$(document).ready(function(){
+				$('.spamButton').click(function(){
+					var question_id = $(this).closest('.singleQuestion').attr('data-id');
+					var that = $(this);
+					$.ajax({'url': '{{ path("spamItem") }}', 'type':'post', 'data': 'question_id='+question_id,
+						'Success': function(){
+							alert('После запроса!');
+							that.css({
+								'background-image': 'url(../i/spamActive.jpg)'
+							});
+						}
+					});
+				});
+			});
+        </script>
         {% for category in categorized_questions %}
-            <h2 class="categoryH2">{{ category.getName() }}</h2>
+            <h2 class="categoryTitle">{{ category.getName() }}</h2>
             <div id="showQuestion">
                 {% for item in category.questions %}
                     <div class="singleQuestion" data-id="{{ item.getId() }}">
-                        <div class="userName">{{ item.getUser().getNick() }}</div>
+                        <div class="userName">{{ item.getUser() }}</div>
                         <div class="questionDate">{{ item.datetime|date('d.m.Y H:i') }}</div>
                         <div class="closeButton"></div>
                         <div style="clear: both;"></div>
