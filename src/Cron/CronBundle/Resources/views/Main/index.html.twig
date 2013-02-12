@@ -162,20 +162,6 @@
 		}
 	});
 	
-	//Спам
-	$('.spamButton').click(function(){
-		var question_id = $(this).closest('.singleQuestion').attr('id');
-		var that = $(this);
-		question_id = id.replace('question_', '');
-			$.ajax({'url': '{{ path("spanItem") }}', 'type':'post', 'data': 'question_id='+question_id,
-				'success': function(){
-				that.css({
-					'background-image': 'url(../i/spamActive.jpg)'
-				});
-				}
-			});
-	});
-	
 
 	});	
 </script>
