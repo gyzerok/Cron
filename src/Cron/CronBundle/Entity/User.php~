@@ -119,6 +119,7 @@ class User implements UserInterface, \Serializable
      */
     private $country;
 
+<<<<<<< HEAD
     /**
      * @var integer $role
      *
@@ -126,6 +127,8 @@ class User implements UserInterface, \Serializable
      */
     private $role = 0;
 
+=======
+>>>>>>> 9feb619d23e785209efc7b1f646332bfbbb5546b
 
 
     /**
