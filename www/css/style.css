@@ -1620,6 +1620,7 @@ span.spaceLeft {
     position: absolute;
     left: 0;
     top: -10px;
+	overflow: auto;
 }
 
 h2.dialogTitle {	
@@ -1761,6 +1762,7 @@ h2.dialogTitle {
     top: 150px;
     left: 50%;
     margin-left: -330px;
+	overflow: auto;
 }
 
 .closeInviteWindow {
@@ -2149,6 +2151,13 @@ a.toggleSettingsGroup:hover {
 	background-color: #fff;
 }
 
+.article-list {
+	width: 728px;
+	display: inline-block;
+	max-height: 790px;
+	overflow: auto;
+}
+
 .article-categories {
 	margin-left: 16px;
 }
@@ -2211,6 +2220,9 @@ a.unbookmarkArticle {
 	font-family: 'Cambria';
 	color: #000;
 	margin-left: 5px;
+	width: 712px;
+	max-height: 790px;
+	overflow: auto;
 }
 
 .article-notes-list a {
