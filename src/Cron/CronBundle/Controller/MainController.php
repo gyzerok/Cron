@@ -100,21 +100,24 @@ class MainController extends Controller
 
             if ($user instanceof User){
                 $my_settings = $this->getDoctrine()->getRepository("CronCronBundle:UserSettings")->findOneBy(array("user"=>$user->getId()));
-                // TODO if $my_settings not empty
-                switch($my_settings->getViewByTime()){
-                    case 'day':
-                        $viewbytime->modify("-1 day");
-                        break;
-                    case 'week':
-                        $viewbytime->modify("-1 week");
-                        break;
-                    case 'month':
-                        $viewbytime->modify("-1 month");
-                        break;
-                    case 'all':
-                    default:
-                        $viewbytime->modify("-100 years");
-                        break;
+                if ($my_settings instanceof UserSettings){
+                    switch($my_settings->getViewByTime()){
+                        case 'day':
+                            $viewbytime->modify("-1 day");
+                            break;
+                        case 'week':
+                            $viewbytime->modify("-1 week");
+                            break;
+                        case 'month':
+                            $viewbytime->modify("-1 month");
+                            break;
+                        case 'all':
+                        default:
+                            $viewbytime->modify("-100 years");
+                            break;
+                    }
+                } else {
+                    $viewbytime->modify("-100 years");
                 }
             } else {
                 $viewbytime->modify("-100 years");
