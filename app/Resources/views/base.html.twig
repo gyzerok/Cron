@@ -89,13 +89,18 @@
                 <h2 class="chatInviteTitle">Приглашения в чат</h2>
                 <div class="invites-container"></div>
             </div>
-
+			<script>
+			$(function() {
+				$( ".userLinkAddWindow" ).draggable();
+			});
+			</script>
             <div class="userLinkAddWindow" style="display:none;">
                 <div class="closeUserLinkWindow"><a href=""></a></div>
                 <form action="/ajax/newUserLink" method="post">
-                    <label for="user-link-title">Заголовок:</label> <input type="text" id="user-link-title" name="title"><br/>
-                    <label for="user-link-url">Ссылка:</label> <input type="text" id="user-link-url" name="url"><br/>
-                    <input type="submit" class="saveUserLink" value="сохранить"> <input type="button" class="cancelUserLink" value="отменить">
+                    <label for="user-link-title">Название:</label> <input type="text" maxlength="20" id="user-link-title" name="title"><span>Масимум 20 символов</span><br/>
+					<div style="clear: both;"></div>
+                    <label for="user-link-url">Ссылка:</label> <input type="text" id="user-link-url" name="url">
+                    <input type="button" class="cancelUserLink" value="отменить"> <input type="submit" class="saveUserLink" value="сохранить">
                 </form>
             </div>
 		</div>

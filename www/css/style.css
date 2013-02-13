@@ -1716,11 +1716,12 @@ h2.dialogTitle {
 	width: 538px;
 	margin-left: -399px;
 	height: 158px;
-	margin-top: -20px;
-	padding: 20px;
-	border: 2px solid #3f4764;
-	border-radius: 23px;
+	margin-top: -93px;
+	padding: 3px 0 0 17px;
+	border: 3px solid #556183;
+	border-radius: 18px;
 	background: #ffffff;
+	z-index: 6;
 }
 
 .closeUserLinkWindow {
@@ -1735,6 +1736,75 @@ h2.dialogTitle {
     height: 13px;
     background: url(../i/closeDialogs.png) no-repeat;
     cursor: pointer;
+}
+
+.userLinkAddWindow form label {
+	font-family: 'Cambria';
+	font-size: 24px;
+	display: block;
+	margin-left: 8px;
+}
+
+.userLinkAddWindow form input#user-link-title {
+	font-family: 'Cambria';
+	font-size: 24px;
+	display: block;
+	width: 260px;
+	height: 31px;
+	border: 1px solid #5b6376;
+	border-radius: 5px;
+	margin-top: 3px;
+	float: left;
+}
+
+.userLinkAddWindow span {
+	display: block;
+	float: right;
+	font-family: 'Arial';
+	font-size: 14px;
+	color: #7e7e7e;
+	margin: 12px 120px 0 0;
+}
+
+.userLinkAddWindow form input#user-link-url {
+	font-family: 'Cambria';
+	font-size: 24px;
+	display: block;
+	width: 500px;
+	height: 31px;
+	border: 1px solid #5b6376;
+	border-radius: 5px;
+	margin-top: 3px;
+}
+
+input.saveUserLink {
+	float: right;
+	width: 88px;
+	height: 20px;
+	border: 1px solid gray;
+	cursor: pointer;
+	border-radius: 6px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 14px;
+	background-color: #fff;
+	margin-top: 7px;
+	margin-right: 8px;
+}
+
+input.cancelUserLink {
+	float: right;
+	width: 88px;
+	height: 20px;
+	border: 1px solid gray;
+	cursor: pointer;
+	border-radius: 6px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 14px;
+	background-color: #fff;
+	margin-top: 7px;
+	margin-right: 8px;	
 }
 
 .closeNotepad {
