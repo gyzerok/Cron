@@ -790,6 +790,10 @@ h2.categoryH2 {
 	margin-right: 3px;
 }
 
+.spamButtonActive {
+	background-image: url(../i/spamActive.jpg);
+}
+
 .likeButton {
 	width: 18px;
 	height: 22px;
@@ -798,6 +802,10 @@ h2.categoryH2 {
 	background-size: 100%;
 	cursor: pointer;
 	margin-right: 3px;
+}
+
+.likeButtonActive {
+	background-image: url(../i/likeActive.jpg);
 }
 
 .repostButton {
@@ -1810,13 +1818,21 @@ input.cancelUserLink {
     position: fixed;
     top: 50%;
     left: 50%;
-    width: 400px;
+    width: 515px;
     margin-left: -275px;
-    height: 150px;
     margin-top: -100px;
-    padding: 20px;
-    border: 1px solid #A02B1C;
+	padding: 5px 0 0 15px;
+    border: 3px solid #556183;
+	border-radius: 10px;
     background: #ffffff;
+	z-index: 6;
+}
+
+.feedbackWindow h3 {
+	font-family: 'Cambria';
+	font-size: 24px;
+	color: #000;
+	margin-left: 10px;
 }
 
 .closeFeedbackWindow {
@@ -1831,6 +1847,53 @@ input.cancelUserLink {
     height: 13px;
     background: url(../i/closeDialogs.png) no-repeat;
     cursor: pointer;
+}
+
+.feedbackWindow form label {
+	font-family: 'Cambria';
+	font-size: 24px;
+	color: #000;
+	margin-left: 10px;
+}
+
+.feedbackWindow form textarea {
+	resize: none;
+	font-family: 'Cambria';
+	font-size: 18px;
+	height: 70px;
+	width: 491px;
+	margin-top: 3px;
+}
+
+input.submit-feedback {
+	float: right;
+	width: 88px;
+	height: 20px;
+	border: 1px solid gray;
+	cursor: pointer;
+	border-radius: 6px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 14px;
+	background-color: #fff;
+	margin-top: 7px;
+	margin-right: 8px;
+	margin-bottom: 8px;	
+}
+
+input.cancel-feedback {
+	float: right;
+	width: 88px;
+	height: 20px;
+	border: 1px solid gray;
+	cursor: pointer;
+	border-radius: 6px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 14px;
+	background-color: #fff;
+	margin-top: 7px;
+	margin-right: 8px;
 }
 
 .closeNotepad {

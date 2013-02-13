@@ -18,10 +18,7 @@
 					$.ajax({'url': '{{ path("spamItem") }}', 'type':'post', 'data': 'question_id='+question_id,
 						'success': function(){
 							alert('Вопрос помечен как спам!');
-							that.css({
-								'background-image': 'url(../i/spamActive.jpg)',
-								'background-size': '100%'
-							});
+							that.addClass("spamButtonActive");
 						}
 					});
 				});
@@ -32,9 +29,7 @@
 					var that = $(this);
 					$.ajax({'url': '{{ path("likeItem") }}', 'type':'post', 'data': 'question_id='+question_id,
 						'success': function(){
-							that.css({
-								'background-image': 'url(../i/likeActive.jpg)'
-							});
+							that.addClass("likeButtonActive");
 						}
 					});
 				});			
