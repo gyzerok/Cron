@@ -1,0 +1,11 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <h2 class="categoryH2">{{ title }}</a></h2>
+    <form action="" method="post">
+        <label for="credits-currency">1 кредит =</label> <input type="text" id="credits-currency" name="credit_currency" value="{{ credits_settings.getCreditCurrency() }}"> руб.<br>
+        <label for="credits-answers50">50 ответов =</label> <input type="text" id="credits-answers50" name="answers50" value="{{ credits_settings.getAnswers50() }}"> кредитов<br>
+        <label for="credits-answers100">100 ответов =</label> <input type="text" id="credits-answers100" name="answers100" value="{{ credits_settings.getAnswers100() }}"> кредитов<br>
+        <label for="credits-answers1000">1000 ответов =</label> <input type="text" id="credits-answers1000" name="answers1000" value="{{ credits_settings.getAnswers1000() }}"> кредитов<br>
+        <input type="submit" value="сохранить">
+    </form>
+{% endblock %}

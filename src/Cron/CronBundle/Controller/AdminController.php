@@ -150,9 +150,6 @@ class AdminController extends Controller
     public function sendFeedbackAction(Request $request)
     {
         $user = $this->getUser();
-        /*if (!$user instanceof User) {
-            return $this->redirect("/");
-        }*/
 
         $feedback = new Feedback();
         $feedback->setType($request->get('type'))
@@ -164,6 +161,31 @@ class AdminController extends Controller
         } else {
             $feedback->setEmail($request->get('email'));
         }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($feedback);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
+    public function replyFeedbackAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return new Response("Fail");
+        }
+
+        $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->find($request->get('feedback'));
+
+        $mailer = $this->get('mailer');
+        $message = \Swift_Message::newInstance(null, null, "text/html")
+            ->setSubject('Ответ на сообщение "'.$feedback->getText().'"')
+            ->setFrom("aditus777@gmail.com")
+            ->setTo($feedback->getEmail())
+            ->setBody('<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body>' . $request->get('text'));
+        $mailer->send($message);
+
+        $feedback->setAnswered(1);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($feedback);
@@ -222,58 +244,68 @@ class AdminController extends Controller
             return $this->redirect("/");
         }
 
-        $srvmsg = $this->getDoctrine()->getRepository("CronCronBundle:AdminSettings")->findOneBy(array("option"=>"srvmsg"));
+        $srvmsg = $this->getDoctrine()->getRepository("CronCronBundle:AdminSettings")->find(1);
         if (!$srvmsg instanceof AdminSettings){
             $srvmsg = new AdminSettings();
+            $srvmsg->setCreditCurrency(5)
+                ->setAnswers50(5)
+                ->setAnswers100(10)
+                ->setAnswers1000(50);
         }
 
         if ($request->isMethod('post')){
-            $srvmsg->setOption('srvmsg')
-                ->setValue($request->get('srvmsg'));
+            $srvmsg->setSrvmsg($request->get('srvmsg'));
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($srvmsg);
             $em->flush();
         }
         return $this->render("CronCronBundle:Admin:srvmsg.html.twig", array('title' => 'Сервисное сообщение',
-            'srvmsg' => $srvmsg,
+            'srvmsg' => $srvmsg->getSrvmsg(),
             'curUser' => $user
         ));
     }
 
     public function getHeaderSrvmsgAction(Request $request)
     {
-        $srvmsg = $this->getDoctrine()->getRepository("CronCronBundle:AdminSettings")->findOneBy(array("option"=>"srvmsg"));
+        $srvmsg = $this->getDoctrine()->getRepository("CronCronBundle:AdminSettings")->find(1);
         if (!$srvmsg instanceof AdminSettings){
             $srvmsg = new AdminSettings();
         }
 
-        return new Response($srvmsg->getValue());
+        return new Response($srvmsg->getSrvmsg());
     }
 
-    public function replyFeedbackAction(Request $request)
+    public function creditsAction(Request $request)
     {
         $user = $this->getUser();
         if (!$user instanceof User || $user->getRole() < 2) {
-            return new Response("Fail");
+            return $this->redirect("/");
         }
 
-        $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->find($request->get('feedback'));
+        $admin_settings = $this->getDoctrine()->getRepository("CronCronBundle:AdminSettings")->find(1);
+        if (!$admin_settings instanceof AdminSettings){
+            $admin_settings = new AdminSettings();
+            $admin_settings->setCreditCurrency(5)
+                ->setAnswers50(5)
+                ->setAnswers100(10)
+                ->setAnswers1000(50);
+        }
 
-        $mailer = $this->get('mailer');
-        $message = \Swift_Message::newInstance(null, null, "text/html")
-            ->setSubject('Ответ на сообщение "'.$feedback->getText().'"')
-            ->setFrom("aditus777@gmail.com")
-            ->setTo($feedback->getEmail())
-            ->setBody('<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body>' . $request->get('text'));
-        $mailer->send($message);
+        if ($request->isMethod('post')){
+            $admin_settings->setCreditCurrency($request->get('credit_currency'))
+                ->setAnswers50($request->get('answers50'))
+                ->setAnswers100($request->get('answers100'))
+                ->setAnswers1000($request->get('answers1000'));
 
-        $feedback->setAnswered(1);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($feedback);
-        $em->flush();
-        return new Response("SUCCESS");
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($admin_settings);
+            $em->flush();
+        }
+        return $this->render("CronCronBundle:Admin:credits.html.twig", array('title' => 'Настройки кредитов',
+            'credits_settings' => $admin_settings,
+            'curUser' => $user
+        ));
     }
 
 }

@@ -22,19 +22,39 @@ class AdminSettings {
     protected $id;
 
     /**
-     * @var string $option
+     * @var string $srvmsg
      *
-     * @ORM\Column(name="admin_option", type="string", length=256, nullable=true)
+     * @ORM\Column(name="srvmsg", type="text", nullable=true)
      */
-    protected $option;
+    protected $srvmsg;
 
     /**
-     * @var string $value
+     * @var integer $credit_currency
      *
-     * @ORM\Column(name="admin_value", type="string", length=256, nullable=true)
+     * @ORM\Column(name="credit_currency", type="integer", nullable=false)
      */
-    protected $value;
+    protected $credit_currency;
 
+    /**
+     * @var integer $credit_currency
+     *
+     * @ORM\Column(name="answers50", type="integer", nullable=false)
+     */
+    protected $answers50;
+
+    /**
+     * @var integer $credit_currency
+     *
+     * @ORM\Column(name="answers100", type="integer", nullable=false)
+     */
+    protected $answers100;
+
+    /**
+     * @var integer $credit_currency
+     *
+     * @ORM\Column(name="answers1000", type="integer", nullable=false)
+     */
+    protected $answers1000;
 
 
     /**
@@ -48,48 +68,117 @@ class AdminSettings {
     }
 
     /**
-     * Set option
+     * Set srvmsg
      *
-     * @param string $option
+     * @param string $srvmsg
      * @return AdminSettings
      */
-    public function setOption($option)
+    public function setSrvmsg($srvmsg)
     {
-        $this->option = $option;
+        $this->srvmsg = $srvmsg;
     
         return $this;
     }
 
     /**
-     * Get option
+     * Get srvmsg
      *
      * @return string 
      */
-    public function getOption()
+    public function getSrvmsg()
     {
-        return $this->option;
+        return $this->srvmsg;
     }
 
     /**
-     * Set value
+     * Set credit_currency
      *
-     * @param string $value
+     * @param integer $creditCurrency
      * @return AdminSettings
      */
-    public function setValue($value)
+    public function setCreditCurrency($creditCurrency)
     {
-        $this->value = $value;
+        $this->credit_currency = $creditCurrency;
     
         return $this;
     }
 
     /**
-     * Get value
+     * Get credit_currency
      *
-     * @return string 
+     * @return integer 
      */
-    public function getValue()
+    public function getCreditCurrency()
     {
-        return $this->value;
+        return $this->credit_currency;
+    }
+
+    /**
+     * Set answers50
+     *
+     * @param integer $answers50
+     * @return AdminSettings
+     */
+    public function setAnswers50($answers50)
+    {
+        $this->answers50 = $answers50;
+    
+        return $this;
+    }
+
+    /**
+     * Get answers50
+     *
+     * @return integer 
+     */
+    public function getAnswers50()
+    {
+        return $this->answers50;
+    }
+
+    /**
+     * Set answers100
+     *
+     * @param integer $answers100
+     * @return AdminSettings
+     */
+    public function setAnswers100($answers100)
+    {
+        $this->answers100 = $answers100;
+    
+        return $this;
+    }
+
+    /**
+     * Get answers100
+     *
+     * @return integer 
+     */
+    public function getAnswers100()
+    {
+        return $this->answers100;
+    }
+
+    /**
+     * Set answers1000
+     *
+     * @param integer $answers1000
+     * @return AdminSettings
+     */
+    public function setAnswers1000($answers1000)
+    {
+        $this->answers1000 = $answers1000;
+    
+        return $this;
+    }
+
+    /**
+     * Get answers1000
+     *
+     * @return integer 
+     */
+    public function getAnswers1000()
+    {
+        return $this->answers1000;
     }
 }
