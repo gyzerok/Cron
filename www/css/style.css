@@ -792,6 +792,7 @@ h2.categoryH2 {
 
 .spamButtonActive {
 	background-image: url(../i/spamActive.jpg);
+	background-size: 100%;	
 }
 
 .likeButton {
@@ -806,6 +807,7 @@ h2.categoryH2 {
 
 .likeButtonActive {
 	background-image: url(../i/likeActive.jpg);
+	background-size: 100%;	
 }
 
 .repostButton {
@@ -817,6 +819,11 @@ h2.categoryH2 {
 	margin-top: 2px;
 	cursor: pointer;
 	margin-right: 3px;
+}
+
+.repostButtonActive {
+	background: url(/i/repostButtonActive.jpg) no-repeat;
+	background-size: 100%;	
 }
 
 .arrowButton {
