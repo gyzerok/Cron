@@ -1770,6 +1770,7 @@ h2.dialogTitle {
 	border-radius: 5px;
 	margin-top: 3px;
 	float: left;
+	padding-left: 8px;
 }
 
 .userLinkAddWindow span {
@@ -1778,18 +1779,19 @@ h2.dialogTitle {
 	font-family: 'Arial';
 	font-size: 14px;
 	color: #7e7e7e;
-	margin: 12px 120px 0 0;
+	margin: 12px 111px 0 0;
 }
 
 .userLinkAddWindow form input#user-link-url {
 	font-family: 'Cambria';
 	font-size: 24px;
 	display: block;
-	width: 500px;
+	width: 492px;
 	height: 31px;
 	border: 1px solid #5b6376;
 	border-radius: 5px;
 	margin-top: 3px;
+	padding-left: 8px;
 }
 
 input.saveUserLink {
