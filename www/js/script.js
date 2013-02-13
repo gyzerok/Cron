@@ -85,13 +85,14 @@ $(document).ready(function() {
     });
 
     $(".repostButton").live('click', function(){
+		$(this).addClass('repostButtonActive');
         $.ajax({
             url: '/ajax/repostQuestion',
             data:{
                 question: $(this).closest('.singleQuestion').data('id')
             },
             success: function(response){
-                alert('Вопрос добавлен в заметки.')
+                alert('Вопрос добавлен в заметки.');
             }
         });
     });
