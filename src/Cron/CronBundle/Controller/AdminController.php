@@ -251,4 +251,32 @@ class AdminController extends Controller
         return new Response($srvmsg->getValue());
     }
 
+    public function replyFeedbackAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return new Response("Fail");
+        }
+
+//        $feedback = new Feedback();
+        $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->find($request->get('feedback'));
+
+        /*$feedback->setType($request->get('type'))
+            ->setText($request->get('text'))
+            ->setDatetime(new \DateTime());
+        if ($user instanceof User){
+            $feedback->setUser($user);
+            $feedback->setEmail($user->getUsername());
+        } else {
+            $feedback->setEmail($request->get('email'));
+        }*/
+        //todo доделать
+        $feedback->setAnswered(1);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($feedback);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
 }

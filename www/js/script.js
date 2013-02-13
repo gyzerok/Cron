@@ -27,7 +27,7 @@ $(document).ready(function() {
             },
             success: function(response){
                 answerForm.prevAll('.myAnswer').first().append(response);
-
+                answerForm.remove();
             }
         });
         answerForm.find('.answerTextarea').val('');
@@ -81,6 +81,32 @@ $(document).ready(function() {
         });
         $("#feedback-text").val(null);
         $(".closeFeedbackWindow").click();
+        return false;
+    });
+
+    $(".open-reply-feedback-window").click(function(){
+        $(".replyFeedbackWindow").show();
+        $("#reply-text").focus();
+        $("#feedback-id").val($(this).closest('.feedback-li').data('id'));
+        return false;
+    });
+    $(".closeReplyFeedbackWindow").click(function(){
+        $(this).closest('.replyFeedbackWindow').hide();
+        return false;
+    });
+    $(".cancelReplyFeedback").click(function(){
+        $(this).closest('.replyFeedbackWindow').hide();
+        return false;
+    });
+    $(".submitReplyFeedback").click(function(){
+        var form = $(this).closest('form');
+        form.ajaxSubmit({
+            success: function(response){
+                alert('Ответ отправлен!');
+                $('.feedback-li[data-id='+$('#feedback-id').val()+']').remove();
+            }
+        });
+        $(".closeReplyFeedbackWindow").click();
         return false;
     });
 

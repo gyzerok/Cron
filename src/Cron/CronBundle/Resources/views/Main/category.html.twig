@@ -59,7 +59,7 @@
                     </div>
                     {% if category.getId()==null %}
                         <div class="myAnswer {% if item.answers==null %}no-border{% endif %}">
-                            {#{% if item.getPrivate()>0 %}#}
+                            {% if item.getPrivate()>0 %}
                                 {% for answer in item.answers %}
                                     <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}">
                                         <div class="userName">{{ answer.getUser().getNick() }}</div>
@@ -76,9 +76,11 @@
                                         </div>
                                     </div>
                                 {% endfor %}
-                            {#{% endif %}#}
+                            {% endif %}
                         </div>
                     {% else %}
+                        <div class="myAnswer no-border">
+                        </div>
                         <form class="answerForm">
                             <textarea class="answerTextarea" ></textarea>
                             <div class="answerFormNavigation">

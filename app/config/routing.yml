@@ -135,6 +135,10 @@ sendFeedback:
   pattern:  /ajax/sendFeedback
   defaults: { _controller: CronCronBundle:Admin:sendFeedback }
 
+replyFeedback:
+  pattern:  /admin/support/replyFeedback
+  defaults: { _controller: CronCronBundle:Admin:replyFeedback }
+
 getHeaderSrvmsg:
   pattern:  /ajax/getHeaderSrvmsg
   defaults: { _controller: CronCronBundle:Admin:getHeaderSrvmsg }
