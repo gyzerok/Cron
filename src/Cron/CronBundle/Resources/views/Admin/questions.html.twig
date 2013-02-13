@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+
+{% block content %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".delete-question").bind('click', function(){
+                if (confirm("Удалить вопрос?")){
+                    var cur_question = $(this).closest(".singleQuestion");
+                    $.ajax({
+                        url: '/admin/deleteQuestion',
+                        data: {
+                            question: cur_question.data('id')
+                        }
+                    });
+                    cur_question.remove();
+                }
+                return false;
+            });
+        });
+    </script>
+        <h2 class="categoryTitle">Все вопросы</h2>
+        <div id="showQuestion">
+            {% for item in questions %}
+                <div class="singleQuestion" data-id="{{ item.getId() }}">
+                    <div class="userName">{{ item.getUser() }}</div>
+                    <div class="questionDate">{{ item.datetime|date('d.m.Y H:i') }}</div>
+                    {#<div class="closeButton"></div>#}
+                    <div style="clear: both;"></div>
+                    <div class="questionText">
+                        {{ item.text }}
+                        <div class="socialIcons">
+                            <a href="#" class="delete-question">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+{% endblock %}

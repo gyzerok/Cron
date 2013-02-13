@@ -9,6 +9,7 @@ use Cron\CronBundle\Entity\ArticleCategory;
 use Cron\CronBundle\Entity\User;
 use Cron\CronBundle\Entity\UserSettings;
 use Cron\CronBundle\Entity\File;
+use Cron\CronBundle\Entity\Feedback;
 use Cron\CronBundle\Form\NewArticle;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -17,9 +18,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends Controller
 {
-    public function newarticleAction(Request $request)
+    public function newarticleAction(Request $request, $article_id)
     {
         $user = $this->getUser();
+
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
 
         if ($request->isMethod('post')){
 
@@ -31,10 +36,13 @@ class AdminController extends Controller
 
             $imgs = array();
 
-            $article = new Article();
+            if ($article_id!=''){
+                $article = $this->getDoctrine()->getRepository("CronCronBundle:Article")->find($article_id);
+            } else {
+                $article = new Article();
+            }
             $article->setHeader($post_data['header'])
                 ->setLocale($post_data['locale'])
-//                ->setImgs($imgs)
                 ->setCategory($category)
                 ->setText($post_data['text'])
                 ->setLinkType($post_data['link_type'])
@@ -56,18 +64,149 @@ class AdminController extends Controller
                     $imgs[$id] = true;
                 }
             }
-
-            $article->setImgs($imgs);
+            if ($article_id!=''){
+                if (!empty($imgs)){
+                    $article->setImgs($imgs);
+                }
+            } else {
+                $article->setImgs($imgs);
+            }
             $em->persist($article);
             $em->flush();
+            return $this->redirect("/admin/articles");
         }
         $form = $this->createForm(new NewArticle());
+        if ($article_id!=''){
+            $cur_article = $this->getDoctrine()->getRepository("CronCronBundle:Article")->find($article_id);
+            $form->setData(array("header"=>$cur_article->getHeader(), "locale"=>$cur_article->getLocale(), "category"=>$cur_article->getCategory(), "text"=>$cur_article->getText(), "link_type"=>$cur_article->getLinkType(), "link_value"=>$cur_article->getLinkValue()));
+        }
 
         return $this->render("CronCronBundle:Admin:newarticle.html.twig", array('title' => 'Новая статья',
             'curUser' => $this->getUser(),
             'form' => $form->createView()
         ));
+    }
 
+    public function articlesAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $articles = $this->getDoctrine()->getRepository("CronCronBundle:Article")->findBy(array(), array("datetime"=>"DESC"));
+
+        return $this->render("CronCronBundle:Admin:articles.html.twig", array('title' => 'Статьи',
+            'articles' => $articles,
+            'curUser' => $user
+        ));
+    }
+
+    public function deleteArticleAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $article = $this->getDoctrine()->getRepository("CronCronBundle:Article")->find($request->get("article"));
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($article);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
+    public function questionsAction(Request $request, $page)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $limit = 1000000;
+        $all_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array(), array("datetime"=>"DESC"), $limit, ($page-1)*$limit);
+
+        return $this->render("CronCronBundle:Admin:questions.html.twig", array('title' => 'Вопросы',
+            'questions' => $all_questions,
+            'curUser' => $user
+        ));
+    }
+
+    public function deleteQuestionAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($request->get("question"));
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($question);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
+    public function sendFeedbackAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User) {
+            return $this->redirect("/");
+        }
+
+        $feedback = new Feedback();
+        $feedback->setType($request->get('type'))
+            ->setUser($user)
+            ->setText($request->get('text'))
+            ->setDatetime(new \DateTime());
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($feedback);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
+    public function deleteFeedbackAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->find($request->get("feedback"));
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($feedback);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
+    public function appealsAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->findBy(array("type"=>"appeal"), array("datetime"=>"DESC"));
+
+        return $this->render("CronCronBundle:Admin:support.html.twig", array('title' => 'Жалобы',
+            'feedback' => $feedback,
+            'curUser' => $user
+        ));
+    }
+
+    public function ideasAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->findBy(array("type"=>"idea"), array("datetime"=>"DESC"));
+
+        return $this->render("CronCronBundle:Admin:support.html.twig", array('title' => 'Предложения',
+            'feedback' => $feedback,
+            'curUser' => $user
+        ));
     }
 
 }

@@ -12,7 +12,7 @@ class NewArticle extends AbstractType
         $builder->add('header', 'text', array('label' => 'Заголовок', 'required' => true))
             ->add('locale', 'choice', array('label' => 'Язык', 'choices' => array('ru_RU' => 'Русский', 'en_US' => 'English', 'pt_PT' => 'Português'), 'expanded' => false, 'required' => true))
             ->add('category', 'entity', array('label' => 'Категория', 'class' => 'CronCronBundle:ArticleCategory', 'property' => 'name', 'empty_value' => false, 'required' => false))
-            ->add('img1', 'file', array('label' => 'Изображение 1', 'required' => true))
+            ->add('img1', 'file', array('label' => 'Изображение 1 *', 'required' => false))
             ->add('img2', 'file', array('label' => 'Изображение 2 (необязательно)', 'required' => false))
             ->add('img3', 'file', array('label' => 'Изображение 3 (необязательно)', 'required' => false))
             ->add('text', 'textarea', array('label' => 'Текст статьи', 'trim' => true, 'required' => false))
