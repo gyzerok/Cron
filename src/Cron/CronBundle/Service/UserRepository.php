@@ -17,9 +17,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 {
     public function loadUserByUsername($username)
     {
-        //$repository = $this->getDoctrine()->getRepository('CronCronBundle:User');
         $q = $this->createQueryBuilder('u')
-                  ->where('u.isActive = 1 AND u.username = :username')
+                  //->where('u.isActive = 1 AND u.username = :username')
+                  ->where('u.username = :username')
                   ->setParameter('username', $username)
                   ->getQuery();
 
@@ -33,8 +33,13 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 
         //$currentTime = new \DateTime();
         if ($user instanceof \Cron\CronBundle\Entity\User)
+        {
+            if (!$user->getIsActive())
+                throw new DisabledException(sprintf('User with email "%s" is not confirmed', $user->getUsername()));
+
             if ($user->getLockedTill() > new \DateTime())
                 throw new LockedException(sprintf('You are locked till %s', $user->getLockedTill()->format("H:i d.m.Y")));
+        }
 
         return $user;
     }

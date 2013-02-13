@@ -134,7 +134,7 @@ class AjaxController extends Controller
 
                 if ($question->getLikes()->contains($user))
                     return new Response('Fail');
-                
+
                 $question->addLike($user);
 
                 $em = $this->getDoctrine()->getManager();
