@@ -98,6 +98,7 @@ class MainController extends Controller
         $my_settings = new UserSettings();
         $viewbytime = new \DateTime();
         $view_cats = array();
+        $income_cats = array();
         if ($user instanceof User){
             $my_settings = $this->getDoctrine()->getRepository("CronCronBundle:UserSettings")->findOneBy(array("user"=>$user->getId()));
             if ($my_settings instanceof UserSettings){
@@ -118,6 +119,9 @@ class MainController extends Controller
                 }
                 foreach ($my_settings->getViewCats() as $id=>$view_cat) {
                     array_push($view_cats, $id);
+                }
+                foreach ($my_settings->getIncomeCats() as $id=>$income_cat) {
+                    array_push($income_cats, $id);
                 }
             } else {
                 $viewbytime->modify("-100 years");
@@ -151,9 +155,11 @@ class MainController extends Controller
             $income->questions = array();
             foreach ($my_answers as $my_answer) {
                 $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($my_answer->getQuestion()->getId());
-                $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"DESC"));
-                $question->answers = $answers;
-                array_push($income->questions, $question);
+                if (empty($income_cats) || in_array($question->getCategory()->getId(), $income_cats)){
+                    $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"DESC"));
+                    $question->answers = $answers;
+                    array_push($income->questions, $question);
+                }
             }
             $categorized[0] = $income;
 
