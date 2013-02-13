@@ -22,18 +22,38 @@ class AdminSettings {
     protected $id;
 
     /**
-     * @var string $option
+     * @var string $srvmsg
      *
-     * @ORM\Column(name="option", type="string", length=256, nullable=true)
+     * @ORM\Column(name="srvmsg", type="text", nullable=true)
      */
-    protected $option;
+    protected $srvmsg;
 
     /**
-     * @var string $value
+     * @var integer $credit_currency
      *
-     * @ORM\Column(name="value", type="string", length=256, nullable=true)
+     * @ORM\Column(name="credit_currency", type="integer", nullable=false)
      */
-    protected $value;
+    protected $credit_currency;
 
+    /**
+     * @var integer $credit_currency
+     *
+     * @ORM\Column(name="answers50", type="integer", nullable=false)
+     */
+    protected $answers50;
+
+    /**
+     * @var integer $credit_currency
+     *
+     * @ORM\Column(name="answers100", type="integer", nullable=false)
+     */
+    protected $answers100;
+
+    /**
+     * @var integer $credit_currency
+     *
+     * @ORM\Column(name="answers1000", type="integer", nullable=false)
+     */
+    protected $answers1000;
 
 }

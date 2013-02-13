@@ -352,6 +352,8 @@ class AjaxController extends Controller
         if (!$user_settings instanceof UserSettings){
             $user_settings = new UserSettings();
             $user_settings->setUser($user);
+            $user_settings->setIncomeCats(array());
+            $user_settings->setViewCats(array());
         }
 
         switch($request->get("group")){
