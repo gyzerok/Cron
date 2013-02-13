@@ -3,7 +3,7 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $(".delete-feedback").bind('click', function(){
-                if (confirm('Удалить халобу?')) {
+                if (confirm('Удалить сообщение?')) {
                     var cur_feedback = $(this).closest(".feedback-li");
                     $.ajax({
                         url: '/admin/support/deleteFeedback',
@@ -25,7 +25,12 @@
                     <table>
                         <tr>
                             <td>
-                                {{ item.getUser().getNick() }}
+                                {% if item.getUser() %}
+                                    {{ item.getUser().getNick() }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ item.getEmail() }}
                             </td>
                             <td>
                                 {{ item.getText() }}

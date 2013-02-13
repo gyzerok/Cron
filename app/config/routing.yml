@@ -135,6 +135,10 @@ sendFeedback:
   pattern:  /ajax/sendFeedback
   defaults: { _controller: CronCronBundle:Admin:sendFeedback }
 
+getHeaderSrvmsg:
+  pattern:  /ajax/getHeaderSrvmsg
+  defaults: { _controller: CronCronBundle:Admin:getHeaderSrvmsg }
+
 
 # Chat routes
 
@@ -268,6 +272,9 @@ adminCredits:
   pattern:  /admin/credits
   defaults: { _controller: CronCronBundle:Admin:credits }
 
+adminSrvmsg:
+  pattern:  /admin/srvmsg
+  defaults: { _controller: CronCronBundle:Admin:srvmsg }
 
 # Support
 

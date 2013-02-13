@@ -1,0 +1,8 @@
+{% extends '::base.html.twig' %}
+{% block content %}
+    <h2 class="categoryH2">{{ title }}</a></h2>
+    <form action="" method="post">
+        <textarea name="srvmsg" id="srvmsg-field" cols="30" rows="10">{{ srvmsg.getValue() }}</textarea><br/>
+        <input type="submit" value="сохранить">
+    </form>
+{% endblock %}

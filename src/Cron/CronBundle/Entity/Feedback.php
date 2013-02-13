@@ -26,10 +26,17 @@ class Feedback {
      *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user", referencedColumnName="id", nullable=false)
+     *   @ORM\JoinColumn(name="user", referencedColumnName="id", nullable=true)
      * })
      */
     private $user;
+
+    /**
+     * @var string $email
+     *
+     * @ORM\Column(name="email", type="string", length=128, nullable=false)
+     */
+    private $email;
 
     /**
      * @var string $type
@@ -183,5 +190,28 @@ class Feedback {
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Feedback
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail()
+    {
+        return $this->email;
     }
 }

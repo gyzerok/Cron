@@ -10,6 +10,7 @@ use Cron\CronBundle\Entity\User;
 use Cron\CronBundle\Entity\UserSettings;
 use Cron\CronBundle\Entity\File;
 use Cron\CronBundle\Entity\Feedback;
+use Cron\CronBundle\Entity\AdminSettings;
 use Cron\CronBundle\Form\NewArticle;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -149,15 +150,20 @@ class AdminController extends Controller
     public function sendFeedbackAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User) {
+        /*if (!$user instanceof User) {
             return $this->redirect("/");
-        }
+        }*/
 
         $feedback = new Feedback();
         $feedback->setType($request->get('type'))
-            ->setUser($user)
             ->setText($request->get('text'))
             ->setDatetime(new \DateTime());
+        if ($user instanceof User){
+            $feedback->setUser($user);
+            $feedback->setEmail($user->getUsername());
+        } else {
+            $feedback->setEmail($request->get('email'));
+        }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($feedback);
@@ -207,6 +213,42 @@ class AdminController extends Controller
             'feedback' => $feedback,
             'curUser' => $user
         ));
+    }
+
+    public function srvmsgAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $srvmsg = $this->getDoctrine()->getRepository("CronCronBundle:AdminSettings")->findOneBy(array("option"=>"srvmsg"));
+        if (!$srvmsg instanceof AdminSettings){
+            $srvmsg = new AdminSettings();
+        }
+
+        if ($request->isMethod('post')){
+            $srvmsg->setOption('srvmsg')
+                ->setValue($request->get('srvmsg'));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($srvmsg);
+            $em->flush();
+        }
+        return $this->render("CronCronBundle:Admin:srvmsg.html.twig", array('title' => 'Сервисное сообщение',
+            'srvmsg' => $srvmsg,
+            'curUser' => $user
+        ));
+    }
+
+    public function getHeaderSrvmsgAction(Request $request)
+    {
+        $srvmsg = $this->getDoctrine()->getRepository("CronCronBundle:AdminSettings")->findOneBy(array("option"=>"srvmsg"));
+        if (!$srvmsg instanceof AdminSettings){
+            $srvmsg = new AdminSettings();
+        }
+
+        return new Response($srvmsg->getValue());
     }
 
 }

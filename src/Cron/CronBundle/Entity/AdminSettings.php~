@@ -1,0 +1,39 @@
+<?php
+
+namespace Cron\CronBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * Cron\CronBundle\Entity\AdminSettings
+ *
+ * @ORM\Table(name="admin_settings")
+ * @ORM\Entity
+ */
+class AdminSettings {
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    protected $id;
+
+    /**
+     * @var string $option
+     *
+     * @ORM\Column(name="option", type="string", length=256, nullable=true)
+     */
+    protected $option;
+
+    /**
+     * @var string $value
+     *
+     * @ORM\Column(name="value", type="string", length=256, nullable=true)
+     */
+    protected $value;
+
+
+}

@@ -150,6 +150,13 @@ $(document).ready(function() {
             $("#notepad-text").val(response);
         }
     });
+    //todo collapse
+    $.ajax({
+        url: '/ajax/getHeaderSrvmsg',
+        success: function(response){
+            $("#header-srvmsg").html(response);
+        }
+    });
 });
 
 function updateNotepad(){

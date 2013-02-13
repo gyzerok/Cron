@@ -25,7 +25,7 @@ class Question
     /**
      * @var string $text
      *
-     * @ORM\Column(name="text", type="string", length=130, nullable=false)
+     * @ORM\Column(name="text", type="string", length=200, nullable=false)
      */
     private $text;
 
@@ -477,5 +477,28 @@ class Question
     public function removeSpam(\Cron\CronBundle\Entity\User $spams)
     {
         $this->spams->removeElement($spams);
+    }
+
+    /**
+     * Set isSpam
+     *
+     * @param boolean $isSpam
+     * @return Question
+     */
+    public function setIsSpam($isSpam)
+    {
+        $this->isSpam = $isSpam;
+    
+        return $this;
+    }
+
+    /**
+     * Get isSpam
+     *
+     * @return boolean 
+     */
+    public function getIsSpam()
+    {
+        return $this->isSpam;
     }
 }

@@ -23,6 +23,7 @@
 	    {% block header %}
 		<div id="header">
 			<div class="logo" title="На главную"><a href="{{ path('index') }}"></a></div>
+            <div id="header-srvmsg"></div>
 			<div class="language">
 				<div class="russian{% if _locale=='ru_RU' or _locale==null %} active{% endif %}" title="русский"><a href="{{ path('locale', { 'locale': 'ru_RU' }) }}"></a></div>
 				<div class="english{% if _locale=='en_US' %} active{% endif %}" title="английский"><a href="{{ path('locale', { 'locale': 'en_US' }) }}"></a></div>
@@ -127,7 +128,7 @@
                         <option value="appeal">Жалоба</option>
                         <option value="idea">Предложение</option>
                     </select><br>
-					<label for="feedback-email">Введите Ваш email</label><br/><input id="feedback-email"></input><br/>
+                    <label for="feedback-email">Введите Ваш email</label><br/><input id="feedback-email" name="email" value="{% if curUser %}{{ curUser.getUsername() }}{% endif %}"><br/>
                     <label for="feedback-text">Введите текст сообщения:</label><br/><textarea disabled="disabled" name="text" id="feedback-text" cols="30" rows="5"></textarea><br/>
                     <input type="button" class="cancel-feedback" value="отмена"> <input type="submit" class="submit-feedback" value="отправить">
                 </form>
