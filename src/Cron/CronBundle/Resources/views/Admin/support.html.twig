@@ -24,7 +24,7 @@
                 <li class="feedback-li" data-id="{{ item.getId() }}">
                     <table>
                         <tr>
-                            <td>
+                            <td width="80" style="overflow: hidden; color: green;">
                                 {% if item.getUser() %}
                                     {{ item.getUser().getNick() }}
                                 {% endif %}
@@ -32,7 +32,7 @@
                             <td>
                                 {{ item.getEmail() }}
                             </td>
-                            <td>
+                            <td width="470">
                                 {{ item.getText() }}
                             </td>
                             <td>

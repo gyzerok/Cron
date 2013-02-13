@@ -1855,6 +1855,9 @@ input.cancelUserLink {
 	border: 1px solid #5b6376;
 	border-radius: 5px;
 	margin-top: 3px;
+	font-size: 18px;
+	font-family: 'Arial';
+	padding-left: 8px;
 }
 
 .feedbackWindow form label {
@@ -1873,6 +1876,7 @@ input.cancelUserLink {
 	margin-top: 3px;
 	border: 1px solid #5b6376;
 	border-radius: 5px;
+	padding-left: 8px;
 }
 
 input.submit-feedback {
@@ -1904,6 +1908,19 @@ input.cancel-feedback {
 	background-color: #fff;
 	margin-top: 7px;
 	margin-right: 8px;
+}
+
+.feedback-li {
+	border: 1px solid #5b6376;
+	border-radius: 5px;
+	padding: 5px;
+	margin-top: 5px;
+}
+
+.feedback-li table td {
+	font-family: 'Cambria';
+	font-size: 18px;
+	vertical-align: middle;
 }
 
 .closeNotepad {
@@ -2327,7 +2344,6 @@ a.toggleSettingsGroup:hover {
 	width: 728px;
 	display: inline-block;
 	max-height: 790px;
-	overflow: auto;
 }
 
 .article-categories {
@@ -2352,7 +2368,7 @@ a.toggleSettingsGroup:hover {
 .article-li {
 	border: 2px solid #979db8;
 	border-radius: 5px;
-	height: 104px;
+	height: 105px;
 	margin-top: 6px;	
 }
 
