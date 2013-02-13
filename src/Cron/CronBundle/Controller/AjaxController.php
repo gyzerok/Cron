@@ -132,7 +132,14 @@ class AjaxController extends Controller
                     return new Response('Fail');
                     //$user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
 
-                $question->addLikes($user);
+                if ($question->getLikes()->contains($user))
+                    return new Response('Fail');
+
+                $question->addLike($user);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($question);
+                $em->flush();
 
                 return new Response('Success');
             }
@@ -156,7 +163,13 @@ class AjaxController extends Controller
                     return new Response('Fail');
                 //$user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
 
+                if ($question->getSpams()->contains($user))
+                    return new Response('Fail');
+
                 $question->addSpam($user);
+
+                if ($question->getSpams()->count() >= 5)
+                    $question->setIsSpam(true);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($question);

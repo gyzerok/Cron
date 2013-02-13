@@ -129,6 +129,13 @@ class Question
      */
     private $user;
 
+    /**
+     * @var boolean $isSpam
+     *
+     * @ORM\Column(name="is_spam", type="boolean", nullable=false)
+     */
+    private $isSpam;
+
 
 
     /**
@@ -421,8 +428,9 @@ class Question
     {
         $this->likes = new ArrayCollection();
         $this->spams = new ArrayCollection();
-        $this->setDatetime(new \DateTime());
-        $this->setStatus(0);
+        $this->datetime = new \DateTime();
+        $this->status = 0;
+        $this->isSpam = false;
     }
 
     /**

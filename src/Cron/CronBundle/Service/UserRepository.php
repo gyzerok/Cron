@@ -6,6 +6,8 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\DisabledException;
+use Symfony\Component\Security\Core\Exception\LockedException;
 use Cron\CronBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
@@ -15,11 +17,11 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 {
     public function loadUserByUsername($username)
     {
-        //$repository = $this->getDoctrine()->getRepository('CronCronBundle:User');
         $q = $this->createQueryBuilder('u')
-            ->where('u.isActive = 1 AND u.username = :username')
-            ->setParameter('username', $username)
-            ->getQuery();
+                  //->where('u.isActive = 1 AND u.username = :username')
+                  ->where('u.username = :username')
+                  ->setParameter('username', $username)
+                  ->getQuery();
 
         try {
             // The Query::getSingleResult() method throws an exception
@@ -27,6 +29,16 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             $user = $q->getSingleResult();
         } catch (NoResultException $e) {
             throw new UsernameNotFoundException(sprintf('Unable to find an active User object identified by "%s".', $username), null, 0, $e);
+        }
+
+        //$currentTime = new \DateTime();
+        if ($user instanceof \Cron\CronBundle\Entity\User)
+        {
+            if (!$user->getIsActive())
+                throw new DisabledException(sprintf('User with email "%s" is not confirmed', $user->getUsername()));
+
+            if ($user->getLockedTill() > new \DateTime())
+                throw new LockedException(sprintf('You are locked till %s', $user->getLockedTill()->format("H:i d.m.Y")));
         }
 
         return $user;

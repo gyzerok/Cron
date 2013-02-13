@@ -90,6 +90,13 @@ class User implements UserInterface, \Serializable
     private $lastVisit;
 
     /**
+     * @var \DateTime $lockedTill
+     *
+     * @ORM\Column(name="locked_till", type="datetime", nullable=false)
+     */
+    private $lockedTill;
+
+    /**
      * @var State
      *
      * @ORM\ManyToOne(targetEntity="State")
@@ -182,29 +189,6 @@ class User implements UserInterface, \Serializable
     public function getPassword()
     {
         return $this->password;
-    }
-
-    /**
-     * Set email
-     *
-     * @param string $email
-     * @return User
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    
-        return $this;
-    }
-
-    /**
-     * Get email
-     *
-     * @return string 
-     */
-    public function getEmail()
-    {
-        return $this->email;
     }
 
     /**
@@ -428,7 +412,7 @@ class User implements UserInterface, \Serializable
 
     public function __toString()
     {
-        return $this->getNick();
+        return $this->nick;
     }
 
     function equals(UserInterface $user)
@@ -438,10 +422,6 @@ class User implements UserInterface, \Serializable
 
         return true;
     }
-
-    /*public function __sleep(){
-        return array('id', 'username', 'email', 'password', 'regDate', 'birthDate', "agreement", "gender", "lastVisit", "city", "state", "country");
-    }*/
 
     /**
      * Set isActive
@@ -510,5 +490,28 @@ class User implements UserInterface, \Serializable
     public function getRole()
     {
         return $this->role;
+    }
+
+    /**
+     * Set lockedTill
+     *
+     * @param \DateTime $lockedTill
+     * @return User
+     */
+    public function setLockedTill($lockedTill)
+    {
+        $this->lockedTill = $lockedTill;
+    
+        return $this;
+    }
+
+    /**
+     * Get lockedTill
+     *
+     * @return \DateTime 
+     */
+    public function getLockedTill()
+    {
+        return $this->lockedTill;
     }
 }
