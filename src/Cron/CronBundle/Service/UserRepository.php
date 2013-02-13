@@ -19,9 +19,9 @@ class UserRepository extends EntityRepository implements UserProviderInterface
     {
         //$repository = $this->getDoctrine()->getRepository('CronCronBundle:User');
         $q = $this->createQueryBuilder('u')
-            ->where('u.isActive = 1 AND u.username = :username')
-            ->setParameter('username', $username)
-            ->getQuery();
+                  ->where('u.isActive = 1 AND u.username = :username')
+                  ->setParameter('username', $username)
+                  ->getQuery();
 
         try {
             // The Query::getSingleResult() method throws an exception
@@ -31,9 +31,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface
             throw new UsernameNotFoundException(sprintf('Unable to find an active User object identified by "%s".', $username), null, 0, $e);
         }
 
-        /*if ($user instanceof \Cron\CronBundle\Entity\User)
-            if ($user->getLockedTill > new \DateTime())
-                throw new LockedException(sprintf('You are locked'));*/
+        //$currentTime = new \DateTime();
+        if ($user instanceof \Cron\CronBundle\Entity\User)
+            if ($user->getLockedTill() > new \DateTime())
+                throw new LockedException(sprintf('You are locked'));
 
         return $user;
     }

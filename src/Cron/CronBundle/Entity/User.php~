@@ -412,7 +412,7 @@ class User implements UserInterface, \Serializable
 
     public function __toString()
     {
-        return $this->getNick();
+        return $this->nick;
     }
 
     function equals(UserInterface $user)
@@ -490,5 +490,28 @@ class User implements UserInterface, \Serializable
     public function getRole()
     {
         return $this->role;
+    }
+
+    /**
+     * Set lockedTill
+     *
+     * @param \DateTime $lockedTill
+     * @return User
+     */
+    public function setLockedTill($lockedTill)
+    {
+        $this->lockedTill = $lockedTill;
+    
+        return $this;
+    }
+
+    /**
+     * Get lockedTill
+     *
+     * @return \DateTime 
+     */
+    public function getLockedTill()
+    {
+        return $this->lockedTill;
     }
 }

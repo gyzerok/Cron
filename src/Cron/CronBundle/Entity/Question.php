@@ -129,6 +129,13 @@ class Question
      */
     private $user;
 
+    /**
+     * @var boolean $isSpam
+     *
+     * @ORM\Column(name="is_spam", type="boolean", nullable=false)
+     */
+    private $isSpam;
+
 
 
     /**
@@ -421,8 +428,9 @@ class Question
     {
         $this->likes = new ArrayCollection();
         $this->spams = new ArrayCollection();
-        $this->setDatetime(new \DateTime());
-        $this->setStatus(0);
+        $this->datetime = new \DateTime();
+        $this->status = 0;
+        $this->isSpam = false;
     }
 
     /**
@@ -469,5 +477,28 @@ class Question
     public function removeSpam(\Cron\CronBundle\Entity\User $spams)
     {
         $this->spams->removeElement($spams);
+    }
+
+    /**
+     * Set isSpam
+     *
+     * @param boolean $isSpam
+     * @return Question
+     */
+    public function setIsSpam($isSpam)
+    {
+        $this->isSpam = $isSpam;
+    
+        return $this;
+    }
+
+    /**
+     * Get isSpam
+     *
+     * @return boolean 
+     */
+    public function getIsSpam()
+    {
+        return $this->isSpam;
     }
 }

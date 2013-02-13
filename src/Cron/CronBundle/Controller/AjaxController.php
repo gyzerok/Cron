@@ -162,6 +162,9 @@ class AjaxController extends Controller
 
                 $question->addSpam($user);
 
+                if ($question->getSpams()->count() >= 5)
+                    $question->setIsSpam(true);
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($question);
                 $em->flush();
