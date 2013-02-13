@@ -192,6 +192,27 @@ class MainController extends Controller
             }
         }
 
+        if ($user instanceof User){
+            foreach ($categorized as $id0=>$cat) {
+                foreach ($cat->questions as $id=>$question){
+                    $cat->questions[$id]->iAnswered = false;
+                    $answer = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findOneBy(array("question"=>$question->getId(), "user"=>$user->getId()));
+                    if ($answer instanceof Answer){
+                        $cat->questions[$id]->iAnswered = true;
+                        $cat->questions[$id]->answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
+                    }
+                    $categorized[$id0] = $cat;
+                }
+            }
+        } else {
+            foreach ($categorized as $id0=>$cat) {
+                foreach ($cat->questions as $id=>$question){
+                    $cat->questions[$id]->iAnswered = false;
+                    $categorized[$id0] = $cat;
+                }
+            }
+        }
+
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'По категориям',
              'categorized_questions' => $categorized,
              'curUser' => $this->getUser(),
@@ -202,6 +223,8 @@ class MainController extends Controller
     public function rushAction(Request $request)
     {
         $request->setLocale($request->getSession()->get('_locale'));
+
+        $user = $this->getUser();
 
         $answer = new Answer();
         $form = $this->createForm(new NewAnswer(), $answer);
@@ -225,11 +248,22 @@ class MainController extends Controller
                                     ->getQuery()
                                     ->getResult();
 
+        if ($user instanceof User){
+            foreach ($rush as $id=>$question){
+                $rush[$id]->iAnswered = false;
+                $answer = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findOneBy(array("question"=>$question->getId(), "user"=>$user->getId()));
+                if ($answer instanceof Answer){
+                    $rush[$id]->iAnswered = true;
+                    $rush[$id]->answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
+                }
+            }
+        } else {
+            foreach ($rush as $id=>$question){
+                $rush[$id]->iAnswered = false;
+            }
+        }
+
         $categorized[0]->questions = $rush;
-        /*foreach ($rush as $id=>$question) {
-            $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
-            $rush[$id]->answers = $answers;
-        }*/
 
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'Срочные',
              'categorized_questions' => $categorized,

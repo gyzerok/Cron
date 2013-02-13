@@ -52,14 +52,23 @@
                                 <div class="likeButton {% if curUser in item.likes %}likeButtonActive{% endif %}"></div>
                                 <div class="repostButton"></div>
                                 <form class="answer">
-                                    <input class="answerButton" type="button" value="ответить" />
+                                    {% if item.iAnswered %}
+                                        {% if item.getPrivate()<1 %}
+                                            {% set answer_button_value = item.answers|length ~ ' отв.' %}
+                                        {% else %}
+                                            {% set answer_button_value = 'закрытый' %}
+                                        {% endif %}
+                                    {% else %}
+                                        {% set answer_button_value = 'ответить' %}
+                                    {% endif %}
+                                    <input class="answerButton" type="button" value="{{ answer_button_value }}" />
                                 </form>
                             </div>
                         </div>
                     </div>
-                    {% if category.getId()==null %}
+                    {% if category.getId()==null or item.iAnswered %}
                         <div class="myAnswer {% if item.answers==null %}no-border{% endif %}">
-                            {% if item.getPrivate()>0 %}
+                            {% if item.getPrivate()<1 %}
                                 {% for answer in item.answers %}
                                     <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}">
                                         <div class="userName">{{ answer.getUser().getNick() }}</div>
@@ -78,6 +87,7 @@
                                 {% endfor %}
                             {% endif %}
                         </div>
+                        <form class="answerForm"></form>
                     {% else %}
                         <div class="myAnswer no-border">
                         </div>
