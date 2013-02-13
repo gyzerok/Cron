@@ -52,11 +52,11 @@
 			</form>
 			<form class="profileNavigation">
 				{#<input type="submit" value="Настройки" />#}
-				<a href="/settings">Настройки</a>
+				<a href="/settings">{% trans %}Настройки{% endtrans %}</a>
 			</form>
 			<p class="credits">Кредиты 123</p>
-			<p class="myQuestions"><a href="">Мои вопросы</a></p>
-			<p class="myQuestions"><a href="">Входящие вопросы</a></p>
+			<p class="myQuestions"><a href="">{% trans %}Мои вопросы{% endtrans %}</a></p>
+			<p class="myQuestions"><a href="">{% trans %}Входящие вопросы{% endtrans %}</a></p>
 			{% else %}
 			<form action="{{ path('login_check') }}" method="post">
 				<input type="text" id="username" name="_username" value="" placeholder="логин" />
