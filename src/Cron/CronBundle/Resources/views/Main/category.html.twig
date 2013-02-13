@@ -61,33 +61,36 @@
                             </div>
                         </div>
                     </div>
-                    {#<div class="myAnswer {% if item.answers==null %}no-border{% endif %}">
-                        &#123;&#35;{% if item.getPrivate()>0 %}&#35;&#125;
-                            {% for answer in item.answers %}
-                                <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}">
-                                    <div class="userName">{{ answer.getUser().getNick() }}</div>
-                                    <div class="answerDate">{{ answer.getPubDate()|date("Y-m-d H:i:s") }}</div>
-                                    <div style="clear: both;"></div>
-                                    <div class="questionText">
-                                        {{ answer.getText() }}
-                                        <div class="socialIcons">
-                                            <div class="spamButton" title="Пометить как спам"></div>
-                                            <div class="likeButton" title="Мне нравится!"></div>
-                                            <div class="arrowButton inviteUser" title="Отправить приглашение в чат"></div>
-                                            <div class="letterButton sendMessage" title="Отправить сообщение"></div>
+                    {% if category.getId()==null %}
+                        <div class="myAnswer {% if item.answers==null %}no-border{% endif %}">
+                            {#{% if item.getPrivate()>0 %}#}
+                                {% for answer in item.answers %}
+                                    <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}">
+                                        <div class="userName">{{ answer.getUser().getNick() }}</div>
+                                        <div class="answerDate">{{ answer.getPubDate()|date("Y-m-d H:i:s") }}</div>
+                                        <div style="clear: both;"></div>
+                                        <div class="questionText">
+                                            {{ answer.getText() }}
+                                            <div class="socialIcons">
+                                                <div class="spamButton" title="Пометить как спам"></div>
+                                                <div class="likeButton" title="Мне нравится!"></div>
+                                                <div class="arrowButton inviteUser" title="Отправить приглашение в чат"></div>
+                                                <div class="letterButton sendMessage" title="Отправить сообщение"></div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            {% endfor %}
-                        &#123;&#35;{% endif %}&#35;&#125;
-                    </div>#}
-                    <form class="answerForm">
-                        <textarea class="answerTextarea" ></textarea>
-                        <div class="answerFormNavigation">
-                            <input class="submitAnswerButton" type="submit" value="отправить" />
-                            <input class="cancelButton" type="button" value="отменить" />
+                                {% endfor %}
+                            {#{% endif %}#}
                         </div>
-                    </form>
+                    {% else %}
+                        <form class="answerForm">
+                            <textarea class="answerTextarea" ></textarea>
+                            <div class="answerFormNavigation">
+                                <input class="submitAnswerButton" type="submit" value="отправить" />
+                                <input class="cancelButton" type="button" value="отменить" />
+                            </div>
+                        </form>
+                    {% endif %}
                 {% endfor %}
             </div>
         {% endfor %}

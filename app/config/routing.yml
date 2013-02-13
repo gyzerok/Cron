@@ -14,6 +14,14 @@ rush:
   pattern: /rush
   defaults: { _controller: CronCronBundle:Main:rush }
 
+my:
+  pattern: /my
+  defaults: { _controller: CronCronBundle:Main:my }
+
+income:
+  pattern: /income
+  defaults: { _controller: CronCronBundle:Main:category, "category_id": "-1" }
+
 disk:
   pattern: /disk/{file_hash}
   defaults: { _controller: CronCronBundle:Main:disk, "file_hash": "" }
@@ -123,6 +131,10 @@ updateNotepad:
   pattern:  /ajax/updateNotepad
   defaults: { _controller: CronCronBundle:Ajax:updateNotepad }
 
+sendFeedback:
+  pattern:  /ajax/sendFeedback
+  defaults: { _controller: CronCronBundle:Admin:sendFeedback }
+
 
 # Chat routes
 
@@ -222,8 +234,54 @@ sendChatInvite:
 
 newarticle:
   pattern:  /admin/newarticle
+  defaults: { _controller: CronCronBundle:Admin:newarticle, "article_id": "" }
+
+editarticle:
+  pattern:  /admin/editarticle/{article_id}
   defaults: { _controller: CronCronBundle:Admin:newarticle }
 
+adminArticles:
+  pattern:  /admin/articles
+  defaults: { _controller: CronCronBundle:Admin:articles }
+
+deleteArticle:
+  pattern:  /admin/deleteArticle
+  defaults: { _controller: CronCronBundle:Admin:deleteArticle }
+
+adminQuestions:
+  pattern:  /admin/questions/{page}
+  defaults: { _controller: CronCronBundle:Admin:questions, "page": "1" }
+
+deleteQuestion:
+  pattern:  /admin/deleteQuestion
+  defaults: { _controller: CronCronBundle:Admin:deleteQuestion }
+
+adminAnswers:
+  pattern:  /admin/answers
+  defaults: { _controller: CronCronBundle:Admin:answers }
+
+adminUsers:
+  pattern:  /admin/users
+  defaults: { _controller: CronCronBundle:Admin:users }
+
+adminCredits:
+  pattern:  /admin/credits
+  defaults: { _controller: CronCronBundle:Admin:credits }
+
+
+# Support
+
+appeals:
+  pattern:  /admin/support/appeals
+  defaults: { _controller: CronCronBundle:Admin:appeals }
+
+ideas:
+  pattern:  /admin/support/ideas
+  defaults: { _controller: CronCronBundle:Admin:ideas }
+
+deleteFeedback:
+  pattern:  /admin/support/deleteFeedback
+  defaults: { _controller: CronCronBundle:Admin:deleteFeedback }
 
 # Security routes
 

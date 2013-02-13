@@ -59,6 +59,31 @@ $(document).ready(function() {
         $(".closeUserLinkWindow").click();
         return false;
     });
+
+    $(".open-feedback-window").click(function(){
+        $(".feedbackWindow").show();
+        return false;
+    });
+    $(".closeFeedbackWindow").click(function(){
+        $(this).closest('.feedbackWindow').hide();
+        return false;
+    });
+    $(".cancel-feedback").click(function(){
+        $(this).closest('.feedbackWindow').hide();
+        return false;
+    });
+    $(".submit-feedback").click(function(){
+        var form = $(this).closest('form');
+        form.ajaxSubmit({
+            success: function(response){
+                alert('Ваше сообщение отправлено. Спасибо!');
+            }
+        });
+        $("#feedback-text").val(null);
+        $(".closeFeedbackWindow").click();
+        return false;
+    });
+
     $(".repostButton").live('click', function(){
         $.ajax({
             url: '/ajax/repostQuestion',

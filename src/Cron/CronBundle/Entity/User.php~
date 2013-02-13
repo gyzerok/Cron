@@ -119,6 +119,13 @@ class User implements UserInterface, \Serializable
      */
     private $country;
 
+    /**
+     * @var integer $role
+     *
+     * @ORM\Column(name="role", type="integer", nullable=false)
+     */
+    private $role = 0;
+
 
 
     /**
@@ -480,5 +487,28 @@ class User implements UserInterface, \Serializable
     public function getNick()
     {
         return $this->nick;
+    }
+
+    /**
+     * Set role
+     *
+     * @param integer $role
+     * @return User
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+    
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return integer 
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 }
