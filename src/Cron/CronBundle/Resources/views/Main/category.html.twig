@@ -47,8 +47,8 @@
                         <div class="questionText">
                         {{ item.text }}
                             <div class="socialIcons">
-                                <div class="spamButton"></div>
-                                <div class="likeButton"></div>
+                                <div class="spamButton {% if curUser in item.spams %}spamButtonActive{% endif %}"></div>
+                                <div class="likeButton {% if curUser in item.likes %}likeButtonActive{% endif %}"></div>
                                 <div class="repostButton"></div>
                                 <form class="answer">
                                     <input class="answerButton" type="button" value="ответить" />

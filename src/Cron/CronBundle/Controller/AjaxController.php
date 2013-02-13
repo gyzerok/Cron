@@ -132,6 +132,9 @@ class AjaxController extends Controller
                     return new Response('Fail');
                     //$user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
 
+                if ($question->getLikes()->contains($user))
+                    return new Response('Fail');
+                
                 $question->addLike($user);
 
                 $em = $this->getDoctrine()->getManager();
@@ -159,6 +162,9 @@ class AjaxController extends Controller
                 if (!$user instanceof User)
                     return new Response('Fail');
                 //$user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+
+                if ($question->getSpams()->contains($user))
+                    return new Response('Fail');
 
                 $question->addSpam($user);
 

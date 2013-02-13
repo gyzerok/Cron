@@ -34,7 +34,7 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         //$currentTime = new \DateTime();
         if ($user instanceof \Cron\CronBundle\Entity\User)
             if ($user->getLockedTill() > new \DateTime())
-                throw new LockedException(sprintf('You are locked'));
+                throw new LockedException(sprintf('You are locked till %s', $user->getLockedTill()->format("H:i d.m.Y")));
 
         return $user;
     }
