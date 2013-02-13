@@ -90,9 +90,22 @@
                 <div class="invites-container"></div>
             </div>
 			<script>
-			$(function() {
+			$(document).ready(function() {
 				$( ".userLinkAddWindow" ).draggable();
 				$(".feedbackWindow").draggable();
+								
+				$('#feedback-type').change(function () {
+					var check = $('#feedback-type').val();
+					if (check == 'appeal') {
+						$('#feedback-text').attr('disabled', false);
+					}
+					else if (check == 'idea') {
+						$('#feedback-text').attr('disabled', false);
+					}
+					else {
+						$('#feedback-text').attr('disabled', true);					
+					}
+				});				
 			});
 			</script>
             <div class="userLinkAddWindow" style="display:none;">
@@ -110,9 +123,11 @@
 				<h3>Выберите категорию:</h3>
                 <form action="/ajax/sendFeedback" method="post">
                     <select name="type" id="feedback-type">
+						<option selected="selected"></option>
                         <option value="appeal">Жалоба</option>
                         <option value="idea">Предложение</option>
                     </select><br>
+					<label for="feedback-email">Введите Ваш email</label><br/><input id="feedback-email"></input><br/>
                     <label for="feedback-text">Введите текст сообщения:</label><br/><textarea disabled="disabled" name="text" id="feedback-text" cols="30" rows="5"></textarea><br/>
                     <input type="button" class="cancel-feedback" value="отмена"> <input type="submit" class="submit-feedback" value="отправить">
                 </form>

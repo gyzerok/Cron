@@ -13,23 +13,24 @@
             //Спам
 			$(document).ready(function(){
 				$('.spamButton').click(function(){
+					$(this).addClass("spamButtonActive");
 					var question_id = $(this).closest('.singleQuestion').attr('data-id');
 					var that = $(this);
 					$.ajax({'url': '{{ path("spamItem") }}', 'type':'post', 'data': 'question_id='+question_id,
-						'success': function(){
-							alert('Вопрос помечен как спам!');
-							that.addClass("spamButtonActive");
+						'fail': function(){
+							that.removeClass("spamButtonActive");
 						}
 					});
 				});
 				
 				//Лайки
 				$('.likeButton').click(function(){
+					$(this).addClass("likeButtonActive");
 					var question_id = $(this).closest('.singleQuestion').attr('data-id');
 					var that = $(this);
 					$.ajax({'url': '{{ path("likeItem") }}', 'type':'post', 'data': 'question_id='+question_id,
-						'success': function(){
-							that.addClass("likeButtonActive");
+						'fail': function(){
+							that.removeClass("likeButtonActive");
 						}
 					});
 				});			
