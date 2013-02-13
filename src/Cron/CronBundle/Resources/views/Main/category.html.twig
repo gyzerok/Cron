@@ -31,7 +31,7 @@
             <div id="showQuestion">
                 {% for item in category.questions %}
                     <div class="singleQuestion" data-id="{{ item.getId() }}">
-                        <div class="userName">{{ item.getUser() }}</div>
+                        <div class="userName">{{ item.user }}</div>
                         <div class="questionDate">{{ item.datetime|date('d.m.Y H:i') }}</div>
                         <div class="closeButton"></div>
                         <div style="clear: both;"></div>

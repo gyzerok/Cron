@@ -6,6 +6,8 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\DisabledException;
+use Symfony\Component\Security\Core\Exception\LockedException;
 use Cron\CronBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
@@ -28,6 +30,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface
         } catch (NoResultException $e) {
             throw new UsernameNotFoundException(sprintf('Unable to find an active User object identified by "%s".', $username), null, 0, $e);
         }
+
+        /*if ($user instanceof \Cron\CronBundle\Entity\User)
+            if ($user->getLockedTill > new \DateTime())
+                throw new LockedException(sprintf('You are locked'));*/
 
         return $user;
     }

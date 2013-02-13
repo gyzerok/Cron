@@ -132,7 +132,11 @@ class AjaxController extends Controller
                     return new Response('Fail');
                     //$user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
 
-                $question->addLikes($user);
+                $question->addLike($user);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($question);
+                $em->flush();
 
                 return new Response('Success');
             }
