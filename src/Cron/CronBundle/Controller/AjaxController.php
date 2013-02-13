@@ -205,12 +205,20 @@ class AjaxController extends Controller
             $em->persist($answer);
             $em->flush();
 
-            $html = '<div class="singleAnswer" data-user="'.$user->getId().'">
-					<div class="userName">'.$user->getNick().'</div>
-					<div class="answerDate">'.$answer->getPubDate()->format("Y-m-d H:i:s").'</div>
+            if ($question->getPrivate()){
+                $answers = $this->getDoctrine()->getRepository('CronCronBundle:Answer')->findby(array("id"=>$answer->getId()));
+            } else {
+                $answers = $this->getDoctrine()->getRepository('CronCronBundle:Answer')->findby(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
+            }
+
+            $html = '';
+            foreach ($answers as $ans) {
+                $html .= '<div class="singleAnswer" data-user="'.$ans->getUser()->getId().'">
+					<div class="userName">'.$ans->getUser()->getNick().'</div>
+					<div class="answerDate">'.$ans->getPubDate()->format("Y-m-d H:i:s").'</div>
 					<div style="clear: both;"></div>
 					<div class="questionText">
-						'.$answer->getText().'
+						'.$ans->getText().'
 						<div class="socialIcons">
 							<div class="spamButton"></div>
 							<div class="likeButton"></div>
@@ -219,6 +227,8 @@ class AjaxController extends Controller
 						</div>
 					</div>
 				</div>';
+            }
+
             return new Response($html);
         }
     }

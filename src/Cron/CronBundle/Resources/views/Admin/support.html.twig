@@ -36,7 +36,7 @@
                                 {{ item.getText() }}
                             </td>
                             <td>
-                                <a href="#">Ответить</a>
+                                <a href="#" class="open-reply-feedback-window">Ответить</a>
                                 <a href="#" class="delete-feedback">Удалить</a>
                             </td>
                         </tr>
@@ -47,4 +47,12 @@
             Пусто
         {% endif %}
     </ul>
+    <div class="replyFeedbackWindow" style="display:none;">
+        <div class="closeReplyFeedbackWindow"><a href=""></a></div>
+        <form action="/admin/support/replyFeedback" method="post">
+            <input type="hidden" name="feedback" id="feedback-id" value="">
+            <label for="reply-text">Введите текст ответа:</label><br/><textarea name="text" id="reply-text" cols="30" rows="5"></textarea><br/>
+            <input type="button" class="cancelReplyFeedback" value="отменить"> <input type="submit" class="submitReplyFeedback" value="отправить">
+        </form>
+    </div>
 {% endblock %}
