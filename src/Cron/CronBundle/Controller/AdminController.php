@@ -192,7 +192,7 @@ class AdminController extends Controller
             return $this->redirect("/");
         }
 
-        $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->findBy(array("type"=>"appeal"), array("datetime"=>"DESC"));
+        $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->findBy(array("type"=>"appeal", "answered"=>0), array("datetime"=>"DESC"));
 
         return $this->render("CronCronBundle:Admin:support.html.twig", array('title' => 'Жалобы',
             'feedback' => $feedback,
@@ -207,7 +207,7 @@ class AdminController extends Controller
             return $this->redirect("/");
         }
 
-        $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->findBy(array("type"=>"idea"), array("datetime"=>"DESC"));
+        $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->findBy(array("type"=>"idea", "answered"=>0), array("datetime"=>"DESC"));
 
         return $this->render("CronCronBundle:Admin:support.html.twig", array('title' => 'Предложения',
             'feedback' => $feedback,
@@ -258,19 +258,16 @@ class AdminController extends Controller
             return new Response("Fail");
         }
 
-//        $feedback = new Feedback();
         $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->find($request->get('feedback'));
 
-        /*$feedback->setType($request->get('type'))
-            ->setText($request->get('text'))
-            ->setDatetime(new \DateTime());
-        if ($user instanceof User){
-            $feedback->setUser($user);
-            $feedback->setEmail($user->getUsername());
-        } else {
-            $feedback->setEmail($request->get('email'));
-        }*/
-        //todo доделать
+        $mailer = $this->get('mailer');
+        $message = \Swift_Message::newInstance(null, null, "text/html")
+            ->setSubject('Ответ на сообщение "'.$feedback->getText().'"')
+            ->setFrom("aditus777@gmail.com")
+            ->setTo($feedback->getEmail())
+            ->setBody('<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body>' . $request->get('text'));
+        $mailer->send($message);
+
         $feedback->setAnswered(1);
 
         $em = $this->getDoctrine()->getManager();
