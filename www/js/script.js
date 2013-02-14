@@ -123,6 +123,7 @@ $(document).ready(function() {
         });
     });
     $(".bookmarkArticle").bind('click', function(){
+		$(this).addClass('bookmarkArticleActive');
         $.ajax({
             url: '/ajax/bookmarkArticle',
             data:{

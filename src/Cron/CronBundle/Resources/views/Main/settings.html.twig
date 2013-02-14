@@ -9,10 +9,16 @@
         $(document).ready(function(){
             $(".toggleSettingsGroup").bind('click', function(){
                 $(this).next(".settingsGroup").slideToggle("fast");
+				$(this).css({
+					'color':'#243b74'
+				});
                 return false;
             });
             $(".closeSettingsGroup").bind('click', function(){
                 $(this).closest(".settingsGroup").slideUp("fast");
+				$(".toggleSettingsGroup").css({
+					'color':'#000'
+				});
                 return false;
             });
             $(".settingsSubmit").bind('click', function(){
@@ -83,7 +89,7 @@
     </div>
     <div class="settingsGroupWrap">
         <a class="toggleSettingsGroup" href="#">Звуковая схема</a>
-        <div class="settingsGroup">
+        <div class="settingsGroup" style="width:294px;">
             <form action="/ajax/saveSettings" method="post">
                 <input type="hidden" name="group" value="sound">
                 <input type="checkbox" name="cats" id="sound_cats" {{ settings.sounds.cats }}> <label for="sound_cats">вопросы по категориям</label><br>

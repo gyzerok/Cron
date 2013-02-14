@@ -790,9 +790,9 @@ h2.categoryH2 {
 	margin-right: 3px;
 }
 
-.spamButtonActive {
+.spamButtonActive, .spamButton:hover  {
 	background-image: url(../i/spamActive.jpg);
-	background-size: 100%;	
+	background-size: 100%;
 }
 
 .likeButton {
@@ -805,7 +805,7 @@ h2.categoryH2 {
 	margin-right: 3px;
 }
 
-.likeButtonActive {
+.likeButtonActive, .likeButton:hover {
 	background-image: url(../i/likeActive.jpg);
 	background-size: 100%;	
 }
@@ -821,7 +821,7 @@ h2.categoryH2 {
 	margin-right: 3px;
 }
 
-.repostButtonActive {
+.repostButtonActive, .repostButton:hover {
 	background: url(/i/repostButtonActive.jpg) no-repeat;
 	background-size: 100%;	
 }
@@ -1968,10 +1968,10 @@ input.cancel-feedback {
 }
 
 .closeNotepad {
-    width: 13px;
-    height: 13px;
-    float: right;
-    margin: 10px 14px 10px 0;
+    width: 10px;
+	height: 13px;
+	float: left;
+	margin: -12px 0px 0 0px;
 }
 .closeNotepad a {
     display: block;
@@ -2358,8 +2358,9 @@ a.toggleSettingsGroup:hover {
 }
 
 .settingsSubmit {
-	margin-left: 255px;
+	margin-left: 114px;
 	margin-bottom: 10px;
+	margin-top: 4px;
 	width: 88px;
 	height: 20px;
 	border: 1px solid gray;
@@ -2374,6 +2375,7 @@ a.toggleSettingsGroup:hover {
 .closeSettingsGroup {
 	margin-bottom: 10px;
 	width: 88px;
+	margin-top: 4px;
 	height: 20px;
 	border: 1px solid gray;
 	cursor: pointer;
@@ -2435,6 +2437,28 @@ a.unbookmarkArticle {
 	height: 13px;
 	background: url(../i/closeDialogs.png) no-repeat;
 	margin-top: 9px;
+}
+
+a.bookmarkArticle {
+	display: block;
+	width: 22px;
+	height: 22px;
+	background: url(../i/repostButton.png) no-repeat;
+	background-size: 100%;
+	margin-left: 229px;
+}
+
+a.bookmarkArticle:hover {
+	background: url(../i/repostButtonHover.jpg) no-repeat;
+	background-size: 100%;
+}
+
+a.bookmarkArticleActive{
+	display: block;
+	width: 22px;
+	height: 22px;
+	background: url(../i/repostButtonActive.jpg) no-repeat;
+	background-size: 100%;
 }
 
 .article-notes-list li {

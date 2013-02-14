@@ -112,7 +112,7 @@
             <div class="userLinkAddWindow" style="display:none;">
                 <div class="closeUserLinkWindow"><a href=""></a></div>
                 <form action="/ajax/newUserLink" method="post">
-                    <label for="user-link-title">Название:</label> <input type="text" maxlength="20" id="user-link-title" name="title"><span>Масимум 20 символов</span><br/>
+                    <label for="user-link-title">Название:</label> <input type="text" maxlength="15" id="user-link-title" name="title"><span>Масимум 15 символов</span><br/>
 					<div style="clear: both;"></div>
                     <label for="user-link-url">Ссылка:</label> <input type="text" id="user-link-url" name="url">
                     <input type="button" class="cancelUserLink" value="отменить"> <input type="submit" class="saveUserLink" value="сохранить">
@@ -199,9 +199,10 @@
                 {% endif %}
 				<li class="chatInvite">Приглашение в чат</li>
                 <div id="notepad" style="margin-top: 10px;display:none;">
+                    <textarea id="notepad-text" style="height: 200px;resize: none;border: 1px solid #CC2A03;border-radius: 5px;margin-left: -9px;float: left;"></textarea>
                     <div class="closeNotepad"><a href=""></a></div>
-                    <textarea id="notepad-text" style="height: 200px;resize: none;border: 2px solid #CC2A03;"></textarea>
                 </div>
+				<div style="clear: both;">
 			</ul>
             <a href="#" class="open-feedback-window">Оставить отзыв</a>
 		</div>
