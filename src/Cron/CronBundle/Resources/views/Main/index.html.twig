@@ -137,7 +137,12 @@
                 'margin-bottom':'8px'
             });
             var questionPrivateCost = $('p.questionPrivateCost');
-            questionPrivateCost.hide();
+            questionPrivateCost.hide();		
+			
+			$('#question_category > label').click(function() {
+			    $("#question_category > label").removeClass('category-active');
+                $(this).addClass('category-active');				
+			});
 
             //Динамическое изменение текстовой области
             $('#question_text').autosize();

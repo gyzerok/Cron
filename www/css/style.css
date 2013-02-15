@@ -1,4 +1,4 @@
- 
+  
 #wrapper {
 	width: 960px;
 	margin: 0 auto;
@@ -45,6 +45,10 @@
 	padding: 1px;
 }
 
+.language a:hover {
+	border: 1px solid #000;
+}
+
 .russian {
 	margin-right: 4px;
 	float: left;
@@ -56,9 +60,11 @@
 	height: 25px;
 	cursor: pointer;
 	background: url(/i/RU1.jpg) no-repeat;
-	border: 1px solid #000;
+	border: 1px solid #333;
 	border-radius: 5px;
 }
+
+
 
 .english {
 	margin-right: 4px;
@@ -71,7 +77,7 @@
 	height: 25px;
 	cursor: pointer;
 	background: url(/i/EN1.jpg) no-repeat;
-	border: 1px solid #000;
+	border: 1px solid #333;
 	border-radius: 5px;
 }
 
@@ -86,7 +92,7 @@
 	height: 25px;
 	cursor: pointer;
 	background: url(/i/PT1.jpg) no-repeat;
-	border: 1px solid #000;
+	border: 1px solid #333;
 	border-radius: 5px;
 }
 
@@ -144,6 +150,7 @@
 	overflow: hidden;
 }
 
+
 #nav .orderQuestions {
 	width: 250px;
 	height: 30px;
@@ -161,9 +168,13 @@
 	height: 30px;
 	cursor: pointer;
 	text-decoration: none;
-	color: #383838;
+	color: #333;
 	font-family: 'Candara';
 	font-size: 24px;
+}
+
+#nav .orderQuestions a:hover {
+	color: #3b3ffd;
 }
 
 
@@ -184,13 +195,13 @@
 	height: 30px;
 	cursor: pointer;
 	text-decoration: none;
-	color: #383838;
+	color: #333;
 	font-family: 'Candara';
 	font-size: 24px;
 }
 
 #nav .categoryQuestions a:hover {
-	background-color: #FFB475;
+	color: #3b3ffd;
 }
 
 #nav .expressQuestions {
@@ -209,15 +220,14 @@
 	height: 30px;
 	cursor: pointer;
 	text-decoration: none;
-	color: #383838;
+	color: #333;
 	font-family: 'Candara';
 	font-size: 24px;
 }
 
 #nav .expressQuestions a:hover {
-	background-color: #FFB475;
+	color: #3b3ffd;
 }
-
 
 
 .usersProfile {
@@ -244,10 +254,16 @@
 	width: 62px;
 	margin: 22px 0 0 5px;
 	float: left;
-	color: #52648A;
+	color: #495677;
 	text-align: center;
 	line-height: 110%;
 }
+
+.usersProfile p.credits:hover {
+	color: #3b3ffd;
+	cursor: pointer;
+}
+
 
 .usersProfile form.profileNavigation {
 	width: 80px;
@@ -258,17 +274,22 @@
 }
 
 .usersProfile form.profileNavigation input, .usersProfile form.profileNavigation a {
-	border: 1px solid gray;
+	border: 1px solid #7b7b7b;
+	color: #333;
 	border-radius: 5px;
 	background-color: #EFEFEF;
 	cursor: pointer;
 	font-weight: bold;
     text-decoration: none;
-    color: #383838;
     font-size: 13px;
     padding: 1px 6px;
     margin: 2px;
     display: inline-block;
+}
+
+.usersProfile form.profileNavigation input:hover, .usersProfile form.profileNavigation a:hover {
+	border: 1px solid #000;
+	color: #000;
 }
 
 .usersProfile p.myQuestions {
@@ -279,10 +300,13 @@
 
 .usersProfile p.myQuestions a {
 	text-align: right;
-	color: #526493;
+	color: #495677;
 	text-decoration: none;
 	font-family: 'Candara';
 	font-size: 16px;
+}
+.usersProfile p.myQuestions a:hover {
+	color: #3b3ffd;
 }
 
 
@@ -335,14 +359,15 @@
 	height: 18px;
 	text-align: center;
 	margin-top: 5px;
-	background-color: #EFEFEF;
+	background-color: #e6e6e6;
+	border: 1px solid #e6e6e6;
 	text-transform: uppercase;
 	font-size: 14px;
 	cursor: pointer;
 	display: block;
 	margin: 5px auto;
 	font-family: 'Candara';
-	color: #383838;
+	color: #333;
 }
 
 #menu ul.menuNavigation li.chatInvite.indicate {
@@ -351,7 +376,8 @@
 }
 
 #menu ul.menuNavigation li.chatInvite:hover {
-	background-color: #FFDDDB;
+	color: #000;
+	border: 1px solid #000;
 }
 
 #menu ul.menuNavigation li ul.subMenuNavigation {
@@ -381,7 +407,7 @@
 
 #menu ul.menuNavigation li ul.subMenuNavigation li a:hover {
 	background-color: #FFDDDB;
-	color: #0093CB;
+	color: #3b3ffd;
 }
 
 #menu ul.menuNavigation li ul.subMenuNavigation li a {
@@ -599,6 +625,10 @@ p.questionPrivateCost {
 	display: block;	
 }
 
+.category label.category-active {
+	color: #495677;
+}
+
 .category input  {
 	display: block;
 	float: left;
@@ -759,20 +789,27 @@ h2.categoryH2 {
 .actionButton form.answer input {
 	width: 86px;
 	height: 20px;
-	border: 1px solid #C6C6C6;
+	border: 1px solid #7b7b7b;
 	cursor: pointer;
 	border-radius: 3px;
 	margin-bottom: 5px;
 	vertical-align: middle;
 	text-align: center;
 	font-size: 14px;
-
+	color: #333;
 }
+
+.actionButton form.answer input:hover {
+	border: 1px solid #000;
+	color: #000;
+}
+
 
 .actionButton form.answer input.answerButtonItalic {
 	width: 91px;
 	height: 20px;
-	border: 1px solid #C6C6C6;
+	border: 1px solid #7b7b7b;
+	color: #333;
 	cursor: pointer;
 	border-radius: 3px;
 	margin-bottom: 5px;
@@ -780,6 +817,12 @@ h2.categoryH2 {
 	text-align: center;
 	font-size: 14px;
 	font-style: italic;
+}
+
+
+.actionButton form.answer input.answerButtonItalic:hover {
+	border: 1px solid #000;
+	color: #000;
 }
 
 .spamButton {
@@ -858,8 +901,9 @@ h2.categoryH2 {
 .socialIcons form.answer input {
 	width: 73px;
 	height: 20px;
-	border: 1px solid gray;
+	border: 1px solid #7b7b7b;
 	margin: 0;
+	color: #333;
 	cursor: pointer;
 	border-radius: 6px;
 	margin-bottom: 5px;
@@ -867,6 +911,11 @@ h2.categoryH2 {
 	text-align: center;
 	font-size: 14px;
 	font-family: 'Arial';
+}
+
+.socialIcons form.answer input:hover {
+	border: 1px solid #000;
+	color: #000;
 }
 
 .chatWindow {
@@ -882,7 +931,7 @@ h2.categoryH2 {
 }
 
 .chatWindow:hover {
-	background-color: #F0F0F0;
+	background-color: #ffebdb;
 }
 
 .chatWindow span {
@@ -1314,7 +1363,7 @@ input.registerButton:hover {
 
 .enterButton {
 	width: 70px;
-	border: 1px solid gray;
+	border: 1px solid #7b7b7b;
 	border-radius: 5px;
 	background-color: #EFEFEF;
 	cursor: pointer;
@@ -1325,11 +1374,17 @@ input.registerButton:hover {
 	font-family: 'Cambria';
 	padding: 0;
 	height: 22px;
+	color: #333;
+}
+
+.enterButton:hover {
+	border: 1px solid #000;
+	color: #000;
 }
 
 .registerButtonOnIndex {
 	width: 90px;
-	border: 1px solid gray;
+	border: 1px solid #7b7b7b;
 	border-radius: 5px;
 	background-color: #EFEFEF;
 	cursor: pointer;
@@ -1341,6 +1396,12 @@ input.registerButton:hover {
 	font-size: 14px;
 	padding: 0;
 	height: 21px;
+	color: #333;
+}
+
+.registerButtonOnIndex:hover {
+	border: 1px solid gray;
+	color: #000;
 }
 
 a.forgotPassword {
@@ -1350,14 +1411,14 @@ a.forgotPassword {
 	margin-top: -10px;
 	margin-left: auto;
 	margin-right: auto;	
-	color: #52648A;
+	color: #495677;
 	text-decoration: none;
 	font-size: 18px;
 	font-family: 'Cambria';
 }
 
 a.forgotPassword:hover {	
-	color: #0093CB;
+	color: #3b3ffd;
 }
 
 a.closeRegisterButton {
@@ -1476,16 +1537,20 @@ a.closeRegisterButton {
 }
 
 #add-file-button{
-	border: 2px solid #52648A;
-	background-color: #EFEFEF;
+	border: 2px solid #495677;
+	background-color: #e6e6e6;
 	margin: 5px 0px 0 -3px;
 	border-radius: 5px;
 	height: 39px;
 	width: 127px;
-	color: #010101;
+	color: #7b7b7b;
 	font-size: 26px;
 	font-family: 'Cambria';
 	cursor: pointer;
+}
+
+#add-file-button:hover{
+	color: #000;
 }
 
 .file-link-wrap {
@@ -1543,16 +1608,17 @@ a.closeRegisterButton {
 	padding: 6px 0 1px 5px;
 	margin: 8px auto 0 auto;
 	border-radius: 4px;
-	border: 1px solid #003580;
+	border: 1px solid #495677;
+	color: #000;
 	width: 666px;
 	height: 22px;
 	overflow: hidden;
 }
 .my-file:hover {
-	background: #f0f0f0;
+	background: #e8fbff;
 }
 .my-file.selected {
-    background: #e8e8e8;
+    background: #e8fbff;
 }
 .my-file table td {
 	vertical-align: top;
@@ -2374,6 +2440,21 @@ a.toggleSettingsGroup:hover {
 	background-color: #fff;
 }
 
+.settingsSubmit.large {
+	margin-left: 263px;
+	margin-bottom: 10px;
+	margin-top: 4px;
+	width: 88px;
+	height: 20px;
+	border: 1px solid gray;
+	cursor: pointer;
+	border-radius: 6px;
+	vertical-align: middle;
+	text-align: center;
+	font-size: 14px;
+	background-color: #fff;
+}
+
 .closeSettingsGroup {
 	margin-bottom: 10px;
 	width: 88px;
@@ -2405,12 +2486,12 @@ a.toggleSettingsGroup:hover {
 .article-categories a {
 	font-size: 30px;
 	font-family: 'Cambria';
-	color: #343434;
+	color: #333;
 	text-decoration: none;
 }
 
 .article-categories a:hover {
-	color: #000;
+	color: #3b3ffd;
 }
 
 .article-li {
@@ -2421,7 +2502,13 @@ a.toggleSettingsGroup:hover {
 }
 
 .article-li a {
-	text-decoration: none;	
+	text-decoration: none;
+	color: #333;
+}
+
+
+.article-li a:hover {
+	text-decoration: underline;
 }
 
 span.article-list-header {
