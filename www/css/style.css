@@ -392,6 +392,8 @@
 	font-family: 'Cambria';
 	font-size: 16px;
 }
+
+
 .open-dialog-list.indicate {
     background-color: #000000 !important;
     color: #ff0000 !important;
@@ -2445,7 +2447,6 @@ a.bookmarkArticle {
 	height: 22px;
 	background: url(../i/repostButton.png) no-repeat;
 	background-size: 100%;
-	margin-left: 229px;
 }
 
 a.bookmarkArticle:hover {
