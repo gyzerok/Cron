@@ -185,6 +185,11 @@ $(document).ready(function() {
             $("#header-srvmsg").html(response);
         }
     });
+	
+	//Делаем заметки статей ссылками
+	$(".article-notes-list > li").click(function(){  
+	  window.location=$(this).find("a").attr("href"); return false;  
+	});  	
 });
 
 function updateNotepad(){

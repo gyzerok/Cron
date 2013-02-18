@@ -19,6 +19,9 @@
 					$.ajax({'url': '{{ path("spamItem") }}', 'type':'post', 'data': 'question_id='+question_id,
 						'fail': function(){
 							that.removeClass("spamButtonActive");
+						},
+						'success': function() {
+							that.closest('.singleQuestion').replaceWith($("<span class='spamMessage'>Этот вопрос помечен как спам!</span>"));							
 						}
 					});
 				});

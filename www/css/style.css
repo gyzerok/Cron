@@ -587,7 +587,6 @@
 
 #showQuestion {
 	max-height: 799px;
-	overflow: auto;
 	width: 728px;
 }
 
@@ -835,7 +834,22 @@ h2.categoryH2 {
 	margin-right: 3px;
 }
 
-.spamButtonActive, .spamButton:hover  {
+.spamButtonActive{
+	background-image: url(../i/spamActive.jpg);
+	background-size: 100%;
+}
+
+.spamButton:hover  {
+	background-image: url(../i/spamHover.jpg);
+	background-size: 100%;	
+}
+
+.spamButton:active  {
+	background-image: url(../i/spamClickActive.jpg);
+	background-size: 100%;	
+}
+
+.spamButtonActive:hover{
 	background-image: url(../i/spamActive.jpg);
 	background-size: 100%;
 }
@@ -850,7 +864,22 @@ h2.categoryH2 {
 	margin-right: 3px;
 }
 
-.likeButtonActive, .likeButton:hover {
+.likeButtonActive{
+	background-image: url(../i/likeActive.jpg);
+	background-size: 100%;	
+}
+
+.likeButton:hover {
+	background-image: url(../i/likeHover.jpg);
+	background-size: 100%;	
+}
+
+.likeButton:active {
+	background-image: url(../i/likeClickActive.jpg);
+	background-size: 100%;	
+}
+
+.likeButtonActive:hover{
 	background-image: url(../i/likeActive.jpg);
 	background-size: 100%;	
 }
@@ -866,10 +895,25 @@ h2.categoryH2 {
 	margin-right: 3px;
 }
 
-.repostButtonActive, .repostButton:hover {
+.repostButtonActive {
 	background: url(/i/repostButtonActive.jpg) no-repeat;
 	background-size: 100%;	
 }
+.repostButton:hover {
+	background: url(/i/repostButtonHover.jpg) no-repeat;
+	background-size: 100%;		
+}
+
+.repostButton:active {
+	background: url(/i/repostButtonClickActive.jpg) no-repeat;
+	background-size: 100%;		
+}
+
+.repostButtonActive:hover {
+	background: url(/i/repostButtonActive.jpg) no-repeat;
+	background-size: 100%;	
+}
+
 
 .arrowButton {
 	width: 22px;
@@ -1732,13 +1776,14 @@ h2.dialogTitle {
 .singleDialog{
 	width: 570px;
 	height: 27px;
-	border: 2px solid #bb8989;
+	border: 2px solid #873d4f;
+	color: #333333;
 	border-radius: 5px;
 	margin: 12px 0 0 10px;
 }
 .singleDialog:hover {
     cursor: pointer;
-    background-color: #f0f0f0;
+    background-color: #ffebdb;
 }
 .dialogs-empty-text {
     padding: 17px;
@@ -2551,10 +2596,17 @@ a.bookmarkArticleActive{
 
 .article-notes-list li {
 	height: 30px;
-	border: 1px solid #7584A2;
+	border: 1px solid #495677;
+	color: #333333;
 	margin-top: 6px;
 	border-radius: 5px;
 	line-height: 160%;
+	cursor: pointer;
+}
+
+.article-notes-list li:hover {
+	border: 1px solid #495677;
+	background-color: #e8fbff;
 }
 
 
@@ -2577,4 +2629,13 @@ a.bookmarkArticleActive{
 	max-height: 785px;
 	overflow: auto;
 	margin-top: 10px;
+}
+
+.spamMessage {
+	margin: 10px auto 0 auto;
+	display: block;
+	text-align: center;
+	font-family: 'Cambtia';
+	font-size: 19px;
+	color: #C63A3A;
 }
