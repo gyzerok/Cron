@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use Cron\CronBundle\Entity\Question;
 use Cron\CronBundle\Entity\Answer;
 use Cron\CronBundle\Entity\File;
 use Cron\CronBundle\Entity\User;
@@ -100,7 +101,7 @@ class AjaxController extends Controller
             $full = $request->get("full");
 
             $question = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findOneById($questionId);
-            if (!$question instanceof \Cron\CronBundle\Entity\Question)
+            if (!$question instanceof Question)
                 return new Response('Fail');
 
             if ($full)
@@ -123,8 +124,9 @@ class AjaxController extends Controller
         {
             if ($questionId = $request->get('question_id'))
             {
+                $question = new Question();
                 $question = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findOneById($questionId);
-                if (!$question instanceof \Cron\CronBundle\Entity\Question)
+                if (!$question instanceof Question)
                     return new Response('Fail');
 
                 $user = $this->getUser();
@@ -148,30 +150,41 @@ class AjaxController extends Controller
         return new Response('Fail');
     }
 
-    public function spamItemAction(Request $request)
+    public function spamQuestionAction(Request $request)
     {
         if ($request->isMethod('POST'))
         {
             if ($questionId = $request->get('question_id'))
             {
+                $em = $this->getDoctrine()->getManager();
+                $question = new Question();
                 $question = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findOneById($questionId);
-                if (!$question instanceof \Cron\CronBundle\Entity\Question)
+                if (!$question instanceof Question)
                     return new Response('Fail');
 
+                $user = new User();
                 $user = $this->getUser();
                 if (!$user instanceof User)
                     return new Response('Fail');
-                //$user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
 
                 if ($question->getSpams()->contains($user))
                     return new Response('Fail');
 
                 $question->addSpam($user);
 
-                if ($question->getSpams()->count() >= 5)
+                if ($question->getSpams()->count() >= 1)//5)
+                {
                     $question->setIsSpam(true);
 
-                $em = $this->getDoctrine()->getManager();
+                    $user->setSpamActivity($user->getSpamActivity() + 1);
+                    $banDate = new \DateTime();
+                    $banDate->add(new \DateInterval('P100Y'));
+                    if ($user->getSpamActivity() >= 1)//5)
+                        $user->setLockedTill($banDate);
+                    $em->persist($user);
+                    $em->flush();
+                }
+
                 $em->persist($question);
                 $em->flush();
 
@@ -180,6 +193,39 @@ class AjaxController extends Controller
         }
 
         return new Response('Fail');
+    }
+
+    public function spamAnswerAction(Request $request)
+    {
+        /*if ($request->isMethod('POST'))
+        {
+            if ($answerId = $request->get('answer_id'))
+            {
+                $answer = $this->getDoctrine()->getRepository('CronCronBundle:Answer')->findOneById($answerId);
+                if (!$answer instanceof \Cron\CronBundle\Entity\Answer)
+                    return new Response('Fail');
+
+                $user = $this->getUser();
+                if (!$user instanceof User)
+                    return new Response('Fail');
+
+                if ($answer->getSpams()->contains($user))
+                    return new Response('Fail');
+
+                $answer->addSpam($user);
+
+                if ($answer->getSpams()->count() >= 5)
+                    $answer->setIsSpam(true);
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($answer);
+                $em->flush();
+
+                return new Response('Success');
+            }
+        }
+
+        return new Response('Fail');*/
     }
 
     public function postAnswerAction(Request $request)
