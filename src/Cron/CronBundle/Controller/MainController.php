@@ -576,6 +576,8 @@ class MainController extends Controller
                 $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
                 $user->setPassword($password);
 
+                $user->setLockedTill(new \DateTime("0000-00-00 00:00:00"));
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
