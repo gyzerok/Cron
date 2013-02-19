@@ -133,6 +133,13 @@ class User implements UserInterface, \Serializable
      */
     private $role = 0;
 
+    /**
+     * @var integer $spamActivity
+     *
+     * @ORM\Column(name="spam_activity", type="integer", nullable=false)
+     */
+    private $spamActivity;
+
 
 
     /**
@@ -391,7 +398,7 @@ class User implements UserInterface, \Serializable
 
     public function serialize()
     {
-        return serialize(array($this->id, $this->username, $this->nick));
+        return serialize(array($this->id, $this->username, $this->nick, $this->lockedTill));
     }
 
     public function unserialize($data)
@@ -399,15 +406,17 @@ class User implements UserInterface, \Serializable
         list(
             $this->id,
             $this->username,
-            $this->nick
+            $this->nick,
+            $this->lockedTill
             ) = unserialize($data);
     }
 
     public function __construct()
     {
-        $this->setRegDate(new \DateTime());
-        $this->setLastVisit(new \DateTime());
-        $this->setIsActive(false);
+        $this->regDate = new \DateTime();
+        $this->lastVisit = new \DateTime();
+        $this->isActive = false;
+        $this->spamActivity = 0;
     }
 
     public function __toString()
@@ -417,7 +426,7 @@ class User implements UserInterface, \Serializable
 
     function equals(UserInterface $user)
     {
-        if ($this->username != $user->getUsername() || $this->password != $user->getPassword())
+        if ($this->username != $user->getUsername() || $this->password != $user->getPassword() || $this->lockedTill != $user->getLockedTill())
             return false;
 
         return true;
@@ -513,5 +522,28 @@ class User implements UserInterface, \Serializable
     public function getLockedTill()
     {
         return $this->lockedTill;
+    }
+
+    /**
+     * Set spamActivity
+     *
+     * @param integer $spamActivity
+     * @return User
+     */
+    public function setSpamActivity($spamActivity)
+    {
+        $this->spamActivity = $spamActivity;
+    
+        return $this;
+    }
+
+    /**
+     * Get spamActivity
+     *
+     * @return integer 
+     */
+    public function getSpamActivity()
+    {
+        return $this->spamActivity;
     }
 }

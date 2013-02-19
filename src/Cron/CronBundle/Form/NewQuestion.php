@@ -24,7 +24,7 @@ class NewQuestion extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('text', 'textarea', array('label' => 'Вопрос', 'max_length' => 130))
+        $builder->add('text', 'textarea', array('label' => 'Вопрос', 'max_length' => 200))
                 ->add('category', null, array('label' => 'Категория', 'expanded' => true))
                 ->add('private', 'checkbox', array('label' => 'закрытый', 'required' => false, 'disabled' => !$this->userAuth))
                 ->add('country', 'entity', array('label' => 'Страна', 'class' => 'CronCronBundle:Country', 'property' => 'name', 'empty_value' => 'Любая страна', 'required' => false))

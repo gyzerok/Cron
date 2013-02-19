@@ -43,16 +43,24 @@ class Answer
     private $pubDate;
 
     /**
-     * @var integer $likes
+     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\JoinTable(name="userLikes1",
+     *     joinColumns={@ORM\JoinColumn(name="answer_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     * )
      *
-     * @ORM\Column(name="likes", type="integer", nullable=true)
+     * @var ArrayCollection $likes
      */
     private $likes;
 
     /**
-     * @var integer $spams
+     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\JoinTable(name="userSpams1",
+     *     joinColumns={@ORM\JoinColumn(name="answer_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     * )
      *
-     * @ORM\Column(name="spams", type="integer", nullable=true)
+     * @var ArrayCollection $spams
      */
     private $spams;
 
@@ -76,6 +84,12 @@ class Answer
      */
     private $user;
 
+    /**
+     * @var boolean $isSpam
+     *
+     * @ORM\Column(name="is_spam", type="boolean", nullable=false)
+     */
+    private $isSpam;
 
 
     /**
@@ -253,5 +267,74 @@ class Answer
     {
         $this->setPubDate(new \DateTime());
         $this->setStatus(true);
+    }
+
+    /**
+     * Add likes
+     *
+     * @param Cron\CronBundle\Entity\User $likes
+     * @return Answer
+     */
+    public function addLike(\Cron\CronBundle\Entity\User $likes)
+    {
+        $this->likes[] = $likes;
+    
+        return $this;
+    }
+
+    /**
+     * Remove likes
+     *
+     * @param Cron\CronBundle\Entity\User $likes
+     */
+    public function removeLike(\Cron\CronBundle\Entity\User $likes)
+    {
+        $this->likes->removeElement($likes);
+    }
+
+    /**
+     * Add spams
+     *
+     * @param Cron\CronBundle\Entity\User $spams
+     * @return Answer
+     */
+    public function addSpam(\Cron\CronBundle\Entity\User $spams)
+    {
+        $this->spams[] = $spams;
+    
+        return $this;
+    }
+
+    /**
+     * Remove spams
+     *
+     * @param Cron\CronBundle\Entity\User $spams
+     */
+    public function removeSpam(\Cron\CronBundle\Entity\User $spams)
+    {
+        $this->spams->removeElement($spams);
+    }
+
+    /**
+     * Set isSpam
+     *
+     * @param boolean $isSpam
+     * @return Answer
+     */
+    public function setIsSpam($isSpam)
+    {
+        $this->isSpam = $isSpam;
+    
+        return $this;
+    }
+
+    /**
+     * Get isSpam
+     *
+     * @return boolean 
+     */
+    public function getIsSpam()
+    {
+        return $this->isSpam;
     }
 }

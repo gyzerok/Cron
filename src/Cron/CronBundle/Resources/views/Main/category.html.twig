@@ -16,7 +16,7 @@
 					$(this).addClass("spamButtonActive");
 					var question_id = $(this).closest('.singleQuestion').attr('data-id');
 					var that = $(this);
-					$.ajax({'url': '{{ path("spamItem") }}', 'type':'post', 'data': 'question_id='+question_id,
+					$.ajax({'url': '{{ path("spamQuestion") }}', 'type':'post', 'data': 'question_id='+question_id,
 						'fail': function(){
 							that.removeClass("spamButtonActive");
 						},
