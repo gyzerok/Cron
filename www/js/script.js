@@ -118,7 +118,6 @@ $(document).ready(function() {
                 question: $(this).closest('.singleQuestion').data('id')
             },
             success: function(response){
-                alert('Вопрос добавлен в заметки.');
             }
         });
     });
@@ -189,7 +188,15 @@ $(document).ready(function() {
 	//Делаем заметки статей ссылками
 	$(".article-notes-list > li").click(function(){  
 	  window.location=$(this).find("a").attr("href"); return false;  
-	});  	
+	});
+
+	
+	
+	/*$('.article-li').hover(function() {
+		$(this).closest('.article-li > a').css({
+			'text-decoration': 'underline'
+		});
+	});*/
 });
 
 function updateNotepad(){
