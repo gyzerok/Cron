@@ -84,6 +84,12 @@ class Answer
      */
     private $user;
 
+    /**
+     * @var boolean $isSpam
+     *
+     * @ORM\Column(name="is_spam", type="boolean", nullable=false)
+     */
+    private $isSpam;
 
 
     /**

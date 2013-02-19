@@ -172,17 +172,20 @@ class AjaxController extends Controller
 
                 $question->addSpam($user);
 
-                if ($question->getSpams()->count() >= 1)//5)
+                if ($question->getBoundary() >= 50)
+                    $spamBoundary = 10;
+                else
+                    $spamBoundary = 5;
+                if ($question->getSpams()->count() >= $spamBoundary)
                 {
                     $question->setIsSpam(true);
 
                     $user->setSpamActivity($user->getSpamActivity() + 1);
                     $banDate = new \DateTime();
                     $banDate->add(new \DateInterval('P100Y'));
-                    if ($user->getSpamActivity() >= 1)//5)
+                    if ($user->getSpamActivity() >= 5)
                         $user->setLockedTill($banDate);
                     $em->persist($user);
-                    $em->flush();
                 }
 
                 $em->persist($question);
@@ -197,14 +200,17 @@ class AjaxController extends Controller
 
     public function spamAnswerAction(Request $request)
     {
-        /*if ($request->isMethod('POST'))
+        if ($request->isMethod('POST'))
         {
             if ($answerId = $request->get('answer_id'))
             {
+                $em = $this->getDoctrine()->getManager();
+                $answer = new Answer();
                 $answer = $this->getDoctrine()->getRepository('CronCronBundle:Answer')->findOneById($answerId);
-                if (!$answer instanceof \Cron\CronBundle\Entity\Answer)
+                if (!$answer instanceof Answer)
                     return new Response('Fail');
 
+                $user = new User();
                 $user = $this->getUser();
                 if (!$user instanceof User)
                     return new Response('Fail');
@@ -214,8 +220,21 @@ class AjaxController extends Controller
 
                 $answer->addSpam($user);
 
+                /*if ($question->getBoundary() >= 50)
+                    $spamBoundary = 10;
+                else
+                    $spamBoundary = 5;*/
                 if ($answer->getSpams()->count() >= 5)
+                {
                     $answer->setIsSpam(true);
+
+                    $user->setSpamActivity($user->getSpamActivity() + 1);
+                    $banDate = new \DateTime();
+                    $banDate->add(new \DateInterval('P100Y'));
+                    if ($user->getSpamActivity() >= 5)
+                        $user->setLockedTill($banDate);
+                    $em->persist($user);
+                }
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($answer);
@@ -225,7 +244,7 @@ class AjaxController extends Controller
             }
         }
 
-        return new Response('Fail');*/
+        return new Response('Fail');
     }
 
     public function postAnswerAction(Request $request)
