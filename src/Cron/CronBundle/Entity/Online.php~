@@ -1,0 +1,37 @@
+<?php
+
+namespace Cron\CronBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Cron\CronBundle\Entity\Online
+ *
+ * @ORM\Table(name="online")
+ * @ORM\Entity
+ */
+class Online
+{
+    /**
+     * @var integer $id
+     *
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+
+    /**
+     * @var string $sid
+     *
+     * @ORM\Column(name="sid", type="string", length=100, nullable=false)
+     */
+    private $sid;
+
+    /**
+     * @var \DateTime $lastVisit
+     *
+     * @ORM\Column(name="last_visit", type="datetime", nullable=false)
+     */
+    private $lastVisit;
+}

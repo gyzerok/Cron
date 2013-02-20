@@ -16,12 +16,49 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class MainController extends Controller
+class MainController extends Controller implements InitializableControllerInterface
 {
-    public function indexAction(Request $request)
+    protected $onlineUserCount;
+    protected $totalUserCount;
+
+    public function initialize(Request $request)
     {
         $request->setLocale($request->getSession()->get('_locale'));
 
+        $em = $this->getDoctrine()->getManager();
+        $sid = $request->getSession()->getId();
+        $isOnline = $this->getDoctrine()->getRepository('CronCronBundle:Online')->findBySid($sid);
+        if (empty($isOnline))
+        {
+            $onlineEntry = new \Cron\CronBundle\Entity\Online($sid);
+            $em->persist($onlineEntry);
+        }
+
+        $timeBoundary = new \DateTime();
+        $timeBoundary->sub(new \DateInterval('PT15M'));
+        $offlines = $this->getDoctrine()->getRepository('CronCronBundle:Online')
+                                       ->createQueryBuilder('online')
+                                       ->where('online.lastVisit < :lastVisit')
+                                       ->setParameter('lastVisit', $timeBoundary)
+                                       ->getQuery()->getResult();
+        foreach ($offlines as $offline)
+            $em->remove($offline);
+        $em->flush();
+
+        $onlineUserCount = $this->getDoctrine()->getRepository('CronCronBundle:Online')
+                                           ->createQueryBuilder('online')
+                                           ->select('COUNT(online.sid) AS onlineCount')
+                                           ->getQuery()->getResult();
+        $totalUserCount = $this->getDoctrine()->getRepository('CronCronBundle:User')
+                                          ->createQueryBuilder('user')
+                                          ->select('COUNT(user.id) AS totalCount')
+                                          ->getQuery()->getResult();
+        $this->onlineUserCount = $onlineUserCount[0]['onlineCount'];
+        $this->totalUserCount = $totalUserCount[0]['totalCount'];
+    }
+
+    public function indexAction(Request $request)
+    {
         $numAnswers = array(10 => '10', 20 => '20');
         if ($this->getUser() instanceof User)
             $numAnswers = array(10 => '10', 20 => '20', 50 => '50', 100 => '100', 1000 => '1000');
@@ -74,15 +111,14 @@ class MainController extends Controller
         return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Главная',
                                                                           'curUser' => $this->getUser(),
                                                                           'userQuestions' => $userQuestions,
-                                                                          'form' => $form->createView())
+                                                                          'form' => $form->createView(),
+                                                                          'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount)
         );
 
     }
 
     public function categoryAction($category_id, Request $request)
     {
-        $request->setLocale($request->getSession()->get('_locale'));
-
         $user = $this->getUser();
 
         $answer = new Answer();
@@ -228,8 +264,6 @@ class MainController extends Controller
 
     public function rushAction(Request $request)
     {
-        $request->setLocale($request->getSession()->get('_locale'));
-
         $user = $this->getUser();
 
         $answer = new Answer();
@@ -280,8 +314,6 @@ class MainController extends Controller
 
     public function myAction(Request $request)
     {
-        $request->setLocale($request->getSession()->get('_locale'));
-
         $user = $this->getUser();
 
         $my = array();
@@ -304,8 +336,6 @@ class MainController extends Controller
 
     public function diskAction($file_hash)
     {
-        //$request->setLocale($request->getSession()->get('_locale'));
-
         $user = $this->getUser();
 
         if (!$file_hash){
@@ -532,8 +562,6 @@ class MainController extends Controller
 
     public function notesAction($location)
     {
-//        $request->setLocale($request->getSession()->get('_locale'));
-
         $user = $this->getUser();
 
         switch($location){
@@ -562,8 +590,6 @@ class MainController extends Controller
 
     public function registerAction(Request $request)
     {
-        $request->setLocale($request->getSession()->get('_locale'));
-
         $user = new User();
         $form = $this->createForm(new Registration(), $user);
         if ($request->isMethod('POST')) {
@@ -610,8 +636,6 @@ class MainController extends Controller
 
     public function regconfAction(Request $request)
     {
-        $request->setLocale($request->getSession()->get('_locale'));
-
         $success = false;
 
         if ($request->isMethod("GET")) {
