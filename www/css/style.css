@@ -2720,11 +2720,21 @@ a.bookmarkArticle:hover {
 	background-size: 100%;
 }
 
+a.bookmarkArticle:active {
+	background: url(../i/repostButtonClickActive.jpg) no-repeat;
+	background-size: 100%;
+}
+
 a.bookmarkArticleActive{
 	display: block;
 	width: 22px;
 	height: 22px;
 	background: url(../i/repostButtonActive.jpg) no-repeat;
+	background-size: 100%;
+}
+
+a.bookmarkArticleActive:hover{
+	background: url(../i/repostButtonClickActive.jpg) no-repeat;
 	background-size: 100%;
 }
 
