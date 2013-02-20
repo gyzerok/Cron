@@ -157,18 +157,18 @@
 				</li>
 				<li>Заметки
                     <ul class="subMenuNavigation">
-                        <li><a href="/notes/questions">Вопросы</a></li>
-                        <li><a href="/notes/articles">Статьи</a></li>
-                        <li><a href="#" class="open-notepad">Блокнот</a></li>
+                        <li><a href="/notes/questions">вопросы</a></li>
+                        <li><a href="/notes/articles">статьи</a></li>
+                        <li><a href="#" class="open-notepad">блокнот</a></li>
                     </ul>
                 </li>
 				<li>Информация
                     <ul class="subMenuNavigation">
-                        <li><a href="/articles">Статьи</a></li>
+                        <li><a href="/articles">cтатьи</a></li>
                         {#{% for link in curUser.getUserLinks() %}
                             <li><a href="{{ link.getUrl() }}">{{ link.getTitle() }}</a></li>
                         {% endfor %}#}
-                        <li><a href="#" class="add-bookmark">Добавить ссылку</a></li>
+                        <li class="add-bookmark-wrap"><a href="#" class="add-bookmark">добавить ссылку</a></li>
                     </ul>
                 </li>
 				<li><a class="menuNavigationLink" href="/disk">Кибердиск</a></li>
@@ -177,21 +177,21 @@
                     {% if curUser.getRole()>0 %}
                         <li>Админка
                         <ul class="subMenuNavigation">
-                            <li><a href="/admin/questions">Вопросы</a></li>
-                            <li><a href="/admin/answers">Ответы</a></li>
+                            <li><a href="/admin/questions">вопросы</a></li>
+                            <li><a href="/admin/answers">ответы</a></li>
                             {% if curUser.getRole()>1 %}
-                                <li><a href="/admin/articles">Статьи</a></li>
-                                <li><a href="/admin/srvmsg">Серв. сообщ</a></li>
-                                <li><a href="/admin/users">Пользователи</a></li>
-                                <li><a href="/admin/credits">Кредиты</a></li>
+                                <li><a href="/admin/articles">статьи</a></li>
+                                <li><a href="/admin/srvmsg">серв. сообщ</a></li>
+                                <li><a href="/admin/users">пользователи</a></li>
+                                <li><a href="/admin/credits">кредиты</a></li>
                             {% endif %}
                         </ul>
                         </li>
                         {% if curUser.getRole()>1 %}
                         <li>Поддержка
                             <ul class="subMenuNavigation">
-                                <li><a href="/admin/support/appeals">Жалобы</a></li>
-                                <li><a href="/admin/support/ideas">Предложения</a></li>
+                                <li><a href="/admin/support/appeals">жалобы</a></li>
+                                <li><a href="/admin/support/ideas">предложения</a></li>
                             </ul>
                         </li>
                         {% endif %}

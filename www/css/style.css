@@ -129,6 +129,7 @@
 	font-size: 20px;
 	color: #495677;
 	margin-right: 21px;
+	margin-left: 5px;
 }
 
 .users span.onSite {
@@ -138,6 +139,7 @@
 	font-family: 'Candara';
 	font-size: 20px;
 	color: #495677;
+	margin-left: 5px;
 }
 
 #nav {
@@ -417,6 +419,27 @@
 	text-transform: none;
 	font-family: 'Cambria';
 	font-size: 16px;
+}
+
+#menu ul.menuNavigation li ul.subMenuNavigation li a.add-bookmark {
+	font-family: 'Calibri';
+	font-size: 12px;
+	color: #000;
+	font-weight: bold;
+}
+
+#menu ul.menuNavigation li ul.subMenuNavigation li a.add-bookmark:hover {
+	color: #3b3ffd;
+	background-color: #fdf5ef;
+}
+
+#menu ul.menuNavigation li ul.subMenuNavigation li.add-bookmark-wrap {
+	background-color: #fdf5ef;
+	border-radius: 0px;
+}
+
+#menu ul.menuNavigation li ul.subMenuNavigation li.add-bookmark-wrap:hover {
+	background-color: #fdf5ef;
 }
 
 
