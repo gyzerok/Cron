@@ -258,7 +258,8 @@ class MainController extends Controller implements InitializableControllerInterf
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'По категориям',
              'categorized_questions' => $categorized,
              'curUser' => $this->getUser(),
-             'form' => $form->createView())
+             'form' => $form->createView(),
+             'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount)
         );
     }
 
@@ -308,7 +309,8 @@ class MainController extends Controller implements InitializableControllerInterf
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'Срочные',
              'categorized_questions' => $categorized,
              'curUser' => $this->getUser(),
-             'form' => $form->createView())
+             'form' => $form->createView(),
+             'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount)
         );
     }
 
@@ -330,7 +332,8 @@ class MainController extends Controller implements InitializableControllerInterf
         return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Мои вопросы',
                 'userQuestions' => $my,
                 'curUser' => $this->getUser(),
-                'form' => null
+                'form' => null,
+                'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));
     }
 
@@ -342,7 +345,8 @@ class MainController extends Controller implements InitializableControllerInterf
             if (!$user instanceof User) {
                 return $this->render("CronCronBundle:Main:disk.html.twig", array('title' => 'Кибердиск',
                                                                                  'curUser' => $user,
-                                                                                 'isAuth' => 0)
+                                                                                 'isAuth' => 0,
+                                                                                 'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount)
                 );
             } else {
                 $total_filesize = $this->getDoctrine()->getRepository("CronCronBundle:File")
@@ -374,7 +378,8 @@ class MainController extends Controller implements InitializableControllerInterf
                         'total_filesize_left' => $this->convertFilesize($total_size_left),
                         'user_files' => $user_files,
                         'curUser' => $user,
-                        'isAuth' => 1)
+                        'isAuth' => 1,
+                        'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount)
                 );
             }
 
@@ -385,7 +390,8 @@ class MainController extends Controller implements InitializableControllerInterf
                 return $this->render("CronCronBundle:Main:file.html.twig", array('title' => 'Скачать файл',
                         'file' => $file,
                         'curUser' => $user,
-                        'isAuth' => $isAuth)
+                        'isAuth' => $isAuth,
+                        'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount)
                 );
             } else {
                 $isAuth = 1;
@@ -516,7 +522,8 @@ class MainController extends Controller implements InitializableControllerInterf
         return $this->render("CronCronBundle:Main:settings.html.twig", array('title' => 'Настройки',
                 'categories' => $categories,
                 'settings' => $settings,
-                'curUser' => $user
+                'curUser' => $user,
+                'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));
     }
 
@@ -536,7 +543,8 @@ class MainController extends Controller implements InitializableControllerInterf
             return $this->render("CronCronBundle:Articles:single_article.html.twig", array('title' => 'Статьи / '.$cur_category->getName().' / '.$cur_article->getHeader(),
                 'category' => $cur_category,
                 'article' => $cur_article,
-                'curUser' => $user
+                'curUser' => $user,
+                'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
             ));
         } elseif ($category_id>0){
             $cur_category = $this->getDoctrine()->getRepository("CronCronBundle:ArticleCategory")->find($category_id);
@@ -547,14 +555,16 @@ class MainController extends Controller implements InitializableControllerInterf
             return $this->render("CronCronBundle:Articles:article_list.html.twig", array('title' => 'Статьи / '.$cur_category->getName(),
                 'category' => $cur_category,
                 'articles' => $articles,
-                'curUser' => $user
+                'curUser' => $user,
+                'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
             ));
         } else {
             $article_categories = $this->getDoctrine()->getRepository("CronCronBundle:ArticleCategory")->findAll();
 
             return $this->render("CronCronBundle:Articles:article_categories.html.twig", array('title' => 'Статьи',
                 'categories' => $article_categories,
-                'curUser' => $user
+                'curUser' => $user,
+                'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
             ));
         }
 
@@ -574,14 +584,16 @@ class MainController extends Controller implements InitializableControllerInterf
                 }
                 return $this->render("CronCronBundle:Notes:questions.html.twig", array('title' => 'Заметки / Статьи',
                     'questions' => $questions,
-                    'curUser' => $user
+                    'curUser' => $user,
+                    'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
                 ));
                 break;
             case 'articles':
                 $articles = $this->getDoctrine()->getRepository("CronCronBundle:NotesArticle")->findBy(array("user"=>$user->getId()));
                 return $this->render("CronCronBundle:Notes:articles.html.twig", array('title' => 'Заметки / Статьи',
                     'articles' => $articles,
-                    'curUser' => $user
+                    'curUser' => $user,
+                    'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
                 ));
                 break;
             default:break;
@@ -631,7 +643,7 @@ class MainController extends Controller implements InitializableControllerInterf
             }
         }
 
-        return $this->render("CronCronBundle:Main:register.html.twig", array('title' => 'Регистрация', 'curUser' => $this->getUser(), 'form' => $form->createView()));
+        return $this->render("CronCronBundle:Main:register.html.twig", array('title' => 'Регистрация', 'curUser' => $this->getUser(), 'form' => $form->createView(), 'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount));
     }
 
     public function regconfAction(Request $request)
@@ -656,7 +668,7 @@ class MainController extends Controller implements InitializableControllerInterf
             }
         }
 
-        return $this->render("CronCronBundle:Main:registration_confirmation.html.twig", array('title' => 'Подтверждение регистрации', 'curUser' => $this->getUser(), 'success' => $success));
+        return $this->render("CronCronBundle:Main:registration_confirmation.html.twig", array('title' => 'Подтверждение регистрации', 'curUser' => $this->getUser(), 'success' => $success, 'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount));
     }
 
     public function localeAction(Request $request, $locale)
