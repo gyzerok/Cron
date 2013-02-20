@@ -34,4 +34,65 @@ class Online
      * @ORM\Column(name="last_visit", type="datetime", nullable=false)
      */
     private $lastVisit;
+
+    public function __construct($sid)
+    {
+        $this->sid = $sid;
+        $this->lastVisit = new \DateTime();
+    }
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set sid
+     *
+     * @param string $sid
+     * @return Online
+     */
+    public function setSid($sid)
+    {
+        $this->sid = $sid;
+    
+        return $this;
+    }
+
+    /**
+     * Get sid
+     *
+     * @return string 
+     */
+    public function getSid()
+    {
+        return $this->sid;
+    }
+
+    /**
+     * Set lastVisit
+     *
+     * @param \DateTime $lastVisit
+     * @return Online
+     */
+    public function setLastVisit($lastVisit)
+    {
+        $this->lastVisit = $lastVisit;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastVisit
+     *
+     * @return \DateTime 
+     */
+    public function getLastVisit()
+    {
+        return $this->lastVisit;
+    }
 }

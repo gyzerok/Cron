@@ -95,7 +95,7 @@ class MainController extends Controller implements InitializableControllerInterf
         if ($user instanceof User)
             $userQuestions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                                                  ->createQueryBuilder('question')
-                                                 ->where('question.user = :uid  AND question.status <> :status')
+                                                 ->where('question.user = :uid  AND question.status <> :status AND question.isSpam = false')
                                                  ->setParameter('status', '2')
                                                  ->setParameter('uid', $user->getId())
                                                  ->getQuery()
@@ -172,7 +172,7 @@ class MainController extends Controller implements InitializableControllerInterf
             $categorized[0] = $this->getDoctrine()->getRepository("CronCronBundle:Category")->find($category_id);
             $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                 ->createQueryBuilder('question')
-                ->where('question.category = :cid AND question.status <> :status AND question.datetime > :viewbytime')
+                ->where('question.category = :cid AND question.status <> :status AND question.datetime > :viewbytime  AND question.isSpam = false')
                 ->setParameter('cid', $category_id)
                 ->setParameter('status', '2')
                 ->setParameter('viewbytime', $viewbytime->format("Y-m-d H:i:s"))
@@ -218,7 +218,7 @@ class MainController extends Controller implements InitializableControllerInterf
                 } else {
                     $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                         ->createQueryBuilder('question')
-                        ->where('question.category = :cid AND question.status <> :status AND question.datetime > :viewbytime')
+                        ->where('question.category = :cid AND question.status <> :status AND question.datetime > :viewbytime AND question.isSpam = false')
                         ->setParameter('cid', $category->getId())
                         ->setParameter('status', '2')
                         ->setParameter('viewbytime', $viewbytime->format("Y-m-d H:i:s"))
@@ -283,7 +283,7 @@ class MainController extends Controller implements InitializableControllerInterf
 
         $rush = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                                     ->createQueryBuilder('question')
-                                    ->where('question.category = :cid  AND question.status <> :status')
+                                    ->where('question.category = :cid  AND question.status <> :status AND question.isSpam = false')
                                     ->setParameter('cid', $rush_id)
                                     ->setParameter('status', '2')
                                     ->getQuery()
