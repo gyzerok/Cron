@@ -16,6 +16,30 @@
                 }
                 return false;
             });
+            $(".confirm-spam").bind('click', function () {
+                if (confirm("Подтвердить, что это спам?")) {
+                    var cur_question = $(this).closest(".singleQuestion");
+                    $.ajax({
+                        url:'/admin/confirmSpamQuestion',
+                        data:{
+                            question:cur_question.data('id')
+                        }
+                    });
+                    cur_question.remove();
+                }
+                return false;
+            });
+            $(".cancel-spam").bind('click', function () {
+                var cur_question = $(this).closest(".singleQuestion");
+                $.ajax({
+                    url:'/admin/cancelSpamQuestion',
+                    data:{
+                        question:cur_question.data('id')
+                    }
+                });
+                cur_question.remove();
+                return false;
+            });
         });
     </script>
     <h2 class="categoryTitle">Вопросы</h2>
@@ -39,10 +63,11 @@
                         {{ item.text }}
                         <div class="socialIcons">
                             {% if tab=='spam' %}
-                                <div class="spam-index">Спам: {{ item.getSpams()|length }}</div>
-                                <a href="#" class="">Подтвердить</a>
-                                <a href="#" class="">Отменить</a>
-                                <a href="#" class="">Заблокировать пользователя</a>
+                                <div class="spam-index">Спам-индекс: {{ item.getUser().getSpamActivity() }}</div>
+                                <div class="questions-count">Вопросов: {{ item.question_count }}</div>
+                                <a href="#" class="confirm-spam">Подтвердить</a>
+                                <a href="#" class="cancel-spam">Отменить</a>
+                                <a href="#" class="block-user">Заблокировать пользователя</a>
                             {% else %}
                                 <a href="#" class="delete-question">Удалить</a>
                             {% endif %}

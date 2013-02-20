@@ -6,12 +6,12 @@
             $(".delete-answer").bind('click', function(){
                 if (confirm("Удалить ответ?")){
                     var cur_answer = $(this).closest(".singleQuestion");
-                    /*$.ajax({
-                        url: '/admin/deleteQuestion',
+                    $.ajax({
+                        url: '/admin/deleteAnswer',
                         data: {
-                            question: cur_question.data('id')
+                            answer: cur_answer.data('id')
                         }
-                    });*/
+                    });
                     cur_answer.remove();
                 }
                 return false;
@@ -38,7 +38,9 @@
                         {{ item.text }}
                         <div class="socialIcons">
                             {% if tab=='spam' %}
-                                <div class="spam-index">Спам: {{ item.getSpams()|length }}</div>
+                                {#<div class="spam-index">Спам: {{ item.getSpams()|length }}</div>#}
+                                <div class="spam-index">Спам-индекс: {{ item.getUser().getSpamActivity() }}</div>
+                                <div class="questions-count">Вопросов: {{ item.question_count }}</div>
                                 <a href="#" class="">Подтвердить</a>
                                 <a href="#" class="">Отменить</a>
                                 <a href="#" class="">Заблокировать пользователя</a>
