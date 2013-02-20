@@ -95,7 +95,7 @@ class MainController extends Controller implements InitializableControllerInterf
         if ($user instanceof User)
             $userQuestions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                                                  ->createQueryBuilder('question')
-                                                 ->where('question.user = :uid  AND question.status <> :status AND question.isSpam = false')
+                                                 ->where('question.user = :uid  AND question.status <> :status')
                                                  ->setParameter('status', '2')
                                                  ->setParameter('uid', $user->getId())
                                                  ->getQuery()
