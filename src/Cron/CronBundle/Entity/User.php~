@@ -572,4 +572,27 @@ class User implements UserInterface, \Serializable
     {
         return $this->spamActivity;
     }
+
+    /**
+     * Set credits
+     *
+     * @param integer $credits
+     * @return User
+     */
+    public function setCredits($credits)
+    {
+        $this->credits = $credits;
+    
+        return $this;
+    }
+
+    /**
+     * Get credits
+     *
+     * @return integer 
+     */
+    public function getCredits()
+    {
+        return $this->credits;
+    }
 }
