@@ -798,13 +798,18 @@ h2.acticle {
 
 .closeButton {
 	width: 11px;
-	height: 10px;
+	height: 12px;
 	float: left;
-	background: url(/i/closeButton.png) no-repeat;
+	background: url(/i/closeButton2.png) no-repeat;
 	background-size: 100%;
 	margin-left: -5px;
 	cursor: pointer;
 	margin-top: 3px;
+}
+
+.closeButton:hover {
+	background: url(/i/closeButton1.png) no-repeat;
+	background-size: 100%;
 }
 
 .questionText{
@@ -1852,9 +1857,15 @@ h2.dialogTitle {
 .closeDialogWindow a {
 	display: block;
 	width: 13px;
-	height: 13px;
-	background: url(../i/closeDialogs.png) no-repeat;
+	height: 15px;
+	background: url(../i/closeButton2.png) no-repeat;
+	background-size: 100%;
 	cursor: pointer;	
+}
+
+.closeDialogWindow a:hover {
+	background: url(../i/closeButton1.png) no-repeat;
+	background-size: 100%;
 }
 
 .singleDialog{
@@ -1901,8 +1912,18 @@ h2.dialogTitle {
 .closeDialogs a {
 	display: block;
 	width: 13px;
-	height: 13px;
-	background: url(../i/closeDialogs.png) no-repeat;
+	height: 15px;
+	background: url(../i/closeButton2.png) no-repeat;
+	background-size: 100%;
+	cursor: pointer;
+}
+
+.closeDialogs a:hover {
+	display: block;
+	width: 13px;
+	height: 15px;
+	background: url(../i/closeButton1.png) no-repeat;
+	background-size: 100%;	
 	cursor: pointer;
 }
 
@@ -2203,8 +2224,18 @@ input.cancel-feedback {
 .closeInviteWindow a {
 	display: block;
 	width: 13px;
+	height: 15px;
+	background: url(../i/closeButton2.png) no-repeat;
+	background-size: 100%;
+	cursor: pointer;		
+}
+
+.closeInviteWindow a:hover {
+	display: block;
+	width: 13px;
 	height: 13px;
-	background: url(../i/closeDialogs.png) no-repeat;
+	background: url(../i/closeButton1.png) no-repeat;
+	background-size: 100%;
 	cursor: pointer;		
 }
 
@@ -2725,9 +2756,15 @@ span.article-list-header {
 a.unbookmarkArticle {
 	display: block;
 	width: 13px;
-	height: 13px;
-	background: url(../i/closeDialogs.png) no-repeat;
+	height: 15px;
+	background: url(../i/closeButton2.png) no-repeat;
+	background-size: 100%;
 	margin-top: 9px;
+}
+
+a.unbookmarkArticle:hover {
+	background: url(../i/closeButton1.png) no-repeat;
+	background-size: 100%;
 }
 
 a.bookmarkArticle {

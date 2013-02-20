@@ -164,11 +164,11 @@
                 </li>
 				<li>Информация
                     <ul class="subMenuNavigation">
-                        <li><a href="/articles">cтатьи</a></li>
+                        <li><a href="/articles">Статьи</a></li>
                         {#{% for link in curUser.getUserLinks() %}
                             <li><a href="{{ link.getUrl() }}">{{ link.getTitle() }}</a></li>
                         {% endfor %}#}
-                        <li class="add-bookmark-wrap"><a href="#" class="add-bookmark">добавить ссылку</a></li>
+                        <li style="	background-color: #fdf5ef; border-radius: 0px;"><a href="#" class="add-bookmark">добавить ссылку</a></li>
                     </ul>
                 </li>
 				<li><a class="menuNavigationLink" href="/disk">Кибердиск</a></li>
@@ -190,8 +190,8 @@
                         {% if curUser.getRole()>1 %}
                         <li>Поддержка
                             <ul class="subMenuNavigation">
-                                <li><a href="/admin/support/appeals">жалобы</a></li>
-                                <li><a href="/admin/support/ideas">предложения</a></li>
+                                <li><a href="/admin/support/appeals">Жалобы</a></li>
+                                <li><a href="/admin/support/ideas">Предложения</a></li>
                             </ul>
                         </li>
                         {% endif %}
