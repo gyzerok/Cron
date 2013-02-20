@@ -351,7 +351,7 @@
 }
 
 #menu ul.menuNavigation li:hover {
-	background-color: #FFDDDB;
+	background-color: #ffebdb;
 }
 
 #menu ul.menuNavigation li.chatInvite {
@@ -385,7 +385,7 @@
   position:absolute;
   z-index:100;
   width:180px;
-  background-color: #FFDDDB;
+  background-color: #ffebdb;
   margin-left: 5px;
 }
 
@@ -399,14 +399,14 @@
 	text-align: center;
 	border: none;
 	border-radius: none;
-	background-color: #FFDDDB;
+	background-color: #ffebdb;
 	cursor: pointer;
 	line-height: 100%;
 	font-size: 16px;
 }
 
 #menu ul.menuNavigation li ul.subMenuNavigation li a:hover {
-	background-color: #FFDDDB;
+	background-color: #ffebdb;
 	color: #3b3ffd;
 }
 

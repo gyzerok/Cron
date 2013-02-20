@@ -22,16 +22,16 @@
 	<div id="wrapper">
 	    {% block header %}
 		<div id="header">
-			<div class="logo" title="На главную"><a href="{{ path('index') }}"></a></div>
+			<div class="logo" title="{% trans %}На главную{% endtrans %}"><a href="{{ path('index') }}"></a></div>
             <div id="header-srvmsg"></div>
 			<div class="language">
-				<div class="russian{% if _locale=='ru_RU' or _locale==null %} active{% endif %}" title="русский"><a href="{{ path('locale', { 'locale': 'ru_RU' }) }}"></a></div>
-				<div class="english{% if _locale=='en_US' %} active{% endif %}" title="английский"><a href="{{ path('locale', { 'locale': 'en_US' }) }}"></a></div>
-				<div class="portuguese{% if _locale=='pt_PT' %} active{% endif %}" title="португальский"><a href="{{ path('locale', { 'locale': 'pt_PT' }) }}"></a></div>
+				<div class="russian{% if _locale=='ru_RU' or _locale==null %} active{% endif %}" title="{% trans %}русский{% endtrans %}"><a href="{{ path('locale', { 'locale': 'ru_RU' }) }}"></a></div>
+				<div class="english{% if _locale=='en_US' %} active{% endif %}" title="{% trans %}английский{% endtrans %}"><a href="{{ path('locale', { 'locale': 'en_US' }) }}"></a></div>
+				<div class="portuguese{% if _locale=='pt_PT' %} active{% endif %}" title="{% trans %}португальский{% endtrans %}"><a href="{{ path('locale', { 'locale': 'pt_PT' }) }}"></a></div>
 			</div>
 			<div class="users">
-			<p><span>12 345 678 </span><span class="onSite">На сайте</span></p>
-			<p><span>345 678 </span><span class="online">В сети</span></p>
+			<p><span>12 345 678 </span><span class="onSite">{% trans %}на сайте{% endtrans %}</span></p>
+			<p><span>345 678 </span><span class="online">{% trans %}В сети{% endtrans %}</span></p>
 			</div>
 		</div>
 	    {% endblock %}
@@ -49,7 +49,7 @@
 		    {% if curUser %}
 			<p class="name">{{ curUser.nick }}</p>
 			<form action="{{ path('logout') }}" class="profileNavigation" name="profileNavigation" action="" method="post">
-				<input type="submit"  value="Выйти" />
+				<input type="submit"  value="{% trans %}Выйти{% endtrans %}" />
 			</form>
 			<form class="profileNavigation">
 				{#<input type="submit" value="Настройки" />#}
