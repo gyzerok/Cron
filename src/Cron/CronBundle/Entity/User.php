@@ -140,6 +140,12 @@ class User implements UserInterface, \Serializable
      */
     private $spamActivity;
 
+    /**
+     * @var integer $credits
+     *
+     * @ORM\Column(name="credits", type="integer", nullable=false)
+     */
+    private $credits = 0;
 
 
     /**
@@ -221,6 +227,21 @@ class User implements UserInterface, \Serializable
         return $this->gender;
     }
 
+    public function getGenderLetter()
+    {
+        $letter = "";
+        switch($this->gender){
+            case "1":
+                $letter = "М";
+                break;
+            case "2":
+                $letter = "Ж";
+                break;
+            default:break;
+        }
+        return $letter;
+    }
+
     /**
      * Set birthDate
      *
@@ -242,6 +263,11 @@ class User implements UserInterface, \Serializable
     public function getBirthDate()
     {
         return $this->birthDate;
+    }
+
+    public function getAge()
+    {
+        return $this->birthDate->diff(new \DateTime())->y;
     }
 
     /**
@@ -545,5 +571,28 @@ class User implements UserInterface, \Serializable
     public function getSpamActivity()
     {
         return $this->spamActivity;
+    }
+
+    /**
+     * Set credits
+     *
+     * @param integer $credits
+     * @return User
+     */
+    public function setCredits($credits)
+    {
+        $this->credits = $credits;
+    
+        return $this;
+    }
+
+    /**
+     * Get credits
+     *
+     * @return integer 
+     */
+    public function getCredits()
+    {
+        return $this->credits;
     }
 }

@@ -308,4 +308,24 @@ class AdminController extends Controller
         ));
     }
 
+    public function usersAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $users = $this->getDoctrine()->getRepository("CronCronBundle:User")->findBy(array(), array("regDate"=>"DESC"));
+        foreach ($users as $id => $user1) {
+            $user_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user" => $user1->getId()));
+            $users[$id]->questions = count($user_questions);
+        }
+
+
+        return $this->render("CronCronBundle:Admin:users.html.twig", array('title' => 'Пользователи',
+            'users' => $users,
+            'curUser' => $user
+        ));
+    }
+
 }
