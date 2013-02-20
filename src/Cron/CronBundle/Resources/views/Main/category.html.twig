@@ -19,6 +19,9 @@
 					$.ajax({'url': '{{ path("spamQuestion") }}', 'type':'post', 'data': 'question_id='+question_id,
 						'fail': function(){
 							that.removeClass("spamButtonActive");
+						},
+						'success': function() {
+							that.closest('.singleQuestion').replaceWith($("<span class='spamMessage'>Этот вопрос помечен как спам!</span>"));							
 						}
 					});
 				});
@@ -36,6 +39,7 @@
 				});			
 			});
         </script>
+		<div style="">
         {% for category in categorized_questions %}
             <h2 class="categoryTitle">{{ category.getName() }}</h2>
             <div id="showQuestion">
@@ -94,12 +98,13 @@
                         <form class="answerForm">
                             <textarea class="answerTextarea" ></textarea>
                             <div class="answerFormNavigation">
+                                <input class="cancelButton" type="button" value="отменить" />							
                                 <input class="submitAnswerButton" type="submit" value="отправить" />
-                                <input class="cancelButton" type="button" value="отменить" />
                             </div>
                         </form>
                     {% endif %}
                 {% endfor %}
             </div>
         {% endfor %}
+		</div>
 	{% endblock %}

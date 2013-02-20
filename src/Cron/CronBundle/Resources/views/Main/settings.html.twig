@@ -8,7 +8,11 @@
     <script type="text/javascript">
         $(document).ready(function(){
             $(".toggleSettingsGroup").bind('click', function(){
-                $(this).next(".settingsGroup").slideToggle("fast");
+				$(".settingsGroup:visible").slideUp("fast");
+				$(".toggleSettingsGroup").css({
+					'color':'#000'
+				});
+                $(this).next(".settingsGroup:not(:visible)").slideDown("fast");
 				$(this).css({
 					'color':'#243b74'
 				});
@@ -38,7 +42,7 @@
     <div class="settingsGroupWrap">
         <a class="toggleSettingsGroup" href="#">Входящие вопросы</a>
         <div class="settingsGroup">
-            <form action="/ajax/saveSettings" method="post">
+            <form action="/ajax/saveSettings" method="post" style="overflow: hidden;">
                 <input type="hidden" name="group" value="income">
                 <div style="float:left;">
                     <div class="settingsGroupHeader">по категориям</div>
@@ -52,7 +56,6 @@
                     <input type="checkbox" name="en" id="income_en" {{ settings.income_locale.en }}> <label for="income_en">на английском</label><br>
                     <input type="checkbox" name="pt" id="income_pt" {{ settings.income_locale.pt }}> <label for="income_pt">на португальском</label><br>
                 </div>
-                <div style="clear:both;"></div>
                 <input type="submit" class="settingsSubmit large" value="сохранить">
                 <input type="button" class="closeSettingsGroup large" value="отмена">
             </form>
@@ -61,7 +64,7 @@
     <div class="settingsGroupWrap">
         <a class="toggleSettingsGroup" href="#">Просмотр всех тем</a>
         <div class="settingsGroup">
-            <form action="/ajax/saveSettings" method="post">
+            <form action="/ajax/saveSettings" method="post" style="overflow: hidden;">
                 <input type="hidden" name="group" value="view">
                 <div style="float:left;">
                     <div class="settingsGroupHeader">по категориям</div>
@@ -81,15 +84,14 @@
                     <input type="radio" name="by_time" id="view_month" value="month" {{ settings.view_by_time.month }}> <label for="view_month">за месяц</label><br>
                     <input type="radio" name="by_time" id="view_all" value="all" {{ settings.view_by_time.all }}> <label for="view_all">все</label><br>
                 </div>
-                <div style="clear:both;"></div>
-                <input type="submit" class="settingsSubmit large" value="сохранить">
-                <input type="button" class="closeSettingsGroup large" value="отмена">
+                <input type="submit" class="settingsSubmit large all-topics" value="сохранить">
+                <input type="button" class="closeSettingsGroup large all-topics" value="отмена">
             </form>
         </div>
     </div>
     <div class="settingsGroupWrap">
         <a class="toggleSettingsGroup" href="#">Звуковая схема</a>
-        <div class="settingsGroup" style="width:294px;">
+        <div class="settingsGroup" style="width: 294px;margin-left:-25px;margin-top: 5px;">
             <form action="/ajax/saveSettings" method="post">
                 <input type="hidden" name="group" value="sound">
                 <input type="checkbox" name="cats" id="sound_cats" {{ settings.sounds.cats }}> <label for="sound_cats">вопросы по категориям</label><br>
