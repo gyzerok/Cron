@@ -9,3 +9,8 @@ services:
     #my_user_provider:
         #class: "%my_user_provider.class%"
         #arguments: []
+  kernel.listener.before_controller:
+    class: Cron\CronBundle\EventListener\BeforeControllerListener
+    scope: request
+    tags:
+      - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }

@@ -30,8 +30,8 @@
 				<div class="portuguese{% if _locale=='pt_PT' %} active{% endif %}" title="{% trans %}португальский{% endtrans %}"><a href="{{ path('locale', { 'locale': 'pt_PT' }) }}"></a></div>
 			</div>
 			<div class="users">
-			<p><span>12 345 678 </span><span class="onSite">{% trans %}на сайте{% endtrans %}</span></p>
-			<p><span>345 678 </span><span class="online">{% trans %}В сети{% endtrans %}</span></p>
+				<p><span>{{ totalUserCount }}</span><span class="onSite">На сайте</span></p>
+				<p><span>{{ onlineUserCount }}</span><span class="online">В сети</span></p>
 			</div>
 		</div>
 	    {% endblock %}
