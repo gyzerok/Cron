@@ -2,38 +2,37 @@
 
 {% block content %}
     <script type="text/javascript">
-        $(document).ready(function () {
-            $(".delete-question").bind('click', function () {
-                if (confirm("Удалить вопрос?")) {
-                    var cur_question = $(this).closest(".singleQuestion");
-                    $.ajax({
-                        url:'/admin/deleteQuestion',
-                        data:{
-                            question:cur_question.data('id')
+        $(document).ready(function(){
+            $(".delete-answer").bind('click', function(){
+                if (confirm("Удалить ответ?")){
+                    var cur_answer = $(this).closest(".singleQuestion");
+                    /*$.ajax({
+                        url: '/admin/deleteQuestion',
+                        data: {
+                            question: cur_question.data('id')
                         }
-                    });
-                    cur_question.remove();
+                    });*/
+                    cur_answer.remove();
                 }
                 return false;
             });
         });
     </script>
-    <h2 class="categoryTitle">Вопросы</h2>
+    <h2 class="categoryTitle">Ответы</h2>
     {% if tab=='all' %}
         Все
-        <a href="/admin/questions/spam">Отмеченные как спам</a>
+        <a href="/admin/answers/spam">Отмеченные как спам</a>
     {% else %}
-        <a href="/admin/questions/all">Все</a>
+        <a href="/admin/answers/all">Все</a>
         Отмеченные как спам
     {% endif %}
     <div style="clear:both;"></div>
-    {% if questions %}
+    {% if answers %}
         <div id="showQuestion">
-            {% for item in questions %}
+            {% for item in answers %}
                 <div class="singleQuestion" data-id="{{ item.getId() }}">
                     <div class="userName">{{ item.getUser() }}</div>
-                    <div class="questionDate">{{ item.datetime|date('d.m.Y H:i') }}</div>
-                    {#<div class="closeButton"></div>#}
+                    <div class="questionDate">{{ item.pubDate|date('d.m.Y H:i') }}</div>
                     <div style="clear: both;"></div>
                     <div class="questionText">
                         {{ item.text }}
@@ -44,7 +43,7 @@
                                 <a href="#" class="">Отменить</a>
                                 <a href="#" class="">Заблокировать пользователя</a>
                             {% else %}
-                                <a href="#" class="delete-question">Удалить</a>
+                                <a href="#" class="delete-answer">Удалить</a>
                             {% endif %}
                         </div>
                     </div>

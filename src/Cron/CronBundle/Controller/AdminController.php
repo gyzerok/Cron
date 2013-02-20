@@ -117,18 +117,28 @@ class AdminController extends Controller
         return new Response("SUCCESS");
     }
 
-    public function questionsAction(Request $request, $page)
+    public function questionsAction(Request $request, $tab)
     {
         $user = $this->getUser();
         if (!$user instanceof User || $user->getRole() < 2) {
             return $this->redirect("/");
         }
 
-        $limit = 1000000;
-        $all_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array(), array("datetime"=>"DESC"), $limit, ($page-1)*$limit);
-
+        $questions = array();
+        if ($tab=='all'){
+            $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array(), array("datetime"=>"DESC"));
+        } elseif ($tab=='spam'){
+            // todo refactor it
+            $all_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findAll();
+            foreach ($all_questions as $quest) {
+                if (count($quest->getSpams())>0){
+                    array_push($questions, $quest);
+                }
+            }
+        }
         return $this->render("CronCronBundle:Admin:questions.html.twig", array('title' => 'Вопросы',
-            'questions' => $all_questions,
+            'questions' => $questions,
+            'tab' => $tab,
             'curUser' => $user
         ));
     }
@@ -141,10 +151,37 @@ class AdminController extends Controller
         }
 
         $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($request->get("question"));
+        //todo delete answers & notes
         $em = $this->getDoctrine()->getManager();
         $em->remove($question);
         $em->flush();
         return new Response("SUCCESS");
+    }
+
+    public function answersAction(Request $request, $tab)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $answers = array();
+        if ($tab=='all'){
+            $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array(), array("pubDate"=>"DESC"));
+        } elseif ($tab=='spam'){
+            // todo refactor it
+            $all_answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findAll();
+            foreach ($all_answers as $answer) {
+                if (count($answer->getSpams())>0){
+                    array_push($answers, $answer);
+                }
+            }
+        }
+        return $this->render("CronCronBundle:Admin:answers.html.twig", array('title' => 'Ответы',
+            'answers' => $answers,
+            'tab' => $tab,
+            'curUser' => $user
+        ));
     }
 
     public function sendFeedbackAction(Request $request)
@@ -308,22 +345,47 @@ class AdminController extends Controller
         ));
     }
 
-    public function usersAction(Request $request)
+    public function usersAction(Request $request, $tab)
     {
         $user = $this->getUser();
         if (!$user instanceof User || $user->getRole() < 2) {
             return $this->redirect("/");
         }
+        $users = array();
+        if ($tab=='all'){
+            $users = $this->getDoctrine()->getRepository("CronCronBundle:User")->findBy(array("isActive"=>"1"), array("regDate"=>"DESC"));
+            foreach ($users as $id => $user1) {
+                $user_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user" => $user1->getId()));
+                $users[$id]->questions = count($user_questions);
+            }
+        } elseif ($tab=='spam'){
+            $spam_dialogs = $this->getDoctrine()->getRepository("CronCronBundle:Dialog")
+                ->createQueryBuilder('d')
+                ->where('d.spam1 = 1 OR d.spam2 = 1')
+                ->getQuery()
+                ->getResult();/*->findBy(array("isActive"=>"1"), array("startdate"=>"DESC"));*/
+            foreach ($spam_dialogs as $spam_d) {
+                if ($spam_d->getSpam1()){
+                    $spam_user = $spam_d->getUser2();
+                    $spam_user->marked_by = $spam_d->getUser1();
+                } elseif($spam_d->getSpam2()){
+                    $spam_user = $spam_d->getUser1();
+                    $spam_user->marked_by = $spam_d->getUser2();
+                }
+                $spam_user->dialog = $spam_d->getId();
+                array_push($users, $spam_user);
+            }
 
-        $users = $this->getDoctrine()->getRepository("CronCronBundle:User")->findBy(array(), array("regDate"=>"DESC"));
-        foreach ($users as $id => $user1) {
-            $user_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user" => $user1->getId()));
-            $users[$id]->questions = count($user_questions);
+            foreach ($users as $id => $user1) {
+                $user_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user" => $user1->getId()));
+                $users[$id]->questions = count($user_questions);
+            }
         }
 
 
         return $this->render("CronCronBundle:Admin:users.html.twig", array('title' => 'Пользователи',
             'users' => $users,
+            'tab' => $tab,
             'curUser' => $user
         ));
     }
