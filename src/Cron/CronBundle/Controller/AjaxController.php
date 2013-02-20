@@ -57,7 +57,7 @@ class AjaxController extends Controller
             $questionRepo = $this->getDoctrine()->getRepository('CronCronBundle:Question');
             $catQuery = $questionRepo->createQueryBuilder('question')
                                      ->innerJoin('question.user', 'user')
-                                     ->where('question.category > :cid AND question.datetime > :lastTime AND question.status <> :status')
+                                     ->where('question.category > :cid AND question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false')
                                      ->setParameter('cid', '1')
                                      ->setParameter('lastTime', $lastTime)
                                      ->setParameter('status', '2')
@@ -66,7 +66,7 @@ class AjaxController extends Controller
 
             $rushQuery = $questionRepo->createQueryBuilder('question')
                                       ->innerJoin('question.user', 'user')
-                                      ->where('question.category = :cid AND question.datetime > :lastTime AND question.status <> :status')
+                                      ->where('question.category = :cid AND question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false')
                                       ->setParameter('cid', '1')
                                       ->setParameter('lastTime', $lastTime)
                                       ->setParameter('status', '2')

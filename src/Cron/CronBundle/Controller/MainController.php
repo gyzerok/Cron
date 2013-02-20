@@ -16,12 +16,49 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class MainController extends Controller
+class MainController extends Controller implements InitializableControllerInterface
 {
-    public function indexAction(Request $request)
+    protected $onlineUserCount;
+    protected $totalUserCount;
+
+    public function initialize(Request $request)
     {
         $request->setLocale($request->getSession()->get('_locale'));
 
+        $em = $this->getDoctrine()->getManager();
+        $sid = $request->getSession()->getId();
+        $isOnline = $this->getDoctrine()->getRepository('CronCronBundle:Online')->findBySid($sid);
+        if (empty($isOnline))
+        {
+            $onlineEntry = new \Cron\CronBundle\Entity\Online($sid);
+            $em->persist($onlineEntry);
+        }
+
+        $timeBoundary = new \DateTime();
+        $timeBoundary->sub(new \DateInterval('PT15M'));
+        $offlines = $this->getDoctrine()->getRepository('CronCronBundle:Online')
+                                       ->createQueryBuilder('online')
+                                       ->where('online.lastVisit < :lastVisit')
+                                       ->setParameter('lastVisit', $timeBoundary)
+                                       ->getQuery()->getResult();
+        foreach ($offlines as $offline)
+            $em->remove($offline);
+        $em->flush();
+
+        $onlineUserCount = $this->getDoctrine()->getRepository('CronCronBundle:Online')
+                                           ->createQueryBuilder('online')
+                                           ->select('COUNT(online.sid) AS onlineCount')
+                                           ->getQuery()->getResult();
+        $totalUserCount = $this->getDoctrine()->getRepository('CronCronBundle:User')
+                                          ->createQueryBuilder('user')
+                                          ->select('COUNT(user.id) AS totalCount')
+                                          ->getQuery()->getResult();
+        $this->onlineUserCount = $onlineUserCount[0]['onlineCount'];
+        $this->totalUserCount = $totalUserCount[0]['totalCount'];
+    }
+
+    public function indexAction(Request $request)
+    {
         $numAnswers = array(10 => '10', 20 => '20');
         if ($this->getUser() instanceof User)
             $numAnswers = array(10 => '10', 20 => '20', 50 => '50', 100 => '100', 1000 => '1000');
@@ -74,15 +111,14 @@ class MainController extends Controller
         return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Главная',
                                                                           'curUser' => $this->getUser(),
                                                                           'userQuestions' => $userQuestions,
-                                                                          'form' => $form->createView())
+                                                                          'form' => $form->createView(),
+                                                                          'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount)
         );
 
     }
 
     public function categoryAction($category_id, Request $request)
     {
-        $request->setLocale($request->getSession()->get('_locale'));
-
         $user = $this->getUser();
 
         $answer = new Answer();
@@ -136,7 +172,7 @@ class MainController extends Controller
             $categorized[0] = $this->getDoctrine()->getRepository("CronCronBundle:Category")->find($category_id);
             $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                 ->createQueryBuilder('question')
-                ->where('question.category = :cid AND question.status <> :status AND question.datetime > :viewbytime')
+                ->where('question.category = :cid AND question.status <> :status AND question.datetime > :viewbytime  AND question.isSpam = false')
                 ->setParameter('cid', $category_id)
                 ->setParameter('status', '2')
                 ->setParameter('viewbytime', $viewbytime->format("Y-m-d H:i:s"))
@@ -182,7 +218,7 @@ class MainController extends Controller
                 } else {
                     $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                         ->createQueryBuilder('question')
-                        ->where('question.category = :cid AND question.status <> :status AND question.datetime > :viewbytime')
+                        ->where('question.category = :cid AND question.status <> :status AND question.datetime > :viewbytime AND question.isSpam = false')
                         ->setParameter('cid', $category->getId())
                         ->setParameter('status', '2')
                         ->setParameter('viewbytime', $viewbytime->format("Y-m-d H:i:s"))
@@ -222,14 +258,13 @@ class MainController extends Controller
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'По категориям',
              'categorized_questions' => $categorized,
              'curUser' => $this->getUser(),
-             'form' => $form->createView())
+             'form' => $form->createView(),
+             'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount)
         );
     }
 
     public function rushAction(Request $request)
     {
-        $request->setLocale($request->getSession()->get('_locale'));
-
         $user = $this->getUser();
 
         $answer = new Answer();
@@ -248,7 +283,7 @@ class MainController extends Controller
 
         $rush = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                                     ->createQueryBuilder('question')
-                                    ->where('question.category = :cid  AND question.status <> :status')
+                                    ->where('question.category = :cid  AND question.status <> :status AND question.isSpam = false')
                                     ->setParameter('cid', $rush_id)
                                     ->setParameter('status', '2')
                                     ->getQuery()
@@ -274,14 +309,13 @@ class MainController extends Controller
         return $this->render("CronCronBundle:Main:category.html.twig", array('title' => 'Срочные',
              'categorized_questions' => $categorized,
              'curUser' => $this->getUser(),
-             'form' => $form->createView())
+             'form' => $form->createView(),
+             'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount)
         );
     }
 
     public function myAction(Request $request)
     {
-        $request->setLocale($request->getSession()->get('_locale'));
-
         $user = $this->getUser();
 
         $my = array();
@@ -298,21 +332,21 @@ class MainController extends Controller
         return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Мои вопросы',
                 'userQuestions' => $my,
                 'curUser' => $this->getUser(),
-                'form' => null
+                'form' => null,
+                'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));
     }
 
     public function diskAction($file_hash)
     {
-        //$request->setLocale($request->getSession()->get('_locale'));
-
         $user = $this->getUser();
 
         if (!$file_hash){
             if (!$user instanceof User) {
                 return $this->render("CronCronBundle:Main:disk.html.twig", array('title' => 'Кибердиск',
                                                                                  'curUser' => $user,
-                                                                                 'isAuth' => 0)
+                                                                                 'isAuth' => 0,
+                                                                                 'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount)
                 );
             } else {
                 $total_filesize = $this->getDoctrine()->getRepository("CronCronBundle:File")
@@ -344,7 +378,8 @@ class MainController extends Controller
                         'total_filesize_left' => $this->convertFilesize($total_size_left),
                         'user_files' => $user_files,
                         'curUser' => $user,
-                        'isAuth' => 1)
+                        'isAuth' => 1,
+                        'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount)
                 );
             }
 
@@ -355,7 +390,8 @@ class MainController extends Controller
                 return $this->render("CronCronBundle:Main:file.html.twig", array('title' => 'Скачать файл',
                         'file' => $file,
                         'curUser' => $user,
-                        'isAuth' => $isAuth)
+                        'isAuth' => $isAuth,
+                        'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount)
                 );
             } else {
                 $isAuth = 1;
@@ -486,7 +522,8 @@ class MainController extends Controller
         return $this->render("CronCronBundle:Main:settings.html.twig", array('title' => 'Настройки',
                 'categories' => $categories,
                 'settings' => $settings,
-                'curUser' => $user
+                'curUser' => $user,
+                'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));
     }
 
@@ -506,7 +543,8 @@ class MainController extends Controller
             return $this->render("CronCronBundle:Articles:single_article.html.twig", array('title' => 'Статьи / '.$cur_category->getName().' / '.$cur_article->getHeader(),
                 'category' => $cur_category,
                 'article' => $cur_article,
-                'curUser' => $user
+                'curUser' => $user,
+                'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
             ));
         } elseif ($category_id>0){
             $cur_category = $this->getDoctrine()->getRepository("CronCronBundle:ArticleCategory")->find($category_id);
@@ -517,14 +555,16 @@ class MainController extends Controller
             return $this->render("CronCronBundle:Articles:article_list.html.twig", array('title' => 'Статьи / '.$cur_category->getName(),
                 'category' => $cur_category,
                 'articles' => $articles,
-                'curUser' => $user
+                'curUser' => $user,
+                'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
             ));
         } else {
             $article_categories = $this->getDoctrine()->getRepository("CronCronBundle:ArticleCategory")->findAll();
 
             return $this->render("CronCronBundle:Articles:article_categories.html.twig", array('title' => 'Статьи',
                 'categories' => $article_categories,
-                'curUser' => $user
+                'curUser' => $user,
+                'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
             ));
         }
 
@@ -532,8 +572,6 @@ class MainController extends Controller
 
     public function notesAction($location)
     {
-//        $request->setLocale($request->getSession()->get('_locale'));
-
         $user = $this->getUser();
 
         switch($location){
@@ -546,14 +584,16 @@ class MainController extends Controller
                 }
                 return $this->render("CronCronBundle:Notes:questions.html.twig", array('title' => 'Заметки / Статьи',
                     'questions' => $questions,
-                    'curUser' => $user
+                    'curUser' => $user,
+                    'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
                 ));
                 break;
             case 'articles':
                 $articles = $this->getDoctrine()->getRepository("CronCronBundle:NotesArticle")->findBy(array("user"=>$user->getId()));
                 return $this->render("CronCronBundle:Notes:articles.html.twig", array('title' => 'Заметки / Статьи',
                     'articles' => $articles,
-                    'curUser' => $user
+                    'curUser' => $user,
+                    'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
                 ));
                 break;
             default:break;
@@ -562,8 +602,6 @@ class MainController extends Controller
 
     public function registerAction(Request $request)
     {
-        $request->setLocale($request->getSession()->get('_locale'));
-
         $user = new User();
         $form = $this->createForm(new Registration(), $user);
         if ($request->isMethod('POST')) {
@@ -605,13 +643,11 @@ class MainController extends Controller
             }
         }
 
-        return $this->render("CronCronBundle:Main:register.html.twig", array('title' => 'Регистрация', 'curUser' => $this->getUser(), 'form' => $form->createView()));
+        return $this->render("CronCronBundle:Main:register.html.twig", array('title' => 'Регистрация', 'curUser' => $this->getUser(), 'form' => $form->createView(), 'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount));
     }
 
     public function regconfAction(Request $request)
     {
-        $request->setLocale($request->getSession()->get('_locale'));
-
         $success = false;
 
         if ($request->isMethod("GET")) {
@@ -632,7 +668,7 @@ class MainController extends Controller
             }
         }
 
-        return $this->render("CronCronBundle:Main:registration_confirmation.html.twig", array('title' => 'Подтверждение регистрации', 'curUser' => $this->getUser(), 'success' => $success));
+        return $this->render("CronCronBundle:Main:registration_confirmation.html.twig", array('title' => 'Подтверждение регистрации', 'curUser' => $this->getUser(), 'success' => $success, 'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount));
     }
 
     public function localeAction(Request $request, $locale)
