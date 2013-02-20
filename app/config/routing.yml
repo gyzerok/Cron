@@ -261,20 +261,20 @@ deleteArticle:
   defaults: { _controller: CronCronBundle:Admin:deleteArticle }
 
 adminQuestions:
-  pattern:  /admin/questions/{page}
-  defaults: { _controller: CronCronBundle:Admin:questions, "page": "1" }
+  pattern:  /admin/questions/{tab}
+  defaults: { _controller: CronCronBundle:Admin:questions, "tab": "spam" }
 
 deleteQuestion:
   pattern:  /admin/deleteQuestion
   defaults: { _controller: CronCronBundle:Admin:deleteQuestion }
 
 adminAnswers:
-  pattern:  /admin/answers
-  defaults: { _controller: CronCronBundle:Admin:answers }
+  pattern:  /admin/answers/{tab}
+  defaults: { _controller: CronCronBundle:Admin:answers, "tab": "spam" }
 
 adminUsers:
-  pattern:  /admin/users
-  defaults: { _controller: CronCronBundle:Admin:users }
+  pattern:  /admin/users/{tab}
+  defaults: { _controller: CronCronBundle:Admin:users, "tab": "spam" }
 
 adminCredits:
   pattern:  /admin/credits
