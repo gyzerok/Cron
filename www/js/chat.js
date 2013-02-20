@@ -39,6 +39,7 @@ $(document).ready(function(){
         $(".chat-input").focus();
     });
     $(".sendMessage").live('click', function () {
+		$(this).addClass('sendMessage-active');
         var singleAnswer = $(this).closest('.singleAnswer');
         $(".chatWindow").click();
         $.ajax({
@@ -63,12 +64,12 @@ $(document).ready(function(){
         $(".chat-input").focus();
     });
     $(".inviteUser").live('click', function () {
+		$(this).addClass('inviteUser-active');
         var singleAnswer = $(this).closest('.singleAnswer');
         $.ajax({
             url:'/chat/sendChatInvite',
             data:{user:singleAnswer.data('user')},
             success:function (dialog) {
-                alert('Приглашение в чат отправлено.');
             }
         });
     });

@@ -612,7 +612,7 @@
 
 #showQuestion {
 	max-height: 799px;
-	width: 728px;
+	width: 710px;
 }
 
 .privateButton {
@@ -797,7 +797,7 @@ h2.acticle {
 }
 
 .closeButton {
-	width: 11px;
+	width: 9px;
 	height: 12px;
 	float: left;
 	background: url(/i/closeButton2.png) no-repeat;
@@ -978,6 +978,26 @@ h2.acticle {
 	margin-right: 3px;
 }
 
+.arrowButton:hover {
+	background: url(/i/chatHover.jpg) no-repeat;
+	background-size: 100%;
+}
+
+.arrowButton:active {
+	background: url(/i/chatClickActive.jpg) no-repeat;
+	background-size: 100%;
+}
+
+.arrowButton.inviteUser-active {
+	background: url(/i/chatActive.jpg) no-repeat;
+	background-size: 100%;	
+}
+
+.arrowButton.inviteUser-active:hover {
+	background: url(/i/chatClickActive.jpg) no-repeat;
+	background-size: 100%;	
+}
+
 .letterButton {
 	width: 22px;
 	height: 22px;
@@ -988,6 +1008,27 @@ h2.acticle {
 	cursor: pointer;
 	margin-right: 3px;
 }
+
+.letterButton:hover {
+	background: url(/i/messagehover.jpg) no-repeat;
+	background-size: 100%;
+}
+
+.letterButton:active {
+	background: url(/i/messgeClickActive.jpg) no-repeat;
+	background-size: 100%;
+}
+
+.letterButton.sendMessage-active {
+	background: url(/i/messageActive.jpg) no-repeat;
+	background-size: 100%;	
+}
+
+.letterButton.sendMessage-active:hover {
+	background: url(/i/messgeClickActive.jpg) no-repeat;
+	background-size: 100%;	
+}
+
 
 .socialIcons form.answer {
 	width: 70px;
@@ -1068,12 +1109,18 @@ h2.acticle {
 
 .closeChat {
 	width: 13px;
-	height: 13px;
+	height: 15px;
 	float: right;
 	margin: 10px 14px 0 0;
-	background: url(../i/closeDialogs.png) no-repeat;
+	background: url(../i/closeButton2.png) no-repeat;
+	background-size: 100%;
 	cursor: pointer;
     z-index: 1;
+}
+
+.closeChat:hover {
+	background: url(../i/closeButton1.png) no-repeat;
+	background-size: 100%;
 }
 
 
@@ -1967,9 +2014,15 @@ h2.dialogTitle {
 .closeUserLinkWindow a {
     display: block;
     width: 13px;
-    height: 13px;
-    background: url(../i/closeDialogs.png) no-repeat;
+    height: 15px;
+    background: url(../i/closeButton2.png) no-repeat;
+	background-size: 100%;
     cursor: pointer;
+}
+
+.closeUserLinkWindow a:hover {
+    background: url(../i/closeButton1.png) no-repeat;
+	background-size: 100%;
 }
 
 .userLinkAddWindow form label {
@@ -2069,12 +2122,19 @@ input.cancelUserLink {
     float: right;
     margin: 10px 14px 0 0;
 }
+
 .closeFeedbackWindow a {
     display: block;
     width: 13px;
-    height: 13px;
-    background: url(../i/closeDialogs.png) no-repeat;
+    height: 15px;
+    background: url(../i/closeButton2.png) no-repeat;
+	background-size: 100%;
     cursor: pointer;
+}
+
+.closeFeedbackWindow a:hover {
+    background: url(../i/closeButton1.png) no-repeat;
+	background-size: 100%;
 }
 
 #feedback-email {
@@ -2755,11 +2815,11 @@ span.article-list-header {
 
 a.unbookmarkArticle {
 	display: block;
-	width: 13px;
+	width: 10px;
 	height: 15px;
 	background: url(../i/closeButton2.png) no-repeat;
 	background-size: 100%;
-	margin-top: 9px;
+	margin-top: 11px;
 }
 
 a.unbookmarkArticle:hover {
