@@ -17,8 +17,47 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminController extends Controller
+class AdminController extends Controller implements InitializableControllerInterface
 {
+    protected $onlineUserCount;
+    protected $totalUserCount;
+
+    public function initialize(Request $request)
+    {
+        $request->setLocale($request->getSession()->get('_locale'));
+
+        $em = $this->getDoctrine()->getManager();
+        $sid = $request->getSession()->getId();
+        $isOnline = $this->getDoctrine()->getRepository('CronCronBundle:Online')->findBySid($sid);
+        if (empty($isOnline))
+        {
+            $onlineEntry = new \Cron\CronBundle\Entity\Online($sid);
+            $em->persist($onlineEntry);
+        }
+
+        $timeBoundary = new \DateTime();
+        $timeBoundary->sub(new \DateInterval('PT15M'));
+        $offlines = $this->getDoctrine()->getRepository('CronCronBundle:Online')
+            ->createQueryBuilder('online')
+            ->where('online.lastVisit < :lastVisit')
+            ->setParameter('lastVisit', $timeBoundary)
+            ->getQuery()->getResult();
+        foreach ($offlines as $offline)
+            $em->remove($offline);
+        $em->flush();
+
+        $onlineUserCount = $this->getDoctrine()->getRepository('CronCronBundle:Online')
+            ->createQueryBuilder('online')
+            ->select('COUNT(online.sid) AS onlineCount')
+            ->getQuery()->getResult();
+        $totalUserCount = $this->getDoctrine()->getRepository('CronCronBundle:User')
+            ->createQueryBuilder('user')
+            ->select('COUNT(user.id) AS totalCount')
+            ->getQuery()->getResult();
+        $this->onlineUserCount = $onlineUserCount[0]['onlineCount'];
+        $this->totalUserCount = $totalUserCount[0]['totalCount'];
+    }
+
     public function newarticleAction(Request $request, $article_id)
     {
         $user = $this->getUser();
@@ -84,7 +123,8 @@ class AdminController extends Controller
 
         return $this->render("CronCronBundle:Admin:newarticle.html.twig", array('title' => 'Новая статья',
             'curUser' => $this->getUser(),
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));
     }
 
@@ -99,7 +139,8 @@ class AdminController extends Controller
 
         return $this->render("CronCronBundle:Admin:articles.html.twig", array('title' => 'Статьи',
             'articles' => $articles,
-            'curUser' => $user
+            'curUser' => $user,
+            'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));
     }
 
@@ -139,7 +180,8 @@ class AdminController extends Controller
         return $this->render("CronCronBundle:Admin:questions.html.twig", array('title' => 'Вопросы',
             'questions' => $questions,
             'tab' => $tab,
-            'curUser' => $user
+            'curUser' => $user,
+            'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));
     }
 
@@ -180,7 +222,8 @@ class AdminController extends Controller
         return $this->render("CronCronBundle:Admin:answers.html.twig", array('title' => 'Ответы',
             'answers' => $answers,
             'tab' => $tab,
-            'curUser' => $user
+            'curUser' => $user,
+            'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));
     }
 
@@ -255,7 +298,8 @@ class AdminController extends Controller
 
         return $this->render("CronCronBundle:Admin:support.html.twig", array('title' => 'Жалобы',
             'feedback' => $feedback,
-            'curUser' => $user
+            'curUser' => $user,
+            'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));
     }
 
@@ -270,7 +314,8 @@ class AdminController extends Controller
 
         return $this->render("CronCronBundle:Admin:support.html.twig", array('title' => 'Предложения',
             'feedback' => $feedback,
-            'curUser' => $user
+            'curUser' => $user,
+            'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));
     }
 
@@ -299,7 +344,8 @@ class AdminController extends Controller
         }
         return $this->render("CronCronBundle:Admin:srvmsg.html.twig", array('title' => 'Сервисное сообщение',
             'srvmsg' => $srvmsg->getSrvmsg(),
-            'curUser' => $user
+            'curUser' => $user,
+            'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));
     }
 
@@ -341,7 +387,8 @@ class AdminController extends Controller
         }
         return $this->render("CronCronBundle:Admin:credits.html.twig", array('title' => 'Настройки кредитов',
             'credits_settings' => $admin_settings,
-            'curUser' => $user
+            'curUser' => $user,
+            'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));
     }
 
@@ -386,7 +433,8 @@ class AdminController extends Controller
         return $this->render("CronCronBundle:Admin:users.html.twig", array('title' => 'Пользователи',
             'users' => $users,
             'tab' => $tab,
-            'curUser' => $user
+            'curUser' => $user,
+            'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));
     }
 
