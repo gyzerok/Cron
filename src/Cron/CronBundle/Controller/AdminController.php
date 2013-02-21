@@ -167,12 +167,14 @@ class AdminController extends Controller implements InitializableControllerInter
 
         $questions = array();
         if ($tab=='all'){
-            $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array(), array("datetime"=>"DESC"));
+            $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("isSpam"=>false), array("datetime"=>"DESC"));
         } elseif ($tab=='spam'){
             // todo refactor it
-            $all_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findAll();
-            foreach ($all_questions as $quest) {
+            $all_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("isSpam"=>false));
+            foreach ($all_questions as $id=>$quest) {
                 if (count($quest->getSpams())>0){
+                    $user_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user"=>$quest->getUser()->getId()));
+                    $quest->question_count = count($user_questions);
                     array_push($questions, $quest);
                 }
             }
@@ -193,9 +195,50 @@ class AdminController extends Controller implements InitializableControllerInter
         }
 
         $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($request->get("question"));
-        //todo delete answers & notes
+        $note_questions = $this->getDoctrine()->getRepository("CronCronBundle:NotesQuestion")->findBy(array("question"=>$question->getId()));
+        $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()));
+
         $em = $this->getDoctrine()->getManager();
+        foreach ($note_questions as $note_questions1) {
+            $em->remove($note_questions1);
+        }
+        foreach ($answers as $answers1) {
+            $em->remove($answers1);
+        }
         $em->remove($question);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
+    public function confirmSpamQuestionAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($request->get("question"));
+        $question->setIsSpam(true);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($question);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
+    public function cancelSpamQuestionAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($request->get("question"));
+        // todo howto remove Spams?
+//        $question->removeSpam($question->getSpams());
+
+        $em = $this->getDoctrine()->getManager();
+//        $em->remove($spams);
         $em->flush();
         return new Response("SUCCESS");
     }
@@ -215,6 +258,8 @@ class AdminController extends Controller implements InitializableControllerInter
             $all_answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findAll();
             foreach ($all_answers as $answer) {
                 if (count($answer->getSpams())>0){
+                    $user_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user"=>$answer->getUser()->getId()));
+                    $answer->question_count = count($user_questions);
                     array_push($answers, $answer);
                 }
             }
@@ -225,6 +270,21 @@ class AdminController extends Controller implements InitializableControllerInter
             'curUser' => $user,
             'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));
+    }
+
+    public function deleteAnswerAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $asnwer = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->find($request->get("answer"));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($asnwer);
+        $em->flush();
+        return new Response("SUCCESS");
     }
 
     public function sendFeedbackAction(Request $request)

@@ -135,10 +135,6 @@ updateNotepad:
   pattern:  /ajax/updateNotepad
   defaults: { _controller: CronCronBundle:Ajax:updateNotepad }
 
-sendFeedback:
-  pattern:  /ajax/sendFeedback
-  defaults: { _controller: CronCronBundle:Admin:sendFeedback }
-
 replyFeedback:
   pattern:  /admin/support/replyFeedback
   defaults: { _controller: CronCronBundle:Admin:replyFeedback }
@@ -244,6 +240,7 @@ sendChatInvite:
 
 # Admin routes
 
+#articles
 newarticle:
   pattern:  /admin/newarticle
   defaults: { _controller: CronCronBundle:Admin:newarticle, "article_id": "" }
@@ -260,6 +257,7 @@ deleteArticle:
   pattern:  /admin/deleteArticle
   defaults: { _controller: CronCronBundle:Admin:deleteArticle }
 
+#questions
 adminQuestions:
   pattern:  /admin/questions/{tab}
   defaults: { _controller: CronCronBundle:Admin:questions, "tab": "spam" }
@@ -268,18 +266,34 @@ deleteQuestion:
   pattern:  /admin/deleteQuestion
   defaults: { _controller: CronCronBundle:Admin:deleteQuestion }
 
+confirmSpamQuestion:
+  pattern:  /admin/confirmSpamQuestion
+  defaults: { _controller: CronCronBundle:Admin:confirmSpamQuestion }
+
+cancelSpamQuestion:
+  pattern:  /admin/cancelSpamQuestion
+  defaults: { _controller: CronCronBundle:Admin:cancelSpamQuestion }
+
+#answers
 adminAnswers:
   pattern:  /admin/answers/{tab}
   defaults: { _controller: CronCronBundle:Admin:answers, "tab": "spam" }
 
+deleteAnswer:
+  pattern:  /admin/deleteAnswer
+  defaults: { _controller: CronCronBundle:Admin:deleteAnswer }
+
+#users
 adminUsers:
   pattern:  /admin/users/{tab}
   defaults: { _controller: CronCronBundle:Admin:users, "tab": "spam" }
 
+#credits
 adminCredits:
   pattern:  /admin/credits
   defaults: { _controller: CronCronBundle:Admin:credits }
 
+#srvmsg
 adminSrvmsg:
   pattern:  /admin/srvmsg
   defaults: { _controller: CronCronBundle:Admin:srvmsg }
@@ -293,6 +307,10 @@ appeals:
 ideas:
   pattern:  /admin/support/ideas
   defaults: { _controller: CronCronBundle:Admin:ideas }
+
+sendFeedback:
+  pattern:  /ajax/sendFeedback
+  defaults: { _controller: CronCronBundle:Admin:sendFeedback }
 
 deleteFeedback:
   pattern:  /admin/support/deleteFeedback
