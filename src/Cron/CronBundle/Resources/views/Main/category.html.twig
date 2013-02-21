@@ -21,7 +21,8 @@
 							that.removeClass("spamButtonActive");
 						},
 						'success': function() {
-							that.closest('.singleQuestion').replaceWith($("<span class='spamMessage'>Этот вопрос помечен как спам!</span>"));							
+							that.closest('.singleQuestion').replaceWith($("<span class='spamMessage'>Этот вопрос помечен как спам!</span>"));
+							$('.spamMessage').delay('5000').fadeOut('1000');
 						}
 					});
 				});

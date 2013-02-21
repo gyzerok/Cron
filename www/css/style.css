@@ -99,7 +99,7 @@
 .users {
 	width: 232px;
 	float: right;
-	margin: 10px 17px 0 0px;
+	margin: 10px 46px -3px 0px;
 	overflow: hidden;
 }
 
@@ -298,6 +298,7 @@
 	overflow: hidden;
 	float: right;
 	margin-right: 10px;
+	height: 18px;
 }
 
 .usersProfile p.myQuestions a {
@@ -319,6 +320,7 @@
 	border-radius: 7px;
 	float: right;
 	margin-top: 3px;
+	position: relative;
 }
 
 #menu ul.menuNavigation {
@@ -442,6 +444,34 @@
 	background-color: #fdf5ef;
 }
 
+.additional-information {
+	position: absolute;
+	bottom: 19px;
+	left: 6px;
+}
+
+.additional-information li a {
+	font-size: 14px;
+	font-family: 'Arial';
+	color: #495677;
+	text-decoration: none;
+}
+
+.additional-information li a:hover {
+	text-decoration: underline;
+}
+
+.copyright {
+	display: block;
+	text-align: center;
+	font-size: 14px;
+	font-family: 'Arial';
+	color: #686868;	
+	position: absolute;
+	bottom: 2px;
+	left: 63px;
+}
+
 
 .open-dialog-list.indicate {
     background-color: #000000 !important;
@@ -473,7 +503,7 @@
 #main {
 	width: 720px;
 	min-height: 800px;
-	margin: -40px 0 0 5px;
+	margin: -55px 0 0 5px;
 	float: left;
     position: relative;
 	/*width: 733px;
@@ -486,7 +516,7 @@
 }
 
 #main form.writeQuestion {
-	margin: 0px auto 0 auto;
+	margin: 25px auto 0 auto;
 	width: 700px;
 	overflow: hidden;
 	font-family: 'Cambria';
@@ -611,8 +641,9 @@
 }
 
 #showQuestion {
-	max-height: 799px;
-	width: 710px;
+	max-height: 770px;
+	width: 729px;
+	overflow-y: scroll;
 }
 
 .privateButton {
@@ -720,7 +751,7 @@ p.questionCost {
 h2.categoryH2 {
 	font-size: 24px;
 	margin-left: 17px;
-	margin-top: -2px;
+	margin-top: 9px;
 	color: #7A2116;
 	text-transform: uppercase;
 }
@@ -755,15 +786,17 @@ h2.acticle {
 }
 
 .greeting {
-	font-size: 14px;
-	font-family: 'Tahoma';
-	text-align: center;
+	font-size: 24px;
+	font-family: 'Cambria';
+	text-align: left;
 	margin-top: 15px;
+	color: #495677;
+	margin-left: 10px;
 }
 
 
 .singleQuestion {
-	width: 709px;
+	width: 704px;
 	border: 1px solid #965565;
 	border-radius: 7px;
 	margin: 5px auto 0px auto;
@@ -787,13 +820,12 @@ h2.acticle {
 	width: 105px;
 	float: left;
 	overflow: hidden;
-	font-size: 13px;
-	margin-left: 482px;
+	margin-left: 478px;
 	margin-right: 0;
 	color: #7e7f7f;
 	font-family: 'Cambria';
 	font-size: 10px;
-	margin-top: 3px;		
+	margin-top: 3px;	
 }
 
 .closeButton {
@@ -1126,9 +1158,9 @@ h2.acticle {
 
 .registerWrapper {
 	position: relative;
-	top: -147px;
+	top: -131px;
 	left: -5px;
-	z-index: 1000;
+	z-index: 10;
 }
 
 .registerForm {
@@ -1557,7 +1589,7 @@ a.forgotPassword {
 	margin-right: auto;	
 	color: #495677;
 	text-decoration: none;
-	font-size: 18px;
+	font-size: 18px;å
 	font-family: 'Cambria';
 }
 
@@ -1570,25 +1602,64 @@ a.closeRegisterButton {
 	width: 18px;
 	height: 19px;
 	float: right;
-	background: url(/i/closeRegisterButton.png) no-repeat;
+	background: url(/i/closeButton2.png) no-repeat;
+	background-size: 100%;
 }
 
-#terms {
+a.closeRegisterButton:hover {
+	background: url(/i/closeButton1.png) no-repeat;
+	background-size: 100%;
+}
+
+#terms-of-use {
+	width: 937px;
+	padding: 10px;
+	border: 2px solid #52648A;
 	border-radius: 7px;
+	background-color: #fff;
+	z-index: 20;
+	position: absolute;
+	top: 0;
+	height: 783px;
+	overflow: auto;
+	display: none;
+}
+
+#not-agree {
+	border: 1px solid #808080;
+	height: 20px;
+	float: right;
+	margin-right: 6px;
+	cursor: pointer;
+	border-radius: 6px;
+	margin-bottom: 7px;
+	vertical-align: middle;
+	text-align: center;
+	margin-top: 57px;
+	font-family: 'Arial';
+	font-size: 14px;
+	background-color: #fff;
+}
+
+#agree {
+	border: 1px solid #808080;
+	height: 20px;
+	float: right;
+	margin-right: 6px;
+	cursor: pointer;
+	border-radius: 6px;
+	margin-bottom: 7px;
+	vertical-align: middle;
+	text-align: center;
+	margin-top: 57px;
+	font-family: 'Arial';
+	font-size: 14px;
+	background-color: #fff;
 } 
-
-#terms h5 {
-	text-align: center;
-	font-weight: bold;
-}
-
-#terms p.pCenter {
-	text-align: center;
-}
 
 .answerForm {
 	width: 690px;
-	margin: 0px 0 0 13px;
+	margin: 0px 0 0 6px;
 	display: none;
 }
 
@@ -1864,7 +1935,8 @@ a.closeRegisterButton {
 
 .my-file-name {
 	width: 350px;
-	overflow: hidden;	
+	overflow: hidden;
+	height: 25px;
 }
 
 span.spaceLeft {
@@ -1874,7 +1946,7 @@ span.spaceLeft {
 }
 
 .dialogsWrapper {
-	width: 717px;
+	width: 722px;
 	margin: 0 auto;
 	border: 2px solid #c85a3d;
     background: #ffffff;
@@ -1882,7 +1954,7 @@ span.spaceLeft {
 	height: 600px;
     position: absolute;
     left: 0;
-    top: -10px;
+    top: 0px;
 	overflow: auto;
 }
 
@@ -1989,6 +2061,7 @@ h2.dialogTitle {
 	background: url(../i/spamDialogs.png) no-repeat;
 	cursor: pointer;
 }
+
 
 .userLinkAddWindow {
 	position: fixed;
@@ -2247,17 +2320,24 @@ input.cancel-feedback {
 }
 
 .closeNotepad {
-    width: 10px;
+	width: 10px;
 	height: 13px;
 	float: left;
-	margin: -12px 0px 0 0px;
+	margin: -3px 0px 0 2px;
 }
+
 .closeNotepad a {
     display: block;
     width: 13px;
-    height: 13px;
-    background: url(../i/closeDialogs.png) no-repeat;
+    height: 15px;
+    background: url(../i/closeButton2.png) no-repeat;
+	background-size: 100%;
     cursor: pointer;
+}
+
+.closeNotepad a:hover {
+    background: url(../i/closeButton1.png) no-repeat;
+	background-size: 100%;
 }
 
 .chatInviteWindow {
@@ -2343,16 +2423,16 @@ h2.chatInviteTitle{
 
 .chatTabs {
 	width: 689px;
-	margin: 4px auto 0px auto;
+	margin: 4px auto -1px auto;
 	overflow: hidden;
 }
 
 .singleTab {
 	width: 118px;
 	height: 24px;
-	border-top: 2px solid #5d6787;
-	border-left: 2px solid #5d6787;
-	border-right: 2px solid #5d6787;
+	border-top: 1px solid #495677;
+	border-left: 1px solid #495677;
+	border-right: 1px solid #495677;
 	border-radius: 5px 5px 0 0;
 	font-size: 18px;
 	font-family: 'Cambria';
@@ -2363,18 +2443,26 @@ h2.chatInviteTitle{
 	cursor: pointer;
 	float: left;
     position: relative;
-	margin-top: 2px;
+	margin-top: 3px;
 }
 .closeDialogTab {
-    background: url(../i/closeDialogs.png);
-    /*display: block;*/
-    width: 13px;
-    height: 13px;
-    position: absolute;
-    right: 2px;
-    top:5px;
-    display: none;
+	background: url(../i/closeButton2.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+	width: 10px;
+	height: 13px;
+	position: absolute;
+	right: 3px;
+	top: 8px;
+	display: none;
 }
+
+.closeDialogTab:hover {
+	background: url(../i/closeButton1.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
 .singleTab:hover .closeDialogTab, .singleTab.active .closeDialogTab {
     display: block;
 }
@@ -2389,10 +2477,10 @@ h2.chatInviteTitle{
 	margin-left: 1px;
 	padding-left: 3px;
 	padding-right: 5px;
-	border-top: 2px solid #5d6787;
-	border-left: 2px solid #5d6787;
-	border-right: 2px solid #5d6787;
-	margin-top: 2px;
+	border-top: 1px solid #495677;
+	border-left: 1px solid #495677;
+	border-right: 1px solid #495677;
+	margin-top: 3px;
 }
 
 .singleInboxTab span {
@@ -2426,7 +2514,9 @@ h2.chatInviteTitle{
     cursor: pointer;
 }
 .chat-tab.active {
-    border-color: #000000;
+	border-top: 2px solid #495677;
+	border-left: 2px solid #495677;
+	border-right: 2px solid #495677;
 }
 
 .numberOnTab.chat-tab:hover {
@@ -2465,6 +2555,10 @@ h2.chatInviteTitle{
 }
 .singleMessage.chatSrvMsg {
     color: #999999;
+}
+
+.singleMessage.my-message {
+	background-color: #e6e6e6;
 }
 
 .chatUsername {
@@ -2632,6 +2726,8 @@ a.toggleSettingsGroup:hover {
 	border: 2px solid #bec1d1;
 	border-radius: 7px;
 	padding: 3px 6px 0 15px;
+	margin-left: -18px;
+	margin-top: 4px;
 }
 
 .settingsGroup label {
