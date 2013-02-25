@@ -5,25 +5,26 @@
             $(".delete-user").bind('click', function(){
                 if (confirm('Удалить пользователя?')) {
                     var cur_user = $(this).closest(".user-tr");
-                    /*$.ajax({
-                        url: '/admin/deleteArticle',
+                    $.ajax({
+                        url: '/admin/deleteUser',
                         data: {
-                            article: cur_article.data('id')
+                            user: cur_user.data('id')
                         }
-                    });*/
+                    });
                     cur_user.remove();
                 }
                 return false;
             });
-            $(".block-user").bind('click', function(){
+            //Блокировка юзера на 60 минут
+            $(".block-user").bind('click', function () {
                 if (confirm('Заблокировать пользователя на 60 минут?')) {
                     var cur_user = $(this).closest(".user-tr");
-                    /*$.ajax({
-                     url: '/admin/deleteArticle',
-                     data: {
-                     article: cur_article.data('id')
-                     }
-                     });*/
+                    $.ajax({
+                        url:'/admin/blockUser',
+                        data:{
+                            user:cur_user.data('id')
+                        }
+                    });
                     cur_user.remove();
                 }
                 return false;

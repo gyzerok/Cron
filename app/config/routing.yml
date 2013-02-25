@@ -283,10 +283,26 @@ deleteAnswer:
   pattern:  /admin/deleteAnswer
   defaults: { _controller: CronCronBundle:Admin:deleteAnswer }
 
+confirmSpamAnswer:
+  pattern:  /admin/confirmSpamAnswer
+  defaults: { _controller: CronCronBundle:Admin:confirmSpamAnswer }
+
+cancelSpamAnswer:
+  pattern:  /admin/cancelSpamAnswer
+  defaults: { _controller: CronCronBundle:Admin:cancelSpamAnswer }
+
 #users
 adminUsers:
   pattern:  /admin/users/{tab}
   defaults: { _controller: CronCronBundle:Admin:users, "tab": "spam" }
+
+blockUser:
+  pattern:  /admin/blockUser
+  defaults: { _controller: CronCronBundle:Admin:blockUser }
+
+deleteUser:
+  pattern:  /admin/deleteUser
+  defaults: { _controller: CronCronBundle:Admin:deleteUser }
 
 #credits
 adminCredits:

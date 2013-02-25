@@ -8,6 +8,7 @@ use Cron\CronBundle\Entity\Article;
 use Cron\CronBundle\Entity\ArticleCategory;
 use Cron\CronBundle\Entity\User;
 use Cron\CronBundle\Entity\UserSettings;
+use Cron\CronBundle\Entity\Notepad;
 use Cron\CronBundle\Entity\File;
 use Cron\CronBundle\Entity\Feedback;
 use Cron\CronBundle\Entity\AdminSettings;
@@ -218,6 +219,7 @@ class AdminController extends Controller implements InitializableControllerInter
         }
 
         $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($request->get("question"));
+        $question->setSpams(null);
         $question->setIsSpam(true);
 
         $em = $this->getDoctrine()->getManager();
@@ -234,11 +236,10 @@ class AdminController extends Controller implements InitializableControllerInter
         }
 
         $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($request->get("question"));
-        // todo howto remove Spams?
-//        $question->removeSpam($question->getSpams());
+        $question->setSpams(null);
 
         $em = $this->getDoctrine()->getManager();
-//        $em->remove($spams);
+        $em->persist($question);
         $em->flush();
         return new Response("SUCCESS");
     }
@@ -252,10 +253,10 @@ class AdminController extends Controller implements InitializableControllerInter
 
         $answers = array();
         if ($tab=='all'){
-            $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array(), array("pubDate"=>"DESC"));
+            $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("isSpam"=>false), array("pubDate"=>"DESC"));
         } elseif ($tab=='spam'){
             // todo refactor it
-            $all_answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findAll();
+            $all_answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("isSpam"=>false));
             foreach ($all_answers as $answer) {
                 if (count($answer->getSpams())>0){
                     $user_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user"=>$answer->getUser()->getId()));
@@ -279,10 +280,43 @@ class AdminController extends Controller implements InitializableControllerInter
             return $this->redirect("/");
         }
 
-        $asnwer = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->find($request->get("answer"));
+        $answer = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->find($request->get("answer"));
 
         $em = $this->getDoctrine()->getManager();
-        $em->remove($asnwer);
+        $em->remove($answer);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
+    public function confirmSpamAnswerAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $answer = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->find($request->get("answer"));
+        $answer->setSpams(null);
+        $answer->setIsSpam(true);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($answer);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
+    public function cancelSpamAnswerAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $answer = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->find($request->get("answer"));
+        $answer->setSpams(null);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($answer);
         $em->flush();
         return new Response("SUCCESS");
     }
@@ -497,5 +531,184 @@ class AdminController extends Controller implements InitializableControllerInter
             'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));
     }
+
+    public function blockUserAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $user4block = $this->getDoctrine()->getRepository("CronCronBundle:User")->find($request->get("user"));
+        $bunDate = new \DateTime();
+        $bunDate->modify("+60 minutes");
+        $user4block->setLockedTill($bunDate);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user4block);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
+    public function deleteUserAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $user_id = $request->get("user");
+        
+        $user2del = $this->getDoctrine()->getRepository("CronCronBundle:User")->find($user_id);
+
+        $user_settings = $this->getDoctrine()->getRepository("CronCronBundle:UserSettings")->findOneBy(array("user"=>$user_id));
+        $notepad = $this->getDoctrine()->getRepository("CronCronBundle:Notepad")->findOneBy(array("user"=>$user_id));
+        $links = $this->getDoctrine()->getRepository("CronCronBundle:UserLink")->findBy(array("user"=>$user_id));
+        $notes_questions = $this->getDoctrine()->getRepository("CronCronBundle:NotesQuestion")->findBy(array("user"=>$user_id));
+        $notes_articles = $this->getDoctrine()->getRepository("CronCronBundle:NotesArticle")->findBy(array("user"=>$user_id));
+
+        $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("user"=>$user_id));
+        $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user"=>$user_id));
+
+        $files = $this->getDoctrine()->getRepository("CronCronBundle:File")->findBy(array("user"=>$user_id));
+        $files_dir = $_SERVER['DOCUMENT_ROOT'].'/files/'.$user_id.'/';
+        foreach ($files as $file) {
+            @unlink($files_dir.$file->getFilename());
+        }
+        @rmdir($files_dir);
+
+        $dialogs_msgs = $this->getDoctrine()->getRepository("CronCronBundle:DialogMsg")->findBy(array("user"=>$user_id));
+        $dialogs1 = $this->getDoctrine()->getRepository("CronCronBundle:Dialog")->findBy(array("user1"=>$user_id));
+        $dialogs2 = $this->getDoctrine()->getRepository("CronCronBundle:Dialog")->findBy(array("user2"=>$user_id));
+
+        $chats_msgs = $this->getDoctrine()->getRepository("CronCronBundle:ChatMsg")->findBy(array("user"=>$user_id));
+        $chats_membering = $this->getDoctrine()->getRepository("CronCronBundle:ChatMember")->findBy(array("user"=>$user_id));
+        $chats_invite1 = $this->getDoctrine()->getRepository("CronCronBundle:ChatInvite")->findBy(array("user1"=>$user_id));
+        $chats_invite2 = $this->getDoctrine()->getRepository("CronCronBundle:ChatInvite")->findBy(array("user2"=>$user_id));
+        $chats = $this->getDoctrine()->getRepository("CronCronBundle:Chat")->findBy(array("owner"=>$user_id));
+
+        $feedposts = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->findBy(array("user"=>$user_id));
+
+        $em = $this->getDoctrine()->getManager();
+        if ($user_settings instanceof UserSettings)
+            $em->remove($user_settings);
+        if ($notepad instanceof Notepad)
+            $em->remove($notepad);
+        foreach ($links as $links1) {
+            $em->remove($links1);
+        }
+        foreach ($notes_questions as $notes_questions1) {
+            $em->remove($notes_questions1);
+        }
+        foreach ($notes_articles as $notes_articles1) {
+            $em->remove($notes_articles1);
+        }
+        foreach ($answers as $answers1) {
+            $em->remove($answers1);
+        }
+        $em->flush();
+        foreach ($questions as $questions1) {
+            $answers_on_this = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$questions1->getId()));
+            foreach ($answers_on_this as $answers_on_this1) {
+                $em->remove($answers_on_this1);
+            }
+            $em->flush();
+
+            $em->remove($questions1);
+        }
+        foreach ($files as $files1) {
+            $em->remove($files1);
+        }
+        foreach ($dialogs_msgs as $dialogs_msgs1) {
+            $em->remove($dialogs_msgs1);
+        }
+        $em->flush();
+        foreach ($dialogs1 as $dialogs1_1) {
+            $msgs_in_this = $this->getDoctrine()->getRepository("CronCronBundle:DialogMsg")->findBy(array("dialog"=>$dialogs1_1->getId()));
+            foreach ($msgs_in_this as $msgs_in_this1) {
+                $em->remove($msgs_in_this1);
+            }
+            $em->flush();
+
+            $srvmsgs_in_this = $this->getDoctrine()->getRepository("CronCronBundle:ChatSrvMsg")->findBy(array("dialog"=>$dialogs1_1->getId()));
+            foreach ($srvmsgs_in_this as $srvmsgs_in_this1) {
+                $em->remove($srvmsgs_in_this1);
+            }
+            $em->flush();
+
+            $em->remove($dialogs1_1);
+        }
+        foreach ($dialogs2 as $dialogs2_1) {
+            $msgs_in_this = $this->getDoctrine()->getRepository("CronCronBundle:DialogMsg")->findBy(array("dialog"=>$dialogs2_1->getId()));
+            foreach ($msgs_in_this as $msgs_in_this1) {
+                $em->remove($msgs_in_this1);
+            }
+            $em->flush();
+
+            $srvmsgs_in_this = $this->getDoctrine()->getRepository("CronCronBundle:ChatSrvMsg")->findBy(array("dialog"=>$dialogs2_1->getId()));
+            foreach ($srvmsgs_in_this as $srvmsgs_in_this1) {
+                $em->remove($srvmsgs_in_this1);
+            }
+            $em->flush();
+
+            $em->remove($dialogs2_1);
+        }
+        foreach ($chats_msgs as $chats_msgs1) {
+            $em->remove($chats_msgs1);
+        }
+        foreach ($chats_membering as $chats_membering1) {
+            $em->remove($chats_membering1);
+        }
+        foreach ($chats_invite1 as $chats_invite1_1) {
+            $em->remove($chats_invite1_1);
+        }
+        foreach ($chats_invite2 as $chats_invite2_1) {
+            $em->remove($chats_invite2_1);
+        }
+        $em->flush();
+        foreach ($chats as $chats1) {
+            $msgs_in_this = $this->getDoctrine()->getRepository("CronCronBundle:ChatMsg")->findBy(array("chat"=>$chats1->getId()));
+            foreach ($msgs_in_this as $msgs_in_this1) {
+                $em->remove($msgs_in_this1);
+            }
+            $em->flush();
+
+            $members_in_this = $this->getDoctrine()->getRepository("CronCronBundle:ChatMember")->findBy(array("chat"=>$chats1->getId()));
+            foreach ($members_in_this as $members_in_this1) {
+                $em->remove($members_in_this1);
+            }
+            $em->flush();
+
+            $srvmsgs_in_this = $this->getDoctrine()->getRepository("CronCronBundle:ChatSrvMsg")->findBy(array("chat"=>$chats1->getId()));
+            foreach ($srvmsgs_in_this as $srvmsgs_in_this1) {
+                $em->remove($srvmsgs_in_this1);
+            }
+            $em->flush();
+
+            $em->remove($chats1);
+        }
+        foreach ($feedposts as $feedposts1) {
+            $em->remove($feedposts1);
+        }
+        $em->flush();
+
+        $srvmsgs_to_user = $this->getDoctrine()->getRepository("CronCronBundle:ChatSrvMsg")->findBy(array("to_user"=>$user_id));
+        foreach ($srvmsgs_to_user as $srvmsgs_to_user1) {
+            $em->remove($srvmsgs_to_user1);
+        }
+        $srvmsgs_about_user = $this->getDoctrine()->getRepository("CronCronBundle:ChatSrvMsg")->findBy(array("about_user"=>$user_id));
+        foreach ($srvmsgs_about_user as $srvmsgs_about_user1) {
+            $em->remove($srvmsgs_about_user1);
+        }
+        $em->flush();
+
+        $em->remove($user2del);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
+    //todo ignoreSpamDialogAction
+    //todo watchSpamDialog
+    //todo changeCredits
 
 }

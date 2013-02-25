@@ -40,6 +40,21 @@
                 cur_question.remove();
                 return false;
             });
+            //Блокировка юзера на 60 минут
+            $(".block-user").bind('click', function () {
+                if (confirm('Заблокировать пользователя на 60 минут?')) {
+                    var cur_user = $(this).closest(".singleQuestion");
+                    $.ajax({
+                        url:'/admin/blockUser',
+                        data:{
+                            user:cur_user.data('user')
+                        }
+                    });
+                    cur_user.find('.confirm-spam').click();
+                    cur_user.remove();
+                }
+                return false;
+            });
         });
     </script>
     <h2 class="categoryTitle">Вопросы</h2>
@@ -54,7 +69,7 @@
     {% if questions %}
         <div id="showQuestion">
             {% for item in questions %}
-                <div class="singleQuestion" data-id="{{ item.getId() }}">
+                <div class="singleQuestion" data-id="{{ item.getId() }}" data-user="{{ item.getUser().getId() }}">
                     <div class="userName">{{ item.getUser() }}</div>
                     <div class="questionDate">{{ item.datetime|date('d.m.Y H:i') }}</div>
                     {#<div class="closeButton"></div>#}

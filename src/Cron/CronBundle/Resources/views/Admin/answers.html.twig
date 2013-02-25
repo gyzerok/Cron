@@ -16,6 +16,45 @@
                 }
                 return false;
             });
+            $(".confirm-spam").bind('click', function () {
+                if (confirm("Подтвердить, что это спам?")) {
+                    var cur_question = $(this).closest(".singleQuestion");
+                    $.ajax({
+                        url:'/admin/confirmSpamAnswer',
+                        data:{
+                            answer:cur_question.data('id')
+                        }
+                    });
+                    cur_question.remove();
+                }
+                return false;
+            });
+            $(".cancel-spam").bind('click', function () {
+                var cur_question = $(this).closest(".singleQuestion");
+                $.ajax({
+                    url:'/admin/cancelSpamAnswer',
+                    data:{
+                        answer:cur_question.data('id')
+                    }
+                });
+                cur_question.remove();
+                return false;
+            });
+            //Блокировка юзера на 60 минут
+            $(".block-user").bind('click', function () {
+                if (confirm('Заблокировать пользователя на 60 минут?')) {
+                    var cur_user = $(this).closest(".singleQuestion");
+                    $.ajax({
+                        url:'/admin/blockUser',
+                        data:{
+                            user:cur_user.data('user')
+                        }
+                    });
+                    cur_user.find('.confirm-spam').click();
+                    cur_user.remove();
+                }
+                return false;
+            });
         });
     </script>
     <h2 class="categoryTitle">Ответы</h2>
@@ -30,7 +69,7 @@
     {% if answers %}
         <div id="showQuestion">
             {% for item in answers %}
-                <div class="singleQuestion" data-id="{{ item.getId() }}">
+                <div class="singleQuestion" data-id="{{ item.getId() }}" data-user="{{ item.getUser().getId() }}">
                     <div class="userName">{{ item.getUser() }}</div>
                     <div class="questionDate">{{ item.pubDate|date('d.m.Y H:i') }}</div>
                     <div style="clear: both;"></div>
@@ -41,9 +80,9 @@
                                 {#<div class="spam-index">Спам: {{ item.getSpams()|length }}</div>#}
                                 <div class="spam-index">Спам-индекс: {{ item.getUser().getSpamActivity() }}</div>
                                 <div class="questions-count">Вопросов: {{ item.question_count }}</div>
-                                <a href="#" class="">Подтвердить</a>
-                                <a href="#" class="">Отменить</a>
-                                <a href="#" class="">Заблокировать пользователя</a>
+                                <a href="#" class="confirm-spam">Подтвердить</a>
+                                <a href="#" class="cancel-spam">Отменить</a>
+                                <a href="#" class="block-user">Заблокировать пользователя</a>
                             {% else %}
                                 <a href="#" class="delete-answer">Удалить</a>
                             {% endif %}
