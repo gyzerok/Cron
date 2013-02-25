@@ -30,9 +30,16 @@
 				//Лайки
 				$('.likeButton').click(function(){
 					$(this).addClass("likeButtonActive");
-					var question_id = $(this).closest('.singleQuestion').attr('data-id');
+					var question_id = $(this).closest('.singleQuestion').data('id');
+					var answer_id = $(this).closest('.singleAnswer').data('id');
 					var that = $(this);
-					$.ajax({'url': '{{ path("likeItem") }}', 'type':'post', 'data': 'question_id='+question_id,
+					$.ajax({
+                        'url': '{{ path("likeItem") }}',
+                        'type':'post',
+                        'data': {
+                            question_id: question_id,
+                            answer_id: answer_id
+                        },
 						'fail': function(){
 							that.removeClass("likeButtonActive");
 						}
@@ -45,7 +52,7 @@
             <h2 class="categoryTitle">{{ category.getName() }}</h2>
             <div id="showQuestion">
                 {% for item in category.questions %}
-                    <div class="singleQuestion" data-id="{{ item.getId() }}">
+                    <div class="singleQuestion likable-item" data-id="{{ item.getId() }}">
                         <div class="userName">{{ item.user }}</div>
                         <div class="questionDate">{{ item.datetime|date('d.m.Y H:i') }}</div>
                         <div class="closeButton"></div>
@@ -75,7 +82,7 @@
                         <div class="myAnswer {% if item.answers==null %}no-border{% endif %}">
                             {% if item.getPrivate()<1 %}
                                 {% for answer in item.answers %}
-                                    <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}">
+                                    <div class="singleAnswer likable-item" data-user="{{ answer.getUser().getId() }}" data-id="{{ answer.getId() }}">
                                         <div class="userName">{{ answer.getUser().getNick() }}</div>
                                         <div class="answerDate">{{ answer.getPubDate()|date("Y-m-d H:i:s") }}</div>
                                         <div style="clear: both;"></div>

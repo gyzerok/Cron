@@ -125,7 +125,7 @@ class AjaxController extends Controller
             if ($questionId = $request->get('question_id'))
             {
                 $question = new Question();
-                $question = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findOneById($questionId);
+                $question = $this->getDoctrine()->getRepository('CronCronBundle:Question')->find($questionId);
                 if (!$question instanceof Question)
                     return new Response('Fail');
 
@@ -139,12 +139,12 @@ class AjaxController extends Controller
 
                 $question->addLike($user);
 
-                $creator = $question->getUser();
-                $creator->incCredits();
+//                $creator = $question->getUser();
+//                $creator->incCredits();
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($question);
-                $em->persist($creator);
+//                $em->persist($creator);
                 $em->flush();
 
                 return new Response('Success');
@@ -152,8 +152,8 @@ class AjaxController extends Controller
             elseif ($answerId = $request->get('answer_id'))
             {
                 $answer = new Answer();
-                $answer = $this->getDoctrine()->getRepository('CronCronBundle:Answer')->findOneById($answerId);
-                if (!$answer instanceof Question)
+                $answer = $this->getDoctrine()->getRepository('CronCronBundle:Answer')->find($answerId);
+                if (!$answer instanceof Answer)
                     return new Response('Fail');
 
                 $user = $this->getUser();

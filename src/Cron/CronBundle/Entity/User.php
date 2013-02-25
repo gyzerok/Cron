@@ -597,7 +597,7 @@ class User implements UserInterface, \Serializable
     }
 
     /*
-     * Добавление 1 кредита после лайка вопроса или ответа, созданного пользователем
+     * Добавление 1 кредита после лайка ответа, созданного пользователем
      */
     public function incCredits()
     {
