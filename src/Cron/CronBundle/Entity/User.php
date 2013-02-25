@@ -595,4 +595,15 @@ class User implements UserInterface, \Serializable
     {
         return $this->credits;
     }
+
+    /*
+     * Добавление 1 кредита после лайка вопроса или ответа, созданного пользователем
+     */
+    public function incCredits()
+    {
+        $this->credits++;
+
+        return $this;
+    }
+
 }
