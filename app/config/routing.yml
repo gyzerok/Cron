@@ -304,6 +304,10 @@ deleteUser:
   pattern:  /admin/deleteUser
   defaults: { _controller: CronCronBundle:Admin:deleteUser }
 
+ignoreSpamDialog:
+  pattern:  /admin/ignoreSpamDialog
+  defaults: { _controller: CronCronBundle:Admin:ignoreSpamDialog }
+
 #credits
 adminCredits:
   pattern:  /admin/credits

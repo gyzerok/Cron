@@ -30,13 +30,14 @@
                 return false;
             });
             $(".ignore-user").bind('click', function(){
+                var dialog = $(this).data('dialog');
                 var cur_user = $(this).closest(".user-tr");
-                /*$.ajax({
-                 url: '/admin/deleteArticle',
-                 data: {
-                 article: cur_article.data('id')
-                 }
-                 });*/
+                $.ajax({
+                    url:'/admin/ignoreSpamDialog',
+                    data:{
+                        dialog:dialog
+                    }
+                });
                 cur_user.remove();
                 return false;
             });
@@ -85,7 +86,7 @@
                             <td><a href="#" class="watch-spam-dialog" data-dialog="{{ user.dialog }}">{{ user.marked_by.getNick() }}</a></td>
                         {% endif %}
                         <td>
-                            <a href="#" class="ignore-user">Проигнорировать</a>
+                            <a href="#" class="ignore-user" data-dialog="{{ user.dialog }}">Проигнорировать</a>
                             <a href="#" class="block-user">Заблокировать</a>
                             <a href="#" class="delete-user">Удалить</a>
                         </td>
