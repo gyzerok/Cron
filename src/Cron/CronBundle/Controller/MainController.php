@@ -603,6 +603,8 @@ class MainController extends Controller implements InitializableControllerInterf
                 $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
                 $user->setPassword($password);
 
+                $user->setCredits(10);
+
                 $user->setLockedTill(new \DateTime("0000-00-00 00:00:00"));
 
                 $em = $this->getDoctrine()->getManager();

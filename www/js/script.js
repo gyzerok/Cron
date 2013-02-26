@@ -189,8 +189,10 @@ $(document).ready(function() {
 	$(".article-notes-list > li").click(function(){  
 	  window.location=$(this).find("a").attr("href"); return false;  
 	});
-
 	
+	$(".article-list > li.article-li").click(function(){  
+	  window.location=$(this).find("a").attr("href"); return false;  
+	});
 	
 	/*$('.article-li').hover(function() {
 		$(this).closest('.article-li > a').css({

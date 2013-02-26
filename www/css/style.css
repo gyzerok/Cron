@@ -99,7 +99,7 @@
 .users {
 	width: 232px;
 	float: right;
-	margin: 10px 17px 0 0px;
+	margin: 10px 46px -3px 0px;
 	overflow: hidden;
 }
 
@@ -129,6 +129,7 @@
 	font-size: 20px;
 	color: #495677;
 	margin-right: 21px;
+	margin-left: 5px;
 }
 
 .users span.onSite {
@@ -138,6 +139,7 @@
 	font-family: 'Candara';
 	font-size: 20px;
 	color: #495677;
+	margin-left: 5px;
 }
 
 #nav {
@@ -296,6 +298,7 @@
 	overflow: hidden;
 	float: right;
 	margin-right: 10px;
+	height: 18px;
 }
 
 .usersProfile p.myQuestions a {
@@ -317,6 +320,7 @@
 	border-radius: 7px;
 	float: right;
 	margin-top: 3px;
+	position: relative;
 }
 
 #menu ul.menuNavigation {
@@ -351,7 +355,7 @@
 }
 
 #menu ul.menuNavigation li:hover {
-	background-color: #FFDDDB;
+	background-color: #ffebdb;
 }
 
 #menu ul.menuNavigation li.chatInvite {
@@ -385,7 +389,7 @@
   position:absolute;
   z-index:100;
   width:180px;
-  background-color: #FFDDDB;
+  background-color: #ffebdb;
   margin-left: 5px;
 }
 
@@ -399,14 +403,14 @@
 	text-align: center;
 	border: none;
 	border-radius: none;
-	background-color: #FFDDDB;
+	background-color: #ffebdb;
 	cursor: pointer;
 	line-height: 100%;
 	font-size: 16px;
 }
 
 #menu ul.menuNavigation li ul.subMenuNavigation li a:hover {
-	background-color: #FFDDDB;
+	background-color: #ffebdb;
 	color: #3b3ffd;
 }
 
@@ -417,6 +421,55 @@
 	text-transform: none;
 	font-family: 'Cambria';
 	font-size: 16px;
+}
+
+#menu ul.menuNavigation li ul.subMenuNavigation li a.add-bookmark {
+	font-family: 'Calibri';
+	font-size: 12px;
+	color: #000;
+	font-weight: bold;
+}
+
+#menu ul.menuNavigation li ul.subMenuNavigation li a.add-bookmark:hover {
+	color: #3b3ffd;
+	background-color: #fdf5ef;
+}
+
+#menu ul.menuNavigation li ul.subMenuNavigation li.add-bookmark-wrap {
+	background-color: #fdf5ef;
+	border-radius: 0px;
+}
+
+#menu ul.menuNavigation li ul.subMenuNavigation li.add-bookmark-wrap:hover {
+	background-color: #fdf5ef;
+}
+
+.additional-information {
+	position: absolute;
+	bottom: 19px;
+	left: 6px;
+}
+
+.additional-information li a {
+	font-size: 14px;
+	font-family: 'Arial';
+	color: #495677;
+	text-decoration: none;
+}
+
+.additional-information li a:hover {
+	text-decoration: underline;
+}
+
+.copyright {
+	display: block;
+	text-align: center;
+	font-size: 14px;
+	font-family: 'Arial';
+	color: #686868;	
+	position: absolute;
+	bottom: 2px;
+	left: 63px;
 }
 
 
@@ -450,7 +503,7 @@
 #main {
 	width: 720px;
 	min-height: 800px;
-	margin: -40px 0 0 5px;
+	margin: -55px 0 0 5px;
 	float: left;
     position: relative;
 	/*width: 733px;
@@ -463,7 +516,7 @@
 }
 
 #main form.writeQuestion {
-	margin: 0px auto 0 auto;
+	margin: 25px auto 0 auto;
 	width: 700px;
 	overflow: hidden;
 	font-family: 'Cambria';
@@ -588,8 +641,9 @@
 }
 
 #showQuestion {
-	max-height: 799px;
-	width: 728px;
+	max-height: 770px;
+	width: 729px;
+	overflow-y: scroll;
 }
 
 .privateButton {
@@ -697,7 +751,7 @@ p.questionCost {
 h2.categoryH2 {
 	font-size: 24px;
 	margin-left: 17px;
-	margin-top: -2px;
+	margin-top: 9px;
 	color: #7A2116;
 	text-transform: uppercase;
 }
@@ -732,15 +786,17 @@ h2.acticle {
 }
 
 .greeting {
-	font-size: 14px;
-	font-family: 'Tahoma';
-	text-align: center;
+	font-size: 24px;
+	font-family: 'Cambria';
+	text-align: left;
 	margin-top: 15px;
+	color: #495677;
+	margin-left: 10px;
 }
 
 
 .singleQuestion {
-	width: 709px;
+	width: 704px;
 	border: 1px solid #965565;
 	border-radius: 7px;
 	margin: 5px auto 0px auto;
@@ -764,24 +820,28 @@ h2.acticle {
 	width: 105px;
 	float: left;
 	overflow: hidden;
-	font-size: 13px;
-	margin-left: 482px;
+	margin-left: 478px;
 	margin-right: 0;
 	color: #7e7f7f;
 	font-family: 'Cambria';
 	font-size: 10px;
-	margin-top: 3px;		
+	margin-top: 3px;	
 }
 
 .closeButton {
-	width: 11px;
-	height: 10px;
+	width: 9px;
+	height: 12px;
 	float: left;
-	background: url(/i/closeButton.png) no-repeat;
+	background: url(/i/closeButton2.png) no-repeat;
 	background-size: 100%;
 	margin-left: -5px;
 	cursor: pointer;
 	margin-top: 3px;
+}
+
+.closeButton:hover {
+	background: url(/i/closeButton1.png) no-repeat;
+	background-size: 100%;
 }
 
 .questionText{
@@ -950,6 +1010,26 @@ h2.acticle {
 	margin-right: 3px;
 }
 
+.arrowButton:hover {
+	background: url(/i/chatHover.jpg) no-repeat;
+	background-size: 100%;
+}
+
+.arrowButton:active {
+	background: url(/i/chatClickActive.jpg) no-repeat;
+	background-size: 100%;
+}
+
+.arrowButton.inviteUser-active {
+	background: url(/i/chatActive.jpg) no-repeat;
+	background-size: 100%;	
+}
+
+.arrowButton.inviteUser-active:hover {
+	background: url(/i/chatClickActive.jpg) no-repeat;
+	background-size: 100%;	
+}
+
 .letterButton {
 	width: 22px;
 	height: 22px;
@@ -960,6 +1040,27 @@ h2.acticle {
 	cursor: pointer;
 	margin-right: 3px;
 }
+
+.letterButton:hover {
+	background: url(/i/messagehover.jpg) no-repeat;
+	background-size: 100%;
+}
+
+.letterButton:active {
+	background: url(/i/messgeClickActive.jpg) no-repeat;
+	background-size: 100%;
+}
+
+.letterButton.sendMessage-active {
+	background: url(/i/messageActive.jpg) no-repeat;
+	background-size: 100%;	
+}
+
+.letterButton.sendMessage-active:hover {
+	background: url(/i/messgeClickActive.jpg) no-repeat;
+	background-size: 100%;	
+}
+
 
 .socialIcons form.answer {
 	width: 70px;
@@ -1040,20 +1141,26 @@ h2.acticle {
 
 .closeChat {
 	width: 13px;
-	height: 13px;
+	height: 15px;
 	float: right;
 	margin: 10px 14px 0 0;
-	background: url(../i/closeDialogs.png) no-repeat;
+	background: url(../i/closeButton2.png) no-repeat;
+	background-size: 100%;
 	cursor: pointer;
     z-index: 1;
+}
+
+.closeChat:hover {
+	background: url(../i/closeButton1.png) no-repeat;
+	background-size: 100%;
 }
 
 
 .registerWrapper {
 	position: relative;
-	top: -147px;
+	top: -131px;
 	left: -5px;
-	z-index: 1000;
+	z-index: 10;
 }
 
 .registerForm {
@@ -1482,7 +1589,7 @@ a.forgotPassword {
 	margin-right: auto;	
 	color: #495677;
 	text-decoration: none;
-	font-size: 18px;
+	font-size: 18px;å
 	font-family: 'Cambria';
 }
 
@@ -1495,25 +1602,64 @@ a.closeRegisterButton {
 	width: 18px;
 	height: 19px;
 	float: right;
-	background: url(/i/closeRegisterButton.png) no-repeat;
+	background: url(/i/closeButton2.png) no-repeat;
+	background-size: 100%;
 }
 
-#terms {
+a.closeRegisterButton:hover {
+	background: url(/i/closeButton1.png) no-repeat;
+	background-size: 100%;
+}
+
+#terms-of-use {
+	width: 937px;
+	padding: 10px;
+	border: 2px solid #52648A;
 	border-radius: 7px;
+	background-color: #fff;
+	z-index: 20;
+	position: absolute;
+	top: 0;
+	height: 783px;
+	overflow: auto;
+	display: none;
+}
+
+#not-agree {
+	border: 1px solid #808080;
+	height: 20px;
+	float: right;
+	margin-right: 6px;
+	cursor: pointer;
+	border-radius: 6px;
+	margin-bottom: 7px;
+	vertical-align: middle;
+	text-align: center;
+	margin-top: 57px;
+	font-family: 'Arial';
+	font-size: 14px;
+	background-color: #fff;
+}
+
+#agree {
+	border: 1px solid #808080;
+	height: 20px;
+	float: right;
+	margin-right: 6px;
+	cursor: pointer;
+	border-radius: 6px;
+	margin-bottom: 7px;
+	vertical-align: middle;
+	text-align: center;
+	margin-top: 57px;
+	font-family: 'Arial';
+	font-size: 14px;
+	background-color: #fff;
 } 
-
-#terms h5 {
-	text-align: center;
-	font-weight: bold;
-}
-
-#terms p.pCenter {
-	text-align: center;
-}
 
 .answerForm {
 	width: 690px;
-	margin: 0px 0 0 13px;
+	margin: 0px 0 0 6px;
 	display: none;
 }
 
@@ -1789,7 +1935,8 @@ a.closeRegisterButton {
 
 .my-file-name {
 	width: 350px;
-	overflow: hidden;	
+	overflow: hidden;
+	height: 25px;
 }
 
 span.spaceLeft {
@@ -1799,7 +1946,7 @@ span.spaceLeft {
 }
 
 .dialogsWrapper {
-	width: 717px;
+	width: 722px;
 	margin: 0 auto;
 	border: 2px solid #c85a3d;
     background: #ffffff;
@@ -1807,7 +1954,7 @@ span.spaceLeft {
 	height: 600px;
     position: absolute;
     left: 0;
-    top: -10px;
+    top: 0px;
 	overflow: auto;
 }
 
@@ -1829,9 +1976,15 @@ h2.dialogTitle {
 .closeDialogWindow a {
 	display: block;
 	width: 13px;
-	height: 13px;
-	background: url(../i/closeDialogs.png) no-repeat;
+	height: 15px;
+	background: url(../i/closeButton2.png) no-repeat;
+	background-size: 100%;
 	cursor: pointer;	
+}
+
+.closeDialogWindow a:hover {
+	background: url(../i/closeButton1.png) no-repeat;
+	background-size: 100%;
 }
 
 .singleDialog{
@@ -1878,8 +2031,18 @@ h2.dialogTitle {
 .closeDialogs a {
 	display: block;
 	width: 13px;
-	height: 13px;
-	background: url(../i/closeDialogs.png) no-repeat;
+	height: 15px;
+	background: url(../i/closeButton2.png) no-repeat;
+	background-size: 100%;
+	cursor: pointer;
+}
+
+.closeDialogs a:hover {
+	display: block;
+	width: 13px;
+	height: 15px;
+	background: url(../i/closeButton1.png) no-repeat;
+	background-size: 100%;	
 	cursor: pointer;
 }
 
@@ -1898,6 +2061,7 @@ h2.dialogTitle {
 	background: url(../i/spamDialogs.png) no-repeat;
 	cursor: pointer;
 }
+
 
 .userLinkAddWindow {
 	position: fixed;
@@ -1923,9 +2087,15 @@ h2.dialogTitle {
 .closeUserLinkWindow a {
     display: block;
     width: 13px;
-    height: 13px;
-    background: url(../i/closeDialogs.png) no-repeat;
+    height: 15px;
+    background: url(../i/closeButton2.png) no-repeat;
+	background-size: 100%;
     cursor: pointer;
+}
+
+.closeUserLinkWindow a:hover {
+    background: url(../i/closeButton1.png) no-repeat;
+	background-size: 100%;
 }
 
 .userLinkAddWindow form label {
@@ -2025,12 +2195,19 @@ input.cancelUserLink {
     float: right;
     margin: 10px 14px 0 0;
 }
+
 .closeFeedbackWindow a {
     display: block;
     width: 13px;
-    height: 13px;
-    background: url(../i/closeDialogs.png) no-repeat;
+    height: 15px;
+    background: url(../i/closeButton2.png) no-repeat;
+	background-size: 100%;
     cursor: pointer;
+}
+
+.closeFeedbackWindow a:hover {
+    background: url(../i/closeButton1.png) no-repeat;
+	background-size: 100%;
 }
 
 #feedback-email {
@@ -2143,17 +2320,24 @@ input.cancel-feedback {
 }
 
 .closeNotepad {
-    width: 10px;
+	width: 10px;
 	height: 13px;
 	float: left;
-	margin: -12px 0px 0 0px;
+	margin: -3px 0px 0 2px;
 }
+
 .closeNotepad a {
     display: block;
     width: 13px;
-    height: 13px;
-    background: url(../i/closeDialogs.png) no-repeat;
+    height: 15px;
+    background: url(../i/closeButton2.png) no-repeat;
+	background-size: 100%;
     cursor: pointer;
+}
+
+.closeNotepad a:hover {
+    background: url(../i/closeButton1.png) no-repeat;
+	background-size: 100%;
 }
 
 .chatInviteWindow {
@@ -2180,8 +2364,18 @@ input.cancel-feedback {
 .closeInviteWindow a {
 	display: block;
 	width: 13px;
+	height: 15px;
+	background: url(../i/closeButton2.png) no-repeat;
+	background-size: 100%;
+	cursor: pointer;		
+}
+
+.closeInviteWindow a:hover {
+	display: block;
+	width: 13px;
 	height: 13px;
-	background: url(../i/closeDialogs.png) no-repeat;
+	background: url(../i/closeButton1.png) no-repeat;
+	background-size: 100%;
 	cursor: pointer;		
 }
 
@@ -2229,16 +2423,16 @@ h2.chatInviteTitle{
 
 .chatTabs {
 	width: 689px;
-	margin: 4px auto 0px auto;
+	margin: 4px auto -1px auto;
 	overflow: hidden;
 }
 
 .singleTab {
 	width: 118px;
 	height: 24px;
-	border-top: 2px solid #5d6787;
-	border-left: 2px solid #5d6787;
-	border-right: 2px solid #5d6787;
+	border-top: 1px solid #495677;
+	border-left: 1px solid #495677;
+	border-right: 1px solid #495677;
 	border-radius: 5px 5px 0 0;
 	font-size: 18px;
 	font-family: 'Cambria';
@@ -2249,18 +2443,26 @@ h2.chatInviteTitle{
 	cursor: pointer;
 	float: left;
     position: relative;
-	margin-top: 2px;
+	margin-top: 3px;
 }
 .closeDialogTab {
-    background: url(../i/closeDialogs.png);
-    /*display: block;*/
-    width: 13px;
-    height: 13px;
-    position: absolute;
-    right: 2px;
-    top:5px;
-    display: none;
+	background: url(../i/closeButton2.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+	width: 10px;
+	height: 13px;
+	position: absolute;
+	right: 3px;
+	top: 8px;
+	display: none;
 }
+
+.closeDialogTab:hover {
+	background: url(../i/closeButton1.png);
+	background-size: 100%;
+	background-repeat: no-repeat;
+}
+
 .singleTab:hover .closeDialogTab, .singleTab.active .closeDialogTab {
     display: block;
 }
@@ -2275,10 +2477,10 @@ h2.chatInviteTitle{
 	margin-left: 1px;
 	padding-left: 3px;
 	padding-right: 5px;
-	border-top: 2px solid #5d6787;
-	border-left: 2px solid #5d6787;
-	border-right: 2px solid #5d6787;
-	margin-top: 2px;
+	border-top: 1px solid #495677;
+	border-left: 1px solid #495677;
+	border-right: 1px solid #495677;
+	margin-top: 3px;
 }
 
 .singleInboxTab span {
@@ -2312,7 +2514,9 @@ h2.chatInviteTitle{
     cursor: pointer;
 }
 .chat-tab.active {
-    border-color: #000000;
+	border-top: 2px solid #495677;
+	border-left: 2px solid #495677;
+	border-right: 2px solid #495677;
 }
 
 .numberOnTab.chat-tab:hover {
@@ -2351,6 +2555,10 @@ h2.chatInviteTitle{
 }
 .singleMessage.chatSrvMsg {
     color: #999999;
+}
+
+.singleMessage.my-message {
+	background-color: #e6e6e6;
 }
 
 .chatUsername {
@@ -2518,6 +2726,8 @@ a.toggleSettingsGroup:hover {
 	border: 2px solid #bec1d1;
 	border-radius: 7px;
 	padding: 3px 6px 0 15px;
+	margin-left: -18px;
+	margin-top: 4px;
 }
 
 .settingsGroup label {
@@ -2701,10 +2911,16 @@ span.article-list-header {
 
 a.unbookmarkArticle {
 	display: block;
-	width: 13px;
-	height: 13px;
-	background: url(../i/closeDialogs.png) no-repeat;
-	margin-top: 9px;
+	width: 10px;
+	height: 15px;
+	background: url(../i/closeButton2.png) no-repeat;
+	background-size: 100%;
+	margin-top: 11px;
+}
+
+a.unbookmarkArticle:hover {
+	background: url(../i/closeButton1.png) no-repeat;
+	background-size: 100%;
 }
 
 a.bookmarkArticle {
@@ -2720,11 +2936,21 @@ a.bookmarkArticle:hover {
 	background-size: 100%;
 }
 
+a.bookmarkArticle:active {
+	background: url(../i/repostButtonClickActive.jpg) no-repeat;
+	background-size: 100%;
+}
+
 a.bookmarkArticleActive{
 	display: block;
 	width: 22px;
 	height: 22px;
 	background: url(../i/repostButtonActive.jpg) no-repeat;
+	background-size: 100%;
+}
+
+a.bookmarkArticleActive:hover{
+	background: url(../i/repostButtonClickActive.jpg) no-repeat;
 	background-size: 100%;
 }
 

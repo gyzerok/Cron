@@ -22,16 +22,16 @@
 	<div id="wrapper">
 	    {% block header %}
 		<div id="header">
-			<div class="logo" title="На главную"><a href="{{ path('index') }}"></a></div>
+			<div class="logo" title="{% trans %}На главную{% endtrans %}"><a href="{{ path('index') }}"></a></div>
             <div id="header-srvmsg"></div>
 			<div class="language">
-				<div class="russian{% if _locale=='ru_RU' or _locale==null %} active{% endif %}" title="русский"><a href="{{ path('locale', { 'locale': 'ru_RU' }) }}"></a></div>
-				<div class="english{% if _locale=='en_US' %} active{% endif %}" title="английский"><a href="{{ path('locale', { 'locale': 'en_US' }) }}"></a></div>
-				<div class="portuguese{% if _locale=='pt_PT' %} active{% endif %}" title="португальский"><a href="{{ path('locale', { 'locale': 'pt_PT' }) }}"></a></div>
+				<div class="russian{% if _locale=='ru_RU' or _locale==null %} active{% endif %}" title="{% trans %}русский{% endtrans %}"><a href="{{ path('locale', { 'locale': 'ru_RU' }) }}"></a></div>
+				<div class="english{% if _locale=='en_US' %} active{% endif %}" title="{% trans %}английский{% endtrans %}"><a href="{{ path('locale', { 'locale': 'en_US' }) }}"></a></div>
+				<div class="portuguese{% if _locale=='pt_PT' %} active{% endif %}" title="{% trans %}португальский{% endtrans %}"><a href="{{ path('locale', { 'locale': 'pt_PT' }) }}"></a></div>
 			</div>
 			<div class="users">
-			<p><span>{{ totalUserCount }}</span><span class="onSite">На сайте</span></p>
-			<p><span>{{ onlineUserCount }}</span><span class="online">В сети</span></p>
+				<p><span>{{ totalUserCount }}</span><span class="onSite">{% trans %}На сайте{% endtrans %}</span></p>
+				<p><span>{{ onlineUserCount }}</span><span class="online">{% trans %}В сети{% endtrans %}</span></p>
 			</div>
 		</div>
 	    {% endblock %}
@@ -49,27 +49,27 @@
 		    {% if curUser %}
 			<p class="name">{{ curUser.nick }}</p>
 			<form action="{{ path('logout') }}" class="profileNavigation" name="profileNavigation" action="" method="post">
-				<input type="submit"  value="Выйти" />
+				<input type="submit"  value="{% trans %}Выйти{% endtrans %}" />
 			</form>
 			<form class="profileNavigation">
-				{#<input type="submit" value="Настройки" />#}
+				{#<input type="submit" value="{% trans %}Настройки{% endtrans %}" />#}
 				<a href="/settings">{% trans %}Настройки{% endtrans %}</a>
 			</form>
-			<p class="credits">Кредиты 123</p>
+			<p class="credits">{% trans %}Кредиты{% endtrans %} {{ curUser.getCredits() }}</p>
 			<p class="myQuestions"><a href="/my">{% trans %}Мои вопросы{% endtrans %}</a></p>
 			<p class="myQuestions"><a href="/income">{% trans %}Входящие вопросы{% endtrans %}</a></p>
 			{% else %}
 			<form action="{{ path('login_check') }}" method="post">
-				<input type="text" id="username" name="_username" value="" placeholder="логин" />
+				<input type="text" id="username" name="_username" value="" placeholder="{% trans %}логин{% endtrans %}" />
 
-				<input type="password" id="password" name="_password" placeholder="пароль" />
+				<input type="password" id="password" name="_password" placeholder="{% trans %}пароль{% endtrans %}" />
 
-				<input class="enterButton" type="submit" name="login" value="Войти" />
+				<input class="enterButton" type="submit" name="login" value="{% trans %}Войти{% endtrans %}" />
 			</form>
 			<form action="{{ path('register') }}" style="height: 0px;" type="text">
-				<input class="registerButtonOnIndex" type="submit" name="" value="Регистрация" />
+				<input class="registerButtonOnIndex" type="submit" name="" value="{% trans %}Регистрация{% endtrans %}" />
 			</form>
-			<a class="forgotPassword" href="#">Забыли пароль?</a>
+			<a class="forgotPassword" href="#">{% trans %}Забыли пароль?{% endtrans %}</a>
             {% endif %}
 		</div>
 		
@@ -81,13 +81,13 @@
 		{% endblock %}
             <div class="dialogsWrapper" style="display:none;">
                 <div class="closeDialogWindow"><a href=""></a></div>
-                <h2 class="dialogTitle">Диалоги</h2>
+                <h2 class="dialogTitle">{% trans %}Диалоги{% endtrans %}</h2>
                 <div class="dialogs-container"></div>
             </div>
 
             <div class="chatInviteWindow" style="display:none;">
                 <div class="closeInviteWindow"><a href=""></a></div>
-                <h2 class="chatInviteTitle">Приглашения в чат</h2>
+                <h2 class="chatInviteTitle">{% trans %}Приглашения в чат{% endtrans %}</h2>
                 <div class="invites-container"></div>
             </div>
 			<script>
@@ -121,7 +121,7 @@
 
             <div class="feedbackWindow" style="display:none;">
                 <div class="closeFeedbackWindow"><a href=""></a></div>
-				<h3>Выберите категорию:</h3>
+				<h3>{% trans %}Выберите категорию:{% endtrans %}</h3>
                 <form action="/ajax/sendFeedback" method="post">
                     <select name="type" id="feedback-type">
 						<option selected="selected"></option>
@@ -138,7 +138,7 @@
 	    {% block menu %}		
 		<div id="menu">
 			<ul class="menuNavigation">
-				<li>Вопросы
+				<li>{% trans %}Вопросы{% endtrans %}
 					<ul class="subMenuNavigation">
 					  <li><a href="/category/2">семья, дом, дети</a></li>
 					  <li><a href="/category/3">любовь, отношения</a></li>
@@ -155,35 +155,35 @@
 					  <li><a href="/category/15">спорт</a></li>
 					</ul>
 				</li>
-				<li>Заметки
+				<li>{% trans %}Заметки{% endtrans %}
                     <ul class="subMenuNavigation">
-                        <li><a href="/notes/questions">Вопросы</a></li>
-                        <li><a href="/notes/articles">Статьи</a></li>
-                        <li><a href="#" class="open-notepad">Блокнот</a></li>
+                        <li><a href="/notes/questions">{% trans %}вопросы{% endtrans %}</a></li>
+                        <li><a href="/notes/articles">{% trans %}статьи{% endtrans %}</a></li>
+                        <li><a href="#" class="open-notepad">{% trans %}блокнот{% endtrans %}</a></li>
                     </ul>
                 </li>
-				<li>Информация
+				<li>{% trans %}Информация{% endtrans %}
                     <ul class="subMenuNavigation">
-                        <li><a href="/articles">Статьи</a></li>
+                        <li><a href="/articles">{% trans %}статьи{% endtrans %}</a></li>
                         {#{% for link in curUser.getUserLinks() %}
                             <li><a href="{{ link.getUrl() }}">{{ link.getTitle() }}</a></li>
                         {% endfor %}#}
-                        <li><a href="#" class="add-bookmark">Добавить ссылку</a></li>
+                        <li style="	background-color: #fdf5ef; border-radius: 0px;"><a href="#" class="add-bookmark">добавить ссылку</a></li>
                     </ul>
                 </li>
-				<li><a class="menuNavigationLink" href="/disk">Кибердиск</a></li>
-				<li class="open-dialog-list">Сообщения</li>
+				<li><a class="menuNavigationLink" href="/disk">{% trans %}Кибердиск{% endtrans %}</a></li>
+				<li class="open-dialog-list">{% trans %}Сообщения{% endtrans %}</li>
                 {% if curUser %}
                     {% if curUser.getRole()>0 %}
                         <li>Админка
                         <ul class="subMenuNavigation">
-                            <li><a href="/admin/questions">Вопросы</a></li>
-                            <li><a href="/admin/answers">Ответы</a></li>
+                            <li><a href="/admin/questions">вопросы</a></li>
+                            <li><a href="/admin/answers">ответы</a></li>
                             {% if curUser.getRole()>1 %}
-                                <li><a href="/admin/articles">Статьи</a></li>
-                                <li><a href="/admin/srvmsg">Серв. сообщ</a></li>
-                                <li><a href="/admin/users">Пользователи</a></li>
-                                <li><a href="/admin/credits">Кредиты</a></li>
+                                <li><a href="/admin/articles">статьи</a></li>
+                                <li><a href="/admin/srvmsg">серв. сообщ</a></li>
+                                <li><a href="/admin/users">пользователи</a></li>
+                                <li><a href="/admin/credits">кредиты</a></li>
                             {% endif %}
                         </ul>
                         </li>
@@ -197,14 +197,21 @@
                         {% endif %}
                     {% endif %}
                 {% endif %}
-				<li class="chatInvite">Приглашение в чат</li>
-                <div id="notepad" style="margin-top: 10px;display:none;">
-                    <textarea id="notepad-text" style="height: 200px;resize: none;border: 1px solid #CC2A03;border-radius: 5px;margin-left: -9px;float: left;"></textarea>
+				<li class="chatInvite">{% trans %}Приглашение в чат{% endtrans %}</li>
+                <div id="notepad" style="margin-top: 10px;display:none; width: 272px;">
+                    <textarea id="notepad-text" style="height: 200px;width: 189px;resize: none;border: 1px solid #CC2A03;border-radius: 5px;margin-left: -9px;float: left;margin-top: 10px;"></textarea>
                     <div class="closeNotepad"><a href=""></a></div>
                 </div>
 				<div style="clear: both;">
 			</ul>
-            <a href="#" class="open-feedback-window">Оставить отзыв</a>
+			<ul class="additional-information">
+				<li><a href="#">О нас</a></li>
+				<li><a href="#" class="open-feedback-window">Помощь</a></li>
+				<li><a href="#">Правила</a></li>
+				<li><a href="#">Рекламодателям</a></li>
+				<li><a href="#">Пользователское соглашение</a></li>			
+			</ul>
+			<span class="copyright">Aditus © 2012</span>
 		</div>
 		<div style="clear: both"></div>
 	    {% endblock %}

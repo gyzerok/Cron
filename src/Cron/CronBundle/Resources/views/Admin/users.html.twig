@@ -2,59 +2,97 @@
 {% block content %}
     <script type="text/javascript">
         $(document).ready(function(){
-            /*$(".delete-article").bind('click', function(){
-                if (confirm('Удалить статью?')) {
-                    var cur_article = $(this).closest(".article-li");
+            $(".delete-user").bind('click', function(){
+                if (confirm('Удалить пользователя?')) {
+                    var cur_user = $(this).closest(".user-tr");
                     $.ajax({
-                        url: '/admin/deleteArticle',
+                        url: '/admin/deleteUser',
                         data: {
-                            article: cur_article.data('id')
+                            user: cur_user.data('id')
                         }
                     });
-                    cur_article.remove();
+                    cur_user.remove();
                 }
                 return false;
-            });*/
+            });
+            //Блокировка юзера на 60 минут
+            $(".block-user").bind('click', function () {
+                if (confirm('Заблокировать пользователя на 60 минут?')) {
+                    var cur_user = $(this).closest(".user-tr");
+                    $.ajax({
+                        url:'/admin/blockUser',
+                        data:{
+                            user:cur_user.data('id')
+                        }
+                    });
+                    cur_user.remove();
+                }
+                return false;
+            });
+            $(".ignore-user").bind('click', function(){
+                var cur_user = $(this).closest(".user-tr");
+                /*$.ajax({
+                 url: '/admin/deleteArticle',
+                 data: {
+                 article: cur_article.data('id')
+                 }
+                 });*/
+                cur_user.remove();
+                return false;
+            });
         });
     </script>
     <h2 class="categoryH2">Пользователи</a></h2>
+    {% if tab=='all' %}
+        Все
+        <a href="/admin/users/spam">Спаммеры</a>
+    {% else %}
+        <a href="/admin/users/all">Все</a>
+        Спаммеры
+    {% endif %}
     <ul class="users-list">
-        <table>
-            <thead>
-                <tr>
-                    <th>Имя</th>
-                    <th>Email</th>
-                    <th>Номер</th>
-                    <th>Место</th>
-                    <th>Пол</th>
-                    <th>Возраст</th>
-                    <th>Кредиты</th>
-                    <th>Вопросы</th>
-                    <th colspan="2">Спам</th>
-                    <th>Действия</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for user in users %}
-                <tr data-id="{{ user.getId() }}">
-                    <td>{{ user.getNick() }}</td>
-                    <td>{{ user.getUsername() }}</td>
-                    <td>{{ user.getId() }}</td>
-                    <td>{{ user.getCity().getName() }}</td>
-                    <td>{{ user.getGenderLetter() }}</td>
-                    <td>{{ user.getAge() }}</td>
-                    <td>{{ user.getCredits() }}</td>
-                    <td>{{ user.questions }}</td>
-                    <td></td>
-                    <td></td>
-                    <td>
-                        <a href="#">Проигнорировать</a>
-                        <a href="#">Заблокировать</a>
-                        <a href="#">Удалить</a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        {% if users %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Email</th>
+                        <th>Номер</th>
+                        <th>Место</th>
+                        <th>Пол</th>
+                        <th>Возраст</th>
+                        <th>Кредиты</th>
+                        <th>Вопросы</th>
+                        {% if tab=='spam' %}
+                            <th colspan="2">Спам</th>
+                        {% endif %}
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr class="user-tr" data-id="{{ user.getId() }}">
+                        <td>{{ user.getNick() }}</td>
+                        <td>{{ user.getUsername() }}</td>
+                        <td>{{ user.getId() }}</td>
+                        <td>{{ user.getCity().getName() }}</td>
+                        <td>{{ user.getGenderLetter() }}</td>
+                        <td>{{ user.getAge() }}</td>
+                        <td>{{ user.getCredits() }}</td>
+                        <td>{{ user.questions }}</td>
+                        {% if tab=='spam' %}
+                            <td>{{ user.getSpamActivity() }}</td>
+                            <td><a href="#" class="watch-spam-dialog" data-dialog="{{ user.dialog }}">{{ user.marked_by.getNick() }}</a></td>
+                        {% endif %}
+                        <td>
+                            <a href="#" class="ignore-user">Проигнорировать</a>
+                            <a href="#" class="block-user">Заблокировать</a>
+                            <a href="#" class="delete-user">Удалить</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </ul>
 {% endblock %}

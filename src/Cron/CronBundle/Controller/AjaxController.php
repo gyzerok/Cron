@@ -127,7 +127,7 @@ class AjaxController extends Controller
             if ($questionId = $request->get('question_id'))
             {
                 $question = new Question();
-                $question = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findOneById($questionId);
+                $question = $this->getDoctrine()->getRepository('CronCronBundle:Question')->find($questionId);
                 if (!$question instanceof Question)
                     return new Response('Fail');
 
@@ -141,8 +141,38 @@ class AjaxController extends Controller
 
                 $question->addLike($user);
 
+//                $creator = $question->getUser();
+//                $creator->incCredits();
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($question);
+//                $em->persist($creator);
+                $em->flush();
+
+                return new Response('Success');
+            }
+            elseif ($answerId = $request->get('answer_id'))
+            {
+                $answer = new Answer();
+                $answer = $this->getDoctrine()->getRepository('CronCronBundle:Answer')->find($answerId);
+                if (!$answer instanceof Answer)
+                    return new Response('Fail');
+
+                $user = $this->getUser();
+                if (!$user instanceof User)
+                    return new Response('Fail');
+
+                if ($answer->getLikes()->contains($user))
+                    return new Response('Fail');
+
+                $answer->addLike($user);
+
+                $creator = $answer->getUser();
+                $creator->incCredits();
+
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($answer);
+                $em->persist($creator);
                 $em->flush();
 
                 return new Response('Success');
