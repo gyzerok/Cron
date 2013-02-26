@@ -236,14 +236,14 @@
     {% endif %}
 
     {% if userQuestions|length > 0 %}
-        {% for item in userQuestions %}
+        {% for question in userQuestions %}
             <div class="singleQuestion">
                 <div style="border: 1px solid #fff;" class="userName"></div>
-                <div class="questionDate">{{ item.datetime|date('H:i:s d.m.Y') }}</div>
+                <div class="questionDate">{{ question.datetime|date('H:i:s d.m.Y') }}</div>
                 <div class="closeButton"></div>
                 <div style="clear: both;"></div>
                 <div class="questionText">
-                    {{ item.text }}
+                    {{ question.text }}
                     <div class="actionButton">
                         <form class="answer">
                             <input class="answerButton" type="button" value="закрыть"/>
@@ -253,8 +253,8 @@
                     </div>
                 </div>
             </div>
-            <div class="myAnswer {% if item.answers==null %}no-border{% endif %}">
-                {% for answer in item.answers %}
+            <div class="myAnswer {% if question.answers == null %}no-border{% endif %}">
+                {% for answer in question.answers %}
                     <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}">
                         <div class="userName">{{ answer.getUser().getNick() }}</div>
                         <div class="answerDate">{{ answer.getPubDate()|date("Y-m-d H:i:s") }}</div>

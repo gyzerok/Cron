@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Cron\CronBundle\Entity\Question
  *
  * @ORM\Table(name="question")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Cron\CronBundle\Model\Repository\QuestionRepository")
  */
 class Question
 {
@@ -135,6 +135,13 @@ class Question
      * @ORM\Column(name="is_spam", type="boolean", nullable=false)
      */
     private $isSpam;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="question")
+     *
+     * @var ArrayCollection $answers
+     */
+    private $answers;
 
 
 
@@ -428,6 +435,7 @@ class Question
     {
         $this->likes = new ArrayCollection();
         $this->spams = new ArrayCollection();
+        $this->answers = new ArrayCollection();
         $this->datetime = new \DateTime();
         $this->status = 0;
         $this->isSpam = false;
@@ -500,5 +508,38 @@ class Question
     public function getIsSpam()
     {
         return $this->isSpam;
+    }
+
+    /**
+     * Add answers
+     *
+     * @param Cron\CronBundle\Entity\Answer $answers
+     * @return Question
+     */
+    public function addAnswer(\Cron\CronBundle\Entity\Answer $answers)
+    {
+        $this->answers[] = $answers;
+    
+        return $this;
+    }
+
+    /**
+     * Remove answers
+     *
+     * @param Cron\CronBundle\Entity\Answer $answers
+     */
+    public function removeAnswer(\Cron\CronBundle\Entity\Answer $answers)
+    {
+        $this->answers->removeElement($answers);
+    }
+
+    /**
+     * Get answers
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getAnswers()
+    {
+        return $this->answers;
     }
 }

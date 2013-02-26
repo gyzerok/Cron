@@ -46,13 +46,14 @@ class MainController extends Controller implements InitializableControllerInterf
         $em->flush();
 
         $onlineUserCount = $this->getDoctrine()->getRepository('CronCronBundle:Online')
-                                           ->createQueryBuilder('online')
-                                           ->select('COUNT(online.sid) AS onlineCount')
-                                           ->getQuery()->getResult();
+                                               ->createQueryBuilder('online')
+                                               ->select('COUNT(online.sid) AS onlineCount')
+                                               ->getQuery()->getResult();
         $totalUserCount = $this->getDoctrine()->getRepository('CronCronBundle:User')
-                                          ->createQueryBuilder('user')
-                                          ->select('COUNT(user.id) AS totalCount')
-                                          ->getQuery()->getResult();
+                                              ->createQueryBuilder('user')
+                                              ->select('COUNT(user.id) AS totalCount')
+                                              ->getQuery()->getResult();
+
         $this->onlineUserCount = $onlineUserCount[0]['onlineCount'];
         $this->totalUserCount = $totalUserCount[0]['totalCount'];
     }
@@ -92,21 +93,9 @@ class MainController extends Controller implements InitializableControllerInterf
 
         $user = $this->getUser();
         $userQuestions = null;
-        if ($user instanceof User)
-            $userQuestions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
-                                                 ->createQueryBuilder('question')
-                                                 ->where('question.user = :uid  AND question.status <> :status')
-                                                 ->setParameter('status', '2')
-                                                 ->setParameter('uid', $user->getId())
-                                                 ->getQuery()
-                                                 ->getResult();
 
-        if ($userQuestions){
-            foreach ($userQuestions as $id=>$question) {
-                $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
-                $userQuestions[$id]->answers = $answers;
-            }
-        }
+        if ($user instanceof User)
+            $userQuestions = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findAllbyUser($user);
 
         return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Главная',
                                                                           'curUser' => $this->getUser(),

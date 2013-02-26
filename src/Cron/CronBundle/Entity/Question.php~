@@ -136,6 +136,13 @@ class Question
      */
     private $isSpam;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Answer", mappedBy="Question")
+     *
+     * @var ArrayCollection $answers
+     */
+    private $answers;
+
 
 
     /**

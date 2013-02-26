@@ -13,6 +13,8 @@ use Cron\CronBundle\Entity\User;
 use Cron\CronBundle\Entity\UserSettings;
 use Cron\CronBundle\Entity\UserLink;
 
+use Cron\CronBundle\Model\SpamEngine;
+
 class AjaxController extends Controller
 {
     public function getStatesAction(Request $request)
@@ -154,97 +156,32 @@ class AjaxController extends Controller
     {
         if ($request->isMethod('POST'))
         {
-            if ($questionId = $request->get('question_id'))
+            if ($qid = $request->get('question_id'))
             {
-                $em = $this->getDoctrine()->getManager();
-                $question = new Question();
-                $question = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findOneById($questionId);
-                if (!$question instanceof Question)
-                    return new Response('Fail');
-
-                $user = new User();
-                $user = $this->getUser();
-                if (!$user instanceof User)
-                    return new Response('Fail');
-
-                if ($question->getSpams()->contains($user))
-                    return new Response('Fail');
-
-                $question->addSpam($user);
-
-                if ($question->getBoundary() >= 50)
-                    $spamBoundary = 10;
-                else
-                    $spamBoundary = 5;
-                if ($question->getSpams()->count() >= $spamBoundary)
-                {
-                    $question->setIsSpam(true);
-
-                    $user->setSpamActivity($user->getSpamActivity() + 1);
-                    $banDate = new \DateTime();
-                    $banDate->add(new \DateInterval('P100Y'));
-                    if ($user->getSpamActivity() >= 5)
-                        $user->setLockedTill($banDate);
-                    $em->persist($user);
-                }
-
-                $em->persist($question);
-                $em->flush();
+                $spamEngine = new SpamEngine($this->getDoctrine());
+                $spamEngine->markQuestionAsSpam($this->getUser(), $qid);
 
                 return new Response('Success');
             }
         }
 
-        return new Response('Fail');
+        throw new \Exception('Unknown error');
     }
 
     public function spamAnswerAction(Request $request)
     {
         if ($request->isMethod('POST'))
         {
-            if ($answerId = $request->get('answer_id'))
+            if ($aid = $request->get('answer_id'))
             {
-                $em = $this->getDoctrine()->getManager();
-                $answer = new Answer();
-                $answer = $this->getDoctrine()->getRepository('CronCronBundle:Answer')->findOneById($answerId);
-                if (!$answer instanceof Answer)
-                    return new Response('Fail');
-
-                $user = new User();
-                $user = $this->getUser();
-                if (!$user instanceof User)
-                    return new Response('Fail');
-
-                if ($answer->getSpams()->contains($user))
-                    return new Response('Fail');
-
-                $answer->addSpam($user);
-
-                /*if ($question->getBoundary() >= 50)
-                    $spamBoundary = 10;
-                else
-                    $spamBoundary = 5;*/
-                if ($answer->getSpams()->count() >= 5)
-                {
-                    $answer->setIsSpam(true);
-
-                    $user->setSpamActivity($user->getSpamActivity() + 1);
-                    $banDate = new \DateTime();
-                    $banDate->add(new \DateInterval('P100Y'));
-                    if ($user->getSpamActivity() >= 5)
-                        $user->setLockedTill($banDate);
-                    $em->persist($user);
-                }
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($answer);
-                $em->flush();
+                $spamEngine = new SpamEngine($this->getDoctrine());
+                $spamEngine->markAnswerAsSpam($this->getUser(), $aid);
 
                 return new Response('Success');
             }
         }
 
-        return new Response('Fail');
+        throw new \Exception('Unknown error');
     }
 
     public function postAnswerAction(Request $request)
