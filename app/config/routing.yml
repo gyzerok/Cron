@@ -308,6 +308,10 @@ ignoreSpamDialog:
   pattern:  /admin/ignoreSpamDialog
   defaults: { _controller: CronCronBundle:Admin:ignoreSpamDialog }
 
+changeCredits:
+  pattern:  /admin/changeCredits
+  defaults: { _controller: CronCronBundle:Admin:changeCredits }
+
 #credits
 adminCredits:
   pattern:  /admin/credits

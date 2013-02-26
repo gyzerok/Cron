@@ -41,6 +41,22 @@
                 cur_user.remove();
                 return false;
             });
+            $(".user-credits").blur(function(){
+                var cur_user = $(this).closest(".user-tr");
+                $.ajax({
+                    url:'/admin/changeCredits',
+                    type:'post',
+                    data:{
+                        user:cur_user.data('id'),
+                        credits:$(this).val()
+                    }
+                });
+            }).keyup(function(e){
+                var code= (e.keyCode ? e.keyCode : e.which);
+                if (code == 13){
+                    $(this).blur();
+                }
+            });
         });
     </script>
     <h2 class="categoryH2">Пользователи</a></h2>
@@ -79,7 +95,7 @@
                         <td>{{ user.getCity().getName() }}</td>
                         <td>{{ user.getGenderLetter() }}</td>
                         <td>{{ user.getAge() }}</td>
-                        <td>{{ user.getCredits() }}</td>
+                        <td><input type="text" name="credits" class="user-credits" value="{{ user.getCredits() }}"></td>
                         <td>{{ user.questions }}</td>
                         {% if tab=='spam' %}
                             <td>{{ user.getSpamActivity() }}</td>
