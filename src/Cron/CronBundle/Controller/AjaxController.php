@@ -15,7 +15,7 @@ use Cron\CronBundle\Entity\UserLink;
 
 use Cron\CronBundle\Model\SpamEngine;
 
-class AjaxController extends Controller
+class AjaxController extends AbstractController
 {
     public function getStatesAction(Request $request)
     {

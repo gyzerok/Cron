@@ -16,48 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class MainController extends Controller implements InitializableControllerInterface
+class MainController extends AbstractController
 {
-    protected $onlineUserCount;
-    protected $totalUserCount;
-
-    public function initialize(Request $request)
-    {
-        $request->setLocale($request->getSession()->get('_locale'));
-
-        $em = $this->getDoctrine()->getManager();
-        $sid = $request->getSession()->getId();
-        $isOnline = $this->getDoctrine()->getRepository('CronCronBundle:Online')->findBySid($sid);
-        if (empty($isOnline))
-        {
-            $onlineEntry = new \Cron\CronBundle\Entity\Online($sid);
-            $em->persist($onlineEntry);
-        }
-
-        $timeBoundary = new \DateTime();
-        $timeBoundary->sub(new \DateInterval('PT15M'));
-        $offlines = $this->getDoctrine()->getRepository('CronCronBundle:Online')
-                                       ->createQueryBuilder('online')
-                                       ->where('online.lastVisit < :lastVisit')
-                                       ->setParameter('lastVisit', $timeBoundary)
-                                       ->getQuery()->getResult();
-        foreach ($offlines as $offline)
-            $em->remove($offline);
-        $em->flush();
-
-        $onlineUserCount = $this->getDoctrine()->getRepository('CronCronBundle:Online')
-                                               ->createQueryBuilder('online')
-                                               ->select('COUNT(online.sid) AS onlineCount')
-                                               ->getQuery()->getResult();
-        $totalUserCount = $this->getDoctrine()->getRepository('CronCronBundle:User')
-                                              ->createQueryBuilder('user')
-                                              ->select('COUNT(user.id) AS totalCount')
-                                              ->getQuery()->getResult();
-
-        $this->onlineUserCount = $onlineUserCount[0]['onlineCount'];
-        $this->totalUserCount = $totalUserCount[0]['totalCount'];
-    }
-
     public function indexAction(Request $request)
     {
         $numAnswers = array(10 => '10', 20 => '20');

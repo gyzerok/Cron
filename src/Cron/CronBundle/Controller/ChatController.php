@@ -17,9 +17,8 @@ use Cron\CronBundle\Entity\ChatSrvMsg;
 use Cron\CronBundle\Entity\Dialog;
 use Cron\CronBundle\Entity\DialogMsg;
 
-class ChatController extends Controller
+class ChatController extends AbstractController
 {
-
     public function loadChatAction(Request $request){
         $user = $this->getUser();
         if (/*$request->isMethod('POST') && */($user instanceof User)){
