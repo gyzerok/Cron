@@ -147,6 +147,12 @@ class User implements UserInterface, \Serializable
      */
     private $credits = 0;
 
+    /**
+     * @ORM\OneToOne(targetEntity="UserSettings")
+     * @ORM\JoinColumn(name="settings", referencedColumnName="id")
+     */
+    private $settings;
+
 
     /**
      * Get id
@@ -606,4 +612,27 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+
+    /**
+     * Set settings
+     *
+     * @param Cron\CronBundle\Entity\UserSettings $settings
+     * @return User
+     */
+    public function setSettings(\Cron\CronBundle\Entity\UserSettings $settings = null)
+    {
+        $this->settings = $settings;
+    
+        return $this;
+    }
+
+    /**
+     * Get settings
+     *
+     * @return Cron\CronBundle\Entity\UserSettings 
+     */
+    public function getSettings()
+    {
+        return $this->settings;
+    }
 }

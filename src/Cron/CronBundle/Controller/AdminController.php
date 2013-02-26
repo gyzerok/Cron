@@ -463,7 +463,7 @@ class AdminController extends AbstractController
         } elseif ($tab=='spam'){
             $spam_dialogs = $this->getDoctrine()->getRepository("CronCronBundle:Dialog")
                 ->createQueryBuilder('d')
-                ->where('d.spam1 = 1 OR d.spam2 = 1')
+                ->where('(d.spam1 = 1 AND d.ignore1 = 0) OR (d.spam2 = 1 AND d.ignore2 = 0)')
                 ->getQuery()
                 ->getResult();/*->findBy(array("isActive"=>"1"), array("startdate"=>"DESC"));*/
             foreach ($spam_dialogs as $spam_d) {
@@ -668,7 +668,26 @@ class AdminController extends AbstractController
         return new Response("SUCCESS");
     }
 
-    //todo ignoreSpamDialogAction
+    public function ignoreSpamDialogAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $dialog = $this->getDoctrine()->getRepository("CronCronBundle:Dialog")->find($request->get("dialog"));
+        if ($dialog->getSpam1()){
+            $dialog->setIgnore1(1);
+        } else {
+            $dialog->setIgnore2(1);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($dialog);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
     //todo watchSpamDialog
     //todo changeCredits
 

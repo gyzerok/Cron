@@ -70,6 +70,20 @@ class Dialog {
     protected $spam2;
 
     /**
+     * @var boolean $ignore1
+     *
+     * @ORM\Column(name="ignore1", type="boolean")
+     */
+    protected $ignore1 = 0;
+
+    /**
+     * @var boolean $ignore2
+     *
+     * @ORM\Column(name="ignore2", type="boolean")
+     */
+    protected $ignore2 = 0;
+
+    /**
      * @var boolean $open1
      *
      * @ORM\Column(name="open1", type="boolean")
@@ -306,5 +320,51 @@ class Dialog {
     public function getOpen2()
     {
         return $this->open2;
+    }
+
+    /**
+     * Set ignore1
+     *
+     * @param boolean $ignore1
+     * @return Dialog
+     */
+    public function setIgnore1($ignore1)
+    {
+        $this->ignore1 = $ignore1;
+    
+        return $this;
+    }
+
+    /**
+     * Get ignore1
+     *
+     * @return boolean 
+     */
+    public function getIgnore1()
+    {
+        return $this->ignore1;
+    }
+
+    /**
+     * Set ignore2
+     *
+     * @param boolean $ignore2
+     * @return Dialog
+     */
+    public function setIgnore2($ignore2)
+    {
+        $this->ignore2 = $ignore2;
+    
+        return $this;
+    }
+
+    /**
+     * Get ignore2
+     *
+     * @return boolean 
+     */
+    public function getIgnore2()
+    {
+        return $this->ignore2;
     }
 }
