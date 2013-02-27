@@ -549,6 +549,19 @@ class MainController extends AbstractController
         }
     }
 
+    public function creditsAction(Request $request)
+    {
+        $user = $this->getUser();
+
+
+//        $articles = $this->getDoctrine()->getRepository("CronCronBundle:NotesArticle")->findBy(array("user"=>$user->getId()));
+        return $this->render("CronCronBundle:Main:credits.html.twig", array('title' => 'Кредиты',
+            'curUser' => $user,
+            'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
+        ));
+
+    }
+
     public function registerAction(Request $request)
     {
         $user = new User();

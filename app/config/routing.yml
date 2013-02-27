@@ -53,6 +53,10 @@ regconf:
   pattern: /regconf
   defaults: { _controller: CronCronBundle:Main:regconf }
 
+credits:
+  pattern: /credits
+  defaults: { _controller: CronCronBundle:Main:credits}
+
 # Ajax routes
 
 getStates:

@@ -2319,6 +2319,48 @@ input.cancel-feedback {
 	vertical-align: middle;
 }
 
+.payWindow {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 515px;
+    margin-left: -380px;
+    margin-top: -92px;
+    padding: 5px 0 0 15px;
+    border: 3px solid #556183;
+    border-radius: 10px;
+    background: #ffffff;
+    z-index: 6;
+}
+
+.payWindow h3 {
+    font-family: 'Cambria';
+    font-size: 24px;
+    color: #000;
+    margin-left: 10px;
+}
+
+.closePayWindow {
+    width: 13px;
+    height: 13px;
+    float: right;
+    margin: 10px 14px 0 0;
+}
+
+.closePayWindow a {
+    display: block;
+    width: 13px;
+    height: 15px;
+    background: url(../i/closeButton2.png) no-repeat;
+    background-size: 100%;
+    cursor: pointer;
+}
+
+.closePayWindow a:hover {
+    background: url(../i/closeButton1.png) no-repeat;
+    background-size: 100%;
+}
+
 .closeNotepad {
 	width: 10px;
 	height: 13px;
