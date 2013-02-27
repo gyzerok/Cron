@@ -554,8 +554,7 @@ class MainController extends AbstractController
         $user = $this->getUser();
 
 
-//        $articles = $this->getDoctrine()->getRepository("CronCronBundle:NotesArticle")->findBy(array("user"=>$user->getId()));
-        return $this->render("CronCronBundle:Main:credits.html.twig", array('title' => 'Кредиты',
+        return $this->render("CronCronBundle:Main:credits.html.twig", array('title' => 'Кредиты сайта',
             'curUser' => $user,
             'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));

@@ -66,32 +66,30 @@
         Отмеченные как спам
     {% endif %}
     <div style="clear:both;"></div>
-    {% if questions %}
-        <div id="showQuestion">
-            {% for item in questions %}
-                <div class="singleQuestion" data-id="{{ item.getId() }}" data-user="{{ item.getUser().getId() }}">
-                    <div class="userName">{{ item.getUser() }}</div>
-                    <div class="questionDate">{{ item.datetime|date('d.m.Y H:i') }}</div>
-                    {#<div class="closeButton"></div>#}
-                    <div style="clear: both;"></div>
-                    <div class="questionText">
-                        {{ item.text }}
-                        <div class="socialIcons">
-                            {% if tab=='spam' %}
-                                <div class="spam-index">Спам-индекс: {{ item.getUser().getSpamActivity() }}</div>
-                                <div class="questions-count">Вопросов: {{ item.question_count }}</div>
-                                <a href="#" class="confirm-spam">Подтвердить</a>
-                                <a href="#" class="cancel-spam">Отменить</a>
-                                <a href="#" class="block-user">Заблокировать пользователя</a>
-                            {% else %}
-                                <a href="#" class="delete-question">Удалить</a>
-                            {% endif %}
-                        </div>
+    <div id="showQuestion">
+        {% for item in questions %}
+            <div class="singleQuestion" data-id="{{ item.getId() }}" data-user="{{ item.getUser().getId() }}">
+                <div class="userName">{{ item.getUser() }}</div>
+                <div class="questionDate">{{ item.datetime|date('d.m.Y H:i') }}</div>
+                {#<div class="closeButton"></div>#}
+                <div style="clear: both;"></div>
+                <div class="questionText">
+                    {{ item.text }}
+                    <div class="socialIcons">
+                        {% if tab=='spam' %}
+                            <div class="spam-index">Спам-индекс: {{ item.getUser().getSpamActivity() }}</div>
+                            <div class="questions-count">Вопросов: {{ item.question_count }}</div>
+                            <a href="#" class="confirm-spam">Подтвердить</a>
+                            <a href="#" class="cancel-spam">Отменить</a>
+                            <a href="#" class="block-user">Заблокировать пользователя</a>
+                        {% else %}
+                            <a href="#" class="delete-question">Удалить</a>
+                        {% endif %}
                     </div>
                 </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        Пусто
-    {% endif %}
+            </div>
+        {% else %}
+            Пусто
+        {% endfor %}
+    </div>
 {% endblock %}
