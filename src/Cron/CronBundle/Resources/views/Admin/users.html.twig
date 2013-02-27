@@ -57,6 +57,10 @@
                     $(this).blur();
                 }
             });
+            //watch-spam-dialog
+            $(".watch-spam-dialog").bind('click', function(event){
+                getDialog($(this), event);
+            });
         });
     </script>
     <h2 class="categoryH2">Пользователи</a></h2>
@@ -99,7 +103,7 @@
                         <td>{{ user.questions }}</td>
                         {% if tab=='spam' %}
                             <td>{{ user.getSpamActivity() }}</td>
-                            <td><a href="#" class="watch-spam-dialog" data-dialog="{{ user.dialog }}">{{ user.marked_by.getNick() }}</a></td>
+                            <td><a href="#" class="watch-spam-dialog" data-dialog="{{ user.dialog }}"><span class="dialogUsername">{{ user.marked_by.getNick() }}</span></a></td>
                         {% endif %}
                         <td>
                             <a href="#" class="ignore-user" data-dialog="{{ user.dialog }}">Проигнорировать</a>
