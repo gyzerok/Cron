@@ -37,6 +37,7 @@ class MainController extends AbstractController
                 if (!$user instanceof User)
                 {
                     $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+
                     if ($question->getBoundary() > 20)
                         $question->setBoundary(20);
                 }

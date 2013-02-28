@@ -3,13 +3,13 @@
 {% if error %}
     {{ error.message }}
 {% endif %}
-<form action="{{ path('login_check') }}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+    <form action="{{ path('login_check') }}" method="post">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}" />
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="_password" />
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="_password" />
 
-    <input type="submit" name="login" />
-</form>
+        <input type="submit" name="login" />
+    </form>
 {% endblock %}
