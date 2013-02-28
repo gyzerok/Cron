@@ -55,7 +55,7 @@
 				{#<input type="submit" value="{% trans %}Настройки{% endtrans %}" />#}
 				<a href="/settings">{% trans %}Настройки{% endtrans %}</a>
 			</form>
-			<p class="credits">{% trans %}Кредиты{% endtrans %} {{ curUser.getCredits() }}</p>
+			<p class="credits"><a href="/credits">{% trans %}Кредиты{% endtrans %} {{ curUser.getCredits() }}</a></p>
 			<p class="myQuestions"><a href="/my">{% trans %}Мои вопросы{% endtrans %}</a></p>
 			<p class="myQuestions"><a href="/income">{% trans %}Входящие вопросы{% endtrans %}</a></p>
 			{% else %}

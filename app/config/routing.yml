@@ -53,6 +53,10 @@ regconf:
   pattern: /regconf
   defaults: { _controller: CronCronBundle:Main:regconf }
 
+credits:
+  pattern: /credits
+  defaults: { _controller: CronCronBundle:Robokassa:pay}
+
 # Ajax routes
 
 getStates:
@@ -307,6 +311,10 @@ deleteUser:
 ignoreSpamDialog:
   pattern:  /admin/ignoreSpamDialog
   defaults: { _controller: CronCronBundle:Admin:ignoreSpamDialog }
+
+changeCredits:
+  pattern:  /admin/changeCredits
+  defaults: { _controller: CronCronBundle:Admin:changeCredits }
 
 #credits
 adminCredits:

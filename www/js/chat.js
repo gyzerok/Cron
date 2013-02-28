@@ -18,25 +18,7 @@ $(document).ready(function(){
     });
 
     $(".singleDialog").live('click', function(event){
-        $(".chatWindow").click();
-        var existed_tab = $(".chat-container .chat-tab[data-tab=d"+$(this).data('dialog')+"]");
-        if (!$(event.target).closest(".closeDialogs").length && !$(event.target).closest(".spamDialogs").length && !existed_tab.size()){
-            var new_tab = $('<div class="singleTab chat-tab" data-tab="d'+$(this).data('dialog')+'"><a href="#" class="closeDialogTab"></a>'+$(this).find(".dialogUsername").text()+'</div>');
-            $(".chat-container .chatTabs").append(new_tab);
-            new_tab.click();
-            $.ajax({
-                url: '/chat/openDialog',
-                data: {dialog:$(this).data('dialog')},
-                success: function(response){
-                    if (!$.trim(response))
-                        response = '<div class="dialogs-empty-text">Сообщения нет.</div>';
-                    $(".chat-container .mainWindow").append(response);
-                    new_tab.click();
-                }
-            });
-        }
-        existed_tab.click();
-        $(".chat-input").focus();
+        getDialog($(this), event);
     });
     $(".sendMessage").live('click', function () {
 		$(this).addClass('sendMessage-active');
@@ -462,6 +444,28 @@ function temp_updateChat(){
         }
     });
     return true;
+}
+
+function getDialog(obj, event){
+    $(".chatWindow").click();
+    var existed_tab = $(".chat-container .chat-tab[data-tab=d"+obj.data('dialog')+"]");
+    if (!$(event.target).closest(".closeDialogs").length && !$(event.target).closest(".spamDialogs").length && !existed_tab.size()){
+        var new_tab = $('<div class="singleTab chat-tab" data-tab="d'+obj.data('dialog')+'"><a href="#" class="closeDialogTab"></a>'+obj.find(".dialogUsername").text()+'</div>');
+        $(".chat-container .chatTabs").append(new_tab);
+        new_tab.click();
+        $.ajax({
+            url: '/chat/openDialog',
+            data: {dialog:obj.data('dialog')},
+            success: function(response){
+                if (!$.trim(response))
+                    response = '<div class="dialogs-empty-text">Сообщений нет.</div>';
+                $(".chat-container .mainWindow").append(response);
+                new_tab.click();
+            }
+        });
+    }
+    existed_tab.click();
+    $(".chat-input").focus();
 }
 
 function nl2br (str, is_xhtml) {

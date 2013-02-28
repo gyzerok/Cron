@@ -688,7 +688,22 @@ class AdminController extends AbstractController
         return new Response("SUCCESS");
     }
 
+    public function changeCreditsAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User || $user->getRole() < 2) {
+            return $this->redirect("/");
+        }
+
+        $victim_user = $this->getDoctrine()->getRepository("CronCronBundle:User")->find($request->get("user"));
+        $victim_user->setCredits($request->get("credits"));
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($victim_user);
+        $em->flush();
+        return new Response("SUCCESS");
+    }
+
     //todo watchSpamDialog
-    //todo changeCredits
 
 }

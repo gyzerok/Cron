@@ -188,10 +188,10 @@ class MainController extends AbstractController
             foreach ($categorized as $id0=>$cat) {
                 foreach ($cat->questions as $id=>$question){
                     $cat->questions[$id]->iAnswered = false;
-                    $answer = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findOneBy(array("question"=>$question->getId(), "user"=>$user->getId()));
-                    if ($answer instanceof Answer){
-                        $cat->questions[$id]->iAnswered = true;
-                        $cat->questions[$id]->answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
+                    foreach ($question->getAnswers() as $answer) {
+                        if ($answer->getUser()==$user){
+                            $cat->questions[$id]->iAnswered = true;
+                        }
                     }
                     $categorized[$id0] = $cat;
                 }
@@ -242,10 +242,10 @@ class MainController extends AbstractController
         if ($user instanceof User){
             foreach ($rush as $id=>$question){
                 $rush[$id]->iAnswered = false;
-                $answer = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findOneBy(array("question"=>$question->getId(), "user"=>$user->getId()));
-                if ($answer instanceof Answer){
-                    $rush[$id]->iAnswered = true;
-                    $rush[$id]->answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
+                foreach ($question->getAnswers() as $answer) {
+                    if ($answer->getUser()==$user){
+                        $rush[$id]->iAnswered = true;
+                    }
                 }
             }
         } else {
@@ -548,6 +548,18 @@ class MainController extends AbstractController
                 break;
             default:break;
         }
+    }
+
+    public function creditsAction(Request $request)
+    {
+        $user = $this->getUser();
+
+
+        return $this->render("CronCronBundle:Main:credits.html.twig", array('title' => 'Кредиты сайта',
+            'curUser' => $user,
+            'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
+        ));
+
     }
 
     public function registerAction(Request $request)
