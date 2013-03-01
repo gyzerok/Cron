@@ -4,7 +4,7 @@ namespace Cron\CronBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\SecurityContext;
 
-class SecurityController extends Controller
+class SecurityController extends AbstractController
 {
     public function loginAction()
     {
@@ -23,6 +23,8 @@ class SecurityController extends Controller
             // имя, введённое пользователем в последний раз
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
+			'totalUserCount' => $this->totalUserCount,
+			'onlineUserCount' => $this->onlineUserCount
         ));
     }
 }
