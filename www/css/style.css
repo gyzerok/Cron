@@ -56,10 +56,11 @@
 
 .russian a {
 	display: block;
-	width: 25px;
-	height: 25px;
+	width: 20px;
+	height: 20px;
 	cursor: pointer;
 	background: url(/i/RU1.jpg) no-repeat;
+	background-size: 100%;
 	border: 1px solid #7b7b7b;
 	border-radius: 5px;
 }
@@ -73,10 +74,11 @@
 
 .english a {
 	display: block;
-	width: 25px;
-	height: 25px;
+	width: 20px;
+	height: 20px;
 	cursor: pointer;
 	background: url(/i/EN1.jpg) no-repeat;
+	background-size: 100%;	
 	border: 1px solid #7b7b7b;
 	border-radius: 5px;
 }
@@ -88,10 +90,11 @@
 
 .portuguese a {
 	display: block;
-	width: 25px;
-	height: 25px;
+	width: 20px;
+	height: 20px;
 	cursor: pointer;
 	background: url(/i/PT1.jpg) no-repeat;
+	background-size: 100%;
 	border: 1px solid #7b7b7b;
 	border-radius: 5px;
 }
@@ -99,7 +102,7 @@
 .users {
 	width: 232px;
 	float: right;
-	margin: 10px 46px -3px 0px;
+	margin: 10px 46px 8px 0px;
 	overflow: hidden;
 }
 
@@ -256,12 +259,17 @@
 	width: 62px;
 	margin: 22px 0 0 5px;
 	float: left;
-	color: #495677;
 	text-align: center;
 	line-height: 110%;
 }
 
-.usersProfile p.credits:hover {
+.usersProfile p.credits a {
+	color: #495677;
+	text-decoration: none;
+	font-family: 'Cambria';
+}
+
+.usersProfile p.credits a:hover {
 	color: #3b3ffd;
 	cursor: pointer;
 }
@@ -421,6 +429,8 @@
 	text-transform: none;
 	font-family: 'Cambria';
 	font-size: 16px;
+	display: block;
+	width: 180px;
 }
 
 #menu ul.menuNavigation li ul.subMenuNavigation li a.add-bookmark {
@@ -786,7 +796,7 @@ h2.acticle {
 }
 
 .greeting {
-	font-size: 24px;
+	font-size: 26px;
 	font-family: 'Cambria';
 	text-align: left;
 	margin-top: 15px;
@@ -854,7 +864,7 @@ h2.acticle {
 }
 
 .socialIcons {
-	width: 147px;
+	width: 180px;
 	overflow: hidden;
 	float: right;
 }
@@ -891,7 +901,7 @@ h2.acticle {
 .actionButton form.answer input.answerButtonItalic {
 	width: 91px;
 	height: 20px;
-	border: 1px solid #7b7b7b;
+	border: 1px soliid #7b7b7b;
 	color: #333;
 	cursor: pointer;
 	border-radius: 3px;
@@ -910,13 +920,12 @@ h2.acticle {
 }
 
 .spamButton {
-	width: 25px;
+	width: 28px;
 	height: 22px;
 	float: left;
 	background: url(/i/spamButton.png) no-repeat;
 	background-size: 100%;
 	cursor: pointer;
-	margin-right: 3px;
 }
 
 .spamButtonActive{
@@ -940,13 +949,12 @@ h2.acticle {
 }
 
 .likeButton {
-	width: 18px;
-	height: 22px;
+	width: 21px;
+	height: 27px;
 	float: left;
 	background: url(/i/likeButton.png) no-repeat;
 	background-size: 100%;
 	cursor: pointer;
-	margin-right: 3px;
 }
 
 .likeButtonActive{
@@ -970,7 +978,7 @@ h2.acticle {
 }
 
 .repostButton {
-	width: 22px;
+	width: 29px;
 	height: 22px;
 	float: left;
 	background: url(/i/repostButton.png) no-repeat;
@@ -1008,6 +1016,7 @@ h2.acticle {
 	background-size: 100%;
 	cursor: pointer;
 	margin-right: 3px;
+	margin-top: 1px;
 }
 
 .arrowButton:hover {
@@ -1039,6 +1048,7 @@ h2.acticle {
 	margin-top: 2px;
 	cursor: pointer;
 	margin-right: 3px;
+	margin-top: 1px;
 }
 
 .letterButton:hover {

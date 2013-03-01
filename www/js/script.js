@@ -194,11 +194,12 @@ $(document).ready(function() {
 	  window.location=$(this).find("a").attr("href"); return false;  
 	});
 	
-	/*$('.article-li').hover(function() {
-		$(this).closest('.article-li > a').css({
-			'text-decoration': 'underline'
-		});
-	});*/
+	$('.article-li').hover(function() {
+		$(this).find('a span').css({'text-decoration': 'underline'})
+	},
+	function() {
+		$(this).find('a span').css({'text-decoration': 'none'})	
+	});
 });
 
 function updateNotepad(){

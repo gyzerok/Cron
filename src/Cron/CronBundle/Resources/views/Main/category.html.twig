@@ -48,6 +48,7 @@
 			});
         </script>
 		<div style="max-height: 820px;overflow: auto;overflow-x: hidden;overflow-y: auto;width: 728px;">
+		{% if curUser %}
         {% for category in categorized_questions %}
             <h2 class="categoryTitle">{{ category.getName() }}</h2>
             <div id="showQuestion">
@@ -114,5 +115,8 @@
                 {% endfor %}
             </div>
         {% endfor %}
+		{% else %}
+		<p style="margin: 15px;">Необходимо авторизироваться, чтобы видеть вопросы по категориям</p>
+		{% endif %}
 		</div>
 	{% endblock %}

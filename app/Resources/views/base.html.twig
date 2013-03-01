@@ -157,9 +157,11 @@
 				</li>
 				<li>{% trans %}Заметки{% endtrans %}
                     <ul class="subMenuNavigation">
+					{% if curUser %}
                         <li><a href="/notes/questions">{% trans %}вопросы{% endtrans %}</a></li>
                         <li><a href="/notes/articles">{% trans %}статьи{% endtrans %}</a></li>
                         <li><a href="#" class="open-notepad">{% trans %}блокнот{% endtrans %}</a></li>
+					{% endif %}
                     </ul>
                 </li>
 				<li>{% trans %}Информация{% endtrans %}
@@ -168,7 +170,9 @@
                         {#{% for link in curUser.getUserLinks() %}
                             <li><a href="{{ link.getUrl() }}">{{ link.getTitle() }}</a></li>
                         {% endfor %}#}
+						{% if curUser %}
                         <li style="	background-color: #fdf5ef; border-radius: 0px;"><a href="#" class="add-bookmark">добавить ссылку</a></li>
+						{% endif %}
                     </ul>
                 </li>
 				<li><a class="menuNavigationLink" href="/disk">{% trans %}Кибердиск{% endtrans %}</a></li>

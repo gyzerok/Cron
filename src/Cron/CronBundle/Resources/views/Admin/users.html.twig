@@ -73,12 +73,11 @@
     {% endif %}
     <ul class="users-list">
         {% if users %}
-            <table>
+            <table style="border-spacing: 8px; border: 1px solid black;">
                 <thead>
                     <tr>
                         <th>Имя</th>
                         <th>Email</th>
-                        <th>Номер</th>
                         <th>Место</th>
                         <th>Пол</th>
                         <th>Возраст</th>
@@ -95,11 +94,10 @@
                     <tr class="user-tr" data-id="{{ user.getId() }}">
                         <td>{{ user.getNick() }}</td>
                         <td>{{ user.getUsername() }}</td>
-                        <td>{{ user.getId() }}</td>
                         <td>{{ user.getCity().getName() }}</td>
                         <td>{{ user.getGenderLetter() }}</td>
                         <td>{{ user.getAge() }}</td>
-                        <td><input type="text" name="credits" class="user-credits" value="{{ user.getCredits() }}"></td>
+                        <td><input style="width: 12px;" type="text" name="credits" class="user-credits" value="{{ user.getCredits() }}"></td>
                         <td>{{ user.questions }}</td>
                         {% if tab=='spam' %}
                             <td>{{ user.getSpamActivity() }}</td>
