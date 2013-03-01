@@ -15,10 +15,12 @@ class AbstractController extends Controller implements InitializableControllerIn
     {
         $request->setLocale($request->getSession()->get('_locale'));
 
-        $this->updateOnlineCounters($request);
+        $this->user = $this->getUser();
+
+        $this->updateUserCounters($request);
     }
 
-    private function updateOnlineCounters(Request $request)
+    private function updateUserCounters(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         $sid = $request->getSession()->getId();
@@ -32,22 +34,24 @@ class AbstractController extends Controller implements InitializableControllerIn
         $timeBoundary = new \DateTime();
         $timeBoundary->sub(new \DateInterval('PT10M'));
         $offlines = $this->getDoctrine()->getRepository('CronCronBundle:Online')
-            ->createQueryBuilder('online')
-            ->where('online.lastVisit < :lastVisit')
-            ->setParameter('lastVisit', $timeBoundary)
-            ->getQuery()->getResult();
+                                        ->createQueryBuilder('online')
+                                        ->where('online.lastVisit < :lastVisit')
+                                        ->setParameter('lastVisit', $timeBoundary)
+                                        ->getQuery()->getResult();
+
         foreach ($offlines as $offline)
             $em->remove($offline);
         $em->flush();
 
         $onlineUserCount = $this->getDoctrine()->getRepository('CronCronBundle:Online')
-            ->createQueryBuilder('online')
-            ->select('COUNT(online.sid) AS onlineCount')
-            ->getQuery()->getResult();
+                                               ->createQueryBuilder('online')
+                                               ->select('COUNT(online.sid) AS onlineCount')
+                                               ->getQuery()->getResult();
+
         $totalUserCount = $this->getDoctrine()->getRepository('CronCronBundle:User')
-            ->createQueryBuilder('user')
-            ->select('COUNT(user.id) AS totalCount')
-            ->getQuery()->getResult();
+                                               ->createQueryBuilder('user')
+                                               ->select('COUNT(user.id) AS totalCount')
+                                               ->getQuery()->getResult();
 
         $this->onlineUserCount = $onlineUserCount[0]['onlineCount'];
         $this->totalUserCount = $totalUserCount[0]['totalCount'];

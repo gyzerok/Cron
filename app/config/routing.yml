@@ -55,7 +55,7 @@ regconf:
 
 credits:
   pattern: /credits
-  defaults: { _controller: CronCronBundle:Main:credits}
+  defaults: { _controller: CronCronBundle:Robokassa:pay}
 
 # Ajax routes
 
@@ -355,6 +355,15 @@ login_check:
 
 logout:
     pattern: /logout
+
+change_password:
+  pattern: /change_password
+  defaults: { _controller: CronCronBundle:Security:changePassword }
+
+forgot_password:
+  pattern: forgot_password
+  defaults: { _controller: CronCronBundle:Security:forgotPassword }
+
 
 # Internal routing configuration to handle ESI
 #_internal:
