@@ -58,7 +58,7 @@
                 <div class="chat" style="width:auto;">
                     <div class="messageWrap" style="width: 578px;">
                         {% for message in mychat.messages %}
-                            <div class="singleMessage">
+                            <div class="singleMessage{% if message.getUser()==curUser %} my-message{% endif %}">
                                 <div class="chatUsername">{{ message.getUser().getNick() }}</div>
                                 <div class="messageText">{{ message.getMsgText()|nl2br }}</div>
                             </div>
@@ -82,7 +82,7 @@
                 <div class="chat">
                     <div class="messageWrap" >
                         {% for message in in_chat.messages %}
-                            <div class="singleMessage">
+                            <div class="singleMessage{% if message.getUser()==curUser %} my-message{% endif %}">
                                 <div class="chatUsername">{{ message.getUser().getNick() }}</div>
                                 <div class="messageText">{{ message.getMsgText()|nl2br }}</div>
                             </div>

@@ -97,15 +97,17 @@
                         <td>{{ user.getCity().getName() }}</td>
                         <td>{{ user.getGenderLetter() }}</td>
                         <td>{{ user.getAge() }}</td>
-                        <td><input style="width: 12px;" type="text" name="credits" class="user-credits" value="{{ user.getCredits() }}"></td>
+                        <td><input style="width: 50px;" type="text" name="credits" class="user-credits" value="{{ user.getCredits() }}"></td>
                         <td>{{ user.questions }}</td>
                         {% if tab=='spam' %}
                             <td>{{ user.getSpamActivity() }}</td>
                             <td><a href="#" class="watch-spam-dialog" data-dialog="{{ user.dialog }}"><span class="dialogUsername">{{ user.marked_by.getNick() }}</span></a></td>
                         {% endif %}
                         <td>
-                            <a href="#" class="ignore-user" data-dialog="{{ user.dialog }}">Проигнорировать</a>
-                            <a href="#" class="block-user">Заблокировать</a>
+                            {% if tab=='spam' %}
+                                <a href="#" class="ignore-user" data-dialog="{{ user.dialog }}">Проигнорировать</a>
+                                <a href="#" class="block-user">Заблокировать</a>
+                            {% endif %}
                             <a href="#" class="delete-user">Удалить</a>
                         </td>
                     </tr>
