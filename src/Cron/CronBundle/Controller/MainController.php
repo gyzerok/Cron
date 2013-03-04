@@ -562,6 +562,38 @@ class MainController extends AbstractController
 
     }
 
+    public function aboutAction()
+    {
+        return $this->render("CronCronBundle:Main:about.html.twig", array('title' => 'О нас',
+            'curUser' => $this->getUser(),
+            'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
+        ));
+    }
+
+    public function rulesAction()
+    {
+        return $this->render("CronCronBundle:Main:rules.html.twig", array('title' => 'Правила',
+            'curUser' => $this->getUser(),
+            'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
+        ));
+    }
+
+    public function advertAction()
+    {
+        return $this->render("CronCronBundle:Main:advert.html.twig", array('title' => 'Рекламодателям',
+            'curUser' => $this->getUser(),
+            'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
+        ));
+    }
+
+    public function agreementAction()
+    {
+        return $this->render("CronCronBundle:Main:agreement.html.twig", array('title' => 'Пользовательское соглашение',
+            'curUser' => $this->getUser(),
+            'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
+        ));
+    }
+
     public function registerAction(Request $request)
     {
         $user = new User();

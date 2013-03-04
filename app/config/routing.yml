@@ -57,6 +57,23 @@ credits:
   pattern: /credits
   defaults: { _controller: CronCronBundle:Robokassa:pay}
 
+about:
+  pattern: /about
+  defaults: { _controller: CronCronBundle:Main:about}
+
+rules:
+  pattern: /rules
+  defaults: { _controller: CronCronBundle:Main:rules}
+
+advert:
+  pattern: /advert
+  defaults: { _controller: CronCronBundle:Main:advert}
+
+agreement:
+  pattern: /agreement
+  defaults: { _controller: CronCronBundle:Main:agreement}
+
+
 # Ajax routes
 
 getStates:
