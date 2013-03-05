@@ -69,7 +69,7 @@
 			<form action="{{ path('register') }}" style="height: 0px;" type="text">
 				<input class="registerButtonOnIndex" type="submit" name="" value="{% trans %}Регистрация{% endtrans %}" />
 			</form>
-			<a class="forgotPassword" href="#">{% trans %}Забыли пароль?{% endtrans %}</a>
+			<a class="forgotPassword" href="{{ path('forgot_password') }}">{% trans %}Забыли пароль?{% endtrans %}</a>
             {% endif %}
 		</div>
 		

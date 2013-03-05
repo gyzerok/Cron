@@ -67,26 +67,31 @@ class SecurityController extends AbstractController
 
     public function forgotPasswordAction(\Symfony\Component\HttpFoundation\Request $request)
     {
-        $email = $request->get('email');
-        $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername($email);
-
-        if ($user instanceof \Cron\CronBundle\Entity\User)
+        if ($request->isMethod('POST'))
         {
-            $hash = md5($user->getId() + $user->getNick() + $user->getUsername()) . '_' . md5($user->getPassword());
+            $email = $request->get('email');
+            $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername($email);
 
-            $mailer = $this->get('mailer');
-            $message = \Swift_Message::newInstance(null, null, "text/html")
-                ->setSubject('Обратная связь')
-                ->setFrom("aditus777@gmail.com")
-                ->setTo($user->getUsername())
-                ->setBody('<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body>' .
-                $_SERVER['HTTP_HOST'] . '/change_password?id=' . $user->getId() . '&hash=' . $hash .
-                '</body></html>');
-            $mailer->send($message);
+            if ($user instanceof \Cron\CronBundle\Entity\User)
+            {
+                $hash = md5($user->getId() + $user->getNick() + $user->getUsername()) . '_' . md5($user->getPassword());
 
-            return $this->render('CronCronBundle:Main:info.html.twig', array('info' => 'Сообщение отправлено на ' . $user->getUsername(), 'totalUserCount' => $this->totalUserCount, 'onlineUserCount' => $this->onlineUserCount, 'curUser' => $this->user));
+                $mailer = $this->get('mailer');
+                $message = \Swift_Message::newInstance(null, null, "text/html")
+                    ->setSubject('Обратная связь')
+                    ->setFrom("aditus777@gmail.com")
+                    ->setTo($user->getUsername())
+                    ->setBody('<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body>' .
+                    $_SERVER['HTTP_HOST'] . '/change_password?id=' . $user->getId() . '&hash=' . $hash .
+                    '</body></html>');
+                $mailer->send($message);
+
+                return $this->render('CronCronBundle:Main:info.html.twig', array('info' => 'Сообщение отправлено на ' . $user->getUsername(), 'totalUserCount' => $this->totalUserCount, 'onlineUserCount' => $this->onlineUserCount, 'curUser' => $this->user));
+            }
+
+            return $this->render('CronCronBundle:Main:info.html.twig', array('info' => 'Такого пользователя не существует', 'totalUserCount' => $this->totalUserCount, 'onlineUserCount' => $this->onlineUserCount, 'curUser' => $this->user));
         }
 
-        return $this->render('CronCronBundle:Main:info.html.twig', array('info' => 'Такого пользователя не существует', 'totalUserCount' => $this->totalUserCount, 'onlineUserCount' => $this->onlineUserCount, 'curUser' => $this->user));
+        return $this->render('CronCronBundle:Security:forgot_password.html.twig', array('totalUserCount' => $this->totalUserCount, 'onlineUserCount' => $this->onlineUserCount, 'curUser' => $this->user));
     }
 }
