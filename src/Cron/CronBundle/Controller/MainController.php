@@ -110,11 +110,15 @@ class MainController extends AbstractController
                         $viewbytime->modify("-100 years");
                         break;
                 }
-                foreach ($my_settings->getViewCats() as $id=>$view_cat) {
-                    array_push($view_cats, $id);
+                if ($my_settings->getViewCats()){
+                    foreach ($my_settings->getViewCats() as $id=>$view_cat) {
+                        array_push($view_cats, $id);
+                    }
                 }
-                foreach ($my_settings->getIncomeCats() as $id=>$income_cat) {
-                    array_push($income_cats, $id);
+                if ($my_settings->getIncomeCats()){
+                    foreach ($my_settings->getIncomeCats() as $id=>$income_cat) {
+                        array_push($income_cats, $id);
+                    }
                 }
             } else {
                 $viewbytime->modify("-100 years");

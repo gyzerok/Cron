@@ -32,6 +32,16 @@ class Chat {
     protected $owner;
 
     /**
+     * @var User
+     *
+     * @ORM\OneToOne(targetEntity="Question")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="question", referencedColumnName="id", nullable=true)
+     * })
+     */
+    protected $question;
+
+    /**
      * @var boolean $is_active
      *
      * @ORM\Column(name="is_active", type="boolean")
