@@ -20,6 +20,12 @@ class MainController extends AbstractController
 {
     public function indexAction(Request $request)
     {
+        if ($request->get('reg_success')){
+            $show_success_msg = true;
+        } else {
+            $show_success_msg = false;
+        }
+
         $numAnswers = array(10 => '10', 20 => '20');
         if ($this->getUser() instanceof User)
             $numAnswers = array(10 => '10', 20 => '20', 50 => '50', 100 => '100', 1000 => '1000');
@@ -62,6 +68,7 @@ class MainController extends AbstractController
                                                                           'curUser' => $this->getUser(),
                                                                           'userQuestions' => $userQuestions,
                                                                           'form' => $form->createView(),
+                                                                          'show_success_msg' => $show_success_msg,
                                                                           'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount)
         );
 
@@ -635,7 +642,7 @@ class MainController extends AbstractController
                     'Если Вы считаете, что данное сообщение послано Вам ошибочно, проигнорируйте его и все данные будут автоматически удалены.');
                 $mailer->send($message);
 
-                return $this->redirect($this->generateUrl('index'));
+                return $this->redirect($this->generateUrl('index', array("reg_success"=>"1")));
             }
         }
 
