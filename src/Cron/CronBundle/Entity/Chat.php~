@@ -104,4 +104,27 @@ class Chat {
     {
         return $this->owner;
     }
+
+    /**
+     * Set question
+     *
+     * @param Cron\CronBundle\Entity\Question $question
+     * @return Chat
+     */
+    public function setQuestion(\Cron\CronBundle\Entity\Question $question = null)
+    {
+        $this->question = $question;
+    
+        return $this;
+    }
+
+    /**
+     * Get question
+     *
+     * @return Cron\CronBundle\Entity\Question 
+     */
+    public function getQuestion()
+    {
+        return $this->question;
+    }
 }

@@ -17,7 +17,22 @@
                 return false;
             });
             $("#CreditsAmount").change(function(){
-                $("#OutSum").val($(this).val()*$("#creditCurrency").val());
+                $("#OutSum").attr('value', $(this).val()*$("#creditCurrency").val());
+            });
+            $("#robo-submit").click(function(){
+                $.ajax({
+                    url: '/pay/prepare',
+                    type: 'post',
+                    data: {
+                        InvId: $("#InvId").val(),
+                        OutSum: $("#OutSum").val()
+                    },
+                    success: function(response){
+                        $("#roboform").submit();
+                    }
+                });
+                $(this).after('<span class="robo-hint">Загрузка...</span>');
+                return false;
             });
         });
     </script>
@@ -67,5 +82,10 @@
         <h3>{% trans %}Кредиты{% endtrans %}</h3>
         {{ roboform|raw }}
     </div>
+    {% if app.request.get('fail') %}
+        <script type="text/javascript">
+            alert('Возникла ошибка в процессе оплаты. Попробуйте снова.');
+        </script>
+    {% endif %}
 {% endblock %}
 

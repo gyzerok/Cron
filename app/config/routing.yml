@@ -57,6 +57,22 @@ credits:
   pattern: /credits
   defaults: { _controller: CronCronBundle:Robokassa:pay}
 
+robokassa_prepare:
+  pattern: /pay/prepare
+  defaults: { _controller: CronCronBundle:Robokassa:prepare}
+
+#robokassa_result:
+#  pattern: /pay/result
+#  defaults: { _controller: CronCronBundle:Robokassa:result}
+
+robokassa_success:
+  pattern: /pay/success
+  defaults: { _controller: CronCronBundle:Robokassa:result}
+
+robokassa_fail:
+  pattern: /pay/fail
+  defaults: { _controller: CronCronBundle:Robokassa:fail}
+
 about:
   pattern: /about
   defaults: { _controller: CronCronBundle:Main:about}
