@@ -32,6 +32,16 @@ class Chat {
     protected $owner;
 
     /**
+     * @var User
+     *
+     * @ORM\OneToOne(targetEntity="Question")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="question", referencedColumnName="id", nullable=true)
+     * })
+     */
+    protected $question;
+
+    /**
      * @var boolean $is_active
      *
      * @ORM\Column(name="is_active", type="boolean")
@@ -93,5 +103,28 @@ class Chat {
     public function getOwner()
     {
         return $this->owner;
+    }
+
+    /**
+     * Set question
+     *
+     * @param Cron\CronBundle\Entity\Question $question
+     * @return Chat
+     */
+    public function setQuestion(\Cron\CronBundle\Entity\Question $question = null)
+    {
+        $this->question = $question;
+    
+        return $this;
+    }
+
+    /**
+     * Get question
+     *
+     * @return Cron\CronBundle\Entity\Question 
+     */
+    public function getQuestion()
+    {
+        return $this->question;
     }
 }

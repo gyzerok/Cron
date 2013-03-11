@@ -280,4 +280,9 @@
             </div>
         {% endfor %}
     {% endif %}
+    {% if show_success_msg %}
+        <script type="text/javascript">
+            alert('Successful registration!');
+        </script>
+    {% endif %}
 {% endblock %}

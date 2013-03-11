@@ -114,7 +114,7 @@
 			<div class="switch"></div>
 			<input id="chat-nl-switch" type="checkbox" />
 		</div>
-		<div class="finishConversation">
+		<div class="finishConversation{% if mychat.members|length<1 %} hidden{% endif %}">
 			<input type="button" value="закончить
 общение" />
 		</div>

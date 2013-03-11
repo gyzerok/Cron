@@ -50,7 +50,10 @@ $(document).ready(function(){
         var singleAnswer = $(this).closest('.singleAnswer');
         $.ajax({
             url:'/chat/sendChatInvite',
-            data:{user:singleAnswer.data('user')},
+            data:{
+                user:singleAnswer.data('user'),
+                question:singleAnswer.closest('.myAnswer').prevAll('.singleQuestion').data('id')
+            },
             success:function (dialog) {
             }
         });

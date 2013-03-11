@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use Cron\CronBundle\Entity\User;
 
+use Cron\CronBundle\Entity\Question;
 use Cron\CronBundle\Entity\Chat;
 use Cron\CronBundle\Entity\ChatInvite;
 use Cron\CronBundle\Entity\ChatMember;
@@ -791,8 +792,15 @@ class ChatController extends AbstractController
                 //return new Response('Fail');
             }
             $chat->setIsActive(1);
+            $question = $this->getDoctrine()->getRepository('CronCronBundle:Question')->find($request->get('question'));
+            $chat->setQuestion($question);
             $em->persist($chat);
 
+            $chat_members = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findBy(array("chat" => $chat->getId()));
+
+            if (count($chat_members)>10){
+                return new Response('Fail');
+            }
 
             $user2 = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneById($user2_id);
             if (!$user2 instanceof \Cron\CronBundle\Entity\User)

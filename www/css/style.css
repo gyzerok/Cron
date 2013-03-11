@@ -2732,6 +2732,9 @@ h2.chatInviteTitle{
 	cursor: pointer;
 	margin: 0px 0 0 14px;
 }
+.finishConversation.hidden input {
+    display: none !important;
+}
 
 .leaveConversation {
     float: left;
