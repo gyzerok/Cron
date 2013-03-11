@@ -1,8 +1,17 @@
 {% extends '::base.html.twig' %}
 {% block content %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#srvmsg-submit").bind('click', function(){
+                $("#srvmsg-field").val($('#srvmsg-form').find("iframe").contents().find('#editor').html());
+//            alert();
+//            return false;
+            });
+        });
+    </script>
     <h2 class="categoryH2">{{ title }}</a></h2>
-    <form action="" method="post">
+    <form action="" method="post" id="srvmsg-form">
         <textarea name="srvmsg" id="srvmsg-field" cols="30" rows="10">{{ srvmsg }}</textarea><br/>
-        <input type="submit" value="сохранить">
+        <input type="submit" value="сохранить" id="srvmsg-submit">
     </form>
 {% endblock %}
