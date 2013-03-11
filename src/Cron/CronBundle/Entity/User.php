@@ -416,7 +416,20 @@ class User implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        $role = "";
+        switch($this->getRole()){
+            case '2':
+                $role = 'ROLE_ADMIN';
+                break;
+            case '1':
+                $role = 'ROLE_MODERATOR';
+                break;
+            case '0':
+            default:
+                $role = 'ROLE_USER';
+                break;
+        }
+        return array($role);
     }
 
     public function getSalt()

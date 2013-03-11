@@ -33,7 +33,25 @@ security:
             anonymous: true
 
     access_control:
+        # Модерация
+        - { path: ^/admin/answers/spam, roles: ROLE_MODERATOR }
+        - { path: ^/admin/questions/spam, roles: ROLE_MODERATOR }
+        # Админка
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        # Кредиты
+        - { path: ^/credits, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/pay, roles: IS_AUTHENTICATED_FULLY }
+        # Заметки
+        - { path: ^/notes, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/ajax/loadNotepad, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/ajax/updateNotepad, roles: IS_AUTHENTICATED_FULLY }
+        # Ссылки быстрого доступа
+        - { path: ^/ajax/newUserLink, roles: IS_AUTHENTICATED_FULLY }
+        # Настройки
+        - { path: ^/settings, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/ajax/saveSettings, roles: IS_AUTHENTICATED_FULLY }
+        # Кибердиск
+        - { path: ^/disk, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/ajax/uploadFile, roles: IS_AUTHENTICATED_FULLY }
+        # Все остальное
         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        #- { path: ^/ajax, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        #- { path: ^/_internal/secure, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

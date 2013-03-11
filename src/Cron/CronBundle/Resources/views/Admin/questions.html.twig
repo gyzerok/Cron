@@ -58,12 +58,14 @@
         });
     </script>
     <h2 class="categoryTitle">Вопросы</h2>
-    {% if tab=='all' %}
-        Все
-        <a href="/admin/questions/spam">Отмеченные как спам</a>
-    {% else %}
-        <a href="/admin/questions/all">Все</a>
-        Отмеченные как спам
+    {% if app.user.getRoles()=='ROLE_ADMIN' %}
+            {% if tab=='all' %}
+            Все
+            <a href="/admin/questions/spam">Отмеченные как спам</a>
+        {% else %}
+            <a href="/admin/questions/all">Все</a>
+            Отмеченные как спам
+        {% endif %}
     {% endif %}
     <div style="clear:both;"></div>
     <div id="showQuestion">

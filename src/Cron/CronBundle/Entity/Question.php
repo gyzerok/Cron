@@ -59,7 +59,7 @@ class Question
 
     /**
      * @ORM\ManyToMany(targetEntity="User")
-     * @ORM\JoinTable(name="userLikes",
+     * @ORM\JoinTable(name="userlikes",
      *     joinColumns={@ORM\JoinColumn(name="question_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
      * )
@@ -70,7 +70,7 @@ class Question
 
     /**
      * @ORM\ManyToMany(targetEntity="User")
-     * @ORM\JoinTable(name="userSpams",
+     * @ORM\JoinTable(name="userspams",
      *     joinColumns={@ORM\JoinColumn(name="question_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
      * )
