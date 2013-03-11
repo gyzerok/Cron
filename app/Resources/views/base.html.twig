@@ -181,17 +181,20 @@
                     {% if curUser.getRole()>0 %}
                         <li>Админка
                         <ul class="subMenuNavigation">
-                            <li><a href="/admin/questions">вопросы</a></li>
-                            <li><a href="/admin/answers">ответы</a></li>
-                            {% if curUser.getRole()>1 %}
+                            {% if curUser.getRole()==2 %}
+                                <li><a href="/admin/questions">вопросы</a></li>
+                                <li><a href="/admin/answers">ответы</a></li>
                                 <li><a href="/admin/articles">статьи</a></li>
                                 <li><a href="/admin/srvmsg">серв. сообщ</a></li>
                                 <li><a href="/admin/users">пользователи</a></li>
                                 <li><a href="/admin/credits">кредиты</a></li>
+                            {% else %}
+                                <li><a href="/admin/questions/spam">вопросы</a></li>
+                                <li><a href="/admin/answers/spam">ответы</a></li>
                             {% endif %}
                         </ul>
                         </li>
-                        {% if curUser.getRole()>1 %}
+                        {% if curUser.getRole()==2 %}
                         <li>Поддержка
                             <ul class="subMenuNavigation">
                                 <li><a href="/admin/support/appeals">Жалобы</a></li>

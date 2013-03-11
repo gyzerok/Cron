@@ -24,10 +24,6 @@ class AdminController extends AbstractController
     {
         $user = $this->getUser();
 
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
-
         if ($request->isMethod('post')){
 
             $em = $this->getDoctrine()->getManager();
@@ -93,9 +89,6 @@ class AdminController extends AbstractController
     public function articlesAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $articles = $this->getDoctrine()->getRepository("CronCronBundle:Article")->findBy(array(), array("datetime"=>"DESC"));
 
@@ -109,9 +102,6 @@ class AdminController extends AbstractController
     public function deleteArticleAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $article = $this->getDoctrine()->getRepository("CronCronBundle:Article")->find($request->get("article"));
         $em = $this->getDoctrine()->getManager();
@@ -123,9 +113,6 @@ class AdminController extends AbstractController
     public function questionsAction(Request $request, $tab)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $questions = array();
         if ($tab=='all'){
@@ -152,9 +139,6 @@ class AdminController extends AbstractController
     public function deleteQuestionAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($request->get("question"));
         $note_questions = $this->getDoctrine()->getRepository("CronCronBundle:NotesQuestion")->findBy(array("question"=>$question->getId()));
@@ -175,9 +159,6 @@ class AdminController extends AbstractController
     public function confirmSpamQuestionAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($request->get("question"));
         $question->setSpams(null);
@@ -192,9 +173,6 @@ class AdminController extends AbstractController
     public function cancelSpamQuestionAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($request->get("question"));
         $question->setSpams(null);
@@ -208,9 +186,6 @@ class AdminController extends AbstractController
     public function answersAction(Request $request, $tab)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $answers = array();
         if ($tab=='all'){
@@ -237,9 +212,6 @@ class AdminController extends AbstractController
     public function deleteAnswerAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $answer = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->find($request->get("answer"));
 
@@ -252,9 +224,6 @@ class AdminController extends AbstractController
     public function confirmSpamAnswerAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $answer = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->find($request->get("answer"));
         $answer->setSpams(null);
@@ -269,9 +238,6 @@ class AdminController extends AbstractController
     public function cancelSpamAnswerAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $answer = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->find($request->get("answer"));
         $answer->setSpams(null);
@@ -306,9 +272,6 @@ class AdminController extends AbstractController
     public function replyFeedbackAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return new Response("Fail");
-        }
 
         $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->find($request->get('feedback'));
 
@@ -331,9 +294,6 @@ class AdminController extends AbstractController
     public function deleteFeedbackAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->find($request->get("feedback"));
         $em = $this->getDoctrine()->getManager();
@@ -345,9 +305,6 @@ class AdminController extends AbstractController
     public function appealsAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->findBy(array("type"=>"appeal", "answered"=>0), array("datetime"=>"DESC"));
 
@@ -361,9 +318,6 @@ class AdminController extends AbstractController
     public function ideasAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $feedback = $this->getDoctrine()->getRepository("CronCronBundle:Feedback")->findBy(array("type"=>"idea", "answered"=>0), array("datetime"=>"DESC"));
 
@@ -377,9 +331,6 @@ class AdminController extends AbstractController
     public function srvmsgAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $srvmsg = $this->getDoctrine()->getRepository("CronCronBundle:AdminSettings")->find(1);
         if (!$srvmsg instanceof AdminSettings){
@@ -417,9 +368,6 @@ class AdminController extends AbstractController
     public function creditsAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $admin_settings = $this->getDoctrine()->getRepository("CronCronBundle:AdminSettings")->find(1);
         if (!$admin_settings instanceof AdminSettings){
@@ -450,9 +398,7 @@ class AdminController extends AbstractController
     public function usersAction(Request $request, $tab)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
+
         $users = array();
         if ($tab=='all'){
             $users = $this->getDoctrine()->getRepository("CronCronBundle:User")->findBy(array("isActive"=>"1"), array("regDate"=>"DESC"));
@@ -496,9 +442,6 @@ class AdminController extends AbstractController
     public function blockUserAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $user4block = $this->getDoctrine()->getRepository("CronCronBundle:User")->find($request->get("user"));
         $bunDate = new \DateTime();
@@ -514,9 +457,6 @@ class AdminController extends AbstractController
     public function deleteUserAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $user_id = $request->get("user");
         
@@ -671,9 +611,6 @@ class AdminController extends AbstractController
     public function ignoreSpamDialogAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $dialog = $this->getDoctrine()->getRepository("CronCronBundle:Dialog")->find($request->get("dialog"));
         if ($dialog->getSpam1()){
@@ -691,9 +628,6 @@ class AdminController extends AbstractController
     public function changeCreditsAction(Request $request)
     {
         $user = $this->getUser();
-        if (!$user instanceof User || $user->getRole() < 2) {
-            return $this->redirect("/");
-        }
 
         $victim_user = $this->getDoctrine()->getRepository("CronCronBundle:User")->find($request->get("user"));
         $victim_user->setCredits($request->get("credits"));
