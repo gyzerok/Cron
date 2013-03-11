@@ -133,7 +133,7 @@ class RobokassaController extends AbstractController
         return new Response($new_crc);
     }
 
-    public function resultAction(Request $request)
+    public function resultAction(Request $request) //doesn't work :(
     {
         $user = $this->getUser();
         if (!$user instanceof User){
@@ -142,7 +142,6 @@ class RobokassaController extends AbstractController
 
         $out_summ = $request->get("OutSum");
         $inv_id = $request->get("InvId");
-//        $shp_item = $request->get("Shp_item");
         $crc = $request->get("SignatureValue");
 
         $crc = strtolower($crc);
@@ -150,8 +149,8 @@ class RobokassaController extends AbstractController
         $my_crc = strtolower(md5("$out_summ:$inv_id:$this->mrh_pass2"));
 
         if ($my_crc !=$crc){
-            return new Response("Fail");
-            return $this->redirect("/credits?fail=1");
+            return new Response("FAIL");
+//            return $this->redirect("/credits?fail=1");
         } else {
             $payment = $this->getDoctrine()->getRepository("CronCronBundle:Payment")->findOneBy(array('hash' => $my_crc, 'user' => $user->getId()));
             $payment->setPaid(1);
@@ -160,33 +159,49 @@ class RobokassaController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($payment);
             $em->flush();
-            return new Response("SUCCESS");
+            return "OK".$inv_id;
         }
 
-            return $this->render('CronCronBundle:Main:pay_success.html.twig', array(
-                'title' => 'Оплата успешно произведена',
-                'curUser' => $user,
-                'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
-            ));
+
 //        }
 
     }
 
     public function successAction(Request $request)
     {
-//        $out_summ = $request->get("OutSum");
-//        $inv_id = $request->get("InvId");
-//        $shp_item = $request->get("Shp_item");
-//        $crc = $request->get("SignatureValue");
-//
-//        $crc = strtoupper($crc);
-//
-//        $my_crc = strtoupper(md5("$out_summ:$inv_id:$this->mrh_pass1:Shp_item=$shp_item"));
-//
-//        if ($my_crc != $crc){
-////            echo "bad sign\n";
-////            exit();
-//        }
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            return $this->redirect("/");
+        }
+        $out_summ = $request->get("OutSum");
+        $inv_id = $request->get("InvId");
+        $crc = $request->get("SignatureValue");
+
+        $crc = strtoupper($crc);
+
+        $my_crc = strtoupper(md5("$out_summ:$inv_id:$this->mrh_pass1"));
+
+        if ($my_crc != $crc){
+            return $this->redirect("/credits?fail=1");
+        }
+
+        $payment = $this->getDoctrine()->getRepository("CronCronBundle:Payment")->findOneBy(array('hash' => $inv_id, 'user' => $user->getId()));
+        if ($payment instanceof Payment){
+            $payment->setPaid(1);
+            $user->setCredits($user->getCredits()+(int)$out_summ);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($payment);
+            $em->flush();
+        } else {
+            return $this->redirect("/credits?fail=1");
+        }
+
+        return $this->render('CronCronBundle:Main:pay_success.html.twig', array(
+            'title' => 'Оплата успешно произведена',
+            'curUser' => $user,
+            'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
+        ));
     }
 
     public function failAction(Request $request)
