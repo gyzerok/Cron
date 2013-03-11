@@ -18,6 +18,19 @@
             });
             $("#CreditsAmount").change(function(){
                 $("#OutSum").attr('value', $(this).val()*$("#creditCurrency").val());
+                $("#robo-submit").attr('disabled', 'disabled');
+                $.ajax({
+                    url: '/pay/getRobolink',
+                    type: 'post',
+                    data: {
+                        InvId: $("#InvId").val(),
+                        OutSum: $("#OutSum").val(),
+                        Desc: $("#InvDesc").val()
+                    },
+                    success: function(robolink){
+                        $("#robo-submit").data('href', robolink).removeAttr('disabled');
+                    }
+                });
             });
             $("#robo-submit").click(function(){
                 $.ajax({
@@ -28,7 +41,8 @@
                         OutSum: $("#OutSum").val()
                     },
                     success: function(response){
-                        $("#roboform").submit();
+//                        $("#roboform").submit();
+                        window.location.href = $("#robo-submit").data('href');
                     }
                 });
                 $(this).after('<span class="robo-hint">Загрузка...</span>');
