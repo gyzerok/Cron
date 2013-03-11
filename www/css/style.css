@@ -29,6 +29,12 @@
 	cursor: pointer;
 }
 
+#header-srvmsg {
+	float: left;
+	width: 300px;
+}
+
+
 .messagesFromAdministration {
 	width: 185px;
 	height: 79px;
@@ -367,7 +373,7 @@
 }
 
 #menu ul.menuNavigation li.chatInvite {
-	width: 145px;
+	width: 166px;
 	height: 18px;
 	text-align: center;
 	margin-top: 5px;
@@ -1593,7 +1599,7 @@ input.registerButton:hover {
 a.forgotPassword {
 	margin: 0;
 	display: block;
-	width: 133px;
+	width: 140px;
 	margin-top: -10px;
 	margin-left: auto;
 	margin-right: auto;	

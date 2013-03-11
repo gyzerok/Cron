@@ -1,5 +1,29 @@
 {% extends '::base.html.twig' %}
 {% block content %}
+		<script>
+	$(document).ready(function(){
+		var editor = new TINY.editor.edit('editor', {
+			id: 'srvmsg-field',
+			width: 720,
+			height: 175,
+			cssclass: 'tinyeditor',
+			controlclass: 'tinyeditor-control',
+			rowclass: 'tinyeditor-header',
+			dividerclass: 'tinyeditor-divider',
+			controls: ['bold', 'italic', 'underline', 'strikethrough', '|', 'subscript', 'superscript', '|',
+				'orderedlist', 'unorderedlist', '|', 'outdent', 'indent', '|', 'leftalign',
+				'centeralign', 'rightalign', 'blockjustify', '|', 'unformat', '|', 'undo', 'redo', 'n',
+				'font', 'size', 'style', '|', 'image', 'hr', 'link', 'unlink', '|', 'print'],
+			footer: true,
+			fonts: ['Verdana','Arial','Georgia','Trebuchet MS', 'Cambria'],
+			xhtml: true,
+			cssfile: 'custom.css',
+			bodyid: 'editor',
+			footerclass: 'tinyeditor-footer',
+			toggle: {text: 'source', activetext: 'wysiwyg', cssclass: 'toggle'},
+		});
+	});
+	</script>
     <h2 class="categoryH2">{{ title }}</a></h2>
     <form action="" method="post">
         <textarea name="srvmsg" id="srvmsg-field" cols="30" rows="10">{{ srvmsg }}</textarea><br/>
