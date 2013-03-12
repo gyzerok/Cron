@@ -225,35 +225,38 @@ $(document).ready(function(){
         var new_line_switch = $("#chat-nl-switch").attr('checked');
         if ((code == 13 && !e.ctrlKey && !new_line_switch)){
 
-        } else if(code == 13 && e.ctrlKey && new_line_switch){
-            chatInput.val(chatInput.val()+'\n').trigger('autosize');
-        } else if((code == 13 && e.ctrlKey && !new_line_switch) || (code == 13 && new_line_switch)){
-            if ($.trim(chatInput.val())){
-                var current_chat = $(".chat-content:visible");
-                if (current_chat.data('dialog-id')){
-                    $.ajax({
-                        url: '/chat/sendDialogMsg',
-                        data: {
-                            dialog:current_chat.data('dialog-id'),
-                            to_user:current_chat.data('to-user'),
-                            message:chatInput.val()
+        } else {
+            if(code == 13 && e.ctrlKey && new_line_switch){
+                        chatInput.val(chatInput.val()+'\n').trigger('autosize');
+                    } else if((code == 13 && e.ctrlKey && !new_line_switch) || (code == 13 && new_line_switch)){
+                        var message = chatInput.val();
+                        if (message){
+                            var current_chat = $(".chat-content:visible");
+                            if (current_chat.data('dialog-id')){
+                                $.ajax({
+                                    url: '/chat/sendDialogMsg',
+                                    data: {
+                                        dialog:current_chat.data('dialog-id'),
+                                        to_user:current_chat.data('to-user'),
+                                        message:message
+                                    }
+                                });
+                            } else {
+                                $.ajax({
+                                    url: '/chat/sendChatMsg',
+                                    data: {
+                                        chat:current_chat.data('chat-id'),
+                                        message:message
+                                    }
+                                });
+                            }
+                            current_chat.find(".chat > div").append('<div class="singleMessage"><div class="chatUsername">'+chatInput.data('nick')+'</div><div class="messageText">'+nl2br(message)+'</div></div>');
+                            chatInput.val('').trigger('autosize');
+                            var objDiv = current_chat.find(".chat");
+                            objDiv[0].scrollTop = objDiv[0].scrollHeight;
                         }
-                    });
-                } else {
-                    $.ajax({
-                        url: '/chat/sendChatMsg',
-                        data: {
-                            chat:current_chat.data('chat-id'),
-                            message:chatInput.val()
-                        }
-                    });
-                }
-                current_chat.find(".chat > div").append('<div class="singleMessage"><div class="chatUsername">'+chatInput.data('nick')+'</div><div class="messageText">'+nl2br(chatInput.val())+'</div></div>');
-                chatInput.val('').trigger('autosize');
-                var objDiv = current_chat.find(".chat");
-                objDiv[0].scrollTop = objDiv[0].scrollHeight;
-            }
-            return false;
+                        return false;
+                    }
         }
 
     });
