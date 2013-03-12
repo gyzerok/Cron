@@ -155,15 +155,17 @@
 					  <li><a href="/category/15">спорт</a></li>
 					</ul>
 				</li>
-				<li>{% trans %}Заметки{% endtrans %}
-                    <ul class="subMenuNavigation">
-					{% if curUser %}
-                        <li><a href="/notes/questions">{% trans %}вопросы{% endtrans %}</a></li>
-                        <li><a href="/notes/articles">{% trans %}статьи{% endtrans %}</a></li>
-                        <li><a href="#" class="open-notepad">{% trans %}блокнот{% endtrans %}</a></li>
-					{% endif %}
-                    </ul>
-                </li>
+                {% if app.user %}
+                    <li>{% trans %}Заметки{% endtrans %}
+                        <ul class="subMenuNavigation">
+                        {% if curUser %}
+                            <li><a href="/notes/questions">{% trans %}вопросы{% endtrans %}</a></li>
+                            <li><a href="/notes/articles">{% trans %}статьи{% endtrans %}</a></li>
+                            <li><a href="#" class="open-notepad">{% trans %}блокнот{% endtrans %}</a></li>
+                        {% endif %}
+                        </ul>
+                    </li>
+                {% endif %}
 				<li>{% trans %}Информация{% endtrans %}
                     <ul class="subMenuNavigation">
                         <li><a href="/articles">{% trans %}статьи{% endtrans %}</a></li>
@@ -175,8 +177,12 @@
 						{% endif %}
                     </ul>
                 </li>
-				<li><a class="menuNavigationLink" href="/disk">{% trans %}Кибердиск{% endtrans %}</a></li>
-				<li class="open-dialog-list">{% trans %}Сообщения{% endtrans %}</li>
+                {% if app.user %}
+                    <li><a class="menuNavigationLink" href="/disk">{% trans %}Кибердиск{% endtrans %}</a></li>
+                {% endif %}
+                {% if app.user %}
+                    <li class="open-dialog-list">{% trans %}Сообщения{% endtrans %}</li>
+                {% endif %}
                 {% if curUser %}
                     {% if curUser.getRole()>0 %}
                         <li>Админка

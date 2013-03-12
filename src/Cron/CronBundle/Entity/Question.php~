@@ -34,7 +34,7 @@ class Question
      *
      * @ORM\Column(name="private", type="boolean", nullable=false)
      */
-    private $private;
+    private $private = false;
 
     /**
      * @var integer $boundary
@@ -59,7 +59,7 @@ class Question
 
     /**
      * @ORM\ManyToMany(targetEntity="User")
-     * @ORM\JoinTable(name="userLikes",
+     * @ORM\JoinTable(name="userlikes",
      *     joinColumns={@ORM\JoinColumn(name="question_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
      * )
@@ -70,7 +70,7 @@ class Question
 
     /**
      * @ORM\ManyToMany(targetEntity="User")
-     * @ORM\JoinTable(name="userSpams",
+     * @ORM\JoinTable(name="userspams",
      *     joinColumns={@ORM\JoinColumn(name="question_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
      * )
@@ -142,6 +142,13 @@ class Question
      * @var ArrayCollection $answers
      */
     private $answers;
+
+    /**
+     * @var string $user_ip
+     *
+     * @ORM\Column(name="user_ip", type="string", length=45, nullable=true)
+     */
+    private $user_ip;
 
 
 

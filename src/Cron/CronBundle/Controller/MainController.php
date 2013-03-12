@@ -49,6 +49,11 @@ class MainController extends AbstractController
                 }
 
                 $question->setUser($user);
+                $question->setUserIp($this->container->get('request')->getClientIp());
+
+                if ($question->getBoundary() > 20){
+                    $user->setCredits($user->getCredits()-5);
+                }
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($question);
@@ -61,8 +66,12 @@ class MainController extends AbstractController
         $user = $this->getUser();
         $userQuestions = null;
 
-        if ($user instanceof User)
+        if ($user instanceof User){
             $userQuestions = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findAllbyUser($user);
+        } else {
+            $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+            $userQuestions = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findBy(array("user"=>$user->getId(), "user_ip"=>$this->container->get('request')->getClientIp()));
+        }
 
         return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Главная',
                                                                           'curUser' => $this->getUser(),
@@ -141,13 +150,15 @@ class MainController extends AbstractController
                 ->getResult();
             $categorized[0]->questions = $questions;
         } elseif ($category_id<0) { //income questions
-            if (!$user instanceof User){
-                return $this->redirect("/");
-            }
+
             $categorized = array();
             $income = new Category();
             $income->setName("Входящие вопросы");
-            $my_answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("user"=>$user->getId()), array("pubDate"=>"DESC"));
+            if (!$user instanceof User){
+                $my_answers = array();
+            } else {
+                $my_answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("user"=>$user->getId()), array("pubDate"=>"DESC"));
+            }
 
             $income->questions = array();
             foreach ($my_answers as $my_answer) {
@@ -287,13 +298,15 @@ class MainController extends AbstractController
                 $my[$id]->answers = $answers;
             }
         } else {
-            return $this->redirect("/");
+            $my = array();
+//            return $this->redirect("/");
         }
 
         return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Мои вопросы',
                 'userQuestions' => $my,
                 'curUser' => $this->getUser(),
                 'form' => null,
+                'show_success_msg' => false,
                 'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
         ));
     }

@@ -163,4 +163,27 @@ class Payment
     {
         return $this->user;
     }
+
+    /**
+     * Set hash
+     *
+     * @param string $hash
+     * @return Payment
+     */
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
+    
+        return $this;
+    }
+
+    /**
+     * Get hash
+     *
+     * @return string 
+     */
+    public function getHash()
+    {
+        return $this->hash;
+    }
 }

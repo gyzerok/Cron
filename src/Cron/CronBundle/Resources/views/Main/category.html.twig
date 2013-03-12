@@ -1,3 +1,4 @@
+{% set _rush =  app.request.requestUri=='/rush' ? true : false %}
 {% extends '::base.html.twig' %}
 
 	{% block navigation %}		
@@ -48,7 +49,6 @@
 			});
         </script>
 		<div style="max-height: 820px;overflow: auto;overflow-x: hidden;overflow-y: auto;width: 728px;">
-		{% if curUser %}
         {% for category in categorized_questions %}
             <h2 class="categoryTitle">{{ category.getName() }}</h2>
             <div id="showQuestion">
@@ -61,62 +61,71 @@
                         <div class="questionText">
                         {{ item.text }}
                             <div class="socialIcons">
-                                <div class="spamButton {% if curUser in item.spams %}spamButtonActive{% endif %}"></div>
-                                <div class="likeButton {% if curUser in item.likes %}likeButtonActive{% endif %}"></div>
-                                <div class="repostButton"></div>
-                                <form class="answer">
-                                    {% if item.iAnswered %}
-                                        {% if item.getPrivate()<1 %}
-                                            {% set answer_button_value = item.answers|length ~ ' отв.' %}
+                                {% if curUser %}
+                                    <div class="spamButton {% if curUser in item.spams %}spamButtonActive{% endif %}"></div>
+                                    <div class="likeButton {% if curUser in item.likes %}likeButtonActive{% endif %}"></div>
+                                    <div class="repostButton"></div>
+                                {% endif %}
+                                {#{% if curUser or _rush %}#}
+                                    <form class="answer">
+                                        {% if item.iAnswered or not curUser %}
+                                            {% if item.getPrivate()<1 %}
+                                                {% set answer_button_value = item.answers|length ~ ' отв.' %}
+                                            {% else %}
+                                                {% set answer_button_value = 'закрытый' %}
+                                            {% endif %}
                                         {% else %}
-                                            {% set answer_button_value = 'закрытый' %}
+                                            {% set answer_button_value = 'ответить' %}
                                         {% endif %}
-                                    {% else %}
-                                        {% set answer_button_value = 'ответить' %}
-                                    {% endif %}
-                                    <input class="answerButton" type="button" value="{{ answer_button_value }}" />
-                                </form>
+                                        <input class="answerButton" type="button" value="{{ answer_button_value }}" />
+                                    </form>
+                                {#{% endif %}#}
                             </div>
                         </div>
                     </div>
-                    {% if category.getId()==null or item.iAnswered %}
-                        <div class="myAnswer {% if item.answers==null %}no-border{% endif %}">
-                            {% if item.getPrivate()<1 %}
-                                {% for answer in item.answers %}
-                                    <div class="singleAnswer likable-item" data-user="{{ answer.getUser().getId() }}" data-id="{{ answer.getId() }}">
-                                        <div class="userName">{{ answer.getUser().getNick() }}</div>
-                                        <div class="answerDate">{{ answer.getPubDate()|date("Y-m-d H:i:s") }}</div>
-                                        <div style="clear: both;"></div>
-                                        <div class="questionText">
-                                            {{ answer.getText() }}
-                                            <div class="socialIcons">
-                                                <div class="spamButton" title="Пометить как спам"></div>
-                                                <div class="likeButton" title="Мне нравится!"></div>
-                                                <div class="arrowButton inviteUser" title="Отправить приглашение в чат"></div>
-                                                <div class="letterButton sendMessage" title="Отправить сообщение"></div>
+                    {#{% if curUser or _rush %}#}
+                        {% if category.getId()==null or item.iAnswered or not curUser %}
+                            <div class="myAnswer {% if item.answers==null %}no-border{% endif %}">
+                                {% if item.getPrivate()<1 %}
+                                    {% for answer in item.answers %}
+                                        <div class="singleAnswer likable-item" data-user="{{ answer.getUser().getId() }}" data-id="{{ answer.getId() }}">
+                                            <div class="userName">{{ answer.getUser().getNick() }}</div>
+                                            <div class="answerDate">{{ answer.getPubDate()|date('d.m.Y H:i') }}</div>
+                                            <div style="clear: both;"></div>
+                                            <div class="questionText">
+                                                {{ answer.getText() }}
+                                                <div class="socialIcons">
+                                                    <div class="spamButton" title="Пометить как спам"></div>
+                                                    {% if curUser %}
+                                                        <div class="likeButton" title="Мне нравится!"></div>
+                                                    {% endif %}
+                                                    <div class="arrowButton inviteUser" title="Отправить приглашение в чат"></div>
+                                                    {% if curUser %}
+                                                        <div class="letterButton sendMessage" title="Отправить сообщение"></div>
+                                                    {% endif %}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                        <form class="answerForm"></form>
-                    {% else %}
-                        <div class="myAnswer no-border">
-                        </div>
-                        <form class="answerForm">
-                            <textarea class="answerTextarea" ></textarea>
-                            <div class="answerFormNavigation">
-                                <input class="cancelButton" type="button" value="отменить" />							
-                                <input class="submitAnswerButton" type="submit" value="отправить" />
+                                    {% endfor %}
+                                {% endif %}
                             </div>
-                        </form>
-                    {% endif %}
+                            <form class="answerForm"></form>
+                        {% else %}
+                            <div class="myAnswer no-border">
+                            </div>
+                            <form class="answerForm">
+                                <textarea class="answerTextarea" ></textarea>
+                                <div class="answerFormNavigation">
+                                    <input class="cancelButton" type="button" value="отменить" />
+                                    <input class="submitAnswerButton" type="submit" value="отправить" />
+                                </div>
+                            </form>
+                        {% endif %}
+                    {#{% endif %}#}
                 {% endfor %}
             </div>
         {% endfor %}
-		{% else %}
-		<p style="margin: 15px;">Необходимо авторизироваться, чтобы видеть вопросы по категориям</p>
-		{% endif %}
+		{#{% else %}#}
+		{#<p style="margin: 15px;">Необходимо авторизироваться, чтобы видеть вопросы по категориям</p>#}
 		</div>
 	{% endblock %}

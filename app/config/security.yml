@@ -43,7 +43,7 @@ security:
         - { path: ^/pay, roles: IS_AUTHENTICATED_FULLY }
         # Заметки
         - { path: ^/notes, roles: IS_AUTHENTICATED_FULLY }
-        - { path: ^/ajax/loadNotepad, roles: IS_AUTHENTICATED_FULLY }
+#        - { path: ^/ajax/loadNotepad, roles: IS_AUTHENTICATED_FULLY }
         - { path: ^/ajax/updateNotepad, roles: IS_AUTHENTICATED_FULLY }
         # Ссылки быстрого доступа
         - { path: ^/ajax/newUserLink, roles: IS_AUTHENTICATED_FULLY }

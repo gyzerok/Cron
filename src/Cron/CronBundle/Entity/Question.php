@@ -34,7 +34,7 @@ class Question
      *
      * @ORM\Column(name="private", type="boolean", nullable=false)
      */
-    private $private;
+    private $private = false;
 
     /**
      * @var integer $boundary
@@ -142,6 +142,13 @@ class Question
      * @var ArrayCollection $answers
      */
     private $answers;
+
+    /**
+     * @var string $user_ip
+     *
+     * @ORM\Column(name="user_ip", type="string", length=45, nullable=true)
+     */
+    private $user_ip;
 
 
 
@@ -541,5 +548,28 @@ class Question
     public function getAnswers()
     {
         return $this->answers;
+    }
+
+    /**
+     * Set user_ip
+     *
+     * @param string $userIp
+     * @return Question
+     */
+    public function setUserIp($userIp)
+    {
+        $this->user_ip = $userIp;
+    
+        return $this;
+    }
+
+    /**
+     * Get user_ip
+     *
+     * @return string 
+     */
+    public function getUserIp()
+    {
+        return $this->user_ip;
     }
 }

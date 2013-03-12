@@ -228,6 +228,7 @@ class AjaxController extends AbstractController
             $answer = new Answer();
             $answer->setQuestion($question);
             $answer->setText($answerText);
+            $answer->setIsSpam(0);
             $user = $this->getUser();
             if (!$user instanceof User)
                 $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
@@ -247,7 +248,7 @@ class AjaxController extends AbstractController
             foreach ($answers as $ans) {
                 $html .= '<div class="singleAnswer" data-user="'.$ans->getUser()->getId().'">
 					<div class="userName">'.$ans->getUser()->getNick().'</div>
-					<div class="answerDate">'.$ans->getPubDate()->format("Y-m-d H:i:s").'</div>
+					<div class="answerDate">'.$ans->getPubDate()->format("d.m.Y H:i").'</div>
 					<div style="clear: both;"></div>
 					<div class="questionText">
 						'.$ans->getText().'
