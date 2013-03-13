@@ -16,7 +16,7 @@
     <script src="/js/script.js"></script>
     <script src="/js/soundmanager2.js"></script>
   </head>
-  <body>
+  <body class="{{ app.getSession().get('_sound_settings') }}">
   
   {% set _locale = app.getSession().get('_locale') %}
 	{% block wrapper %}
@@ -24,7 +24,7 @@
 	    {% block header %}
 		<div id="header">
 			<div class="logo" title="{% trans %}На главную{% endtrans %}"><a href="{{ path('index') }}"></a></div>
-            <div id="header-srvmsg"></div>
+            <div id="header-srvmsg">{{ app.getSession().get('_srvmsg') }}</div>
 			<div class="language">
 				<div class="russian{% if _locale=='ru_RU' or _locale==null %} active{% endif %}" title="{% trans %}русский{% endtrans %}"><a href="{{ path('locale', { 'locale': 'ru_RU' }) }}"></a></div>
 				<div class="english{% if _locale=='en_US' %} active{% endif %}" title="{% trans %}английский{% endtrans %}"><a href="{{ path('locale', { 'locale': 'en_US' }) }}"></a></div>
@@ -170,9 +170,7 @@
 				<li>{% trans %}Информация{% endtrans %}
                     <ul class="subMenuNavigation">
                         <li><a href="/articles">{% trans %}статьи{% endtrans %}</a></li>
-                        {#{% for link in curUser.getUserLinks() %}
-                            <li><a href="{{ link.getUrl() }}">{{ link.getTitle() }}</a></li>
-                        {% endfor %}#}
+                        {{ app.getSession().get('_user_links')|raw }}
 						{% if curUser %}
                         <li style="	background-color: #fdf5ef; border-radius: 0px;"><a href="#" class="add-bookmark">добавить ссылку</a></li>
 						{% endif %}
@@ -213,7 +211,7 @@
                 {% endif %}
 				<li class="chatInvite">{% trans %}Приглашение в чат{% endtrans %}</li>
                 <div id="notepad" style="margin-top: 10px;display:none; width: 272px;">
-                    <textarea id="notepad-text" style="height: 200px;width: 189px;resize: none;border: 1px solid #CC2A03;border-radius: 5px;margin-left: -9px;float: left;margin-top: 10px;"></textarea>
+                    <textarea id="notepad-text" style="height: 200px;width: 189px;resize: none;border: 1px solid #CC2A03;border-radius: 5px;margin-left: -9px;float: left;margin-top: 10px;">{{ app.getSession().get('_notepad') }}</textarea>
                     <div class="closeNotepad"><a title="закрыть блокнот" href=""></a></div>
                 </div>
 				<div style="clear: both;">

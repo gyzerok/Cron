@@ -395,10 +395,10 @@
 	color: #333;
 }
 
-#menu ul.menuNavigation li.chatInvite.indicate {
-    background-color: #000000;
-    color: #ff0000;
-}
+/*#menu ul.menuNavigation li.chatInvite.indicate {*/
+    /*background-color: #000000;*/
+    /*color: #ff0000;*/
+/*}*/
 
 #menu ul.menuNavigation li.chatInvite:hover {
 	color: #000;
@@ -496,9 +496,9 @@
 }
 
 
-.open-dialog-list.indicate {
-    background-color: #000000 !important;
-    color: #ff0000 !important;
+/*.open-dialog-list.indicate {*/
+    /*background-color: #000000 !important;*/
+    /*color: #ff0000 !important;*/
 }
 
 
@@ -2592,9 +2592,9 @@ h2.chatInviteTitle{
 	color: #425073;
 	font-family: 'Cambria';
 }
-.chat-tab.indicate {
-    background-color: #000000;
-    color: #ff0000;
+/*.chat-tab.indicate {*/
+    /*background-color: #000000;*/
+    /*color: #ff0000;*/
 }
 
 .mainWindow{

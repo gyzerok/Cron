@@ -163,28 +163,6 @@ $(document).ready(function() {
     });
 
 
-    //todo collapse
-    $.ajax({
-        url: '/ajax/getUserLinks',
-        success: function(response){
-            $(".add-bookmark").parent('li').before(response);
-        }
-    });
-    //todo collapse
-    $.ajax({
-        url: '/ajax/loadNotepad',
-        success: function(response){
-            $("#notepad-text").val(response);
-        }
-    });
-    //todo collapse
-    $.ajax({
-        url: '/ajax/getHeaderSrvmsg',
-        success: function(response){
-            $("#header-srvmsg").html(response);
-        }
-    });
-	
 	//Делаем заметки статей ссылками
 	$(".article-notes-list > li").click(function(){  
 	  window.location=$(this).find("a").attr("href"); return false;  
@@ -205,7 +183,7 @@ $(document).ready(function() {
     //Sounds
     soundManager.setup({ 
         url: '/flash/',
-        flashVersion: 9, 
+        flashVersion: 9
     });
             
     soundManager.onload = function() {    

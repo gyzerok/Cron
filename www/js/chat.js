@@ -1,4 +1,6 @@
+var indicate_interval = 0;
 $(document).ready(function(){
+
     $(".open-dialog-list").bind('click', function(){
         $.ajax({
             url: '/chat/getDialogList',
@@ -101,7 +103,9 @@ $(document).ready(function(){
         });*/
 //        $(".invites-container").html('<div class="invites-empty-text">Загрузка...</div>');
         soundManager.stop('chatInvite');
-        $(this).animate({borderWidth: '2px', borderColor: '#e6e6e6', color: '#333'}, 500);
+//        $(this).animate({borderWidth: '2px', borderColor: '#e6e6e6', color: '#333'}, 500);
+//        clearTimeout(indicate_interval);
+        $(".chatInvite").removeClass('indicate');
         $(".chatInviteWindow").toggle();
     });
     $(".closeInviteWindow a").bind('click', function(){
@@ -116,6 +120,8 @@ $(document).ready(function(){
             data: { invite:singleInvite.data('invite') }
         });
         removeSingleInvite(singleInvite);
+//        clearTimeout(indicate_interval);
+        $(".chatInvite").removeClass('indicate');
         return false;
     });
     $(".accept-invite").live('click', function(){
@@ -147,6 +153,8 @@ $(document).ready(function(){
             }
         });
         removeSingleInvite(singleInvite);
+//        clearTimeout(indicate_interval);
+        $(".chatInvite").removeClass('indicate');
         return false;
     });
     function removeSingleInvite (obj) {
@@ -342,6 +350,8 @@ $(document).ready(function(){
 
     var chat_update_interval = setInterval('temp_updateChat()', 10000);
 
+    indicate_interval = setInterval(indicateChatInvite, 1000);
+
 
 //    $('.chatWindow').click();
 });
@@ -358,8 +368,6 @@ function temp_loadChat(){
             }
         }
     });
-
-
     //Загрузка приглашений в чат
     $.ajax({
         url: '/chat/getInviteList',
@@ -368,11 +376,7 @@ function temp_loadChat(){
                 response = '<div class="invites-empty-text">Приглашений нет.</div>';
             } else {
                 soundManager.play('chatInvite');
-                $(document).ready(function() {
-                    $(".chatInvite").animate({borderWidth: '2px', borderColor: '#e85b2d', color: '#000'}, 500);
-                    $(".chatInvite").animate({borderWidth: '2px', borderColor: '#e6e6e6', color: '#333'}, 500);
-                    setTimeout(arguments.callee, 1000)
-                });
+                indicateChatInvite();
             }
             $(".chatInviteWindow .invites-container").html(response);
         }
@@ -418,11 +422,12 @@ function temp_updateChat(){
         success: function(data){
             if (data.invites){
                 soundManager.play('chatInvite');
-                $(document).ready(function() {
-                    $(".chatInvite").animate({borderWidth: '2px', borderColor: '#e85b2d', color: '#000'}, 500);
-                    $(".chatInvite").animate({borderWidth: '2px', borderColor: '#e6e6e6', color: '#333'}, 500);
-                    setTimeout(arguments.callee, 1000)
-                });
+                $(".chatInvite").addClass('indicate');
+//                $(document).ready(function() {
+//                    $(".chatInvite").animate({borderWidth: '2px', borderColor: '#e85b2d', color: '#000'}, 500);
+//                    $(".chatInvite").animate({borderWidth: '2px', borderColor: '#e6e6e6', color: '#333'}, 500);
+//                    setTimeout(arguments.callee, 1000)
+//                });
             }
             if (data.new_dialogs){
                 $(document).ready(function() {
@@ -435,14 +440,14 @@ function temp_updateChat(){
             for (var i in data.chats){
                 var cur_chat = $(".chat-content[data-chat-id="+i+"]");
                 for (var j in data.chats[i]){
-                    $(".chat-tab:not(.active)[data-tab="+cur_chat.attr('tab')+"]").addClass('indicate');
+//                    $(".chat-tab:not(.active)[data-tab="+cur_chat.attr('tab')+"]").addClass('indicate');
                     cur_chat.find(".messageWrap").append('<div class="singleMessage"><div class="chatUsername">'+data.chats[i][j].user_name+'</div><div class="messageText">'+data.chats[i][j].msg_text+'</div></div>');
                 }
             }
             for (var i in data.dialogs){
                 var cur_chat = $(".chat-content[data-dialog-id="+i+"]");
                 for (var j in data.dialogs[i]){
-                    $(".chat-tab:not(.active)[data-tab="+cur_chat.attr('tab')+"]").addClass('indicate');
+//                    $(".chat-tab:not(.active)[data-tab="+cur_chat.attr('tab')+"]").addClass('indicate');
                     cur_chat.find(".messageWrap").append('<div class="singleMessage"><div class="chatUsername">'+data.dialogs[i][j].user_name+'</div><div class="messageText">'+data.dialogs[i][j].msg_text+'</div></div>');
                 }
             }
@@ -496,4 +501,13 @@ function getDialog(obj, event){
 function nl2br (str, is_xhtml) {
     var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
     return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1'+ breakTag +'$2');
+}
+
+function indicateChatInvite () {
+    if ($(".indicate").size()){
+        $(".chatInvite.indicate").animate({borderWidth: '2px', borderColor: '#e85b2d', color: '#000'}, 500)
+            .animate({borderWidth: '2px', borderColor: '#e6e6e6', color: '#333'}, 500);
+//        $(".chat-tab.indicate").animate({borderWidth: '2px', borderColor: '#e85b2d', color: '#000'}, 500)
+//            .animate({borderWidth: '2px', borderColor: '#e6e6e6', color: '#333'}, 500);
+    }
 }
