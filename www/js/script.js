@@ -183,6 +183,7 @@ $(document).ready(function() {
     //Sounds
     soundManager.setup({ 
         url: '/flash/',
+        debugMode: false,
         flashVersion: 9
     });
             

@@ -32,9 +32,13 @@ class AbstractController extends Controller implements InitializableControllerIn
         $request->getSession()->set('_user_links', $this->getUserLinks());
 
         $request->getSession()->set('_sound_settings', $this->getSoundSettings());
+
+        $request->getSession()->set('_dialog_list', $this->getDialogList());
+
+        $request->getSession()->set('_invite_list', $this->getInviteList());
     }
 
-    public function getSrvmsg()
+    public function getSrvMsg()
     {
         $admin_settings = $this->getDoctrine()->getRepository('CronCronBundle:AdminSettings')->find(1);
 
@@ -111,7 +115,7 @@ class AbstractController extends Controller implements InitializableControllerIn
                             }
                         }
                     }
-                    $classes = substr($classes,0,strlen($classes)-1);
+//                    $classes = substr($classes,0,strlen($classes)-1);
                 }
                 return $classes;
             } else {
@@ -119,6 +123,70 @@ class AbstractController extends Controller implements InitializableControllerIn
             }
 
         }
+    }
+
+    public function getDialogList(){
+        $user = $this->getUser();
+        if ($user instanceof User){
+            $dialogs = $this->getDoctrine()->getRepository('CronCronBundle:Dialog')
+                ->createQueryBuilder('dialog')
+                ->where('(dialog.user1 = :uid AND dialog.del1 = 0 AND dialog.spam1 = 0) OR (dialog.user2 = :uid AND dialog.del2 = 0 AND dialog.spam2 = 0)')
+                ->setParameter('uid', $user->getId())
+                ->orderBy('dialog.start_date', 'DESC')
+                ->getQuery()
+                ->getResult();
+
+            $total_unreads = 0;
+
+            foreach ($dialogs as $dialog) {
+                $unreads = $this->getDoctrine()->getRepository('CronCronBundle:DialogMsg')
+                    ->createQueryBuilder('dm')
+                    ->select('COUNT(dm.dialog) as unreads')
+                    ->where('dm.dialog = :did AND dm.read_flag = 0 AND dm.user = :uid')
+                    ->setParameter('did', $dialog->getId())
+                    ->setParameter('uid', ($dialog->getUser1()==$user ? $dialog->getUser2()->getId():$dialog->getUser1()->getId()))
+                    ->groupBy('dm.dialog')
+                    ->getQuery()
+                    ->getResult();
+                $dialog->unreads = '';
+                if ($unreads){
+                    if ($unreads[0]){
+                        $dialog->unreads = '('.$unreads[0]['unreads'].')';
+                        $total_unreads += $unreads[0]['unreads'];
+                    }
+                }
+            }
+
+            return $this->renderView("CronCronBundle:Chat:dialogs.html.twig", array(
+                    "dialogs" => $dialogs,
+                    "total_unreads" => $total_unreads,
+                    "curUser" => $user
+                )
+            );
+        } else {
+            return '<div class="dialogs-empty-text">Диалогов нет.</div>';
+        }
+    }
+
+    public function getInviteList(){
+        $user = $this->getUser();
+        if ($user instanceof User){
+            $invites = $this->getDoctrine()->getRepository('CronCronBundle:ChatInvite')
+                ->createQueryBuilder('chat_invite')
+                ->where('chat_invite.user2 = :uid')
+                ->setParameter('uid', $user->getId())
+                ->orderBy('chat_invite.invite_date', 'DESC')
+                ->getQuery()
+                ->getResult();
+
+            if (count($invites)){
+                return $this->renderView("CronCronBundle:Chat:invites.html.twig", array(
+                        "invites" => $invites
+                    )
+                );
+            }
+        }
+        return '<div class="invites-empty-text">Приглашений нет.</div>';
     }
 
     private function updateUserCounters(Request $request)

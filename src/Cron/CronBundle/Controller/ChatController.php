@@ -70,6 +70,8 @@ class ChatController extends AbstractController
                     "curUser" => $user
                 )
             );
+        } else {
+            return new Response("");
         }
     }
 
@@ -139,7 +141,7 @@ class ChatController extends AbstractController
                         ->getResult();
                     if (count($srv_messages)){
                         foreach ($srv_messages as $msg) {
-                            $srvmsgs['chats'][$chat_id][$msg->getId()] = array("msg_text"=>$this->getSrvMsg($msg));
+                            $srvmsgs['chats'][$chat_id][$msg->getId()] = array("msg_text"=>$this->getChatSrvMsg($msg));
                         }
                     }
                 }
@@ -174,7 +176,7 @@ class ChatController extends AbstractController
                         ->getResult();
                     if (count($srv_messages)){
                         foreach ($srv_messages as $msg) {
-                            $srvmsgs['dialogs'][$dialog_id][$msg->getId()] = array("msg_text"=>$this->getSrvMsg($msg));
+                            $srvmsgs['dialogs'][$dialog_id][$msg->getId()] = array("msg_text"=>$this->getChatSrvMsg($msg));
                         }
                     }
                 }
@@ -188,10 +190,12 @@ class ChatController extends AbstractController
                 "dialogs" => $dialogs,
                 "srvmsgs" => $srvmsgs
             )));
+        } else {
+            return new Response("");
         }
     }
 
-    public function getSrvMsg($srvmsg){
+    public function getChatSrvMsg($srvmsg){
         $user = $this->getUser();
         if (/*$request->isMethod('POST') && */($user instanceof User)){
             switch($srvmsg->getMsgTextId()){

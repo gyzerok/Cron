@@ -16,7 +16,7 @@
     <script src="/js/script.js"></script>
     <script src="/js/soundmanager2.js"></script>
   </head>
-  <body class="{{ app.getSession().get('_sound_settings') }}">
+  <body class="{{ app.getSession().get('_sound_settings') }}{% if app.user %}auth{% endif %}">
   
   {% set _locale = app.getSession().get('_locale') %}
 	{% block wrapper %}
@@ -83,13 +83,13 @@
             <div class="dialogsWrapper" style="display:none;">
                 <div class="closeDialogWindow"><a href=""></a></div>
                 <h2 class="dialogTitle">{% trans %}Диалоги{% endtrans %}</h2>
-                <div class="dialogs-container"></div>
+                <div class="dialogs-container">{{ app.getSession().get('_dialog_list')|raw }}</div>
             </div>
 
             <div class="chatInviteWindow" style="display:none;">
                 <div class="closeInviteWindow"><a href=""></a></div>
                 <h2 class="chatInviteTitle">{% trans %}Приглашения в чат{% endtrans %}</h2>
-                <div class="invites-container"></div>
+                <div class="invites-container">{{ app.getSession().get('_invite_list')|raw }}</div>
             </div>
 			<script>
 			$(document).ready(function() {
