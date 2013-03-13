@@ -61,9 +61,9 @@
                         <div class="questionText">
                         {{ item.text }}
                             <div class="socialIcons">
-                                <div class="spamButton {% if curUser in item.spams %}spamButtonActive{% endif %}"></div>
-                                <div class="likeButton {% if curUser in item.likes %}likeButtonActive{% endif %}"></div>
-                                <div class="repostButton"></div>
+                                <div title="пометить как спам" class="spamButton {% if curUser in item.spams %}spamButtonActive{% endif %}"></div>
+                                <div title="мне нравится" class="likeButton {% if curUser in item.likes %}likeButtonActive{% endif %}"></div>
+                                <div title="добавить с закладки" class="repostButton"></div>
                                 <form class="answer">
                                     {% if item.iAnswered %}
                                         {% if item.getPrivate()<1 %}

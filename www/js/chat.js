@@ -10,7 +10,7 @@ $(document).ready(function(){
         });
         $(".dialogsWrapper .dialogs-container").html('<div class="dialogs-empty-text">Загрузка...</div>');
         $(".dialogsWrapper").toggle();
-        $(this).removeClass('indicate');
+        $(this).animate({backgroundColor: '#fff'}, 500);
     });
     $(".closeDialogWindow a").bind('click', function(){
         $(".dialogsWrapper").hide();
@@ -100,7 +100,8 @@ $(document).ready(function(){
             }
         });*/
 //        $(".invites-container").html('<div class="invites-empty-text">Загрузка...</div>');
-        $(this).removeClass('indicate');
+        soundManager.stop('chatInvite');
+        $(this).animate({borderWidth: '2px', borderColor: '#e6e6e6', color: '#333'}, 500);
         $(".chatInviteWindow").toggle();
     });
     $(".closeInviteWindow a").bind('click', function(){
@@ -196,7 +197,7 @@ $(document).ready(function(){
         $('.chatWrapper').fadeIn();
         openChat.show();
         $(".chat-input").focus();
-        $(".open-dialog-list").removeClass('indicate');
+        $(".open-dialog-list").animate({backgroundColor: '#fff'}, 500);
     });
     $('.closeChat').click(function() {
 //        openChat.fadeOut();
@@ -363,7 +364,12 @@ function temp_loadChat(){
             if (!$.trim(response)){
                 response = '<div class="invites-empty-text">Приглашений нет.</div>';
             } else {
-                $(".chatInvite").addClass('indicate');
+                soundManager.play('chatInvite');
+                $(document).ready(function() {
+                    $(".chatInvite").animate({borderWidth: '2px', borderColor: '#e85b2d', color: '#000'}, 500);
+                    $(".chatInvite").animate({borderWidth: '2px', borderColor: '#e6e6e6', color: '#333'}, 500);
+                    setTimeout(arguments.callee, 1000)
+                });
             }
             $(".chatInviteWindow .invites-container").html(response);
         }
@@ -378,7 +384,10 @@ function temp_loadChat(){
             var dialogs_container = $(".dialogsWrapper .dialogs-container");
             dialogs_container.html(response);
             if (dialogs_container.find('.messagesAmount').text()!=''){
-                $(".open-dialog-list").addClass('indicate');
+                soundManager.play('personalMessage');
+                $(document).ready(function() {
+                    $(".open-dialog-list").animate({backgroundColor: '#e85b2d '}, 500);
+                });
             }
         }
     });
@@ -405,10 +414,17 @@ function temp_updateChat(){
         },
         success: function(data){
             if (data.invites){
-                $(".chatInvite").addClass('indicate');
+                soundManager.play('chatInvite');
+                $(document).ready(function() {
+                    $(".chatInvite").animate({borderWidth: '2px', borderColor: '#e85b2d', color: '#000'}, 500);
+                    $(".chatInvite").animate({borderWidth: '2px', borderColor: '#e6e6e6', color: '#333'}, 500);
+                    setTimeout(arguments.callee, 1000)
+                });
             }
             if (data.new_dialogs){
-                $(".open-dialog-list").addClass('indicate');
+                $(document).ready(function() {
+                    $(".open-dialog-list").animate({backgroundColor: '#e85b2d '}, 500);
+                });
             }
 
             $("#chat-last-update").attr('value', data.chat_last_update);
@@ -442,6 +458,7 @@ function temp_updateChat(){
                     cur_chat.find(".messageWrap").append('<div class="singleMessage chatSrvMsg"><div class="messageText">'+data.srvmsgs.dialogs[i][j].msg_text+'</div></div>');
                 }
             }
+
 
             $('.chat').each(function(){
                 $(this)[0].scrollTop = $(this)[0].scrollHeight;
