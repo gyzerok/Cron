@@ -824,6 +824,7 @@ h2.acticle {
 	border-radius: 7px;
 	margin: 5px auto 0px auto;
 	overflow: hidden;
+    min-height: 47px;
 }
 
 .userName {

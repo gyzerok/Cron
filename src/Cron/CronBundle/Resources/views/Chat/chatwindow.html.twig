@@ -28,7 +28,7 @@
                 <span>Входящий чат</span>
                 {% set counter = 1 %}
                 {% for in_chat in income_chats %}
-                    <div class="numberOnTab chat-tab" data-tab="in{{ counter }}">{{ counter }}</div>
+                    <div class="numberOnTab chat-tab" data-tab="in{{ counter }}" title="{{ in_chat.getChat().getQuestion().getText() }}">{{ counter }}</div>
                     {% set counter = counter + 1 %}
                 {% endfor %}
             </div>
