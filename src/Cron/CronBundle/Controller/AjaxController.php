@@ -431,9 +431,15 @@ class AjaxController extends AbstractController
         }
 
         $link = new UserLink();
+
+        $url = $request->get('url');
+        if (substr($url,0,7)!='http://'){
+            $url = "http://".$url;
+        }
+
         $link->setUser($user)
             ->setTitle($request->get('title'))
-            ->setUrl($request->get('url'))
+            ->setUrl($url)
             ->setDatetime(new \DateTime());
 
 
@@ -441,27 +447,27 @@ class AjaxController extends AbstractController
         $em->persist($link);
         $em->flush();
 
-        $html = '<li><a href="'.$request->get('url').'" target="_blank">'.$request->get('title').'</a></li>';
+        $html = '<li><a href="'.$url.'" target="_blank">'.$request->get('title').'</a></li>';
 
         return new Response($html);
     }
 
-    public function getUserLinksAction(Request $request)
-    {
-        $user = $this->getUser();
-        if (!$user instanceof User){
-            return new Response("Fail", "403");
-        }
-
-        $links = $this->getDoctrine()->getRepository("CronCronBundle:UserLink")->findBy(array('user' => $user->getId()));
-
-        $html = '';
-        foreach ($links as $link) {
-            $html .= '<li><a href="'.$link->getUrl().'" target="_blank">'.$link->getTitle().'</a></li>';
-        }
-
-        return new Response($html);
-    }
+//    public function getUserLinksAction(Request $request)
+//    {
+//        $user = $this->getUser();
+//        if (!$user instanceof User){
+//            return new Response("Fail", "403");
+//        }
+//
+//        $links = $this->getDoctrine()->getRepository("CronCronBundle:UserLink")->findBy(array('user' => $user->getId()));
+//
+//        $html = '';
+//        foreach ($links as $link) {
+//            $html .= '<li><a href="'.$link->getUrl().'" target="_blank">'.$link->getTitle().'</a></li>';
+//        }
+//
+//        return new Response($html);
+//    }
 
     public function repostQuestionAction(Request $request)
     {
@@ -521,29 +527,29 @@ class AjaxController extends AbstractController
         return new Response("SUCCESS");
     }
 
-    public function loadNotepadAction(Request $request)
-    {
-        $user = $this->getUser();
-        if (!$user instanceof User){
-            return new Response("Fail", "403");
-        }
-
-        $notepad = $this->getDoctrine()->getRepository("CronCronBundle:Notepad")->findOneBy(array("user"=>$user->getId()));
-
-        if (!$notepad instanceof \Cron\CronBundle\Entity\Notepad){
-            $notepad = new \Cron\CronBundle\Entity\Notepad();
-            $notepad->setUser($user);
-            $notepad->setText('');
-        }
-        $notepad->setDatetime(new \DateTime());
-//        $notepad->setText('');
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($notepad);
-        $em->flush();
-
-        return new Response($notepad->getText());
-    }
+//    public function loadNotepadAction(Request $request)
+//    {
+//        $user = $this->getUser();
+//        if (!$user instanceof User){
+//            return new Response("Fail", "403");
+//        }
+//
+//        $notepad = $this->getDoctrine()->getRepository("CronCronBundle:Notepad")->findOneBy(array("user"=>$user->getId()));
+//
+//        if (!$notepad instanceof \Cron\CronBundle\Entity\Notepad){
+//            $notepad = new \Cron\CronBundle\Entity\Notepad();
+//            $notepad->setUser($user);
+//            $notepad->setText('');
+//        }
+//        $notepad->setDatetime(new \DateTime());
+////        $notepad->setText('');
+//
+//        $em = $this->getDoctrine()->getManager();
+//        $em->persist($notepad);
+//        $em->flush();
+//
+//        return new Response($notepad->getText());
+//    }
 
     public function updateNotepadAction(Request $request)
     {

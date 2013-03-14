@@ -163,28 +163,6 @@ $(document).ready(function() {
     });
 
 
-    //todo collapse
-    $.ajax({
-        url: '/ajax/getUserLinks',
-        success: function(response){
-            $(".add-bookmark").parent('li').before(response);
-        }
-    });
-    //todo collapse
-    $.ajax({
-        url: '/ajax/loadNotepad',
-        success: function(response){
-            $("#notepad-text").val(response);
-        }
-    });
-    //todo collapse
-    $.ajax({
-        url: '/ajax/getHeaderSrvmsg',
-        success: function(response){
-            $("#header-srvmsg").html(response);
-        }
-    });
-	
 	//Делаем заметки статей ссылками
 	$(".article-notes-list > li").click(function(){  
 	  window.location=$(this).find("a").attr("href"); return false;  
@@ -200,6 +178,43 @@ $(document).ready(function() {
 	function() {
 		$(this).find('a span').css({'text-decoration': 'none'})	
 	});
+    
+    
+    //Sounds
+    soundManager.setup({ 
+        url: '/flash/',
+        debugMode: false,
+        flashVersion: 9
+    });
+            
+    soundManager.onload = function() {    
+        mySound = soundManager.createSound({
+            id: 'newQuestion',     
+            url: '/audio/newQuestion.mp3',         
+            volume: 100        
+            });
+        mySound = soundManager.createSound({
+            id: 'personalMessage',     
+            url: '/audio/personalMessage.mp3',         
+            volume: 100       
+            }); 
+        mySound = soundManager.createSound({
+            id: 'questionIsClosed',     
+            url: '/audio/questionIsClosed.mp3',         
+            volume: 100        
+            }); 
+        mySound = soundManager.createSound({
+            id: 'inChat',     
+            url: '/audio/inChat.mp3',         
+            volume: 100        
+        }); 
+            mySound = soundManager.createSound({
+            id: 'chatInvite',     
+            url: '/audio/chatInvite.mp3',         
+            volume: 100        
+        });     
+    }
+  
 });
 
 function updateNotepad(){

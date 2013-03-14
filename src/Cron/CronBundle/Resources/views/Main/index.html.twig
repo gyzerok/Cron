@@ -283,8 +283,9 @@
         {% endfor %}
     {% endif %}
     {% if show_success_msg %}
-        <script type="text/javascript">
-            alert('Successful registration!');
-        </script>
+        <div class="successful-reg">
+            <p>На Ваш email отправлено письмо, <br /> прочтите его для завершения регистрации</p>
+            <a href="/" class="close-confirmation">OK</a>
+        </div>
     {% endif %}
 {% endblock %}

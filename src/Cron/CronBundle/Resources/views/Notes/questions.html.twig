@@ -1,6 +1,7 @@
 {% extends '::base.html.twig' %}
 {% block content %}
     <h2 class="categoryH2">Заметки / Вопросы</h2>
+    <div style="max-height: 800px;overflow: auto;width: 733px;margin-left: -5px;">
     {% if questions %}
         <ul class="article-list">
             {% for item in questions %}
@@ -47,6 +48,7 @@
                 </form>
             {% endfor %}
         </ul>
+        </div>
     {% else %}
         <div class="empty-notes">Нет избранных вопросов</div>
     {% endif %}
