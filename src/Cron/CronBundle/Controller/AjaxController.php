@@ -599,3 +599,4 @@ class AjaxController extends AbstractController
         }
     }
 }
+
