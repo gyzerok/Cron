@@ -62,13 +62,15 @@
                         {{ item.text }}
                             <div class="socialIcons">
                                 {% if curUser %}
-                                    <div title="пометить как спам" class="spamButton {% if curUser in item.spams %}spamButtonActive{% endif %}"></div>
-                                    <div title="мне нравится" class="likeButton {% if curUser in item.likes %}likeButtonActive{% endif %}"></div>
-                                    <div title="добавить с закладки" class="repostButton"></div>
+                                    {% if item.getUser()!=curUser %}
+                                        <div title="пометить как спам" class="spamButton {% if curUser in item.spams %}spamButtonActive{% endif %}"></div>
+                                        <div title="мне нравится" class="likeButton {% if curUser in item.likes %}likeButtonActive{% endif %}"></div>
+                                        <div title="добавить с закладки" class="repostButton"></div>
+                                    {% endif %}
                                 {% endif %}
                                 {#{% if curUser or _rush %}#}
                                     <form class="answer">
-                                        {% if item.iAnswered or not curUser %}
+                                        {% if item.iAnswered or not curUser or item.getUser()==curUser %}
                                             {% if item.getPrivate()<1 %}
                                                 {% set answer_button_value = item.answers|length ~ ' отв.' %}
                                             {% else %}
@@ -77,14 +79,14 @@
                                         {% else %}
                                             {% set answer_button_value = 'ответить' %}
                                         {% endif %}
-                                        <input class="answerButton" type="button" value="{{ answer_button_value }}" />
+                                        <input class="answerButton" type="button" {% if not item.answers|length %}disabled="disabled"{% endif %} value="{{ answer_button_value }}" />
                                     </form>
                                 {#{% endif %}#}
                             </div>
                         </div>
                     </div>
                     {#{% if curUser or _rush %}#}
-                        {% if category.getId()==null or item.iAnswered or not curUser %}
+                        {% if category.getId()==null or item.iAnswered or not curUser or item.getUser()==curUser %}
                             <div class="myAnswer {% if item.answers==null %}no-border{% endif %}">
                                 {% if item.getPrivate()<1 %}
                                     {% for answer in item.answers %}
@@ -94,16 +96,18 @@
                                             <div style="clear: both;"></div>
                                             <div class="questionText">
                                                 {{ answer.getText() }}
-                                                <div class="socialIcons">
-                                                    <div class="spamButton" title="Пометить как спам"></div>
-                                                    {% if curUser %}
-                                                        <div class="likeButton" title="Мне нравится!"></div>
-                                                    {% endif %}
-                                                    <div class="arrowButton inviteUser" title="Отправить приглашение в чат"></div>
-                                                    {% if curUser %}
-                                                        <div class="letterButton sendMessage" title="Отправить сообщение"></div>
-                                                    {% endif %}
-                                                </div>
+                                                {#{% if answer.getUser()!=curUser %}#}
+                                                    <div class="socialIcons">
+                                                        <div class="spamButton" title="Пометить как спам"></div>
+                                                        {% if curUser %}
+                                                            <div class="likeButton" title="Мне нравится!"></div>
+                                                        {% endif %}
+                                                        <div class="arrowButton inviteUser" title="Отправить приглашение в чат"></div>
+                                                        {% if curUser %}
+                                                            <div class="letterButton sendMessage" title="Отправить сообщение"></div>
+                                                        {% endif %}
+                                                    </div>
+                                                {#{% endif %}#}
                                             </div>
                                         </div>
                                     {% endfor %}

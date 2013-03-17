@@ -4,7 +4,7 @@
 	$(document).ready(function(){
 		var editor = new TINY.editor.edit('editor', {
 			id: 'srvmsg-field',
-			width: 720,
+			width: 700,
 			height: 175,
 			cssclass: 'tinyeditor',
 			controlclass: 'tinyeditor-control',
@@ -30,7 +30,7 @@
 	});
 	</script>
     <h2 class="categoryH2">{{ title }}</a></h2>
-    <form action="" method="post" id="srvmsg-form">
+    <form action="" method="post" id="srvmsg-form" style="margin: 15px;">
         <textarea name="srvmsg" id="srvmsg-field" cols="30" rows="10">{{ srvmsg }}</textarea><br/>
         <input type="submit" value="сохранить" id="srvmsg-submit">
     </form>

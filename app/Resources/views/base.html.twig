@@ -11,10 +11,10 @@
 	<script src="/js/jquery.form.js"></script>
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	<script src="/js/jquery.autosize-min.js"></script>
-    <script src="/js/chat.js"></script>
-	<script src="/js/tiny.editor.packed.js"></script>
-    <script src="/js/script.js"></script>
-    <script src="/js/soundmanager2.js"></script>
+      <script src="/js/tiny.editor.packed.js"></script>
+      <script src="/js/soundmanager2.js"></script>
+      <script src="/js/script.js"></script>
+      <script src="/js/chat.js"></script>
   </head>
   <body class="{{ app.getSession().get('_sound_settings') }}{% if app.user %}auth{% endif %}">
   
@@ -24,7 +24,7 @@
 	    {% block header %}
 		<div id="header">
 			<div class="logo" title="{% trans %}На главную{% endtrans %}"><a href="{{ path('index') }}"></a></div>
-            <div id="header-srvmsg">{{ app.getSession().get('_srvmsg') }}</div>
+            <div id="header-srvmsg">{{ app.getSession().get('_srvmsg')|raw }}</div>
 			<div class="language">
 				<div class="russian{% if _locale=='ru_RU' or _locale==null %} active{% endif %}" title="{% trans %}русский{% endtrans %}"><a href="{{ path('locale', { 'locale': 'ru_RU' }) }}"></a></div>
 				<div class="english{% if _locale=='en_US' %} active{% endif %}" title="{% trans %}английский{% endtrans %}"><a href="{{ path('locale', { 'locale': 'en_US' }) }}"></a></div>
@@ -141,19 +141,7 @@
 			<ul class="menuNavigation">
 				<li>{% trans %}Вопросы{% endtrans %}
 					<ul class="subMenuNavigation">
-					  <li><a href="/category/2">семья, дом, дети</a></li>
-					  <li><a href="/category/3">любовь, отношения</a></li>
-					  <li><a href="/category/5">культура, досуг</a></li>
-					  <li><a href="/category/6">туризм</a></li>
-					  <li><a href="/category/7">компьютеры, интернет</a></li>
-					  <li><a href="/category/8">компьютерные игры</a></li>
-					  <li><a href="/category/9">техника</a></li>
-					  <li><a href="/category/10">знакомства, общение</a></li>
-					  <li><a href="/category/11">экономика</a></li>
-					  <li><a href="/category/12">юриспруденция</a></li>
-					  <li><a href="/category/13">опросы</a></li>
-					  <li><a href="/category/14">новости</a></li>
-					  <li><a href="/category/15">спорт</a></li>
+                        {{ app.getSession().get('_category_list_view')|raw }}
 					</ul>
 				</li>
                 {% if app.user %}

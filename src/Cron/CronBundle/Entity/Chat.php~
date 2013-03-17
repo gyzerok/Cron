@@ -32,7 +32,7 @@ class Chat {
     protected $owner;
 
     /**
-     * @var User
+     * @var Question
      *
      * @ORM\OneToOne(targetEntity="Question")
      * @ORM\JoinColumns({

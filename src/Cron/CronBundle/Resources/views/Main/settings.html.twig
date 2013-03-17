@@ -47,7 +47,9 @@
                 <div style="float:left;">
                     <div class="settingsGroupHeader">по категориям</div>
                     {% for category in categories %}
-                        <input type="checkbox" name="cat[{{ category.getId() }}]" id="income_{{ category.getId() }}" {{ settings.income_cats[category.getId()] }}> <label for="income_{{ category.getId() }}">{{ category.getName() }}</label><br>
+                        {% if not loop.first %}
+                            <input type="checkbox" name="cat[{{ category.getId() }}]" id="income_{{ category.getId() }}" {{ settings.income_cats[category.getId()] }}> <label for="income_{{ category.getId() }}">{{ category.getName() }}</label><br>
+                        {% endif %}
                     {% endfor %}
                 </div>
                 <div style="float:left; margin-left: 36px">
@@ -69,7 +71,9 @@
                 <div style="float:left;">
                     <div class="settingsGroupHeader">по категориям</div>
                     {% for category in categories %}
-                        <input type="checkbox" name="cat[{{ category.getId() }}]" id="view_{{ category.getId() }}"  {{ settings.view_cats[category.getId()] }}> <label for="view_{{ category.getId() }}">{{ category.getName() }}</label><br>
+                        {% if not loop.first %}
+                            <input type="checkbox" name="cat[{{ category.getId() }}]" id="view_{{ category.getId() }}"  {{ settings.view_cats[category.getId()] }}> <label for="view_{{ category.getId() }}">{{ category.getName() }}</label><br>
+                        {% endif %}
                     {% endfor %}
                 </div>
                 <div style="float:left; margin-left: 36px">

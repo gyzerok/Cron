@@ -217,7 +217,7 @@ class UserSettings {
     /**
      * Get sounds
      *
-     * @return string 
+     * @return Array
      */
     public function getSounds()
     {

@@ -34,7 +34,7 @@ class RobokassaController extends AbstractController
         $inv_id = time()*count($user->getUsername());
 
         // описание заказа
-        $inv_desc = "Покупка кредитов на aditus.com";
+        $inv_desc = "Покупка кредитов на aditus.ru";
 
         // сумма заказа
         $creditCurrency = $this->getCreditCurrency();

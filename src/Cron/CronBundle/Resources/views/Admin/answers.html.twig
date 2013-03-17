@@ -58,42 +58,46 @@
         });
     </script>
     <h2 class="categoryTitle">Ответы</h2>
-    {% if app.user.getRoles()=='ROLE_ADMIN' %}
-        {% if tab=='all' %}
-            Все
-            <a href="/admin/answers/spam">Отмеченные как спам</a>
-        {% else %}
-            <a href="/admin/answers/all">Все</a>
-            Отмеченные как спам
-        {% endif %}
-    {% endif %}
-    <div style="clear:both;"></div>
-    {% if answers %}
-        <div id="showQuestion">
-            {% for item in answers %}
-                <div class="singleQuestion" data-id="{{ item.getId() }}" data-user="{{ item.getUser().getId() }}">
-                    <div class="userName">{{ item.getUser() }}</div>
-                    <div class="questionDate">{{ item.pubDate|date('d.m.Y H:i') }}</div>
-                    <div style="clear: both;"></div>
-                    <div class="questionText">
-                        {{ item.text }}
-                        <div class="socialIcons">
-                            {% if tab=='spam' %}
-                                {#<div class="spam-index">Спам: {{ item.getSpams()|length }}</div>#}
-                                <div class="spam-index">Спам-индекс: {{ item.getUser().getSpamActivity() }}</div>
-                                <div class="questions-count">Вопросов: {{ item.question_count }}</div>
-                                <a href="#" class="confirm-spam">Подтвердить</a>
-                                <a href="#" class="cancel-spam">Отменить</a>
-                                <a href="#" class="block-user">Заблокировать пользователя</a>
-                            {% else %}
-                                <a href="#" class="delete-answer">Удалить</a>
-                            {% endif %}
+    <div class="admin-wrap">
+        <div class="admin-menu">
+            {% if app.user.getRole()==2 %}
+                {% if tab=='all' %}
+                    Все
+                    <a href="/admin/answers/spam">Отмеченные как спам</a>
+                {% else %}
+                    <a href="/admin/answers/all">Все</a>
+                    Отмеченные как спам
+                {% endif %}
+            {% endif %}
+        </div>
+        <div style="clear:both;"></div>
+        {% if answers %}
+            <div id="showQuestion" style="width: 700px;">
+                {% for item in answers %}
+                    <div class="singleQuestion" data-id="{{ item.getId() }}" data-user="{{ item.getUser().getId() }}">
+                        <div class="userName">{{ item.getUser() }}</div>
+                        <div class="questionDate">{{ item.pubDate|date('d.m.Y H:i') }}</div>
+                        <div style="clear: both;"></div>
+                        <div class="questionText">
+                            {{ item.text }}
+                            <div class="socialIcons">
+                                {% if tab=='spam' %}
+                                    {#<div class="spam-index">Спам: {{ item.getSpams()|length }}</div>#}
+                                    <div class="spam-index">Спам-индекс: {{ item.getUser().getSpamActivity() }}</div>
+                                    <div class="questions-count">Вопросов: {{ item.question_count }}</div>
+                                    <a href="#" class="confirm-spam">Подтвердить</a>
+                                    <a href="#" class="cancel-spam">Отмена</a>
+                                    <a href="#" class="block-user">Блок пользователя</a>
+                                {% else %}
+                                    <a href="#" class="delete-answer">Удалить</a>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        Пусто
-    {% endif %}
+                {% endfor %}
+            </div>
+        {% else %}
+            Пусто
+        {% endif %}
+    </div>
 {% endblock %}

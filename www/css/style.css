@@ -878,7 +878,8 @@ h2.acticle {
 }
 
 .socialIcons {
-	width: 180px;
+	width: 154px;
+    padding-right: 26px;
 	overflow: hidden;
 	float: right;
 }
@@ -1088,7 +1089,7 @@ h2.acticle {
 
 .socialIcons form.answer {
 	width: 70px;
-	float: left;
+	float: right;
 	margin-top: 2px;
 }
 
@@ -1152,6 +1153,19 @@ h2.acticle {
 	bottom: 0px;
 	z-index: 5;
     display: none;
+}
+.chatWrapper .loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding-top: 130px;
+    background: rgba(255, 255, 255, 0.8);
+    /*opacity: 0.5;*/
+    /*filter: alpha(opacity=50);*/
+    z-index: 5;
+    text-align: center;
 }
 
 .openChat {
@@ -1613,7 +1627,7 @@ a.forgotPassword {
 	margin-right: auto;	
 	color: #495677;
 	text-decoration: none;
-	font-size: 18px;�
+	font-size: 18px;
 	font-family: 'Cambria';
 }
 
@@ -1772,6 +1786,7 @@ a.closeRegisterButton:hover {
 .singleAnswer {
 	margin: 6px 0 0 5px;
 	width: 665px;
+    min-height: 45px;
 	border: 1px solid #965565;
 	border-radius: 7px;
 	overflow: hidden;
@@ -2592,8 +2607,8 @@ h2.chatInviteTitle{
 	color: #425073;
 	font-family: 'Cambria';
 }
-/*.chat-tab.indicate {*/
-    /*background-color: #000000;*/
+.chat-tab.newMsgs {
+    background-color: #adc7de;
     /*color: #ff0000;*/
 }
 
@@ -2624,16 +2639,16 @@ h2.chatInviteTitle{
 }
 
 .singleMessage.my-message {
-	background-color: #e6e6e6;
+	background-color: #eeeeee;
 }
 
 .chatUsername {
 	width: 88px;
 	height: 11px;
 	overflow: hidden;
-	border-bottom: 1px solid #e0eaf5;
-	border-left: 1px solid #e0eaf5;
-	border-right: 1px solid #e0eaf5;
+	border-bottom: 1px solid #cadced;
+	border-left: 1px solid #cadced;
+	border-right: 1px solid #cadced;
 	text-align: center;
 	border-radius: 3px;
 	font-family: 'Cambria';
@@ -2710,6 +2725,12 @@ h2.chatInviteTitle{
 	overflow: auto;
     float: left;
 }
+.enterArea.wide {
+    width: 725px;
+}
+.enterArea.wide textarea {
+    width: 687px;
+}
 
 .enterArea input {
 	float: right;
@@ -2728,6 +2749,7 @@ h2.chatInviteTitle{
 .finishConversation {
 	float: left;
 	width: 115px;
+    margin-left: -45px;
 }
 
 .finishConversation input {
@@ -2749,6 +2771,7 @@ h2.chatInviteTitle{
 .leaveConversation {
     float: left;
     width: 115px;
+    margin-left: -45px;
 }
 
 .leaveConversation input {
@@ -3109,10 +3132,21 @@ a.bookmarkArticleActive:hover{
     color: #000;   
 }
 
-.send-message {
+#send-message {
     display: block;
     width: 30px;
     height: 30px;
     float: left;
     background:  url(../i/sendMessage.png) no-repeat;
+}
+
+.admin-wrap {
+    padding: 18px;
+}
+.admin-menu {
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+.admin-menu a {
+    font-weight: normal;
 }
