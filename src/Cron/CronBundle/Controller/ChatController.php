@@ -374,6 +374,8 @@ class ChatController extends AbstractController
                     "curUser" => $user
                 )
             );
+        } else {
+            return new Response("");
         }
     }
 

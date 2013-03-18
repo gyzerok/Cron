@@ -16,8 +16,10 @@
       <script src="/js/script.js"></script>
       <script src="/js/chat.js"></script>
   </head>
-  <body class="{{ app.getSession().get('_sound_settings') }}{% if app.user %}auth{% endif %}">
-  
+  <body class="{{ app.getSession().get('_sound_settings') }}{% if app.user %}auth{% endif %}" {% if app.request.requestUri=='/' %}data-index-page="true"{% endif %}>
+
+  <div id="questions_last_update">{{ "now"|date('Y-m-d H:i:s') }}</div>
+
   {% set _locale = app.getSession().get('_locale') %}
 	{% block wrapper %}
 	<div id="wrapper">
@@ -40,8 +42,8 @@
 	    {% block navigation %}
 		<div id="nav">
 			<div class="orderQuestions"><a href="{{ path('index') }}">{% trans %}Главная{% endtrans %}</a></div>
-			<div class="categoryQuestions"><a href="{{ path('category') }}">{% trans %}по категориям{% endtrans %}</a></div>
-			<div class="expressQuestions"><a href="{{ path('rush') }}">{% trans %}срочные{% endtrans %}</a></div>
+			<div class="categoryQuestions"><a href="{{ path('category') }}">{% trans %}по категориям{% endtrans %} <span id="new_categorized_questions"></span></a></div>
+			<div class="expressQuestions"><a href="{{ path('rush') }}">{% trans %}срочные{% endtrans %} <span id="new_rush_questions"></span></a></div>
 		</div>
 	    {% endblock %}
 		
@@ -56,7 +58,7 @@
 				{#<input type="submit" value="{% trans %}Настройки{% endtrans %}" />#}
 				<a href="/settings">{% trans %}Настройки{% endtrans %}</a>
 			</form>
-			<p class="credits"><a href="/credits">{% trans %}Кредиты{% endtrans %} {{ curUser.getCredits() }}</a></p>
+			<p class="credits"><a href="/credits">{% trans %}Кредиты{% endtrans %} <span id="current-credits">{{ curUser.getCredits() }}</span></a></p>
 			<p class="myQuestions"><a href="/my">{% trans %}Мои вопросы{% endtrans %}</a></p>
 			<p class="myQuestions"><a href="/income">{% trans %}Входящие вопросы{% endtrans %}</a></p>
 			{% else %}
@@ -144,7 +146,7 @@
                         {{ app.getSession().get('_category_list_view')|raw }}
 					</ul>
 				</li>
-                {% if app.user %}
+                {#{% if app.user %}#}
                     <li>{% trans %}Заметки{% endtrans %}
                         <ul class="subMenuNavigation">
                         {% if curUser %}
@@ -154,7 +156,7 @@
                         {% endif %}
                         </ul>
                     </li>
-                {% endif %}
+                {#{% endif %}#}
 				<li>{% trans %}Информация{% endtrans %}
                     <ul class="subMenuNavigation">
                         <li><a href="/articles">{% trans %}статьи{% endtrans %}</a></li>
@@ -164,12 +166,12 @@
 						{% endif %}
                     </ul>
                 </li>
-                {% if app.user %}
+                {#{% if app.user %}#}
                     <li><a class="menuNavigationLink" href="/disk">{% trans %}Кибердиск{% endtrans %}</a></li>
-                {% endif %}
-                {% if app.user %}
+                {#{% endif %}#}
+                {#{% if app.user %}#}
                     <li class="open-dialog-list">{% trans %}Сообщения{% endtrans %}</li>
-                {% endif %}
+                {#{% endif %}#}
                 {% if curUser %}
                     {% if curUser.getRole()>0 %}
                         <li>Админка

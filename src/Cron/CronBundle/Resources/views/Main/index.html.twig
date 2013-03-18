@@ -111,10 +111,29 @@
             myAnswer.hide();
             $('.answerButtonItalic').toggle(function () {
                 $(this).closest('.singleQuestion').next('.myAnswer').slideDown();
-                $(this).val('свернуть');
+//                $(this).val('свернуть');
             }, function () {
                 $(this).closest('.singleQuestion').next('.myAnswer').slideUp();
-                $(this).val('развернуть');
+//                $(this).val('развернуть');
+            });
+
+            $(".deleteMyQuestion").live('click', function(){
+                if (confirm('Удалить вопрос? (Стоимость 5 кредитов)')){
+                    var cur_credits = $("#current-credits");
+                    cur_credits.text(cur_credits.text()-5);
+                    var question = $(this).closest('.singleQuestion');
+                    $.ajax({
+                        url: "/ajax/deleteMyQuestion",
+                        type: "POST",
+                        data: {
+                            question: question.data('id')
+                        },
+                        success:function () {
+                        }
+                    });
+                    question.next('.myAnswer').remove();
+                    question.remove();
+                }
             });
 
             //Расположение элементов страницы
@@ -246,9 +265,9 @@
 
     {% if userQuestions|length > 0 %}
         {% for question in userQuestions %}
-            <div class="singleQuestion">
+            <div class="singleQuestion" data-id="{{ question.getId() }}">
                 <div style="border: 1px solid #fff;" class="userName"></div>
-                <div class="questionDate">{{ question.datetime|date('H:i:s d.m.Y') }}</div>
+                <div class="questionDate">{{ question.datetime|date('d.m.Y H:i') }}</div>
                 <div class="closeButton" title="удалить вопрос"></div>
                 <div style="clear: both;"></div>
                 <div class="questionText">
@@ -256,17 +275,17 @@
                     <div class="actionButton">
                         <form class="answer">
                             <input class="answerButton" type="button" value="{% trans %}закрыть{% endtrans %}"/>
-                            <input class="answerButton" type="button" value="{% trans %}удалить{% endtrans %}"/>
-                            <input class="answerButtonItalic" type="button" value="{% trans %}развернуть{% endtrans %}"/>
+                            <input class="deleteMyQuestion" type="button" value="{% trans %}удалить{% endtrans %}"/>
+                            <input class="answerButtonItalic" type="button" value="{{ question.getAnswers()|length }} отв."/>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="myAnswer {% if question.answers == null %}no-border{% endif %}">
+            <div class="myAnswer {% if question.answers|length == 0 %}no-border{% endif %}">
                 {% for answer in question.answers %}
                     <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}">
                         <div class="userName">{{ answer.getUser().getNick() }}</div>
-                        <div class="answerDate">{{ answer.getPubDate()|date("Y-m-d H:i:s") }}</div>
+                        <div class="answerDate">{{ answer.getPubDate()|date('d.m.Y H:i') }}</div>
                         <div style="clear: both;"></div>
                         <div class="questionText">
                             {{ answer.getText() }}

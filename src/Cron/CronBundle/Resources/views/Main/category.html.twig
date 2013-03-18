@@ -72,14 +72,13 @@
                                     <form class="answer">
                                         {% if item.iAnswered or not curUser or item.getUser()==curUser %}
                                             {% if item.getPrivate()<1 %}
-                                                {% set answer_button_value = item.answers|length ~ ' отв.' %}
+                                                <input class="answerButton" type="button" {% if not item.answers|length  %}disabled="disabled"{% endif %} value="{{ item.answers|length ~ ' отв.' }}" />
                                             {% else %}
-                                                {% set answer_button_value = 'закрытый' %}
+                                                <input class="answerButton" type="button" value="закрытый" />
                                             {% endif %}
                                         {% else %}
-                                            {% set answer_button_value = 'ответить' %}
+                                            <input class="answerButton" type="button" value="ответить" />
                                         {% endif %}
-                                        <input class="answerButton" type="button" {% if not item.answers|length %}disabled="disabled"{% endif %} value="{{ answer_button_value }}" />
                                     </form>
                                 {#{% endif %}#}
                             </div>

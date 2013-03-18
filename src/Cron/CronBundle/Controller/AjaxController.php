@@ -574,6 +574,71 @@ class AjaxController extends AbstractController
         return new Response("SUCCESS");
     }
 
+    public function updateQuestionsAction(Request $request)
+    {
+        $lastTime = $request->get("questions_last_update");
+//        $lastTime = date('Y-m-d H:i:s', $lastTime);
+
+        $questionRepo = $this->getDoctrine()->getRepository('CronCronBundle:Question');
+        $catQuery = $questionRepo->createQueryBuilder('question')
+            ->innerJoin('question.user', 'user')
+            ->where('question.category > :cid AND question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false')
+            ->setParameter('cid', '1')
+            ->setParameter('lastTime', $lastTime)
+            ->setParameter('status', '2')
+            ->getQuery();
+        $categorized = $catQuery->getResult();
+
+        $rushQuery = $questionRepo->createQueryBuilder('question')
+            ->innerJoin('question.user', 'user')
+            ->where('question.category = :cid AND question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false')
+            ->setParameter('cid', '1')
+            ->setParameter('lastTime', $lastTime)
+            ->setParameter('status', '2')
+            ->getQuery();
+        $rush = $rushQuery->getResult();
+
+        $data = array();
+        $data['new_categorized_questions'] = count($categorized);
+        $data['new_rush_questions'] = count($rush);
+        $data['questions_last_update'] = date('Y-m-d H:i:s');
+
+        return new Response(json_encode($data));
+    }
+
+    public function deleteMyQuestionAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            return new Response("Fail", 403);
+        }
+
+//        $question = $request->get("question");
+        $question = 75; //todo complete
+
+        $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($question);
+        $chat = $this->getDoctrine()->getRepository("CronCronBundle:Chat")->findOneBy(array("question"=>$question->getId()));
+        $note_questions = $this->getDoctrine()->getRepository("CronCronBundle:NotesQuestion")->findBy(array("question"=>$question->getId()));
+        $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()));
+
+        $em = $this->getDoctrine()->getManager();
+        foreach ($note_questions as $note_questions1) {
+            $em->remove($note_questions1);
+        }
+        foreach ($answers as $answers1) {
+            $em->remove($answers1);
+        }
+        $em->remove($chat);
+        $em->remove($question);
+
+        $user->setCredits($user->getCredits()-5);
+        $em->persist($user);
+
+        $em->flush();
+
+        return new Response("SUCCESS");
+    }
+
     public function convertFilesize($input_filesize)
     {
         $filesize = $input_filesize;
