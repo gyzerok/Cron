@@ -426,6 +426,7 @@ function updateChat(){
                 var cur_chat = $(".chat-content[data-chat-id="+i+"]");
                 for (var j in data.chats[i]){
 //                    $(".chat-tab:not(.active)[data-tab="+cur_chat.attr('tab')+"]").addClass('indicate');
+
                     cur_chat.find(".messageWrap").append('<div class="singleMessage"><div class="chatUsername">'+data.chats[i][j].user_name+'</div><div class="messageText">'+data.chats[i][j].msg_text+'</div></div>');
                 }
             }

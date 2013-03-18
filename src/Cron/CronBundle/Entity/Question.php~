@@ -549,4 +549,27 @@ class Question
     {
         return $this->answers;
     }
+
+    /**
+     * Set user_ip
+     *
+     * @param string $userIp
+     * @return Question
+     */
+    public function setUserIp($userIp)
+    {
+        $this->user_ip = $userIp;
+    
+        return $this;
+    }
+
+    /**
+     * Get user_ip
+     *
+     * @return string 
+     */
+    public function getUserIp()
+    {
+        return $this->user_ip;
+    }
 }
