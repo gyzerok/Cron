@@ -115,10 +115,10 @@
             <div class="userLinkAddWindow" style="display:none;">
                 <div class="closeUserLinkWindow"><a href=""></a></div>
                 <form action="/ajax/newUserLink" method="post">
-                    <label for="user-link-title">Название:</label> <input type="text" maxlength="15" id="user-link-title" name="title"><span>Масимум 15 символов</span><br/>
+                    <label for="user-link-title">Название:</label> <input type="text" maxlength="15" id="user-link-title" name="title" /><span>{% trans %}Масимум 15 символов{% endtrans %}</span><br/>
 					<div style="clear: both;"></div>
-                    <label for="user-link-url">Ссылка:</label> <input type="text" id="user-link-url" name="url">
-                    <input type="button" class="cancelUserLink" value="отменить"> <input type="submit" class="saveUserLink" value="сохранить">
+                    <label for="user-link-url">{% trans %}Ссылка{% endtrans %}:</label> <input type="text" id="user-link-url" name="url" />
+                    <input type="button" class="cancelUserLink" value="{% trans %}отменить{% endtrans %}" /> <input type="submit" class="saveUserLink" value="{% trans %}сохранить{% endtrans %}" />
                 </form>
             </div>
 
@@ -128,12 +128,12 @@
                 <form action="/ajax/sendFeedback" method="post">
                     <select name="type" id="feedback-type">
 						<option selected="selected"></option>
-                        <option value="appeal">Жалоба</option>
-                        <option value="idea">Предложение</option>
+                        <option value="appeal">{% trans %}Жалоба{% endtrans %}</option>
+                        <option value="idea">{% trans %}Предложение{% endtrans %}</option>
                     </select><br>
-                    <label for="feedback-email">Введите Ваш email</label><br/><input id="feedback-email" name="email" value="{% if curUser %}{{ curUser.getUsername() }}{% endif %}"><br/>
-                    <label for="feedback-text">Введите текст сообщения:</label><br/><textarea disabled="disabled" name="text" id="feedback-text" cols="30" rows="5"></textarea><br/>
-                    <input type="button" class="cancel-feedback" value="отмена"> <input type="submit" class="submit-feedback" value="отправить">
+                    <label for="feedback-email">{% trans %}Введите Ваш email{% endtrans %}</label><br/><input id="feedback-email" name="email" value="{% if curUser %}{{ curUser.getUsername() }}{% endif %}"><br/>
+                    <label for="feedback-text">{% trans %}Введите текст сообщения{% endtrans %}:</label><br/><textarea disabled="disabled" name="text" id="feedback-text" cols="30" rows="5"></textarea><br/>
+                    <input type="button" class="cancel-feedback" value="{% trans %}отмена{% endtrans %}"> <input type="submit" class="submit-feedback" value="{% trans %}отправить{% endtrans %}">
                 </form>
             </div>
 		</div>
@@ -162,7 +162,7 @@
                         <li><a href="/articles">{% trans %}статьи{% endtrans %}</a></li>
                         {{ app.getSession().get('_user_links')|raw }}
 						{% if curUser %}
-                        <li style="	background-color: #fdf5ef; border-radius: 0px;"><a href="#" class="add-bookmark">добавить ссылку</a></li>
+                        <li style="	background-color: #fdf5ef; border-radius: 0px;"><a href="#" class="add-bookmark">{% trans %}добавить ссылку{% endtrans %}</a></li>
 						{% endif %}
                     </ul>
                 </li>
@@ -207,11 +207,11 @@
 				<div style="clear: both;">
 			</ul>
 			<ul class="additional-information">
-				<li><a href="/about">О нас</a></li>
-				<li><a href="#" class="open-feedback-window">Помощь</a></li>
-				<li><a href="/rules">Правила</a></li>
-				<li><a href="/advert">Рекламодателям</a></li>
-				<li><a href="/agreement">Пользовательское соглашение</a></li>
+				<li><a href="/about">{% trans %}О нас{% endtrans %}</a></li>
+				<li><a href="#" class="open-feedback-window">{% trans %}Помощь{% endtrans %}</a></li>
+				<li><a href="/rules">{% trans %}Правила{% endtrans %}</a></li>
+				<li><a href="/advert">{% trans %}Рекламодателям{% endtrans %}</a></li>
+				<li><a href="/agreement">{% trans %}Пользовательское соглашение{% endtrans %}</a></li>
 			</ul>
 			<span class="copyright">Aditus © 2012</span>
 		</div>
@@ -225,7 +225,7 @@
 			</div>
 		</div>
 		<div class="chatWindow">
-		<span>Окно чата</span>
+		<span>{% trans %}Окно чата{% endtrans %}</span>
 		<div class="chatUpButton"></div>
 		</div>
 		{% endblock %}
