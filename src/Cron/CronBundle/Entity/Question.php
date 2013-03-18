@@ -150,6 +150,13 @@ class Question
      */
     private $user_ip;
 
+    /**
+     * @var boolean $hide_on_index
+     *
+     * @ORM\Column(name="hide_on_index", type="boolean", nullable=false)
+     */
+    private $hide_on_index = false;
+
 
 
     /**
@@ -571,5 +578,28 @@ class Question
     public function getUserIp()
     {
         return $this->user_ip;
+    }
+
+    /**
+     * Set hide_on_index
+     *
+     * @param boolean $hideOnIndex
+     * @return Question
+     */
+    public function setHideOnIndex($hideOnIndex)
+    {
+        $this->hide_on_index = $hideOnIndex;
+    
+        return $this;
+    }
+
+    /**
+     * Get hide_on_index
+     *
+     * @return boolean 
+     */
+    public function getHideOnIndex()
+    {
+        return $this->hide_on_index;
     }
 }

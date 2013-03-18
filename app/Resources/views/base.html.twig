@@ -16,8 +16,10 @@
       <script src="/js/script.js"></script>
       <script src="/js/chat.js"></script>
   </head>
-  <body class="{{ app.getSession().get('_sound_settings') }}{% if app.user %}auth{% endif %}">
-  
+  <body class="{{ app.getSession().get('_sound_settings') }}{% if app.user %}auth{% endif %} {% if app.request.requestUri=='/' %}index-page{% endif %}">
+
+  <div id="questions_last_update">{{ "now"|date('Y-m-d H:i:s') }}</div>
+
   {% set _locale = app.getSession().get('_locale') %}
 	{% block wrapper %}
 	<div id="wrapper">
@@ -40,8 +42,8 @@
 	    {% block navigation %}
 		<div id="nav">
 			<div class="orderQuestions"><a href="{{ path('index') }}">{% trans %}Главная{% endtrans %}</a></div>
-			<div class="categoryQuestions"><a href="{{ path('category') }}">{% trans %}по категориям{% endtrans %}</a></div>
-			<div class="expressQuestions"><a href="{{ path('rush') }}">{% trans %}срочные{% endtrans %}</a></div>
+			<div class="categoryQuestions"><a href="{{ path('category') }}">{% trans %}по категориям{% endtrans %} <span id="new_categorized_questions"></span></a></div>
+			<div class="expressQuestions"><a href="{{ path('rush') }}">{% trans %}срочные{% endtrans %} <span id="new_rush_questions"></span></a></div>
 		</div>
 	    {% endblock %}
 		
@@ -56,7 +58,7 @@
 				{#<input type="submit" value="{% trans %}Настройки{% endtrans %}" />#}
 				<a href="/settings">{% trans %}Настройки{% endtrans %}</a>
 			</form>
-			<p class="credits"><a href="/credits">{% trans %}Кредиты{% endtrans %} {{ curUser.getCredits() }}</a></p>
+			<p class="credits"><a href="/credits">{% trans %}Кредиты{% endtrans %} <span id="current-credits">{{ curUser.getCredits() }}</span></a></p>
 			<p class="myQuestions"><a href="/my">{% trans %}Мои вопросы{% endtrans %}</a></p>
 			<p class="myQuestions"><a href="/income">{% trans %}Входящие вопросы{% endtrans %}</a></p>
 			{% else %}
@@ -144,17 +146,15 @@
                         {{ app.getSession().get('_category_list_view')|raw }}
 					</ul>
 				</li>
-                {% if app.user %}
-                    <li>{% trans %}Заметки{% endtrans %}
-                        <ul class="subMenuNavigation">
-                        {% if curUser %}
-                            <li><a href="/notes/questions">{% trans %}вопросы{% endtrans %}</a></li>
-                            <li><a href="/notes/articles">{% trans %}статьи{% endtrans %}</a></li>
-                            <li><a href="#" class="open-notepad">{% trans %}блокнот{% endtrans %}</a></li>
-                        {% endif %}
-                        </ul>
-                    </li>
-                {% endif %}
+                <li>{% trans %}Заметки{% endtrans %}
+                    <ul class="subMenuNavigation">
+                    {% if curUser %}
+                        <li><a href="/notes/questions">{% trans %}вопросы{% endtrans %}</a></li>
+                        <li><a href="/notes/articles">{% trans %}статьи{% endtrans %}</a></li>
+                        <li><a href="#" class="open-notepad">{% trans %}блокнот{% endtrans %}</a></li>
+                    {% endif %}
+                    </ul>
+                </li>
 				<li>{% trans %}Информация{% endtrans %}
                     <ul class="subMenuNavigation">
                         <li><a href="/articles">{% trans %}статьи{% endtrans %}</a></li>
@@ -164,12 +164,8 @@
 						{% endif %}
                     </ul>
                 </li>
-                {% if app.user %}
-                    <li><a class="menuNavigationLink" href="/disk">{% trans %}Кибердиск{% endtrans %}</a></li>
-                {% endif %}
-                {% if app.user %}
-                    <li class="open-dialog-list">{% trans %}Сообщения{% endtrans %}</li>
-                {% endif %}
+                <li><a class="menuNavigationLink" href="/disk">{% trans %}Кибердиск{% endtrans %}</a></li>
+                <li class="open-dialog-list">{% trans %}Сообщения{% endtrans %}</li>
                 {% if curUser %}
                     {% if curUser.getRole()>0 %}
                         <li>Админка
@@ -229,5 +225,7 @@
 		{% endblock %}
 	</div>
 	{% endblock %}
+
+  <!-- Yandex.Metrika counter --><script type="text/javascript">(function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter20628040 = new Ya.Metrika({id:20628040, webvisor:true, clickmap:true, trackLinks:true, accurateTrackBounce:true}); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks");</script><noscript><div><img src="//mc.yandex.ru/watch/20628040" style="position:absolute; left:-9999px;" alt="" /></div></noscript><!-- /Yandex.Metrika counter -->
   </body>
 </html>

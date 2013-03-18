@@ -346,9 +346,9 @@ $(document).ready(function(){
     if ($("body").is('.auth')){
         loadChat();
 
-        var chat_update_interval = setInterval('updateChat()', 10000);
+        var chat_update_interval = setInterval('updateChat();', 10000);
 
-        indicate_interval = setInterval(indicateChatInvite, 1000);
+        indicate_interval = setInterval('indicateChatInvite();', 1000);
 
         var invites_container = $(".chatInviteWindow .invites-container");
         if (invites_container.find('.singleInvite').size()){
@@ -421,7 +421,7 @@ function updateChat(){
                 $(".open-dialog-list").animate({backgroundColor: '#e85b2d '}, 500);
             }
 
-            $("#chat-last-update").attr('value', data.chat_last_update);
+            $("#chat-last-update").attr('value', data.questions_last_update);
 
             for (var i in data.chats){
                 var cur_chat = $(".chat-content[data-chat-id="+i+"]");

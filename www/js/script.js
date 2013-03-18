@@ -1,9 +1,10 @@
 var mySound1,mySound2,mySound3,mySound4,mySound5;
+var iAmOnIndexPage = $("body").is('.index-page') ? true : false;
 
 $(document).ready(function() {
 
     var answerFrom = $('.answerForm');
-    $('.answerButton').click(function() {
+    $('.socialIcons .answerButton').click(function() {
         var cur_answerForm = $(this).closest('.singleQuestion').nextAll('.answerForm').first();
         $(".answerForm").not(cur_answerForm).slideUp(500);
         cur_answerForm.slideToggle(500);
@@ -76,7 +77,7 @@ $(document).ready(function() {
     $(".submit-feedback").click(function(){
         var form = $(this).closest('form');
         form.ajaxSubmit({
-            success: function(response){
+            success: function(){
                 alert('Ваше сообщение отправлено. Спасибо!');
             }
         });
@@ -102,7 +103,7 @@ $(document).ready(function() {
     $(".submitReplyFeedback").click(function(){
         var form = $(this).closest('form');
         form.ajaxSubmit({
-            success: function(response){
+            success: function(){
                 alert('Ответ отправлен!');
                 $('.feedback-li[data-id='+$('#feedback-id').val()+']').remove();
             }
@@ -118,7 +119,7 @@ $(document).ready(function() {
             data:{
                 question: $(this).closest('.singleQuestion').data('id')
             },
-            success: function(response){
+            success: function(){
             }
         });
     });
@@ -129,7 +130,7 @@ $(document).ready(function() {
             data:{
                 article: $(this).closest('.article-li').data('id')
             },
-            success: function(response){
+            success: function(){
                 alert('Статья добавлена в заметки.')
             }
         });
@@ -214,8 +215,12 @@ $(document).ready(function() {
             url: '/audio/chatInvite.mp3',         
             volume: 100        
         });
-    }
-  
+    };
+
+//    if ($("body").is('.auth')){
+        setInterval('updateQuestions(iAmOnIndexPage);', 30000);
+//    }
+
 });
 
 function updateNotepad(){
@@ -225,4 +230,42 @@ function updateNotepad(){
             text: $("#notepad-text").val()
         }
     });
+}
+
+function updateQuestions(update_my_questions){
+    $.ajax({
+        url: '/ajax/updateQuestions',
+        type: 'post',
+        dataType: 'json',
+        data: {
+            questions_last_update: $("#questions_last_update").text(),
+            update_my_questions: update_my_questions
+//            chats:  chats.substr(0,chats/**/.length-1),
+//            dialogs: dialogs.substr(0,dialogs.length-1)
+        },
+        success: function(data){
+            if (update_my_questions){
+                if (data.my_questions){
+
+                }
+            }
+            if (data.new_categorized_questions){
+                $("#new_categorized_questions").text('('+data.new_categorized_questions+')');
+            } else {
+                $("#new_categorized_questions").text('');
+            }
+            if (data.new_rush_questions){
+                $("#new_rush_questions").text('('+data.new_rush_questions+')');
+            } else {
+                $("#new_rush_questions").text('');
+            }
+
+            if ((data.new_categorized_questions || data.new_rush_questions) && $("body").is('.sound_newQuestion')){
+                soundManager.play('newQuestion');
+            }
+
+//            $("#questions_last_update").text(data.questions_last_update);
+        }
+    });
+    return true;
 }

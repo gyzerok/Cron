@@ -3152,3 +3152,7 @@ a.bookmarkArticleActive:hover{
 .admin-menu a {
     font-weight: normal;
 }
+
+#questions_last_update {
+    display: none;
+}

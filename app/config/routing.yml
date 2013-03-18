@@ -184,6 +184,22 @@ getHeaderSrvmsg:
   pattern:  /ajax/getHeaderSrvmsg
   defaults: { _controller: CronCronBundle:Admin:getHeaderSrvmsg }
 
+updateQuestions:
+  pattern:  /ajax/updateQuestions
+  defaults: { _controller: CronCronBundle:Ajax:updateQuestions }
+
+deleteMyQuestion:
+  pattern:  /ajax/deleteMyQuestion
+  defaults: { _controller: CronCronBundle:Ajax:deleteMyQuestion }
+
+closeMyQuestion:
+  pattern:  /ajax/closeMyQuestion
+  defaults: { _controller: CronCronBundle:Ajax:closeMyQuestion }
+
+hideMyQuestion:
+  pattern:  /ajax/hideMyQuestion
+  defaults: { _controller: CronCronBundle:Ajax:hideMyQuestion }
+
 
 # Chat routes
 

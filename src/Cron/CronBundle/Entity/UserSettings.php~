@@ -148,7 +148,7 @@ class UserSettings {
     /**
      * Get view_cats
      *
-     * @return string 
+     * @return Array
      */
     public function getViewCats()
     {
