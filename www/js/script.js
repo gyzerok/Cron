@@ -1,3 +1,4 @@
+var mySound1,mySound2,mySound3,mySound4,mySound5;
 
 $(document).ready(function() {
 
@@ -188,31 +189,31 @@ $(document).ready(function() {
     });
             
     soundManager.onload = function() {    
-        mySound = soundManager.createSound({
+        mySound1 = soundManager.createSound({
             id: 'newQuestion',     
             url: '/audio/newQuestion.mp3',         
             volume: 100        
             });
-        mySound = soundManager.createSound({
+        mySound2 = soundManager.createSound({
             id: 'personalMessage',     
             url: '/audio/personalMessage.mp3',         
             volume: 100       
             }); 
-        mySound = soundManager.createSound({
+        mySound3 = soundManager.createSound({
             id: 'questionIsClosed',     
             url: '/audio/questionIsClosed.mp3',         
             volume: 100        
             }); 
-        mySound = soundManager.createSound({
+        mySound4 = soundManager.createSound({
             id: 'inChat',     
             url: '/audio/inChat.mp3',         
             volume: 100        
         }); 
-            mySound = soundManager.createSound({
+        mySound5 = soundManager.createSound({
             id: 'chatInvite',     
             url: '/audio/chatInvite.mp3',         
             volume: 100        
-        });     
+        });
     }
   
 });

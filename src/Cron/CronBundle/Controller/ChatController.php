@@ -566,7 +566,7 @@ class ChatController extends AbstractController
                 ->getQuery()
                 ->getResult();
 
-            $html = '<div class="chat-content" tab="d'.$dialog->getId().'" data-dialog-id="'.$dialog->getId().'" data-to-user="{% if dialog.user1==curUser %}{{ dialog.user2.getId() }}{% else %}{{ dialog.user1.getId() }}{% endif %}"><div class="chat"><div style="border-right: 2px solid #465176">';
+            $html = '<div class="chat-content" tab="d'.$dialog->getId().'" data-dialog-id="'.$dialog->getId().'" data-to-user="'.($dialog->getUser1()==$user ? $dialog->getUser2()->getId() : $dialog->getUser1()->getId()).'"><div class="chat"><div style="border-right: 2px solid #465176">';
             foreach ($messages as $message) {
                 $html .= '<div class="singleMessage'.($message->getUser()!=$user?:' my-message').'">
                             <div class="chatUsername">'.$message->getUser()->getNick().'</div>

@@ -52,6 +52,9 @@ class MainController extends AbstractController
                 $question->setUserIp($this->container->get('request')->getClientIp());
 
                 if ($question->getBoundary() > 20){
+                    if ($user->getCredits() < 5){
+                        return $this->redirect($this->generateUrl('index'));
+                    }
                     $user->setCredits($user->getCredits()-5);
                 }
 
@@ -163,21 +166,21 @@ class MainController extends AbstractController
             $income->questions = array();
             foreach ($my_answers as $my_answer) {
                 $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($my_answer->getQuestion()->getId());
-                if (empty($income_cats) || in_array($question->getCategory()->getId(), $income_cats)){
+//                if (empty($income_cats) || in_array($question->getCategory()->getId(), $income_cats)){
                     $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"DESC"));
                     $question->answers = $answers;
                     array_push($income->questions, $question);
-                }
+//                }
             }
             $categorized[0] = $income;
 
         } else { //all categories
 
-            if (!empty($view_cats)){
+            if (!empty($income_cats)){
                 $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Category")
                     ->createQueryBuilder('category')
                     ->where('category.id IN (:cid)')
-                    ->setParameter('cid', $view_cats)
+                    ->setParameter('cid', $income_cats)
                     ->getQuery()
                     ->getResult();
             } else {
@@ -294,8 +297,8 @@ class MainController extends AbstractController
         if ($user instanceof User){
             $my = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user"=>$user->getId()));
             foreach ($my as $id=>$question) {
-                $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
-                $my[$id]->answers = $answers;
+//                $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
+//                $my[$id]->answers = $answers;
             }
         } else {
             $my = array();

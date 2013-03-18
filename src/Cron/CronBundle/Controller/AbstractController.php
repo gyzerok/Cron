@@ -36,6 +36,8 @@ class AbstractController extends Controller implements InitializableControllerIn
         $request->getSession()->set('_dialog_list', $this->getDialogList());
 
         $request->getSession()->set('_invite_list', $this->getInviteList());
+
+        $request->getSession()->set('_category_list_view', $this->getCategoryListView());
     }
 
     public function getSrvMsg()
@@ -88,7 +90,7 @@ class AbstractController extends Controller implements InitializableControllerIn
     {
         $user = $this->getUser();
         if (!$user instanceof User){
-            return "sound_inChat sound_personalMessage sound_chatInvite sound_newQuestion sound_questionIsClosed";
+            return "sound_inChat sound_personalMessage sound_chatInvite sound_newQuestion sound_questionIsClosed ";
         } else {
             $my_settings = $user->getSettings();
             if ($my_settings instanceof UserSettings){
@@ -99,8 +101,8 @@ class AbstractController extends Controller implements InitializableControllerIn
                         if ($val){
                             switch($sound){
                                 case 'cats':
-                                    break;
                                 case 'rush':
+                                    $classes .= "sound_newQuestion ";
                                     break;
                                 case 'invite':
                                     $classes .= "sound_chatInvite ";
@@ -115,11 +117,13 @@ class AbstractController extends Controller implements InitializableControllerIn
                             }
                         }
                     }
-//                    $classes = substr($classes,0,strlen($classes)-1);
+                    $classes .= "sound_questionIsClosed ";
+                } else {
+                    return "sound_inChat sound_personalMessage sound_chatInvite sound_newQuestion sound_questionIsClosed ";
                 }
                 return $classes;
             } else {
-                return "sound_inChat sound_personalMessage sound_chatInvite sound_newQuestion sound_questionIsClosed";
+                return "sound_inChat sound_personalMessage sound_chatInvite sound_newQuestion sound_questionIsClosed ";
             }
 
         }
@@ -184,9 +188,69 @@ class AbstractController extends Controller implements InitializableControllerIn
                         "invites" => $invites
                     )
                 );
+            } else {
+                return '<div class="invites-empty-text">Приглашений нет.</div>';
             }
         }
         return '<div class="invites-empty-text">Приглашений нет.</div>';
+    }
+
+    public function getCategoryListView()
+    {
+        /*
+         * <li><a href="/category/2">семья, дом, дети</a></li>
+          <li><a href="/category/3">любовь, отношения</a></li>
+          <li><a href="/category/5">культура, досуг</a></li>
+          <li><a href="/category/6">туризм</a></li>
+          <li><a href="/category/7">компьютеры, интернет</a></li>
+          <li><a href="/category/8">компьютерные игры</a></li>
+          <li><a href="/category/9">техника</a></li>
+          <li><a href="/category/10">знакомства, общение</a></li>
+          <li><a href="/category/11">экономика</a></li>
+          <li><a href="/category/12">юриспруденция</a></li>
+          <li><a href="/category/13">опросы</a></li>
+          <li><a href="/category/14">новости</a></li>
+          <li><a href="/category/15">спорт</a></li>
+         */
+        $categories = array(
+            2 => "семья, дом, дети",
+            3 => "любовь, отношения",
+            5 => "культура, досуг",
+            6 => "туризм",
+            7 => "компьютеры, интернет",
+            8 => "компьютерные игры",
+            9 => "техника",
+            10 => "знакомства, общение",
+            11 => "экономика",
+            12 => "юриспрунденция",
+            13 => "опросы",
+            14 => "новости",
+            15 => "спорт",
+        );
+        $view_cats = array();
+        $user = $this->getUser();
+        if ($user instanceof User){
+            $user_settings = $user->getSettings();
+            if ($user_settings instanceof UserSettings){
+                if ($view_cats_settings = $user_settings->getViewCats()){
+                    foreach ($view_cats_settings as $id=>$view_cat) {
+                        $view_cats[$id] = $id;
+//                        array_push($view_cats, $id);
+                    }
+                }
+            }
+        }
+//        print_r($view_cats);
+        if (!empty($view_cats)){
+            $categories = array_intersect_key($categories, $view_cats);
+        }
+
+        $html = '';
+        foreach ($categories as $id=>$category) {
+            $html .= '<li><a href="/category/'.$id.'">'.$category.'</a></li>';
+        }
+
+        return $html;
     }
 
     private function updateUserCounters(Request $request)

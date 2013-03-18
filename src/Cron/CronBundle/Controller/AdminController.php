@@ -30,7 +30,18 @@ class AdminController extends AbstractController
 
             $post_data = $request->get('article');
 
-            $category = $this->getDoctrine()->getRepository("CronCronBundle:ArticleCategory")->find($post_data['category']);
+            if (!empty($post_data['category'])){
+                $category = $this->getDoctrine()->getRepository("CronCronBundle:ArticleCategory")->find($post_data['category']);
+            } else {
+                $category = new ArticleCategory();
+                if (!empty($post_data['new_category'])){
+                    $category->setName($post_data['new_category']);
+                    $em->persist($category);
+                    $em->flush();
+                } else {
+                    return $this->redirect("/admin/newarticle");
+                }
+            }
 
             $imgs = array();
 
