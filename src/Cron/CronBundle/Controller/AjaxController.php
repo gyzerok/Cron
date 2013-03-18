@@ -12,6 +12,7 @@ use Cron\CronBundle\Entity\File;
 use Cron\CronBundle\Entity\User;
 use Cron\CronBundle\Entity\UserSettings;
 use Cron\CronBundle\Entity\UserLink;
+use Cron\CronBundle\Entity\Chat;
 
 use Cron\CronBundle\Model\SpamEngine;
 
@@ -613,26 +614,86 @@ class AjaxController extends AbstractController
             return new Response("Fail", 403);
         }
 
-//        $question = $request->get("question");
-        $question = 75; //todo complete
+        $em = $this->getDoctrine()->getManager();
+
+        $question = $request->get("question");
 
         $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($question);
-        $chat = $this->getDoctrine()->getRepository("CronCronBundle:Chat")->findOneBy(array("question"=>$question->getId()));
         $note_questions = $this->getDoctrine()->getRepository("CronCronBundle:NotesQuestion")->findBy(array("question"=>$question->getId()));
         $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()));
 
-        $em = $this->getDoctrine()->getManager();
+        $chat = $this->getDoctrine()->getRepository("CronCronBundle:Chat")->findOneBy(array("question"=>$question->getId()));
+        if ($chat instanceof Chat){
+            $chat_members = $this->getDoctrine()->getRepository("CronCronBundle:ChatMember")->findBy(array("chat"=>$chat->getId()));
+            $chat_msgs = $this->getDoctrine()->getRepository("CronCronBundle:ChatMsg")->findBy(array("chat"=>$chat->getId()));
+            $chat_srvmsgs = $this->getDoctrine()->getRepository("CronCronBundle:ChatSrvMsg")->findBy(array("chat"=>$chat->getId()));
+            foreach ($chat_members as $chat_members1) {
+                $em->remove($chat_members1);
+            }
+            foreach ($chat_msgs as $chat_msgs1) {
+                $em->remove($chat_msgs1);
+            }
+            foreach ($chat_srvmsgs as $chat_srvmsgs1) {
+                $em->remove($chat_srvmsgs1);
+            }
+            $em->remove($chat);
+        }
+
         foreach ($note_questions as $note_questions1) {
             $em->remove($note_questions1);
         }
         foreach ($answers as $answers1) {
             $em->remove($answers1);
         }
-        $em->remove($chat);
+
         $em->remove($question);
 
         $user->setCredits($user->getCredits()-5);
         $em->persist($user);
+
+        $em->flush();
+
+        return new Response("SUCCESS");
+    }
+
+    public function closeMyQuestionAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            return new Response("Fail", 403);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $question = $request->get("question");
+
+        $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($question);
+
+        $question->setStatus(2);
+
+        $em->persist($question);
+
+        $em->flush();
+
+        return new Response("SUCCESS");
+    }
+
+    public function hideMyQuestionAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            return new Response("Fail", 403);
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $question = $request->get("question");
+
+        $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($question);
+
+        $question->setHideOnIndex(true);
+
+        $em->persist($question);
 
         $em->flush();
 

@@ -58,6 +58,11 @@ class MainController extends AbstractController
                     $user->setCredits($user->getCredits()-5);
                 }
 
+
+                if ($question->getPrivate()){
+                    $user->setCredits($user->getCredits()-5);
+                }
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($question);
                 $em->flush();
@@ -295,14 +300,7 @@ class MainController extends AbstractController
 
         $my = array();
         if ($user instanceof User){
-            $my = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user"=>$user->getId()));
-            foreach ($my as $id=>$question) {
-//                $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
-//                $my[$id]->answers = $answers;
-            }
-        } else {
-            $my = array();
-//            return $this->redirect("/");
+            $my = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findAllMyByUser($user);
         }
 
         return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Мои вопросы',

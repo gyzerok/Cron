@@ -150,6 +150,13 @@ class Question
      */
     private $user_ip;
 
+    /**
+     * @var boolean $hide_on_index
+     *
+     * @ORM\Column(name="hide_on_index", type="boolean", nullable=false)
+     */
+    private $hide_on_index = false;
+
 
 
     /**

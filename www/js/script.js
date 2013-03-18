@@ -1,4 +1,5 @@
 var mySound1,mySound2,mySound3,mySound4,mySound5;
+var iAmOnIndexPage = $("body").is('.index-page') ? true : false;
 
 $(document).ready(function() {
 
@@ -217,8 +218,7 @@ $(document).ready(function() {
     };
 
 //    if ($("body").is('.auth')){
-        var needUpdateMyQuestions = $("body").data('index-page') ? true : false;
-        setInterval('updateQuestions(needUpdateMyQuestions);', 30000);
+        setInterval('updateQuestions(iAmOnIndexPage);', 30000);
 //    }
 
 });
