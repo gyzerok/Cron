@@ -3091,7 +3091,7 @@ a.bookmarkArticleActive:hover{
 	margin: 10px auto 0 auto;
 	display: block;
 	text-align: center;
-	font-family: 'Cambtia';
+	font-family: 'Cambria';
 	font-size: 19px;
 	color: #C63A3A;
 }
@@ -3155,4 +3155,124 @@ a.bookmarkArticleActive:hover{
 
 #questions_last_update {
     display: none;
+}
+
+#robo-submit {
+    border: 1px solid #808080;
+    width: 86px;
+    height: 20px;
+    float: right;
+    cursor: pointer;
+    border-radius: 6px;
+    vertical-align: middle;
+    text-align: center;
+    font-family: 'Arial';
+    font-size: 14px;
+    background-color: #fff;
+    margin: 0 8px 8px 10px;    
+}
+
+#robo-submit:hover {
+    color: #000;
+    border-color: #000000;
+}
+
+.pay-cancel {
+    border: 1px solid #808080;
+    width: 86px;
+    height: 20px;
+    float: right;
+    cursor: pointer;
+    border-radius: 6px;
+    vertical-align: middle;
+    text-align: center;
+    font-family: 'Arial';
+    font-size: 14px;
+    background-color: #fff;
+}
+
+.toggle-pay-window {
+    color: #495677;    
+}
+
+.toggle-pay-window:hover {
+    color: #3b3ffd;   
+}
+
+.forgotPassword-window {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 450px;
+    margin-left: -350px;
+    margin-top: -100px;
+    padding: 3px 0 0 17px;
+    border: 3px solid #556183;
+    border-radius: 18px;
+    background: #ffffff;
+    z-index: 6;
+}
+
+.forgot-password-tittle {
+	font-family: 'Cambria';
+	font-size: 24px;
+	color: #000;
+    margin-left: 18px;    
+}
+
+#email {
+    font-family: 'Cambria';
+    font-size: 24px;
+    display: block;
+    width: 380px;
+    height: 33px;
+    border: 1px solid #5b6376;
+    border-radius: 5px;
+    margin-top: 3px;
+    padding-left: 8px;
+}
+
+.forgot-explanation {
+    font-family: 'Cambria';
+    font-size: 12px;
+	color: #000; 
+    margin-top: 6px;
+    margin-left: 15px;    
+}
+
+.forgot-submit {
+    float: right;
+    width: 88px;
+    height: 20px;
+    border: 1px solid gray;
+    cursor: pointer;
+    border-radius: 6px;
+    vertical-align: middle;
+    text-align: center;
+    font-size: 14px;
+    background-color: #fff;
+    margin-top: 4px;
+}
+
+.forgot-cancel {
+    display: block;
+    float: right;
+    width: 88px;
+    height: 18px;
+    border: 1px solid gray;
+    cursor: pointer;
+    border-radius: 6px;
+    vertical-align: middle;
+    text-align: center;
+    background-color: #fff;
+    font-family: 'Arial';
+    font-size: 15px;
+    color: #333;
+    text-decoration: none;
+    margin: 4px 9px 6px 8px;
+}
+
+.forgot-cancel:hover {
+    color: #000;
+    border-color: #000000;    
 }

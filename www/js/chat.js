@@ -216,7 +216,7 @@ $(document).ready(function(){
         $('.chatWrapper').fadeIn();
         openChat.show();
         $(".chat-input").focus();
-        $(".open-dialog-list").animate({backgroundColor: '#fff'}, 500);
+        $(".open-dialog-list").animate({color: '#383838'}, 500);
     });
     $('.closeChat').click(function() {
 //        openChat.fadeOut();
@@ -363,7 +363,7 @@ $(document).ready(function(){
             if ($("body").is('.sound_personalMessage')){
                 soundManager.play('personalMessage');
             }
-            $(".open-dialog-list").animate({backgroundColor: '#e85b2d '}, 500); //todo color
+            $(".open-dialog-list").animate({color: '#e85b2d '}, 500); //todo color
         }
     }
 
@@ -418,7 +418,7 @@ function updateChat(){
                 if ($("body").is('.sound_personalMessage')){
                     soundManager.play('personalMessage');
                 }
-                $(".open-dialog-list").animate({backgroundColor: '#e85b2d '}, 500);
+                $(".open-dialog-list").animate({color: '#e85b2d '}, 500);
             }
 
             $("#chat-last-update").attr('value', data.questions_last_update);
@@ -427,15 +427,23 @@ function updateChat(){
                 var cur_chat = $(".chat-content[data-chat-id="+i+"]");
                 for (var j in data.chats[i]){
                     $(".chat-tab:not(.active)[data-tab="+cur_chat.attr('tab')+"]").addClass('newMsgs');
+                    $(".chatWindow").addClass('chatIndicate');                    
                     cur_chat.find(".messageWrap").append('<div class="singleMessage"><div class="chatUsername">'+data.chats[i][j].user_name+'</div><div class="messageText">'+data.chats[i][j].msg_text+'</div></div>');
                 }
+                
             }
             for (var i in data.dialogs){
                 var cur_chat = $(".chat-content[data-dialog-id="+i+"]");
                 for (var j in data.dialogs[i]){
                     $(".chat-tab:not(.active)[data-tab="+cur_chat.attr('tab')+"]").addClass('newMsgs');
+                    $(".chatWindow").addClass('chatIndicate');
                     cur_chat.find(".messageWrap").append('<div class="singleMessage"><div class="chatUsername">'+data.dialogs[i][j].user_name+'</div><div class="messageText">'+data.dialogs[i][j].msg_text+'</div></div>');
                 }
+            }
+            
+            if (data.chats.length > 0 || data.dialogs.length > 0) {
+                soundManager.play('inChat');
+                $(".chatWindow").addClass('chatIndicate');                  
             }
 
             for (var i in data.srvmsgs.chats){
@@ -496,6 +504,8 @@ function indicateChatInvite () {
             .animate({borderWidth: '2px', borderColor: '#e6e6e6', color: '#333'}, 500);
 //        $(".chat-tab.indicate").animate({borderWidth: '2px', borderColor: '#e85b2d', color: '#000'}, 500)
 //            .animate({borderWidth: '2px', borderColor: '#e6e6e6', color: '#333'}, 500);
+        $(".chatWindow.chatIndicate").animate({backgroundColor: '#ffebdb'}, 1000)
+            .animate({backgroundColor:'#ebf2fa'}, 1000);
     }
 }
 
