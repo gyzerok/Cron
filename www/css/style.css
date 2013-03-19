@@ -428,6 +428,7 @@
 	cursor: pointer;
 	line-height: 100%;
 	font-size: 16px;
+    position: relative;
 }
 
 #menu ul.menuNavigation li ul.subMenuNavigation li a:hover {
@@ -444,6 +445,20 @@
 	font-size: 16px;
 	display: block;
 	width: 180px;
+}
+
+#menu ul.menuNavigation li ul.subMenuNavigation li a.delete-link {
+    display: block;
+    position: absolute;
+    height: 7px;
+    width: 7px;
+    background: url(../i/delete-link.png) no-repeat;
+    right: 6px;
+    top: 6px;
+}
+
+#menu ul.menuNavigation li ul.subMenuNavigation li a.delete-link:hover {
+    background: url(../i/delete-link-hover.png) no-repeat;
 }
 
 #menu ul.menuNavigation li ul.subMenuNavigation li a.add-bookmark {

@@ -157,7 +157,7 @@
                 </li>
 				<li>{% trans %}Информация{% endtrans %}
                     <ul class="subMenuNavigation">
-                        <li><a href="/articles">{% trans %}статьи{% endtrans %}</a></li>
+                        <li><a href="/articles">{% trans %}статьи{% endtrans %}</a><a title="удалить ссылку" class="delete-link"></a></li>
                         {{ app.getSession().get('_user_links')|raw }}
 						{% if curUser %}
                         <li style="	background-color: #fdf5ef; border-radius: 0px;"><a href="#" class="add-bookmark">{% trans %}добавить ссылку{% endtrans %}</a></li>
