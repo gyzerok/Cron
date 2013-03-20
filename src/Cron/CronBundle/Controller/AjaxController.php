@@ -578,7 +578,8 @@ class AjaxController extends AbstractController
     public function updateQuestionsAction(Request $request)
     {
         $lastTime = $request->get("questions_last_update");
-//        $lastTime = date('Y-m-d H:i:s', $lastTime);
+
+        $em = $this->getDoctrine()->getManager();
 
         $questionRepo = $this->getDoctrine()->getRepository('CronCronBundle:Question');
         $catQuery = $questionRepo->createQueryBuilder('question')
@@ -604,7 +605,41 @@ class AjaxController extends AbstractController
         $data['new_rush_questions'] = count($rush);
         $data['questions_last_update'] = date('Y-m-d H:i:s');
 
-        return new Response(json_encode($data));
+        if ($request->get('update_my_questions')){
+            $user = $this->getUser();
+            if ($user instanceof User){
+                $my_questions = $questionRepo->findAllByUser($user);
+                $my_updated_questions = array();
+                $i = 0;
+                foreach ($my_questions as $id => $my_question) {
+                    $answers = $my_question->getAnswers();
+                    $html = '';
+                    $j = 0;
+                    foreach ($answers as $ans) {
+                        if (!in_array($user, (array)$ans->getSpams())){
+                            $html .= '<div class="singleAnswer" data-user="'.$ans->getUser()->getId().'"><div class="userName">'.$ans->getUser()->getNick().'</div><div class="answerDate">'.$ans->getPubDate()->format("d.m.Y H:i").'</div><div style="clear: both;"></div><div class="questionText">'.$ans->getText().'<div class="socialIcons"><div class="spamButton '.(in_array($user, (array)$ans->getSpams()) ? 'spamButtonActive' : '').'"></div><div class="likeButton '.(in_array($user, (array)$ans->getLikes()) ? 'likeButtonActive' : '').'"></div><div class="arrowButton inviteUser"></div><div class="letterButton sendMessage"></div></div></div></div>';
+                            $j++;
+                        }
+                    }
+                    $my_updated_questions[$i]['id'] = $my_question->getId();
+                    $my_updated_questions[$i]['answers'] = $html;
+                    if ($j>=$my_question->getBoundary()){
+                        $my_updated_questions[$i]['closed'] = true;
+                        $my_question->setStatus(2);
+
+                        $em->persist($my_question);
+                        $em->flush();
+                    } else {
+                        $my_updated_questions[$i]['closed'] = false;
+                    }
+                    $i++;
+                }
+//                echo $html;
+                $data['my_questions'] = $my_updated_questions;
+            }
+        }
+
+        return new Response(json_encode($data, true));
     }
 
     public function deleteMyQuestionAction(Request $request)

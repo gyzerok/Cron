@@ -217,9 +217,9 @@ $(document).ready(function() {
         });
     };
 
-//    if ($("body").is('.auth')){
+    if ($("body").is('.auth')){
         setInterval('updateQuestions(iAmOnIndexPage);', 30000);
-//    }
+    }
 
 });
 
@@ -244,11 +244,26 @@ function updateQuestions(update_my_questions){
 //            dialogs: dialogs.substr(0,dialogs.length-1)
         },
         success: function(data){
-            if (update_my_questions){
+//            if (update_my_questions){
+//                alert('asd');
                 if (data.my_questions){
-
+                    var questionIsClosed = false;
+                    for (var i in data.my_questions){
+                        var cur_question = $(".singleQuestion[data-id=" + data.my_questions[i].id + "]");
+                        var cur_answers_wrap = cur_question.next();
+                        cur_answers_wrap.html(data.my_questions[i].answers);
+                        cur_question.find('.answerButtonItalic').attr('value', cur_answers_wrap.find('.singleAnswer').size() + ' отв.');
+                        if (data.my_questions[i].closed){
+//                            cur_question.find('.closeMyQuestion').attr('value', 'вопрос закрыт').attr('disabled', 'disabled');
+                            cur_question.find('.closeMyQuestion').remove();
+                            questionIsClosed = true;
+                        }
+                    }
+                    if (questionIsClosed && $("body").is('.sound_questionIsClosed')){
+                        soundManager.play('questionIsClosed');
+                    }
                 }
-            }
+//            }
             if (data.new_categorized_questions){
                 $("#new_categorized_questions").text('('+data.new_categorized_questions+')');
             } else {

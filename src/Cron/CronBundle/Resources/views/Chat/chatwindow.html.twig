@@ -66,12 +66,14 @@
                     </div>
                 </div>
                 <div class="usersInChat">
-                    {% for member in mychat.members %}
-                    <div class="singleUser" data-user="{{ member.getUser().getId() }}">
-                        <div class="singleUsername">{{ member.getUser().getNick() }}</div>
-                        <div class="kickUser"></div>
-                    </div>
-                    {% endfor %}
+                    {% if mychat.members %}
+                        {% for member in mychat.members %}
+                        <div class="singleUser" data-user="{{ member.getUser().getId() }}">
+                            <div class="singleUsername">{{ member.getUser().getNick() }}</div>
+                            <div class="kickUser"></div>
+                        </div>
+                        {% endfor %}
+                    {% endif %}
                 </div>
             </div>
         {% endif %}
@@ -115,7 +117,7 @@
 			<div class="switch"></div>
 			<input id="chat-nl-switch" type="checkbox" />
 		</div>
-		<div class="finishConversation{% if mychat.members|length<1 %} hidden{% endif %}">
+		<div class="finishConversation{% if mychat %}{% if mychat.members|length<1 %} hidden{% endif %}{% endif %}">
 			<input type="button" value="закончить
 общение" />
 		</div>
