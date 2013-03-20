@@ -4,8 +4,8 @@
 	{% block navigation %}		
 	<div id="nav">
 		<div class="orderQuestions"><a href="{{ path('index') }}">{% trans %}Главная{% endtrans %}</a></div>
-		<div class="categoryQuestions"><a style="color:#7A4216" href="{{ path('category') }}">по категориям</a></div>
-		<div class="expressQuestions"><a href="{{ path('rush') }}">срочные</a></div>
+		<div class="categoryQuestions"><a style="color:#7A4216" href="{{ path('category') }}">{% trans %}по категориям{% endtrans %}</a></div>
+		<div class="expressQuestions"><a href="{{ path('rush') }}">{% trans %}срочный{% endtrans %}</a></div>
 	</div>
 	{% endblock %}
 
@@ -22,7 +22,7 @@
 							that.removeClass("spamButtonActive");
 						},
 						'success': function() {
-							that.closest('.singleQuestion').replaceWith($("<span class='spamMessage'>Этот вопрос помечен как спам!</span>"));
+							that.closest('.singleQuestion').replaceWith($("<span class='spamMessage'>{% trans %}Вопрос был отмечен как спам{% endtrans %}</span>"));
 							$('.spamMessage').delay('5000').fadeOut('1000');
 						}
 					});
@@ -65,9 +65,9 @@
                             <div class="socialIcons">
                                 {% if curUser %}
                                     {% if item.getUser()!=curUser %}
-                                        <div title="пометить как спам" class="spamButton {% if curUser in item.spams %}spamButtonActive{% endif %}"></div>
-                                        <div title="мне нравится" class="likeButton {% if curUser in item.likes %}likeButtonActive{% endif %}"></div>
-                                        <div title="добавить с закладки" class="repostButton"></div>
+                                        <div title="{% trans %}отметить как спам{% endtrans %}" class="spamButton {% if curUser in item.spams %}spamButtonActive{% endif %}"></div>
+                                        <div title="{% trans %}мне нравится{% endtrans %}" class="likeButton {% if curUser in item.likes %}likeButtonActive{% endif %}"></div>
+                                        <div title="{% trans %}добавить в заметки{% endtrans %}" class="repostButton"></div>
                                     {% endif %}
                                 {% endif %}
                                 {#{% if curUser or _rush %}#}
@@ -76,10 +76,10 @@
                                             {% if item.getPrivate()<1 %}
                                                 <input class="answerButton" type="button" {% if not item.answers|length  %}disabled="disabled"{% endif %} value="{{ item.answers|length ~ ' отв.' }}" />
                                             {% else %}
-                                                <input class="answerButton" type="button" value="закрытый" />
+                                                <input class="answerButton" type="button" value="{% trans %}закрытый{% endtrans %}" />
                                             {% endif %}
                                         {% else %}
-                                            <input class="answerButton" type="button" value="ответить" />
+                                            <input class="answerButton" type="button" value="{% trans %}ответить{% endtrans %}" />
                                         {% endif %}
                                     </form>
                                 {#{% endif %}#}
@@ -119,8 +119,8 @@
                             <form class="answerForm">
                                 <textarea class="answerTextarea" ></textarea>
                                 <div class="answerFormNavigation">
-                                    <input class="cancelButton" type="button" value="отменить" />
-                                    <input class="submitAnswerButton" type="submit" value="отправить" />
+                                    <input class="cancelButton" type="button" value="{% trans %}отмена{% endtrans %}" />
+                                    <input class="submitAnswerButton" type="submit" value="{% trans %}отправить{% endtrans %}" />
                                 </div>
                             </form>
                         {% endif %}
@@ -129,6 +129,6 @@
             </div>
         {% endfor %}
 		{#{% else %}#}
-		{#<p style="margin: 15px;">Необходимо авторизироваться, чтобы видеть вопросы по категориям</p>#}
+		{#<p style="margin: 15px;">{% trans %}Недоступно незарегистрированным пользователям{% endtrans %}</p>#}
 		</div>
 	{% endblock %}

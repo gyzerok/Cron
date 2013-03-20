@@ -43,7 +43,7 @@
 
         {% for dialog in dialogs %}
             <div class="singleTab chat-tab" data-tab="d{{ dialog.getId() }}">
-                <a href="#" class="closeDialogTab"></a>
+                <a href="#" title="закрыть диалог" class="closeDialogTab"></a>
                 {% if dialog.user1==curUser %}
                     {{ dialog.user2.getNick() }}
                 {% else %}
@@ -55,7 +55,7 @@
 	<div class="mainWindow">
         {% if mychat %}
             <div class="chat-content" tab="my" data-chat-id="{{ mychat.getId() }}">
-                <div class="chat" style="width:auto;">
+                <div class="chat resizeChat" style="width:auto;">
                     <div class="messageWrap" style="width: 578px;">
                         {% for message in mychat.messages %}
                             <div class="singleMessage{% if message.getUser()==curUser %} my-message{% endif %}">
@@ -65,12 +65,12 @@
                         {% endfor %}
                     </div>
                 </div>
-                <div class="usersInChat">
+                <div class="usersInChat resizeChat">
                     {% if mychat.members %}
                         {% for member in mychat.members %}
                         <div class="singleUser" data-user="{{ member.getUser().getId() }}">
                             <div class="singleUsername">{{ member.getUser().getNick() }}</div>
-                            <div class="kickUser"></div>
+                            <div title="выгнать пользователя" class="kickUser"></div>
                         </div>
                         {% endfor %}
                     {% endif %}
@@ -81,7 +81,7 @@
         {% set counter = 1 %}
         {% for in_chat in income_chats %}
             <div class="chat-content" tab="in{{ counter }}" data-chat-id="{{ in_chat.getChat().getId() }}">
-                <div class="chat">
+                <div class="chat resizeChat">
                     <div class="messageWrap" >
                         {% for message in in_chat.messages %}
                             <div class="singleMessage{% if message.getUser()==curUser %} my-message{% endif %}">
@@ -97,7 +97,7 @@
 
         {% for dialog in dialogs %}
             <div class="chat-content" tab="d{{ dialog.getId() }}" data-dialog-id="{{ dialog.getId() }}" data-to-user="{% if dialog.user1==curUser %}{{ dialog.user2.getId() }}{% else %}{{ dialog.user1.getId() }}{% endif %}">
-                <div class="chat">
+                <div class="chat resizeChat">
                     <div class="messageWrap">
                         {% for message in dialog.messages %}
                             <div class="singleMessage{% if message.getUser()==curUser %} my-message{% endif %}">

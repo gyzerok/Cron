@@ -33,8 +33,8 @@
 				<div class="portuguese{% if _locale=='pt_PT' %} active{% endif %}" title="{% trans %}португальский{% endtrans %}"><a href="{{ path('locale', { 'locale': 'pt_PT' }) }}"></a></div>
 			</div>
 			<div class="users">
-				<p><span>{{ totalUserCount }}</span><span class="onSite">{% trans %}На сайте{% endtrans %}</span></p>
-				<p><span>{{ onlineUserCount }}</span><span class="online">{% trans %}В сети{% endtrans %}</span></p>
+				<p><span>{{ totalUserCount }}</span><span class="deivder"></span><span class="onSite">{% trans %}На сайте{% endtrans %}</span></p>
+				<p><span>{{ onlineUserCount }}</span><span class="deivder"></span><span class="online">{% trans %}В сети{% endtrans %}</span></p>
 			</div>
 		</div>
 	    {% endblock %}
@@ -141,7 +141,7 @@
 	    {% block menu %}		
 		<div id="menu">
 			<ul class="menuNavigation">
-				<li>{% trans %}Вопросы{% endtrans %}
+				<li>{% trans %}вопросы{% endtrans %}
 					<ul class="subMenuNavigation">
                         {{ app.getSession().get('_category_list_view')|raw }}
 					</ul>
@@ -214,7 +214,7 @@
 		{% block chat %}
 		<div class="chatWrapper">
 			<div class="openChat">
-				<div class="closeChat"></div>
+				<div title="свернуть чат" class="closeChat"></div>
 				<div class="chat-container"></div>
 			</div>
 		</div>
