@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
 //use Doctrine\ORM\EntityManager;
 //use Doctrine\ORM\EntityRepository;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * Cron\CronBundle\Entity\User
@@ -101,20 +103,20 @@ class User implements UserInterface, \Serializable
      *
      * @ORM\ManyToOne(targetEntity="State")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="state_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="state_id", referencedColumnName="id", nullable=true)
      * })
      */
-    private $state;
+    private $state = null;
 
     /**
      * @var City
      *
      * @ORM\ManyToOne(targetEntity="City")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="city_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=true)
      * })
      */
-    private $city;
+    private $city = null;
 
     /**
      * @var Country

@@ -146,23 +146,43 @@
                         },
                         success:function () {}
                     });
-                    question.next('.myAnswer').remove();
-                    question.remove();
+                    question.find('.closeMyQuestion').remove();
+//                    question.remove();
                 }
             });
 
             $("body.index-page .singleQuestion .closeButton").live('click', function(){
                 var question = $(this).closest('.singleQuestion');
-                $.ajax({
-                    url: "/ajax/hideMyQuestion",
-                    type: "POST",
-                    data: {
-                        question: question.data('id')
-                    },
-                    success:function () {}
-                });
+                if ($("body").is('auth')){
+                    $.ajax({
+                        url: "/ajax/hideMyQuestion",
+                        type: "POST",
+                        data: {
+                            question: question.data('id')
+                        },
+                        success:function () {}
+                    });
+                } else {
+                    $.ajax({
+                        url: "/ajax/closeMyQuestion",
+                        type: "POST",
+                        data: {
+                            question: question.data('id')
+                        },
+                        success:function () {}
+                    });
+                    $.ajax({
+                        url: "/ajax/hideMyQuestion",
+                        type: "POST",
+                        data: {
+                            question: question.data('id')
+                        },
+                        success:function () {}
+                    });
+                }
                 question.next('.myAnswer').remove();
                 question.remove();
+
             });
 
             //Расположение элементов страницы
@@ -303,8 +323,12 @@
                     {{ question.text }}
                     <div class="actionButton">
                         <form class="answer">
-                            <input class="closeMyQuestion" type="button" value="{% trans %}закрыть{% endtrans %}"/>
-                            <input class="deleteMyQuestion" type="button" value="{% trans %}удалить{% endtrans %}"/>
+                            {% if not question.isClosed() %}
+                                <input class="closeMyQuestion" type="button" value="{% trans %}закрыть{% endtrans %}"/>
+                            {% endif %}
+                            {% if curUser %}
+                                <input class="deleteMyQuestion" type="button" value="{% trans %}удалить{% endtrans %}"/>
+                            {% endif %}
                             <input class="answerButtonItalic" type="button" value="{{ question.getAnswers()|length }} отв."/>
                         </form>
                     </div>

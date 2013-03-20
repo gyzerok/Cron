@@ -8,6 +8,7 @@ use Doctrine\ORM\NoResultException;
 define('ACTIVE', 0);
 define('HIDDEN', 1);
 define('CLOSED', 2);
+define('DELETED', 3);
 
 class QuestionRepository extends EntityRepository
 {
@@ -15,7 +16,7 @@ class QuestionRepository extends EntityRepository
     {
         $questions = $this->createQueryBuilder('question')
                           ->where('question.user = :uid AND question.status <> :status AND question.hide_on_index = 0 ')
-                          ->setParameters(array('status' => CLOSED, 'uid' => $user->getId()))
+                          ->setParameters(array('status' => DELETED, 'uid' => $user->getId()))
                           ->getQuery()
                           ->getResult();
 
@@ -26,6 +27,17 @@ class QuestionRepository extends EntityRepository
     {
         $questions = $this->createQueryBuilder('question')
             ->where('question.user = :uid AND question.status <> :status ')
+            ->setParameters(array('status' => DELETED, 'uid' => $user->getId()))
+            ->getQuery()
+            ->getResult();
+
+        return $questions;
+    }
+
+    public function findAllNotClosedByUser(\Cron\CronBundle\Entity\User $user)
+    {
+        $questions = $this->createQueryBuilder('question')
+            ->where('question.user = :uid AND question.status <> :status AND question.hide_on_index = 0 ')
             ->setParameters(array('status' => CLOSED, 'uid' => $user->getId()))
             ->getQuery()
             ->getResult();
@@ -41,14 +53,14 @@ class QuestionRepository extends EntityRepository
                 $questions = $this->createQueryBuilder('question')
                                   ->innerJoin('question.spams', 'user')
                                   ->where('question.category <> :cid  AND question.status <> :status AND question.spams <> :user')
-                                  ->setParameters(array('cid' => '1', 'status' => CLOSED, 'user' => $user->getId()))
+                                  ->setParameters(array('cid' => '1', 'status' => DELETED, 'user' => $user->getId()))
                                   ->getQuery()
                                   ->getResult();
                 break;
             case 'rush':
                 $questions = $this->createQueryBuilder('question')
                                   ->where('question.category = :cid  AND question.status <> :status AND question')
-                                  ->setParameters(array('status' => CLOSED, 'cid' => '1'))
+                                  ->setParameters(array('status' => DELETED, 'cid' => '1'))
                                   ->getQuery()
                                   ->getResult();
                 break;

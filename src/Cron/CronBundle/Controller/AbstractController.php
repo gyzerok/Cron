@@ -79,7 +79,7 @@ class AbstractController extends Controller implements InitializableControllerIn
 
             $html = '';
             foreach ($links as $link) {
-                $html .= '<li><a href="'.$link->getUrl().'" target="_blank">'.$link->getTitle().'</a></li>';
+                $html .= '<li data-id="'.$link->getId().'"><a href="'.$link->getUrl().'" target="_blank">'.$link->getTitle().'</a><a title="удалить ссылку" class="delete-link"></a></li>';
             }
 
             return $html;

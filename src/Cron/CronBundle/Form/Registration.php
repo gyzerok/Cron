@@ -4,6 +4,9 @@ namespace Cron\CronBundle\Form;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\CallbackValidator;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Event\DataEvent;
 use Cron\CronBundle\Entity\Country;
@@ -39,6 +42,7 @@ class Registration extends AbstractType
             $form->add($factory->createNamed('state', 'entity', null, array(
                 'class'         => 'Cron\CronBundle\Entity\State',
                 'property'      => 'name',
+                'required'      => false,
                 'empty_value'   => 'Выберите регион',
                 'query_builder' => function (EntityRepository $repository) use ($country)
                 {
@@ -66,6 +70,7 @@ class Registration extends AbstractType
                 'class'         => 'Cron\CronBundle\Entity\City',
                 'property'      => 'name',
                 'empty_value'   => 'Выберите город',
+                'required'      => false,
                 'query_builder' => function (EntityRepository $repository) use ($state)
                 {
                     $qb = $repository->createQueryBuilder('city')
@@ -104,6 +109,7 @@ class Registration extends AbstractType
                 'property'      => 'name',
                 'property_path' => false,
                 'empty_value'   => 'Выберите регион',
+                'required'      => false,
                 'data'          => $state,
             )));
         };

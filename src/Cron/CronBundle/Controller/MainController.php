@@ -2,6 +2,9 @@
 
 namespace Cron\CronBundle\Controller;
 
+use Symfony\Component\Security\Core\SecurityContext;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+
 use Cron\CronBundle\Entity\Question;
 use Cron\CronBundle\Entity\Answer;
 use Cron\CronBundle\Entity\Category;
@@ -78,7 +81,7 @@ class MainController extends AbstractController
             $userQuestions = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findAllbyUser($user);
         } else {
             $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
-            $userQuestions = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findBy(array("user"=>$user->getId(), "user_ip"=>$this->container->get('request')->getClientIp()));
+            $userQuestions = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findBy(array("user"=>$user->getId(), "user_ip"=>$this->container->get('request')->getClientIp(), "hide_on_index"=>0));
         }
 
         return $this->render("CronCronBundle:Main:index.html.twig", array('title' => 'Главная',
@@ -622,8 +625,15 @@ class MainController extends AbstractController
     public function registerAction(Request $request)
     {
         $user = new User();
+        /*if (!$user->getState()){
+            $user->setState(null);
+        }
+        if (!$user->getCity()){
+            $user->setCity(null);
+        }*/
         $form = $this->createForm(new Registration(), $user);
         if ($request->isMethod('POST')) {
+
             $form->bind($request);
 
             if ($form->isValid()) {
@@ -632,6 +642,10 @@ class MainController extends AbstractController
                 $forconf = $user->getPassword();
                 $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
                 $user->setPassword($password);
+
+//                if (!$user->getState()){
+//                    $user->setState(new \Cron\CronBundle\Entity\State());
+//                }
 
                 $user->setCredits(10);
 
@@ -680,6 +694,9 @@ class MainController extends AbstractController
             if (md5($user->getId() + $user->getNick() + $user->getUsername()) == $hash)
             {
                 $user->setIsActive(true);
+
+                $token = new UsernamePasswordToken($user, null, 'secured_area', $user->getRoles());
+                $this->container->get('security.context')->setToken($token);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);

@@ -56,7 +56,9 @@
                     <div class="singleQuestion likable-item" data-id="{{ item.getId() }}">
                         <div class="userName">{{ item.user }}</div>
                         <div class="questionDate">{{ item.datetime|date('d.m.Y H:i') }}</div>
-                        <div class="closeButton"></div>
+                        {% if item.user==curUser %}
+                            <div class="closeButton"></div>
+                        {% endif %}
                         <div style="clear: both;"></div>
                         <div class="questionText">
                         {{ item.text }}
@@ -95,18 +97,16 @@
                                             <div style="clear: both;"></div>
                                             <div class="questionText">
                                                 {{ answer.getText() }}
-                                                {#{% if answer.getUser()!=curUser %}#}
+                                                {% if item.getUser()==curUser or answer.getUser()!=curUser %}
                                                     <div class="socialIcons">
-                                                        <div class="spamButton" title="Пометить как спам"></div>
                                                         {% if curUser %}
-                                                            <div class="likeButton" title="Мне нравится!"></div>
-                                                        {% endif %}
-                                                        <div class="arrowButton inviteUser" title="Отправить приглашение в чат"></div>
-                                                        {% if curUser %}
+                                                            <div class="spamButton" title="Пометить как спам"></div>
+                                                            <div class="likeButton  {% if curUser in answer.getLikes() %}likeButtonActive{% endif %}"" title="Мне нравится!"></div>
+                                                            <div class="arrowButton inviteUser" title="Отправить приглашение в чат"></div>
                                                             <div class="letterButton sendMessage" title="Отправить сообщение"></div>
                                                         {% endif %}
                                                     </div>
-                                                {#{% endif %}#}
+                                                {% endif %}
                                             </div>
                                         </div>
                                     {% endfor %}

@@ -262,6 +262,19 @@ class Question
     }
 
     /**
+     * Check closed state
+     *
+     * @return boolean
+     */
+    public function isClosed()
+    {
+        if ($this->getStatus()=='2'){
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Set datetime
      *
      * @param \DateTime $datetime

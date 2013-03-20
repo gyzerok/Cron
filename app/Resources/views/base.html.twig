@@ -157,7 +157,7 @@
                 </li>
 				<li>{% trans %}Информация{% endtrans %}
                     <ul class="subMenuNavigation">
-                        <li><a href="/articles">{% trans %}статьи{% endtrans %}</a><a title="удалить ссылку" class="delete-link"></a></li>
+                        <li><a href="/articles">{% trans %}статьи{% endtrans %}</a></li>
                         {{ app.getSession().get('_user_links')|raw }}
 						{% if curUser %}
                         <li style="	background-color: #fdf5ef; border-radius: 0px;"><a href="#" class="add-bookmark">{% trans %}добавить ссылку{% endtrans %}</a></li>
@@ -194,7 +194,7 @@
                     {% endif %}
                 {% endif %}
 				<li class="chatInvite">{% trans %}Приглашение в чат{% endtrans %}</li>
-                <div id="notepad" style="margin-top: 10px;display:none; width: 272px;">
+                <div id="notepad" style="margin-top: 10px;width: 272px;{% if not app.getSession().get('_notepad_opened') %}display:none;{% endif %}}">
                     <textarea id="notepad-text" style="height: 200px;width: 189px;resize: none;border: 1px solid #CC2A03;border-radius: 5px;margin-left: -9px;float: left;margin-top: 10px;">{{ app.getSession().get('_notepad') }}</textarea>
                     <div class="closeNotepad"><a title="закрыть блокнот" href=""></a></div>
                 </div>
@@ -218,7 +218,7 @@
 				<div class="chat-container"></div>
 			</div>
 		</div>
-		<div class="chatWindow">
+		<div class="chatWindow {% if app.getSession().get('_chat_opened') %}opened{% endif %}">
 		<span>{% trans %}Окно чата{% endtrans %}</span>
 		<div class="chatUpButton"></div>
 		</div>

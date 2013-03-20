@@ -172,6 +172,22 @@ loadNotepad:
   pattern:  /ajax/loadNotepad
   defaults: { _controller: CronCronBundle:Ajax:loadNotepad }
 
+openNotepad:
+  pattern:  /ajax/openNotepad
+  defaults: { _controller: CronCronBundle:Ajax:openNotepad }
+
+closeNotepad:
+  pattern:  /ajax/closeNotepad
+  defaults: { _controller: CronCronBundle:Ajax:closeNotepad }
+
+openChat:
+  pattern:  /ajax/openChat
+  defaults: { _controller: CronCronBundle:Ajax:openChat }
+
+closeChat:
+  pattern:  /ajax/closeChat
+  defaults: { _controller: CronCronBundle:Ajax:closeChat }
+
 updateNotepad:
   pattern:  /ajax/updateNotepad
   defaults: { _controller: CronCronBundle:Ajax:updateNotepad }
@@ -199,6 +215,10 @@ closeMyQuestion:
 hideMyQuestion:
   pattern:  /ajax/hideMyQuestion
   defaults: { _controller: CronCronBundle:Ajax:hideMyQuestion }
+
+deleteMyLink:
+  pattern:  /ajax/deleteMyLink
+  defaults: { _controller: CronCronBundle:Ajax:deleteMyLink }
 
 
 # Chat routes

@@ -142,12 +142,12 @@ class AjaxController extends AbstractController
 
                 $question->addLike($user);
 
-//                $creator = $question->getUser();
-//                $creator->incCredits();
+                $creator = $question->getUser();
+                $creator->incCredits();
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($question);
-//                $em->persist($creator);
+                $em->persist($creator);
                 $em->flush();
 
                 return new Response('Success');
@@ -254,10 +254,6 @@ class AjaxController extends AbstractController
 					<div class="questionText">
 						'.$ans->getText().'
 						<div class="socialIcons">
-							<div class="spamButton"></div>
-							<div class="likeButton"></div>
-							<div class="arrowButton inviteUser"></div>
-							<div class="letterButton sendMessage"></div>
 						</div>
 					</div>
 				</div>';
@@ -448,7 +444,7 @@ class AjaxController extends AbstractController
         $em->persist($link);
         $em->flush();
 
-        $html = '<li><a href="'.$url.'" target="_blank">'.$request->get('title').'</a></li>';
+        $html = '<li data-id="'.$link->getId().'"><a href="'.$url.'" target="_blank">'.$request->get('title').'</a><a title="удалить ссылку" class="delete-link"></a></li>';
 
         return new Response($html);
     }
@@ -552,6 +548,30 @@ class AjaxController extends AbstractController
 //        return new Response($notepad->getText());
 //    }
 
+    public function openNotepadAction(Request $request)
+    {
+        $request->getSession()->set('_notepad_opened', 1);
+        return new Response("SUCCESS");
+    }
+
+    public function closeNotepadAction(Request $request)
+    {
+        $request->getSession()->remove('_notepad_opened');
+        return new Response("SUCCESS");
+    }
+
+    public function openChatAction(Request $request)
+    {
+        $request->getSession()->set('_chat_opened', 1);
+        return new Response("SUCCESS");
+    }
+
+    public function closeChatAction(Request $request)
+    {
+        $request->getSession()->remove('_chat_opened');
+        return new Response("SUCCESS");
+    }
+
     public function updateNotepadAction(Request $request)
     {
         $user = $this->getUser();
@@ -608,7 +628,7 @@ class AjaxController extends AbstractController
         if ($request->get('update_my_questions')){
             $user = $this->getUser();
             if ($user instanceof User){
-                $my_questions = $questionRepo->findAllByUser($user);
+                $my_questions = $questionRepo->findAllNotClosedByUser($user);
                 $my_updated_questions = array();
                 $i = 0;
                 foreach ($my_questions as $id => $my_question) {
@@ -695,7 +715,8 @@ class AjaxController extends AbstractController
     {
         $user = $this->getUser();
         if (!$user instanceof User){
-            return new Response("Fail", 403);
+//            return new Response("Fail", 403);
+            $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -704,11 +725,16 @@ class AjaxController extends AbstractController
 
         $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($question);
 
-        $question->setStatus(2);
+        if ($question->getUser()==$user)
+        {
+            $question->setStatus(2);
 
-        $em->persist($question);
+            $em->persist($question);
 
-        $em->flush();
+            $em->flush();
+        }
+
+
 
         return new Response("SUCCESS");
     }
@@ -717,7 +743,7 @@ class AjaxController extends AbstractController
     {
         $user = $this->getUser();
         if (!$user instanceof User){
-            return new Response("Fail", 403);
+            $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -726,11 +752,38 @@ class AjaxController extends AbstractController
 
         $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($question);
 
-        $question->setHideOnIndex(true);
+        if ($question->getUser()==$user){
+            $question->setHideOnIndex(true);
 
-        $em->persist($question);
+            $em->persist($question);
 
-        $em->flush();
+            $em->flush();
+        }
+
+        return new Response("SUCCESS");
+    }
+
+    public function deleteMyLinkAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            return new Response("Fail");
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $user_link = $request->get("id");
+//        if (!$user_link){
+//            $user_link =
+//        }
+
+        $user_link = $this->getDoctrine()->getRepository("CronCronBundle:UserLink")->find($user_link);
+
+        if ($user_link->getUser()==$user){
+            $em->remove($user_link);
+
+            $em->flush();
+        }
 
         return new Response("SUCCESS");
     }

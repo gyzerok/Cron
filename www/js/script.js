@@ -62,6 +62,19 @@ $(document).ready(function() {
         return false;
     });
 
+    $(".delete-link").live('click', function(){
+        var link = $(this).closest('li');
+        $.ajax({
+            url: '/ajax/deleteMyLink',
+            type: 'post',
+            data: {
+                id: link.data('id')
+            }
+        });
+        link.remove();
+        return false;
+    });
+
     $(".open-feedback-window").click(function(){
         $(".feedbackWindow").show();
         return false;
@@ -149,12 +162,27 @@ $(document).ready(function() {
         return false;
     });
     $(".open-notepad").click(function(){
-        $("#notepad").show();
-        $("#notepad-text").focus();
+        var notepad = $("#notepad");
+        if (notepad.is(':visible')){
+            notepad.hide();
+            $.ajax({
+                url:'/ajax/closeNotepad'
+            });
+        } else {
+            notepad.show();
+            $("#notepad-text").focus();
+            $.ajax({
+                url:'/ajax/openNotepad'
+            });
+        }
+
         return false;
     });
     $(".closeNotepad").click(function(){
         $("#notepad").hide();
+        $.ajax({
+            url:'/ajax/closeNotepad'
+        });
         return false;
     });
 

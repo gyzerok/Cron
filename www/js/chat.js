@@ -213,13 +213,24 @@ $(document).ready(function(){
             chat_container.find(".chat-tab").first().click();
         }
 //        openChat.fadeIn();
-        $('.chatWrapper').fadeIn();
+//        if ($(".chatWrapper").is(':visible')){
+//
+//        } else {
+            $('.chatWrapper').fadeIn();
+            $.ajax({
+                url:'/ajax/openChat'
+            });
+//        }
+
         openChat.show();
         $(".chat-input").focus();
         $(".open-dialog-list").animate({color: '#383838'}, 500);
     });
     $('.closeChat').click(function() {
 //        openChat.fadeOut();
+        $.ajax({
+            url:'/ajax/closeChat'
+        });
         $('.chatWrapper').fadeOut();
         openChat.hide();
     });
@@ -364,6 +375,11 @@ $(document).ready(function(){
                 soundManager.play('personalMessage');
             }
             $(".open-dialog-list").animate({color: '#e85b2d '}, 500); //todo color
+        }
+
+        var chat_button = $(".chatWindow");
+        if (chat_button.is('.opened')){
+            chat_button.click();
         }
     }
 
