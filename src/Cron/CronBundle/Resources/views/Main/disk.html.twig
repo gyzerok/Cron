@@ -1,13 +1,13 @@
 {% extends '::base.html.twig' %}
 {% block content %}
-    <h2 class="categoryH2">Кибердиск</h2>
+    <h2 class="categoryH2">{% trans %}Кибердиск{% endtrans %}</h2>
     {% if isAuth>0 %}
         <div id="progress">
             <div class="bar" style="width: 0;"></div>
             <div class="file-name"></div>
         </div>
         <input id="fileupload" type="file" name="file" data-url="{{ path('uploadFile') }}" style="/*visibility: hidden;*/position:absolute;left:-9999px;">
-        <input type="button" value="добавить" id="add-file-button">
+        <input type="button" value="{% trans %}добавить{% endtrans %}" id="add-file-button">
         <script src="js/vendor/jquery.ui.widget.js"></script>
         <script src="js/jquery.iframe-transport.js"></script>
         <script src="js/jquery.fileupload.js"></script>
@@ -29,7 +29,7 @@
                                 $("#total-size-values").html(data);
                             }
                         });
-                        $("#total-size-values").html('Обновляется...');
+                        $("#total-size-values").html('{% trans %}Обновляется...{% endtrans %}');
                     },
                     success: function(last_file_id){
     //                    $(".my-files").attr('lastid', last_file_id);
@@ -46,12 +46,12 @@
                                 //$(".my-files").prepend(data);
                             }
                         });
-                        $(".my-files").prepend('<div class="hint">Обновляется...</div>');
+                        $(".my-files").prepend('<div class="hint">{% trans %}Обновляется...{% endtrans %}</div>');
                         $('#progress .bar').delay(2000).width(0);
                         $('#progress .file-name').text('');
                     },
                     error: function(){
-                        alert('Ошибка! Недостаточно места на диске.');
+                        alert('{% trans %}Ошибка! Недостаточно места на диске.{% endtrans %}');
                     },
                     progressall: function (e, data) {
                         var progress = parseInt(data.loaded / data.total * 100, 10);
@@ -80,7 +80,7 @@
                     $("#file-path-field").val($(this).attr('filepath'));
                 });
                 $(".delete-my-file").live('click', function(){
-                    if (confirm('Удалить файл?')){
+                    if (confirm('{% trans %}Удалить файл{% endtrans %}?')){
                         var my_file = $(this).closest('.my-file');
                         $.ajax({
                             url: '{{ path('deleteFile') }}',
@@ -102,7 +102,7 @@
                             }
                         });
                         my_file.remove();
-                        $("#total-size-values").html('Обновляется...');
+                        $("#total-size-values").html('{% trans %}Обновляется...{% endtrans %}');
                     }
                 });
                 $(".download-my-file").live('click', function(){
@@ -117,21 +117,21 @@
                     clip.setText($('#file-path-field').val().trim());
                 });
                 $("#ZeroClipboardMovie_1").bind('click', function(){
-                    alert('Ссылка скопирована в буфер обмена.');
+                    alert('{% trans %}Ссылка скопирована в буфер обмена.{% endtrans %}');
                 });
 
             });
         </script>
         <div class="" style="clear:both;">
             <div class="file-link-wrap" style="float:left;/*visibility: hidden;*/">
-                <div>Адрес файла</div>
+                <div>{% trans %}Адрес файла{% endtrans %}</div>
                 <input type="text" id="file-path-field">
-                <span title="скопировать в буфер" id="d_clip_button"><a href=""></a></span>
+                <span id="d_clip_button"><a title="{% trans %}копировать ссылку{% endtrans %}" href=""></a></span>
             </div>
             <div class="total-size-wrap" style="float:right;">
                 <span id="total-size-values">{{ total_filesize }} / {{ total_filesize_left }}</span>
                 <br>
-                <span class="spaceLeft">занято / свободно</span>
+                <span class="spaceLeft">{% trans %}занято{% endtrans %} / {% trans %}свободно{% endtrans %}</span>
             </div>
             <div style="clear:both;"></div>
         </div>
@@ -143,7 +143,7 @@
                             <tr>
                                 <td><div class="my-file-name">{{ file.filename }}</div></td>
                                 <td width="90"><div class="my-file-size">{{ file.filesize }}</div></td>
-                                <td width="185"><input type="button" class="delete-my-file" value="удалить"><input type="button" class="download-my-file" value="загрузить"></td>
+                                <td width="185"><input type="button" class="delete-my-file" value="{% trans %}удалить{% endtrans %}"><input type="button" class="download-my-file" value="{% trans %}загрузить{% endtrans %}"></td>
                             </tr>
                         </table>
                     </div>
@@ -151,6 +151,6 @@
             </div>
         </div>
     {% else %}
-        <div style="padding: 15px;">Необходимо авторизоваться, чтобы пользоваться кибердиском.</div>
+        <div style="padding: 15px;">{% trans %}недоступно незарегистрированным пользователям{% endtrans %}</div>
     {% endif %}
 {% endblock %}

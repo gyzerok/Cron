@@ -62,8 +62,8 @@ class RobokassaController extends AbstractController
             '<label for="CreditsAmount">Количество кредитов</label> <select id="CreditsAmount"><option value="20">20</option><option value="50">50</option><option value="100">100</option><option value="200">200</option><option value="500">500</option></select><br/>'.
             '<label for="OutSum">Сумма в руб.</label> <input type="text" id="OutSum" name="OutSum" disabled="disabled" value="'.$out_summ.'"><br/>'.
             '<input type="hidden" name="SignatureValue" value="'.$crc.'">'.
-            '<input type="submit" id="robo-submit" data-href="'.$this->mrh_host.'?MrchLogin='.$this->mrh_login.'&InvId='.$inv_id.'&Desc='.urlencode($inv_desc).'&OutSum='.$out_summ.'&SignatureValue='.$crc.'" value="оплатить"> '.
             '<input type="button" class="pay-cancel" value="отмена">'.
+            '<input type="submit" id="robo-submit" data-href="'.$this->mrh_host.'?MrchLogin='.$this->mrh_login.'&InvId='.$inv_id.'&Desc='.urlencode($inv_desc).'&OutSum='.$out_summ.'&SignatureValue='.$crc.'" value="оплатить"> '.
             '</form>';
 
         return $this->render('CronCronBundle:Main:credits.html.twig', array(

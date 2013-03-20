@@ -1,86 +1,160 @@
-Автор: Author
-Адрес файла: Address file
-Английский: English
-Блокнот: Notebook
-В сети: Online
-Вопросы: Questions
-Вопросы по категориям: Questions by Category
-Все: All
-Войти: Log in
-Входящие вопросы: Incoming Questions
-Входящий чат: Incoming chat
-Выйти: Log out
-Главная: Home
-Город: City
-Добавить: Add
-Добавить в заметки: Add to notes
-За месяц: For the month
-За неделю: For the week
-За сутки: During the day
-Заблокировать пользователя: Block User
-Забыли пароль?: Forgot your password?
-Загрузить: Download
-Закончить общение: Finish the chat
-Закрытый: Closed
-Закрыть: Close
-Заметки: Notes
-Занято: Busy
-Звуковая схема: Sound scheme
-Информация: Information
-Источник: Source
-Кибердиск: Cyberdisk
-Кредиты: Loans
-Кредиты сайта: Site Credits
-Личные сообщения: Private Messages
-Любая страна: Any country
-Любой город: Any city
-Любой регион: Any state
-Минимальное количество ответов: The minimum number of responses
-Мне нравится: Like
-Мои вопросы: My questions
-Мой чат: My chat
-На английском: In English
-На португальском: In Portuguese
-На русском: In Russian
-На украинском: In Ukrainian
-На французском: In French
-Написать сообщение: Send a message
-Настройки: Settings
-Новая строка в чате: A new line in the chat
-Обратная связь: Contact Us
-Окно чата: Chat Window
-Ответить: Reply
-Ответов: Replies
-Отклонить: Decline
-Отмена: Cancel
-Отметить как спам: Mark as spam
-Отправить: Send
-Отправить вопрос: Send a question
-По времени: On the time
-по категориям: by category
-По языкам: By language
-Подтвердить: Сonfirm
-Пользователей на сайте: Visitors to the site
-Португальский: Portuguese
-Приглашение в чат: An invitation to chat
-Приглашения в чат: Chat Invitations
-Просмотр всех тем: View all topics
-Развернуть: Expand
-Регион: State
-Регистрация: Register
-Рекламодателям: Advertisers
-Русский: Russian
-Свернуть: Minimize
-Свободно: Freely
-Сообщения: Messages
-Сохранить: Save
-срочные: urgent
-Срочные вопросы: Urgent matters
-Ссылка: Link
-Статьи: Articles
-#Стоимость N кредитов
-Страна: Country
-Убрать из списка: Remove from the list
-Удалить: Delete
-Украинский: Ukrainian
-Французский: French
+русский:	russian
+английский:	english
+португальский:	portuguese
+Главная:	Home
+по категориям:	by category 
+срочный:	urgent
+закрытый:	closed
+На сайте:	On the site
+В сети:	Online
+Войти:	log in
+Регистация:	register
+Выйти:	log out
+логин:	login
+пароль:	password
+Кредиты:	credits
+Забыли пароль?:	Forgot your password?
+введите адрес электронной почты:	enter your email address
+Настройки:	settings
+Мои вопросы: 	my questions
+Входящие вопросы:	incoming questions
+вопросы:	questions
+Заметки:	notes
+Информация:	information
+Кибердиск:	cyberdisk	
+Сообщения:	messages
+статьи:	articles
+автор:	author
+источник:	source
+ссылка:	link
+блокнот:	notebook
+добавить ссылку:	add link
+адрес страницы в интернете:	webpage address
+название:	title
+удалить:	delete
+Адрес файла:	Address file
+добавить:	add
+занято:	busy
+свободно:	freely
+загрузить:	download
+диалоги:	dialogues
+свернуть:	minimize
+закрыть:	close 
+ответить:	reply
+ответов:	replies
+подтвердить:	сonfirm
+отклонить:	decline
+приглашения: в чат	chat invitations 
+окно чата:	chat window
+мой чат:	my chat 
+входяший чат:	incoming chat 
+закончить общение:	finish the chat
+выйти из чата:	sign out of chat
+о нас:	about us
+рекламодателям:	advertisers
+помощь:	support
+жалоба:	complaint
+предложение:	proposal
+текст сообщения:	text messages
+обращение в службу поддержки:	contacting customer support
+правила сайта:	site rules
+пользовательское соглашение:	user agreement
+семья, дом, дети:	family, home, children
+любовь, отношения:	love, relationships
+культура, досуг:	culture, leisure
+туризм:	tourism
+компьютеры, интернет:	computers, the internet
+компьютерные игры:	computer games
+техника:	technics
+знакомсва, общение:	dating, socializing
+экономика:	economics
+юриспруденция:	jurisprudence
+опросы:	polls
+новости:	news
+спорт:	sport
+страна:	country
+регион:	region
+город:	city
+минимальная наполняемость ответами:	the minimum number of responses
+отправить:	send
+отмена:	cancel
+все поля обязательны для заполнения:	all fields are mandatory
+email:	e-mail
+повторите пароль:	repeat password
+ваше имя:	your name
+пол:	gender
+мужской:	masculine
+женский:	feminine
+дата рождения:	date of birth
+день: 	day
+месяц: 	month
+год:	year
+январь: 	january
+февраль: 	february
+март:	march
+апрель:	april
+май:	may
+июнь:	june
+июль:	july
+август:	august
+сентябрь:	september
+октябрь:	october
+ноябрь:	november
+декабрь:	december
+местонахождение:	location
+пожалуйста, ознакомьтесь с пользовательским соглашением:	please read the user agreement
+зарегистрироваться:	sign up
+я принимаю условия пользовательского соглашения:	i accept the the user agreement
+просмотр всех тем:	view all topics 
+звуковая схема:	sound scheme 
+по языкам:	by language 
+на русском:	in russian 
+на английском:	in english 
+на португальском:	in portuguese
+по времени:	on the time 
+за сутки:	during the day
+за неделю:	for the week 
+за месяц:	for the month
+все:	all 
+вопросы по категориям:	questions by category 
+срочные:	urgent
+новая строка в чате:	a new line in the chat 
+личные сообщения:	private messages
+сохранить:	save
+сейчас вы можете использовать ресурс только на 30 %. пожалуйста, зарегистрируйтесь или авторизуйтесь:	now you can use the resource at 30%. please register or login
+ресурс находится в стадии тестирования:	the resource is in the testing phase
+стоимость n кредитов:	cost n credits
+удалить из списка:	remove from the list 
+отметить как спам:	mark as spam 
+мне нравится:	like
+добавить в заметки:	add to notes 
+копировать ссылку:	copy
+пригласить в чат:	invite to chat
+отправить личное сообщение:	send a private message
+укажите реальный и действующий e-mail адрес.он потребуется для входа на сайт и для получения уведомлений.:	please enter a valid email address. he will need to login to the site and to receive notifications.
+придумайте сложный пароль, который нельзя подобрать;от 4 до 12 символов — цифры и латинские буквы.:	invent complex password which is impossible to choose; of 4 to 12 characters - numbers and latin letters.
+пароли совпадают:	passwords are the same
+пароли не совпадают:	passwords don't match
+укажите ваше имя или никнейм;от 2 до 12 символов - нельзя использовать цифры.:	specify your name or nickname; of 4 to 12 characters - can not use the the numbers.
+некорректное заполнение:	entering incorrect
+поле не заполнено:	field is not filled
+укажите ваш пол:	specify your gender
+вы не ознакомились с пользовательским соглашением:	you have not read the user agreement
+на ваш email отправлено письмо, прочтите его для завершения регистрации:	to your email sent to message, read it to complete registration
+вы уверены?:	are you sure?
+недоступно незарегистрированным пользователям: 	not available for unregistered users
+на вашем счету недостаточно средств для оплаты:	on your account insufficient funds to pay
+вопрос был отмечен как спам: 	the question has been marked as spam
+ответ был отмечен как спам: 	the answer has been marked as spam
+в чат добавлен (...):	(...) added to the chat
+в чат вошел  (...):	(...) went to the chat
+чат покинул (...):	(...) came out of chat
+вы были удалены из чата:	you have been removed from the chat
+из чата был удален (...):	(...) was removed from the chat
+чат завершен автором вопроса: 	author of a question completed chat
+чат завершен: 	chat completed
+вы вышли из чата:	you're out of chat
+вопрос является закрытым, вы не можете просматривать ответы других пользователей: 	the issue is closed, you can not view the answers of other users
+неверный логин или пароль: 	incorrect login or password
+обновляется...: updating...
+
