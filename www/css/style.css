@@ -729,6 +729,7 @@
 	max-height: 770px;
 	width: 729px;
 	overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .privateButton {
@@ -3381,4 +3382,13 @@ a.toggleSettingsGroup.blue {
 
 .chat-content {
     overflow: hidden;
+}
+
+.users-list table th {
+    font-weight: bold;
+}
+.users-list table th, .users-list table td {
+    border-bottom: 1px solid #000000;
+    font-size: 12px;
+    padding: 3px;
 }

@@ -18,7 +18,7 @@ class SpamEngine
     public function markQuestionAsSpam(\Cron\CronBundle\Entity\User $user, $qid)
     {
         $question = new Question();
-        $question = $this->getDoctrine()->getRepository('CronCronBundle:Question')->findOneById($qid);
+        $question = $this->doctrine->getRepository('CronCronBundle:Question')->findOneById($qid);
         if (!$question instanceof Question)
             throw new \Exception('Question not found');
 
@@ -50,7 +50,7 @@ class SpamEngine
     public function markAnswerAsSpam(\Cron\CronBundle\Entity\User $user, $aid)
     {
         $answer = new Answer();
-        $answer = $this->getDoctrine()->getRepository('CronCronBundle:Answer')->findOneById($aid);
+        $answer = $this->doctrine->getRepository('CronCronBundle:Answer')->findOneById($aid);
         if (!$answer instanceof Answer)
             throw new \Exception('Answer not found');
 

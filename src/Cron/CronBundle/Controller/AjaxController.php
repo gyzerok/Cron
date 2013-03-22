@@ -183,6 +183,27 @@ class AjaxController extends AbstractController
         return new Response('Fail');
     }
 
+    public function spamItemAction(Request $request)
+    {
+        if ($request->isMethod('POST'))
+        {
+            if ($qid = $request->get('question_id'))
+            {
+                $spamEngine = new SpamEngine($this->getDoctrine());
+                $spamEngine->markQuestionAsSpam($this->getUser(), $qid);
+
+                return new Response('Success');
+            } elseif ($aid = $request->get('answer_id'))
+            {
+                $spamEngine = new SpamEngine($this->getDoctrine());
+                $spamEngine->markAnswerAsSpam($this->getUser(), $aid);
+
+                return new Response('Success');
+            }
+        }
+
+        throw new \Exception('Unknown error');
+    }
     public function spamQuestionAction(Request $request)
     {
         if ($request->isMethod('POST'))
@@ -786,6 +807,51 @@ class AjaxController extends AbstractController
         }
 
         return new Response("SUCCESS");
+    }
+
+    public function getLastSpamQuestionsAction(Request $request)
+    {
+        $lastTime = $request->get("questions_last_update");
+        $lastTime = "2013-03-20 00:00:00";
+
+        $em = $this->getDoctrine()->getManager();
+
+        $questionsRepo = $this->getDoctrine()->getRepository('CronCronBundle:Question');
+        $query = $questionsRepo->createQueryBuilder('question')
+            ->innerJoin('question.user', 'user')
+            ->where('question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false')
+            ->setParameter('lastTime', $lastTime)
+            ->setParameter('status', '2')
+            ->getQuery();
+        $questions = $query->getResult();
+
+
+        $data = array();
+        $html = '';
+        foreach ($questions as $question) {
+            $user_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user"=>$question->getUser()->getId()));
+            $question->question_count = count($user_questions);
+            $html .= '<div class="singleQuestion" data-id="'.$question->getId().'" data-user="'.$question->getUser()->getId().'">
+                    <div class="userName">'.$question->getUser().'</div>
+                    <div class="questionDate">'.$question->getDatetime()->format('d.m.Y h:i').'</div>
+                    <div style="clear: both;"></div>
+                    <div class="questionText">
+                        '.$question->getText().'
+                        <div class="socialIcons">
+                            <div class="spam-index">Спам-индекс: '.$question->getUser()->getSpamActivity().'</div>
+                            <div class="questions-count">Вопросов: '.$question->question_count.'</div>
+                            <a href="#" class="confirm-spam">Подтвердить</a>
+                            <a href="#" class="cancel-spam">Отмена</a>
+                            <a href="#" class="block-user">Блок пользователя</a>
+                        </div>
+                    </div>
+                </div>';
+        }
+
+        $data['questions'] = $html;
+        $data['questions_last_update'] = date('Y-m-d H:i:s');
+
+        return new Response(json_encode($data, true));
     }
 
     public function convertFilesize($input_filesize)
