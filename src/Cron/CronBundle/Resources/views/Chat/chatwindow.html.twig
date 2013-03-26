@@ -16,16 +16,16 @@
 		});
 	</script>
 	<div class="chatTabs">
-        <div class="singleTab chat-tab active" data-tab="my">Мой чат</div>
+        <div class="singleTab chat-tab active" data-tab="my">{% trans %}Мой чат{% endtrans %}</div>
         {#{% if mychat %}
             {% if mychat.getIsActive() %}
-                <div class="singleTab chat-tab active" data-tab="my">Мой чат</div>
+                <div class="singleTab chat-tab active" data-tab="my">{% trans %}Мой чат{% endtrans %}</div>
             {% endif %}
         {% endif %}#}
 
         {% if income_chats %}
             <div class="singleInboxTab">
-                <span>Входящий чат</span>
+                <span>{% trans %}Входящий чат{% endtrans %}</span>
                 {% set counter = 1 %}
                 {% for in_chat in income_chats %}
                     <div class="numberOnTab chat-tab" data-tab="in{{ counter }}" title="{{ in_chat.getChat().getQuestion().getText() }}">{{ counter }}</div>
@@ -34,7 +34,7 @@
             </div>
         {% else %}
             <div class="singleInboxTab">
-                <span>Входящий чат</span>
+                <span>{% trans %}Входящий чат{% endtrans %}</span>
                 <div class="numberOnTab" data-tab="in1">1</div>
                 <div class="numberOnTab" data-tab="in2">2</div>
                 <div class="numberOnTab" data-tab="in3">3</div>
@@ -43,7 +43,7 @@
 
         {% for dialog in dialogs %}
             <div class="singleTab chat-tab" data-tab="d{{ dialog.getId() }}">
-                <a href="#" title="закрыть диалог" class="closeDialogTab"></a>
+                <a href="#" title="{% trans %}закрыть диалог{% endtrans %}" class="closeDialogTab"></a>
                 {% if dialog.user1==curUser %}
                     {{ dialog.user2.getNick() }}
                 {% else %}
@@ -70,7 +70,7 @@
                         {% for member in mychat.members %}
                         <div class="singleUser" data-user="{{ member.getUser().getId() }}">
                             <div class="singleUsername">{{ member.getUser().getNick() }}</div>
-                            <div title="выгнать пользователя" class="kickUser"></div>
+                            <div title="{% trans %}выгнать пользователя{% endtrans %}" class="kickUser"></div>
                         </div>
                         {% endfor %}
                     {% endif %}
@@ -113,17 +113,17 @@
 	<div class="typeText">
 		<div class="enterArea">
 			<textarea class="chat-input" data-user="{{ curUser.getId() }}" data-nick="{{ curUser.getNick() }}"></textarea>
-            <a title="отправить сообщение" id="send-message" href=""></a>
+            <a title="{% trans %}отправить сообщение{% endtrans %}" id="send-message" href=""></a>
 			<div class="switch"></div>
 			<input id="chat-nl-switch" type="checkbox" />
 		</div>
 		<div class="finishConversation{% if mychat %}{% if mychat.members|length<1 %} hidden{% endif %}{% endif %}">
-			<input type="button" value="закончить
-общение" />
+			<input type="button" value="{% trans %}закончить{% endtrans %}
+{% trans %}общение{% endtrans %}" />
 		</div>
         <div class="leaveConversation" style="display:none;">
-            <input type="button" value="выйти
-из чата" />
+            <input type="button" value="{% trans %}выйти
+из чата{% endtrans %}" />
         </div>
 	</div>
 {#

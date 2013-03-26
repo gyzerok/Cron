@@ -100,10 +100,10 @@
                                                 {% if item.getUser()==curUser or answer.getUser()!=curUser %}
                                                     <div class="socialIcons">
                                                         {% if curUser %}
-                                                            <div class="spamButton" title="Пометить как спам"></div>
-                                                            <div class="likeButton  {% if curUser in answer.getLikes() %}likeButtonActive{% endif %}"" title="Мне нравится!"></div>
-                                                            <div class="arrowButton inviteUser" title="Отправить приглашение в чат"></div>
-                                                            <div class="letterButton sendMessage" title="Отправить сообщение"></div>
+                                                            <div class="spamButton" title="{% trans %}отметить как спам{% endtrans %}"></div>
+                                                            <div class="likeButton  {% if curUser in answer.getLikes() %}likeButtonActive{% endif %}" title="{% trans %}мне нравится{% endtrans %}"></div>
+                                                            <div class="arrowButton inviteUser" title="{% trans %}пригласить в чат{% endtrans %}"></div>
+                                                            <div class="letterButton sendMessage" title="{% trans %}отправить личное сообщение{% endtrans %}"></div>
                                                         {% endif %}
                                                     </div>
                                                 {% endif %}

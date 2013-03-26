@@ -262,7 +262,7 @@
                     {{ form_label(form.private) }}
                     {{ form_errors(form.private) }}
                     {{ form_widget(form.private) }}
-                    <p class="questionPrivateCost">стоимость 5 кредитов</p>
+                    <p class="questionPrivateCost">{% trans %}стоимость 5 кредитов{% endtrans %}</p>
                 </div>
             </div>
             <div class="writeQuestionDiv">
@@ -290,8 +290,8 @@
                         {{ form_widget(form.boundary) }}
                     </div>
                     <p class="questionCost">Стоимость 5 кредитов</p>
-                    <input name="cancelInformation" class="submitButton" type="button" value="отмена"/>
-                    <input class="submitButton" type="submit" value="отправить"/>
+                    <input name="cancelInformation" class="submitButton" type="button" value="{% trans %}отмена{% endtrans %}"/>
+                    <input class="submitButton" type="submit" value="{% trans %}отправить{% endtrans %}"/>
                 </div>
             </div>
 
@@ -303,8 +303,8 @@
         {% else %}
             {% if not userQuestions|length %}
                 <div class="greeting">
-                    <p>&nbsp;&nbsp;&nbsp;&nbsp;Этот ресурс создан для быстрого поиска людей, обладающих нужными Вам знаниями. Здесь Вы можете найти интересных собеседников и обсуждать интересующие Вас вопросы. ADITUS сделает Вашу жизнь проще и сэкономит много времени </p>
-                    <p style="margin-top: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;На ADITUS Вы можете задать свой вопрос любому пользователю или группе специалистов из области вашего вопроса  в режиме онлайн и, оценив полученные ответы, выбрать подходящего собеседника для приватной беседы,  либо продолжить обсуждение в группе.  Это безусловно повысит эффективность использования интернета и сэкономит самый драгоценный ресурс – время.</p>
+                    <p>&nbsp;&nbsp;&nbsp;&nbsp;{% trans %}Этот ресурс создан для быстрого поиска людей, обладающих нужными Вам знаниями. Здесь Вы можете найти интересных собеседников и обсуждать интересующие Вас вопросы. ADITUS сделает Вашу жизнь проще и сэкономит много времени{% endtrans %} </p>
+                    <p style="margin-top: 20px;">&nbsp;&nbsp;&nbsp;&nbsp;{% trans %}На ADITUS Вы можете задать свой вопрос любому пользователю или группе специалистов из области вашего вопроса  в режиме онлайн и, оценив полученные ответы, выбрать подходящего собеседника для приватной беседы,  либо продолжить обсуждение в группе.  Это безусловно повысит эффективность использования интернета и сэкономит самый драгоценный ресурс – время.{% endtrans %}</p>
                 </div>
             {% endif %}
         {% endif %}
@@ -317,7 +317,7 @@
             <div class="singleQuestion" data-id="{{ question.getId() }}">
                 <div style="border: 1px solid #fff;" class="userName"></div>
                 <div class="questionDate">{{ question.datetime|date('d.m.Y H:i') }}</div>
-                <div class="closeButton" title="удалить из списка"></div>
+                <div class="closeButton" title="{% trans %}удалить из списка{% endtrans %}"></div>
                 <div style="clear: both;"></div>
                 <div class="questionText">
                     {{ question.text }}

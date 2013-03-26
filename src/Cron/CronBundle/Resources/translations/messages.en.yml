@@ -8,16 +8,16 @@
 На сайте:	On the site
 В сети:	Online
 Войти:	log in
-Регистация:	register
+Регистрация:	Register
 Выйти:	log out
 логин:	login
 пароль:	password
 Кредиты:	credits
 Забыли пароль?:	Forgot your password?
 введите адрес электронной почты:	enter your email address
-Настройки:	settings
-Мои вопросы: 	my questions
-Входящие вопросы:	incoming questions
+Настройки:	Settings
+Мои вопросы: 	My questions
+Входящие вопросы:	Incoming questions
 вопросы:	questions
 Заметки:	notes
 Информация:	information
@@ -39,26 +39,28 @@
 загрузить:	download
 диалоги:	dialogues
 свернуть:	minimize
-закрыть:	close 
+закрыть:	close
+закрыть диалог:	close dialog
 ответить:	reply
 ответов:	replies
 подтвердить:	сonfirm
 отклонить:	decline
-приглашения: в чат	chat invitations 
+приглашения в чат:	chat invitations 
 окно чата:	chat window
-мой чат:	my chat 
-входяший чат:	incoming chat 
-закончить общение:	finish the chat
+Мой чат:	My chat 
+Входящий чат:	Incoming chat 
+закончить:  finish the 
+общение:  chat
 выйти из чата:	sign out of chat
-о нас:	about us
-рекламодателям:	advertisers
-помощь:	support
+О нас:	About us
+Рекламодателям:	Advertisers
+Помощь:	Support
 жалоба:	complaint
 предложение:	proposal
 текст сообщения:	text messages
 обращение в службу поддержки:	contacting customer support
-правила сайта:	site rules
-пользовательское соглашение:	user agreement
+Правила:	Site rules
+Пользовательское соглашение:	User agreement
 семья, дом, дети:	family, home, children
 любовь, отношения:	love, relationships
 культура, досуг:	culture, leisure
@@ -75,10 +77,10 @@
 страна:	country
 регион:	region
 город:	city
-минимальная наполняемость ответами:	the minimum number of responses
+Минимальная наполняемость ответами:	The minimum number of responses
 отправить:	send
 отмена:	cancel
-все поля обязательны для заполнения:	all fields are mandatory
+Все поля обязательны для заполнения:	All fields are mandatory
 email:	e-mail
 повторите пароль:	repeat password
 ваше имя:	your name
@@ -86,9 +88,9 @@ email:	e-mail
 мужской:	masculine
 женский:	feminine
 дата рождения:	date of birth
-день: 	day
-месяц: 	month
-год:	year
+День: 	Day
+Месяц: 	Month
+Год:	Year
 январь: 	january
 февраль: 	february
 март:	march
@@ -101,12 +103,13 @@ email:	e-mail
 октябрь:	october
 ноябрь:	november
 декабрь:	december
-местонахождение:	location
-пожалуйста, ознакомьтесь с пользовательским соглашением:	please read the user agreement
-зарегистрироваться:	sign up
-я принимаю условия пользовательского соглашения:	i accept the the user agreement
-просмотр всех тем:	view all topics 
-звуковая схема:	sound scheme 
+Местонахождение:	Location
+Пожалуйста, ознакомьтесь с: Please read the
+пользовательским соглашением:  user agreement
+Зарегистрироваться:	Sign up
+Я принимаю условия пользовательского соглашения:	I accept the user agreement
+Просмотр всех тем:	View all topics 
+Звуковая схема:	Sound scheme 
 по языкам:	by language 
 на русском:	in russian 
 на английском:	in english 
@@ -123,7 +126,7 @@ email:	e-mail
 сохранить:	save
 сейчас вы можете использовать ресурс только на 30 %. пожалуйста, зарегистрируйтесь или авторизуйтесь:	now you can use the resource at 30%. please register or login
 ресурс находится в стадии тестирования:	the resource is in the testing phase
-стоимость n кредитов:	cost n credits
+стоимость 5 кредитов:	cost 5 credits
 удалить из списка:	remove from the list 
 отметить как спам:	mark as spam 
 мне нравится:	like
@@ -131,11 +134,14 @@ email:	e-mail
 копировать ссылку:	copy
 пригласить в чат:	invite to chat
 отправить личное сообщение:	send a private message
-укажите реальный и действующий e-mail адрес.он потребуется для входа на сайт и для получения уведомлений.:	please enter a valid email address. he will need to login to the site and to receive notifications.
-придумайте сложный пароль, который нельзя подобрать;от 4 до 12 символов — цифры и латинские буквы.:	invent complex password which is impossible to choose; of 4 to 12 characters - numbers and latin letters.
-пароли совпадают:	passwords are the same
-пароли не совпадают:	passwords don't match
-укажите ваше имя или никнейм;от 2 до 12 символов - нельзя использовать цифры.:	specify your name or nickname; of 4 to 12 characters - can not use the the numbers.
+Укажите реальный и действующий e-mail адрес.: Please enter a valid email address.
+Он потребуется для входа на сайт и для получения уведомлений.: He will need to login to the site and to receive notifications.
+Придумайте сложный пароль, который нельзя подобрать;: Invent complex password which is impossible to choose;
+От 4 до 12 символов — цифры и латинские буквы.: of 4 to 12 characters - numbers and latin letters.
+Пароли совпадают:	passwords are the same
+Пароли не совпадают:	passwords dont match
+Укажите ваше имя или никнейм;:  specify your name or nickname;
+от 2 до 12 символов - нельзя использовать цифры.: of 4 to 12 characters - can not use the numbers.
 некорректное заполнение:	entering incorrect
 поле не заполнено:	field is not filled
 укажите ваш пол:	specify your gender
@@ -157,4 +163,8 @@ email:	e-mail
 вопрос является закрытым, вы не можете просматривать ответы других пользователей: 	the issue is closed, you can not view the answers of other users
 неверный логин или пароль: 	incorrect login or password
 обновляется...: updating...
-
+Этот ресурс создан для быстрого поиска людей, обладающих нужными Вам знаниями. Здесь Вы можете найти интересных собеседников и обсуждать интересующие Вас вопросы. ADITUS сделает Вашу жизнь проще и сэкономит много времени: This resource was created to quickly search for people, who have useful knowledge for you. You can find interesting interlocutors and discuss your questions here. ADITUS can make your life easier and save a lot of time in searching for relevant information.
+На ADITUS Вы можете задать свой вопрос любому пользователю или группе специалистов из области вашего вопроса  в режиме онлайн и, оценив полученные ответы, выбрать подходящего собеседника для приватной беседы,  либо продолжить обсуждение в группе.  Это безусловно повысит эффективность использования интернета и сэкономит самый драгоценный ресурс – время.: At ADITUS you can ask a question to any user or group of experts from the field of your question online and by evaluating the responses, select a suitable companion for a private conversation, or to continue the discussion in the group. Of course, it helps you increase the efficiency of using the Internet and save the most precious resource - time.
+выгнать пользователя: 
+отправить сообщение:
+на главную:
