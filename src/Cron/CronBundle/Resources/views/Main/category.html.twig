@@ -15,14 +15,22 @@
 			$(document).ready(function(){
 				$('.spamButton').click(function(){
 					$(this).addClass("spamButtonActive");
-					var question_id = $(this).closest('.singleQuestion').attr('data-id');
+					var question_id = $(this).closest('.singleQuestion').data('id');
+					var answer_id = $(this).closest('.singleAnswer').data('id');
 					var that = $(this);
-					$.ajax({'url': '{{ path("spamQuestion") }}', 'type':'post', 'data': 'question_id='+question_id,
+					$.ajax({'url': '{{ path("spamItem") }}', 'type':'post', 'data':{
+                            question_id: question_id,
+                            answer_id: answer_id
+                        },
 						'fail': function(){
 							that.removeClass("spamButtonActive");
 						},
 						'success': function() {
-							that.closest('.singleQuestion').replaceWith($("<span class='spamMessage'>{% trans %}Вопрос был отмечен как спам{% endtrans %}</span>"));
+                            if (question_id){
+                                that.closest('.singleQuestion').replaceWith($("<span class='spamMessage'>{% trans %}Вопрос был отмечен как спам{% endtrans %}</span>"));
+                            } else {
+                                that.closest('.singleAnswer').replaceWith($("<span class='spamMessage'>{% trans %}Ответ был отмечен как спам{% endtrans %}</span>"));
+                            }
 							$('.spamMessage').delay('5000').fadeOut('1000');
 						}
 					});
@@ -100,7 +108,7 @@
                                                 {% if item.getUser()==curUser or answer.getUser()!=curUser %}
                                                     <div class="socialIcons">
                                                         {% if curUser %}
-                                                            <div class="spamButton" title="{% trans %}отметить как спам{% endtrans %}"></div>
+                                                            <div class="spamButton {% if curUser in answer.getSpams() %}spamButtonActive{% endif %}" title="{% trans %}отметить как спам{% endtrans %}"></div>
                                                             <div class="likeButton  {% if curUser in answer.getLikes() %}likeButtonActive{% endif %}" title="{% trans %}мне нравится{% endtrans %}"></div>
                                                             <div class="arrowButton inviteUser" title="{% trans %}пригласить в чат{% endtrans %}"></div>
                                                             <div class="letterButton sendMessage" title="{% trans %}отправить личное сообщение{% endtrans %}"></div>

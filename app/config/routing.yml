@@ -116,6 +116,10 @@ likeItem:
   pattern:  /ajax/likeItem
   defaults: { _controller: CronCronBundle:Ajax:likeItem }
 
+spamItem:
+  pattern:  /ajax/spamItem
+  defaults: { _controller: CronCronBundle:Ajax:spamItem }
+
 spamQuestion:
   pattern:  /ajax/spamQuestion
   defaults: { _controller: CronCronBundle:Ajax:spamQuestion }
@@ -219,6 +223,10 @@ hideMyQuestion:
 deleteMyLink:
   pattern:  /ajax/deleteMyLink
   defaults: { _controller: CronCronBundle:Ajax:deleteMyLink }
+
+getLastSpamQuestions:
+  pattern:  /ajax/getLastSpamQuestions
+  defaults: { _controller: CronCronBundle:Ajax:getLastSpamQuestions }
 
 
 # Chat routes

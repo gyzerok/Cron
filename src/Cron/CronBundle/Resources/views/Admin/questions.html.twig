@@ -3,7 +3,7 @@
 {% block content %}
     <script type="text/javascript">
         $(document).ready(function () {
-            $(".delete-question").bind('click', function () {
+            $(".delete-question").live('click', function () {
                 if (confirm("Удалить вопрос?")) {
                     var cur_question = $(this).closest(".singleQuestion");
                     $.ajax({
@@ -16,7 +16,7 @@
                 }
                 return false;
             });
-            $(".confirm-spam").bind('click', function () {
+            $(".confirm-spam").live('click', function () {
                 if (confirm("Подтвердить, что это спам?")) {
                     var cur_question = $(this).closest(".singleQuestion");
                     $.ajax({
@@ -29,7 +29,7 @@
                 }
                 return false;
             });
-            $(".cancel-spam").bind('click', function () {
+            $(".cancel-spam").live('click', function () {
                 var cur_question = $(this).closest(".singleQuestion");
                 $.ajax({
                     url:'/admin/cancelSpamQuestion',
@@ -41,7 +41,7 @@
                 return false;
             });
             //Блокировка юзера на 60 минут
-            $(".block-user").bind('click', function () {
+            $(".block-user").live('click', function () {
                 if (confirm('Заблокировать пользователя на 60 минут?')) {
                     var cur_user = $(this).closest(".singleQuestion");
                     $.ajax({
@@ -55,7 +55,31 @@
                 }
                 return false;
             });
+
+            {#{% if tab=='spam' %}
+                //Подгрузка новых спам вопросо
+                setInterval('updateSpamQuestions();',30000);
+            {% endif %}#}
         });
+        /*function updateSpamQuestions(){
+            $.ajax({
+                url: '/ajax/getLastSpamQuestions',
+                type: 'post',
+                dataType: 'json',
+                data: {
+                    questions_last_update: $("#questions_last_update").text()
+                },
+                success: function(data){
+                    if (data.questions){
+                        $("#showQuestions").prepend(data.questions);
+                    }
+                    if (data.questions && $("body").is('.sound_newQuestion')){
+                        soundManager.play('newQuestion');
+                    }
+                    $("#questions_last_update").text(data.questions_last_update);
+                }
+            });
+        }*/
     </script>
     <h2 class="categoryTitle">Вопросы</h2>
     <div class="admin-wrap">
@@ -68,6 +92,8 @@
                     <a href="/admin/questions/all">Все</a>
                     Отмеченные как спам
                 {% endif %}
+            {% else %}
+                Отмеченные как спам
             {% endif %}
         </div>
         <div style="clear:both;"></div>

@@ -76,9 +76,10 @@
         </div>
         <ul class="users-list">
             {% if users %}
-                <table style="border-spacing: 8px; border: 1px solid black;" width="700">
+                <table style="border: 1px solid black;" width="700">
                     <thead>
                         <tr>
+                            <th>№</th>
                             <th>Имя</th>
                             <th>Email</th>
                             <th>Место</th>
@@ -95,6 +96,7 @@
                     <tbody>
                         {% for user in users %}
                         <tr class="user-tr" data-id="{{ user.getId() }}">
+                            <td>{{ user.getId() }}</td>
                             <td>{{ user.getNick() }}</td>
                             <td>{{ user.getUsername() }}</td>
                             <td>{{ user.getCity().getName() }}</td>
