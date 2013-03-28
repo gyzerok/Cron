@@ -72,7 +72,8 @@
 			'margin-top':'18px',
 			'margin-bottom':'11px',
 			'top': '38px',
-			'right': '-1px'
+			'right': '-1px',
+            'float': 'left'
 		});
 		$('#register_password > div:first > ul').css({
 		'position':'absolute',
@@ -83,7 +84,7 @@
 		'right': '51px',
 		'top': '37px'
 		});
-		$('#register_password > div:first > ul > li').text('поле не заполнено');
+		$('#register_password > div:first > ul > li').text('{% trans %}поле не заполнено{% endtrans %}');
 				
 		//Сравнение полей с паролем
 		$('#register_password_Confirm').change(testPass).keyup(testPass);
@@ -96,10 +97,10 @@
 				var p2 = $("#register_password_Confirm").val();
 				
 				if(p1 == p2) { 
-					$(".checkPassword").html('<span style="color:green;">Пароли совпадают</span>'); 
+					$(".checkPassword").html('<span style="color:green;">{% trans %}Пароли совпадают{% endtrans %}</span>'); 
 				} 
 				else { 
-					$(".checkPassword").html('<span style="color:red;">Пароли не совпадают</span>'); 
+					$(".checkPassword").html('<span style="color:red;">{% trans %}Пароли не совпадают{% endtrans %}</span>'); 
 				}
 			}, 2000);
 		}
@@ -133,8 +134,8 @@
 	
 	<div class="registerWrapper">
 		<form class="registerForm" action="{{ path('register') }}" method="post" {{ form_enctype(form) }}>
-			<h2 class="registrationH2">Регистрация</h2>
-			<h3 class="registrationH3">Все поля обязательны для заполнения</h3>
+			<h2 class="registrationH2">{% trans %}Регистрация{% endtrans %}</h2>
+			<h3 class="registrationH3">{% trans %}Все поля обязательны для заполнения{% endtrans %}</h3>
 			<a class="closeRegisterButton" href="{{ path('index') }}" title="на главную"></a>
 			<div style="clear:both;"></div>	
 			<div class="registrationField">
@@ -143,12 +144,12 @@
 				<div class="emailError">
 				{{ form_errors(form.username) }}
 				</div>
-				<span class="fieldHelp">Укажите реальный и действующий e-mail адрес.<br> Он потребуется для входа на сайт и для получения уведомлений.</span>
+				<span class="fieldHelp">{% trans %}Укажите реальный и действующий e-mail адрес.{% endtrans %}</br> {% trans %}Он потребуется для входа на сайт и для получения уведомлений.{% endtrans %}</span>
 			</div>
 			<div class="registrationFieldPass">
 				{{ form_label(form.password) }}
 				{{ form_widget(form.password) }}
-				<span class="fieldHelpPass">Придумайте сложный пароль, который нельзя подобрать; <br> От 4 до 12 символов — цифры и латинские буквы.</span>
+				<span class="fieldHelpPass">{% trans %}Придумайте сложный пароль, который нельзя подобрать;{% endtrans %} </br> {% trans %}От 4 до 12 символов — цифры и латинские буквы.{% endtrans %}</span>
 				<span class="checkPassword"></span>
 			</div>
 			<div class="registrationField">
@@ -157,7 +158,7 @@
 				<div class="nickError">
 				{{ form_errors(form.nick) }}
 				</div>
-				<span class="fieldHelp">Укажите ваше имя или никнейм; <br> От 2 до 12 символов - нельзя использовать цифры.</span>
+				<span class="fieldHelp">{% trans %}Укажите ваше имя или никнейм;{% endtrans %} </br> {% trans %}от 2 до 12 символов - нельзя использовать цифры.{% endtrans %}</span>
 			</div>
 			<div class="registrationFieldGender">
 				<div class="genderLabel">
@@ -173,13 +174,13 @@
 			<div class="registrationField">
 				{{ form_label(form.birthDate) }}
 				{{ form_errors(form.birthDate) }}
-				<span class="birtDateDescription">День&nbsp;&nbsp; Месяц &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Год</span>
+				<span class="birtDateDescription">{% trans %}День{% endtrans %}&nbsp;&nbsp; {% trans %}Месяц{% endtrans %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% trans %}Год{% endtrans %}</span>
 				<div class="birthDateSelect">
 				{{ form_widget(form.birthDate) }}
 				</div>
 			</div>
 	<div class="registrationFieldPlace">
-		<span class="placeLabel">Местонахождение</span>
+		<span class="placeLabel">{% trans %}Местонахождение{% endtrans %}</span>
 		<div class="placeSelects">
 			{{ form_label(form.country) }}	
 			{{ form_widget(form.country) }}
@@ -198,7 +199,7 @@
 			</div>
 		</div>
 		<div class="registrationField">
-			<span class="agreementLabel">Пожалуйста, ознакомьтесь с <a href="#" title="Для продолжения регистрации ознакомьтесь с пользовательским соглашением">пользовательским соглашением</a></span>
+			<span class="agreementLabel">{% trans %}Пожалуйста, ознакомьтесь с{% endtrans %} <a href="#">{% trans %}пользовательским соглашением{% endtrans %}</a></span>
 			{{ form_widget(form.agreement) }}
 			<div class="agreementError">
 			{{ form_errors(form.agreement) }}
@@ -206,7 +207,7 @@
 		</div>
 
 			{{ form_rest(form) }}
-		<input class="registerButton" type="submit" value="Зарегистрироваться">
+		<input class="registerButton" type="submit" value="{% trans %}Зарегистрироваться{% endtrans %}">
 		</form>
 	</div>
 	
@@ -733,7 +734,7 @@ mso-hansi-theme-font:major-latin;mso-ansi-language:RU'><o:p></o:p></span></p>
 <p class=MsoNormal><span style='mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
 
 </div>
-		<input id="not-agree" type="submit" value="отмена"/>	
-		<input id="agree" type="submit" value="Я принимаю условия пользовательского соглашения"/>
+		<input id="not-agree" type="submit" value="{% trans %}отмена{% endtrans %}"/>	
+		<input id="agree" type="submit" value="{% trans %}Я принимаю условия пользовательского соглашения{% endtrans %}"/>
 	</div>
 	{% endblock %}
