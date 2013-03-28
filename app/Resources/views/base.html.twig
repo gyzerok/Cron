@@ -26,7 +26,13 @@
 	    {% block header %}
 		<div id="header">
 			<div class="logo" title="{% trans %}На главную{% endtrans %}"><a href="{{ path('index') }}"></a></div>
-            <div id="header-srvmsg">{{ app.getSession().get('_srvmsg')|raw }}</div>
+            <div id="header-srvmsg">
+                {% if app.user %}
+                    {{ app.getSession().get('_srvmsg')|raw }}
+                {% else %}
+                    {% trans %}Сейчас Вы можете использовать ресурс только на 30%. Пожалуйста, зарегистрируйтесь или авторизуйтесь.{% endtrans %}
+                {% endif %}
+            </div>
 			<div class="language">
 				<div class="russian{% if _locale=='ru_RU' or _locale==null %} active{% endif %}" title="{% trans %}русский{% endtrans %}"><a href="{{ path('locale', { 'locale': 'ru_RU' }) }}"></a></div>
 				<div class="english{% if _locale=='en_US' %} active{% endif %}" title="{% trans %}английский{% endtrans %}"><a href="{{ path('locale', { 'locale': 'en_US' }) }}"></a></div>
@@ -42,8 +48,8 @@
 	    {% block navigation %}
 		<div id="nav">
 			<div class="orderQuestions"><a href="{{ path('index') }}">{% trans %}Главная{% endtrans %}</a></div>
-			<div class="categoryQuestions"><a href="{{ path('category') }}">{% trans %}по категориям{% endtrans %} <span id="new_categorized_questions"></span></a></div>
-			<div class="expressQuestions"><a href="{{ path('rush') }}">{% trans %}срочные{% endtrans %} <span id="new_rush_questions"></span></a></div>
+			<div class="categoryQuestions"><a href="{{ path('category') }}" {% if app.request.requestUri=='/category' %}class="active"{% endif %}>{% trans %}по категориям{% endtrans %} <span id="new_categorized_questions"></span></a></div>
+			<div class="expressQuestions"><a href="{{ path('rush') }}" {% if app.request.requestUri=='/rush' %}class="active"{% endif %}>{% trans %}срочные{% endtrans %} <span id="new_rush_questions"></span></a></div>
 		</div>
 	    {% endblock %}
 		
@@ -72,7 +78,7 @@
 			<form action="{{ path('register') }}" style="height: 0px;" type="text">
 				<input class="registerButtonOnIndex" type="submit" name="" value="{% trans %}Регистрация{% endtrans %}" />
 			</form>
-			<a class="forgotPassword" href="{{ path('forgot_password') }}">{% trans %}Забыли пароль?{% endtrans %}</a>
+			<a class="forgotPassword" href="#{#{{ path('forgot_password') }}#}">{% trans %}Забыли пароль?{% endtrans %}</a>
             {% endif %}
 		</div>
 		
@@ -134,6 +140,16 @@
                     <label for="feedback-email">{% trans %}Введите Ваш email{% endtrans %}</label><br/><input id="feedback-email" name="email" value="{% if curUser %}{{ curUser.getUsername() }}{% endif %}"><br/>
                     <label for="feedback-text">{% trans %}Введите текст сообщения{% endtrans %}:</label><br/><textarea disabled="disabled" name="text" id="feedback-text" cols="30" rows="5"></textarea><br/>
                     <input type="button" class="cancel-feedback" value="{% trans %}отмена{% endtrans %}"> <input type="submit" class="submit-feedback" value="{% trans %}отправить{% endtrans %}">
+                </form>
+            </div>
+
+            <div class="forgotPassword-window" style="display: none;">
+                <h2 class="forgot-password-tittle">Введите адрес электронной почты</h2>
+                <form action="{{ path('forgot_password') }}" method="post">
+                    <input type="text" id="email" name="email" value="" />
+                    <p class="forgot-explanation">По этому адресу будут отправлены Ваши регистрационные данные.</p>
+                    <a href="#" class="forgot-cancel">отмена</a>
+                    <input class="forgot-submit" type="submit" name="accept" value="отправить" />
                 </form>
             </div>
 		</div>

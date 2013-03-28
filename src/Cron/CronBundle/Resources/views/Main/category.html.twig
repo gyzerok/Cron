@@ -1,14 +1,6 @@
 {% set _rush =  app.request.requestUri=='/rush' ? true : false %}
 {% extends '::base.html.twig' %}
 
-	{% block navigation %}		
-	<div id="nav">
-		<div class="orderQuestions"><a href="{{ path('index') }}">{% trans %}Главная{% endtrans %}</a></div>
-		<div class="categoryQuestions"><a style="color:#7A4216" href="{{ path('category') }}">{% trans %}по категориям{% endtrans %}</a></div>
-		<div class="expressQuestions"><a href="{{ path('rush') }}">{% trans %}срочный{% endtrans %}</a></div>
-	</div>
-	{% endblock %}
-
 	{% block content %}
         <script type="text/javascript">
             //Спам

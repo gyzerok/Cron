@@ -294,6 +294,10 @@
 	color: #3b3ffd;
 }
 
+#nav .active {
+    color: #7A4216 !important;
+}
+
 
 .usersProfile {
 	width: 220px;

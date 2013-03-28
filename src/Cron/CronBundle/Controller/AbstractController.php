@@ -265,7 +265,7 @@ class AbstractController extends Controller implements InitializableControllerIn
         }
 
         $timeBoundary = new \DateTime();
-        $timeBoundary->sub(new \DateInterval('PT10M'));
+        $timeBoundary->sub(new \DateInterval('PT5M'));
         $offlines = $this->getDoctrine()->getRepository('CronCronBundle:Online')
                                         ->createQueryBuilder('online')
                                         ->where('online.lastVisit < :lastVisit')
@@ -284,6 +284,7 @@ class AbstractController extends Controller implements InitializableControllerIn
         $totalUserCount = $this->getDoctrine()->getRepository('CronCronBundle:User')
                                                ->createQueryBuilder('user')
                                                ->select('COUNT(user.id) AS totalCount')
+                                               ->where('user.isActive = 1')
                                                ->getQuery()->getResult();
 
         $this->onlineUserCount = $onlineUserCount[0]['onlineCount'];

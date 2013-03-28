@@ -3,6 +3,15 @@ var iAmOnIndexPage = $("body").is('.index-page') ? true : false;
 
 $(document).ready(function() {
 
+    $(".forgotPassword").bind('click', function(e){
+        e.preventDefault();
+        $(".forgotPassword-window").toggle();
+    });
+    $(".forgot-cancel").bind('click', function(e){
+        e.preventDefault();
+        $(".forgotPassword-window").hide();
+    });
+
     var answerFrom = $('.answerForm');
     $('.socialIcons .answerButton').click(function() {
         var cur_answerForm = $(this).closest('.singleQuestion').nextAll('.answerForm').first();
