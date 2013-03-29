@@ -136,7 +136,7 @@
 		<form class="registerForm" action="{{ path('register') }}" method="post" {{ form_enctype(form) }}>
 			<h2 class="registrationH2">{% trans %}Регистрация{% endtrans %}</h2>
 			<h3 class="registrationH3">{% trans %}Все поля обязательны для заполнения{% endtrans %}</h3>
-			<a class="closeRegisterButton" href="{{ path('index') }}" title="на главную"></a>
+			<a class="closeRegisterButton" href="{{ path('index') }}" title="закрыть"></a>
 			<div style="clear:both;"></div>	
 			<div class="registrationField">
 				{{ form_label(form.username) }}

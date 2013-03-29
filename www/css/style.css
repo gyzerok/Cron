@@ -1002,7 +1002,7 @@ h2.acticle {
 
 .spamButton {
 	width: 28px;
-	height: 22px;
+	height: 25px;
 	float: left;
 	background: url(/i/spamButton.png) no-repeat;
 	background-size: 100%;
@@ -3237,7 +3237,6 @@ a.bookmarkArticleActive:hover{
 }
 
 .admin-wrap {
-    padding: 18px;
 }
 .admin-menu {
     margin-bottom: 15px;
