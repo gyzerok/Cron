@@ -20,6 +20,12 @@ $(document).ready(function() {
         var cur_myAnswer = $(this).closest('.singleQuestion').nextAll('.myAnswer').first();
         cur_myAnswer.slideToggle(500);
         $(".myAnswer").not(cur_myAnswer).slideUp(500);
+        $(".answerButton.expanded").not(this).each(function(){
+            var alter_name = $(this).data('alter-name');
+            $(this).data('alter-name', $(this).val()).val(alter_name).toggleClass('expanded');
+        });
+        var alter_name = $(this).data('alter-name');
+        $(this).data('alter-name', $(this).val()).val(alter_name).toggleClass('expanded');
     });
 
 //		var answerFormNavigation = $('.answerFormNavigation');
@@ -207,16 +213,16 @@ $(document).ready(function() {
 	  window.location=$(this).find("a").attr("href"); return false;  
 	});
 	
-	$(".article-list > li.article-li").click(function(){  
-	  window.location=$(this).find("a").attr("href"); return false;  
-	});
+//	$(".article-list > li.article-li").click(function(){
+//	  window.location=$(this).find("a").attr("href"); return false;
+//	});
 	
-	$('.article-li').hover(function() {
-		$(this).find('a span').css({'text-decoration': 'underline'})
-	},
-	function() {
-		$(this).find('a span').css({'text-decoration': 'none'})	
-	});
+//	$('.article-li').hover(function() {
+//		$(this).find('a span').css({'text-decoration': 'underline'})
+//	},
+//	function() {
+//		$(this).find('a span').css({'text-decoration': 'none'})
+//	});
     
     
     //Sounds

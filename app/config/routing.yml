@@ -228,6 +228,10 @@ getLastSpamQuestions:
   pattern:  /ajax/getLastSpamQuestions
   defaults: { _controller: CronCronBundle:Ajax:getLastSpamQuestions }
 
+getBoundaryPrice:
+  pattern:  /ajax/getBoundaryPrice
+  defaults: { _controller: CronCronBundle:Ajax:getBoundaryPrice }
+
 
 # Chat routes
 

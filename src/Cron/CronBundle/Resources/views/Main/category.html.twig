@@ -3,9 +3,9 @@
 
 	{% block content %}
         <script type="text/javascript">
-            //Спам
 			$(document).ready(function(){
-				$('.spamButton').click(function(){
+                //Спам
+                $('.spamButton').click(function(){
 					$(this).addClass("spamButtonActive");
 					var question_id = $(this).closest('.singleQuestion').data('id');
 					var answer_id = $(this).closest('.singleAnswer').data('id');
@@ -27,7 +27,7 @@
 						}
 					});
 				});
-				
+
 				//Лайки
 				$('.likeButton').click(function(){
 					$(this).addClass("likeButtonActive");
@@ -45,7 +45,7 @@
 							that.removeClass("likeButtonActive");
 						}
 					});
-				});			
+				});
 			});
         </script>
 		<div style="max-height: 820px;overflow: auto;overflow-x: hidden;overflow-y: auto;width: 728px;">
@@ -56,7 +56,7 @@
                     <div class="singleQuestion likable-item" data-id="{{ item.getId() }}">
                         <div class="userName">{{ item.user }}</div>
                         <div class="questionDate">{{ item.datetime|date('d.m.Y H:i') }}</div>
-                        {% if item.user==curUser %}
+                        {% if item.user==curUser or not category.getId() %}
                             <div class="closeButton"></div>
                         {% endif %}
                         <div style="clear: both;"></div>
@@ -74,12 +74,12 @@
                                     <form class="answer">
                                         {% if item.iAnswered or not curUser or item.getUser()==curUser %}
                                             {% if item.getPrivate()<1 %}
-                                                <input class="answerButton" type="button" {% if not item.answers|length  %}disabled="disabled"{% endif %} value="{{ item.answers|length ~ ' отв.' }}" />
+                                                <input class="answerButton" type="button" {% if not item.answers|length  %}disabled="disabled"{% endif %} value="{{ item.answers|length ~ ' отв.' }}" data-alter-name="{% trans %}свернуть{% endtrans %}" />
                                             {% else %}
-                                                <input class="answerButton" type="button" value="{% trans %}закрытый{% endtrans %}" />
+                                                <input class="answerButton" type="button" value="{% trans %}закрытый{% endtrans %}" data-alter-name="{% trans %}свернуть{% endtrans %}" />
                                             {% endif %}
                                         {% else %}
-                                            <input class="answerButton" type="button" value="{% trans %}ответить{% endtrans %}" />
+                                            <input class="answerButton" type="button" value="{% trans %}ответить{% endtrans %}" data-alter-name="{% trans %}свернуть{% endtrans %}" />
                                         {% endif %}
                                     </form>
                                 {#{% endif %}#}
@@ -101,7 +101,7 @@
                                                     <div class="socialIcons">
                                                         {% if curUser %}
                                                             <div class="spamButton {% if curUser in answer.getSpams() %}spamButtonActive{% endif %}" title="{% trans %}отметить как спам{% endtrans %}"></div>
-                                                            <div class="likeButton  {% if curUser in answer.getLikes() %}likeButtonActive{% endif %}" title="{% trans %}мне нравится{% endtrans %}"></div>
+                                                            <div class="likeButton {% if curUser in answer.getLikes() %}likeButtonActive{% endif %}" title="{% trans %}мне нравится{% endtrans %}"></div>
                                                             <div class="arrowButton inviteUser" title="{% trans %}пригласить в чат{% endtrans %}"></div>
                                                             <div class="letterButton sendMessage" title="{% trans %}отправить личное сообщение{% endtrans %}"></div>
                                                         {% endif %}

@@ -58,7 +58,22 @@ class MainController extends AbstractController
                     if ($user->getCredits() < 5){
                         return $this->redirect($this->generateUrl('index'));
                     }
-                    $user->setCredits($user->getCredits()-5);
+                    $admin_settings = $this->getDoctrine()->getRepository("CronCronBundle:AdminSettings")->find(1);
+                    $price = 5;
+                    switch($question->getBoundary()){
+                        case '50':
+                            $price = $admin_settings->getAnswers50();
+                            break;
+                        case '100':
+                            $price = $admin_settings->getAnswers100();
+                            break;
+                        case '1000':
+                            $price = $admin_settings->getAnswers1000();
+                            break;
+                        default:
+                            break;
+                    }
+                    $user->setCredits($user->getCredits()-$price);
                 }
 
 
@@ -153,10 +168,11 @@ class MainController extends AbstractController
             $categorized[0] = $this->getDoctrine()->getRepository("CronCronBundle:Category")->find($category_id);
             $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                 ->createQueryBuilder('question')
-                ->where('question.category = :cid AND question.status <> :status AND question.datetime > :viewbytime  AND question.isSpam = false')
+                ->where('question.category = :cid AND question.status <> :status AND question.datetime > :viewbytime  AND question.isSpam = false AND question.user <> :user')
                 ->setParameter('cid', $category_id)
                 ->setParameter('status', '2')
                 ->setParameter('viewbytime', $viewbytime->format("Y-m-d H:i:s"))
+                ->setParameter('user', ($user instanceof User ? $user->getId(): 0))
                 ->getQuery()
                 ->getResult();
             $categorized[0]->questions = $questions;
@@ -201,10 +217,11 @@ class MainController extends AbstractController
                 } else {
                     $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                         ->createQueryBuilder('question')
-                        ->where('question.category = :cid AND question.status <> :status AND question.datetime > :viewbytime AND question.isSpam = false')
+                        ->where('question.category = :cid AND question.status <> :status AND question.datetime > :viewbytime AND question.isSpam = false AND question.user <> :user')
                         ->setParameter('cid', $category->getId())
                         ->setParameter('status', '2')
                         ->setParameter('viewbytime', $viewbytime->format("Y-m-d H:i:s"))
+                        ->setParameter('user', ($user instanceof User ? $user->getId(): 0))
                         ->getQuery()
                         ->setMaxResults(5)
                         ->getResult();
@@ -224,6 +241,9 @@ class MainController extends AbstractController
                     foreach ($question->getAnswers() as $answer) {
                         if ($answer->getUser()==$user){
                             $cat->questions[$id]->iAnswered = true;
+                            if (!$category_id<0){
+                                unset($cat->questions[$id]);
+                            }
                         }
                     }
                     $categorized[$id0] = $cat;
@@ -266,9 +286,10 @@ class MainController extends AbstractController
 
         $rush = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                                     ->createQueryBuilder('question')
-                                    ->where('question.category = :cid  AND question.status <> :status AND question.isSpam = false')
+                                    ->where('question.category = :cid  AND question.status <> :status AND question.isSpam = false AND question.user <> :user')
                                     ->setParameter('cid', $rush_id)
                                     ->setParameter('status', '2')
+                                    ->setParameter('user', ($user instanceof User ? $user->getId(): 0))
                                     ->getQuery()
                                     ->getResult();
 
@@ -277,7 +298,8 @@ class MainController extends AbstractController
                 $rush[$id]->iAnswered = false;
                 foreach ($question->getAnswers() as $answer) {
                     if ($answer->getUser()==$user){
-                        $rush[$id]->iAnswered = true;
+//                        $rush[$id]->iAnswered = true;
+                        unset($rush[$id]);
                     }
                 }
             }
