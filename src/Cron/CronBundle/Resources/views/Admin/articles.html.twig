@@ -17,25 +17,30 @@
             });
         });
     </script>
+    <style type="text/css">
+        .article-li {
+            cursor: default;
+        }
+    </style>
     <h2 class="categoryH2">Статьи</a></h2>
     <a href="/admin/newarticle" style="margin: 15px;display: block;">+ Добавить статью</a>
     <ul class="article-list">
         {% for article in articles %}
             <li class="article-li" data-id="{{ article.getId() }}">
-                <table>
+                <table width="100%">
                     <tr>
-                        <td style="vertical-align:middle;">
+                        <td style="vertical-align:middle;width:170px;">
                             <a href="/articles/{{ article.getCategory().getId() }}/{{ article.getId() }}"><img src="/articles_i/{{ article.getId() }}/img1.jpg" height="105" class="article-list-img" alt="{{ article.getHeader() }}"></a>
 
                         </td>
-                        <td style="vertical-align:middle;">
+                        <td style="vertical-align:middle; text-align: left;padding: 0 25px;">
                             <a href="/articles/{{ article.getCategory().getId() }}/{{ article.getId() }}"> <span class="article-list-header">{{ article.getHeader() }}</span></a>
                         </td>
-                        <td>
+                        <td style="vertical-align:middle;width:130px;">
                             {{ article.getCategory().getName() }}
                         </td>
-                        <td>
-                            <a href="/admin/editarticle/{{ article.getId() }}">Редактировать</a>
+                        <td style="vertical-align:middle;width:130px;">
+                            <a href="/admin/editarticle/{{ article.getId() }}">Редактировать</a> <br>
                             <a href="#" class="delete-article">Удалить</a>
                         </td>
                     </tr>

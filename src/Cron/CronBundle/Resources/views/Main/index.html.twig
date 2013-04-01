@@ -117,6 +117,13 @@
             }, function () {
                 $(this).closest('.singleQuestion').next('.myAnswer').slideUp();
 //                $(this).val('развернуть');
+            }).click(function(){
+                /*$(".answerButtonItalic.expanded").not(this).each(function(){
+                    var alter_name = $(this).data('alter-name');
+                    $(this).data('alter-name', $(this).val()).val(alter_name).toggleClass('expanded');
+                });*/
+                var alter_name = $(this).data('alter-name');
+                $(this).data('alter-name', $(this).val()).val(alter_name).toggleClass('expanded');
             });
 
             $(".deleteMyQuestion").live('click', function(){
@@ -165,14 +172,14 @@
                         success:function () {}
                     });
                 } else {
-                    $.ajax({
+                    /*$.ajax({
                         url: "/ajax/closeMyQuestion",
                         type: "POST",
                         data: {
                             question: question.data('id')
                         },
                         success:function () {}
-                    });
+                    });*/
                     $.ajax({
                         url: "/ajax/hideMyQuestion",
                         type: "POST",
@@ -238,11 +245,64 @@
             $('#question_boundary').change(function () {
                 var check = $('#question_boundary').val();
                 if (check >= 50) {
+                    $.ajax({
+                        url: '/ajax/getBoundaryPrice',
+                        data:{
+                            boundary: check
+                        },
+                        success: function(response){
+                            $('#boundary-cost').text(response);
+                        }
+                    });
+                    $('#boundary-cost').text('...');
                     $('.questionCost').show();
                 }
                 else {
                     $('.questionCost').hide();
                 }
+            });
+
+            //Спам
+            $('.spamButton').click(function(){
+                $(this).addClass("spamButtonActive");
+                var question_id = $(this).closest('.singleQuestion').data('id');
+                var answer_id = $(this).closest('.singleAnswer').data('id');
+                var that = $(this);
+                $.ajax({'url': '{{ path("spamItem") }}', 'type':'post', 'data':{
+                    question_id: question_id,
+                    answer_id: answer_id
+                },
+                    'fail': function(){
+                        that.removeClass("spamButtonActive");
+                    },
+                    'success': function() {
+                        if (question_id){
+                            that.closest('.singleQuestion').replaceWith($("<span class='spamMessage'>{% trans %}Вопрос был отмечен как спам{% endtrans %}</span>"));
+                        } else {
+                            that.closest('.singleAnswer').replaceWith($("<span class='spamMessage'>{% trans %}Ответ был отмечен как спам{% endtrans %}</span>"));
+                        }
+                        $('.spamMessage').delay('5000').fadeOut('1000');
+                    }
+                });
+            });
+
+            //Лайки
+            $('.likeButton').click(function(){
+                $(this).addClass("likeButtonActive");
+                var question_id = $(this).closest('.singleQuestion').data('id');
+                var answer_id = $(this).closest('.singleAnswer').data('id');
+                var that = $(this);
+                $.ajax({
+                    'url': '{{ path("likeItem") }}',
+                    'type':'post',
+                    'data': {
+                        question_id: question_id,
+                        answer_id: answer_id
+                    },
+                    'fail': function(){
+                        that.removeClass("likeButtonActive");
+                    }
+                });
             });
 
         });
@@ -291,7 +351,7 @@
                         {{ form_errors(form.boundary) }}
                         {{ form_widget(form.boundary) }}
                     </div>
-                    <p class="questionCost">Стоимость 5 кредитов</p>
+                    <p class="questionCost">Стоимость <span id="boundary-cost">5</span> кредитов</p>
                     <input name="cancelInformation" class="submitButton" type="button" value="{% trans %}отмена{% endtrans %}"/>
                     <input class="submitButton" type="submit" value="{% trans %}отправить{% endtrans %}"/>
                 </div>
@@ -331,22 +391,22 @@
                             {% if curUser %}
                                 <input class="deleteMyQuestion" type="button" value="{% trans %}удалить{% endtrans %}"/>
                             {% endif %}
-                            <input class="answerButtonItalic" type="button" value="{{ question.getAnswers()|length }} отв."/>
+                            <input class="answerButtonItalic" type="button" value="{{ question.getAnswers()|length }} отв." data-alter-name="{% trans %}свернуть{% endtrans %}"/>
                         </form>
                     </div>
                 </div>
             </div>
             <div class="myAnswer {% if question.answers|length == 0 %}no-border{% endif %}">
                 {% for answer in question.answers %}
-                    <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}">
+                    <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}" data-id="{{ answer.getId() }}">
                         <div class="userName">{{ answer.getUser().getNick() }}</div>
                         <div class="answerDate">{{ answer.getPubDate()|date('d.m.Y H:i') }}</div>
                         <div style="clear: both;"></div>
                         <div class="questionText">
                             {{ answer.getText() }}
                             <div class="socialIcons">
-                                <div class="spamButton" title="Пометить как спам"></div>
-                                <div class="likeButton" title="Мне нравится!"></div>
+                                <div class="spamButton {% if curUser in answer.getSpams() %}spamButtonActive{% endif %}" title="Пометить как спам"></div>
+                                <div class="likeButton {% if curUser in answer.getLikes() %}likeButtonActive{% endif %}" title="Мне нравится!"></div>
                                 <div class="arrowButton inviteUser" title="Отправить приглашение в чат"></div>
                                 <div class="letterButton sendMessage" title="Отправить сообщение"></div>
                             </div>

@@ -294,6 +294,10 @@
 	color: #3b3ffd;
 }
 
+#nav .active {
+    color: #7A4216 !important;
+}
+
 
 .usersProfile {
 	width: 220px;
@@ -483,6 +487,11 @@
 	color: #3b3ffd;
 }
 
+#menu ul.menuNavigation li ul.subMenuNavigation li:hover a {
+    background-color: #ffebdb;
+    color: #3b3ffd;
+}
+
 #menu ul.menuNavigation li ul.subMenuNavigation li a {
 	color: #383838;
 	text-decoration: none;
@@ -495,13 +504,18 @@
 }
 
 #menu ul.menuNavigation li ul.subMenuNavigation li a.delete-link {
-    display: block;
+    /*display: block;*/
     position: absolute;
     height: 7px;
     width: 7px;
     background: url(../i/delete-link.png) no-repeat;
     right: 6px;
     top: 6px;
+    display: none;
+}
+
+#menu ul.menuNavigation li ul.subMenuNavigation li:hover a.delete-link {
+    display: block;
 }
 
 #menu ul.menuNavigation li ul.subMenuNavigation li a.delete-link:hover {
@@ -823,9 +837,9 @@ p.questionPrivateCost {
 
 p.questionCost {
 	display: none;
-	width: 189px;
+	width: auto;
 	float: right;
-	margin: -20px 135px 0 0;
+	margin: -20px 100px 0 0;
 	font-family: 'Arial';
 	font-size: 18px;
 	color: #000;
@@ -1178,6 +1192,9 @@ h2.acticle {
 .socialIcons form.answer input:hover {
 	border: 1px solid #000;
 	color: #000;
+}
+.socialIcons form.answer input.expanded {
+    font-style: italic;
 }
 
 .chatWindow {
@@ -3082,13 +3099,16 @@ a.toggleSettingsGroup:hover {
 }
 
 .article-li:hover {
-	text-decoration: underline;
-	cursor: pointer;
+	/*text-decoration: underline;*/
+	/*cursor: pointer;*/
 }
 
 .article-li a {
 	text-decoration: none;
 	color: #333;
+}
+.article-li a:hover {
+    text-decoration: underline;
 }
 
 span.article-list-header {

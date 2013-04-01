@@ -854,6 +854,27 @@ class AjaxController extends AbstractController
         return new Response(json_encode($data, true));
     }
 
+    public function getBoundaryPriceAction(Request $request)
+    {
+        $admin_settings = $this->getDoctrine()->getRepository("CronCronBundle:AdminSettings")->find(1);
+        $price = 5;
+        switch($request->get('boundary')){
+            case '50':
+                $price = $admin_settings->getAnswers50();
+                break;
+            case '100':
+                $price = $admin_settings->getAnswers100();
+                break;
+            case '1000':
+                $price = $admin_settings->getAnswers1000();
+                break;
+            default:
+                break;
+        }
+
+        return new Response($price);
+    }
+
     public function convertFilesize($input_filesize)
     {
         $filesize = $input_filesize;

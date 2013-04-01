@@ -46,6 +46,18 @@ class User implements UserInterface, \Serializable
      * @var string $nick
      *
      * @ORM\Column(name="nick", type="string", length=45, nullable=false)
+     *
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "12",
+     *      minMessage = "некорректное заполнение|некорректное заполнение",
+     *      maxMessage = "некорректное заполнение|некорректное заполнение"
+     * )
+     * @Assert\Regex(
+     *      pattern = "/\d/",
+     *      match = false,
+     *      message = "некорректное заполнение"
+     * )
      */
     private $nick;
 
@@ -103,7 +115,7 @@ class User implements UserInterface, \Serializable
      *
      * @ORM\ManyToOne(targetEntity="State")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="state_id", referencedColumnName="id", nullable=true)
+     *   @ORM\JoinColumn(name="state_id", nullable=true, referencedColumnName="id")
      * })
      */
     private $state = null;
