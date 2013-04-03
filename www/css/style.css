@@ -427,7 +427,7 @@
 }
 
 #menu ul.menuNavigation li:hover {
-	background-color: #ffebdb;
+	background-color: #ffebdb !important;
 }
 
 #menu ul.menuNavigation li.chatInvite {
@@ -1016,7 +1016,7 @@ h2.acticle {
 
 .spamButton {
 	width: 28px;
-	height: 22px;
+	height: 25px;
 	float: left;
 	background: url(/i/spamButton.png) no-repeat;
 	background-size: 100%;
@@ -2921,7 +2921,7 @@ a.toggleSettingsGroup {
 }
 
 a.toggleSettingsGroup:hover {
-	color: #3b3ffd;
+	color: #3b3ffd !important;
 }
 
 .settingsGroupWrap {
@@ -3257,7 +3257,6 @@ a.bookmarkArticleActive:hover{
 }
 
 .admin-wrap {
-    padding: 18px;
 }
 .admin-menu {
     margin-bottom: 15px;

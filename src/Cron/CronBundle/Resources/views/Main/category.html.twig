@@ -66,40 +66,39 @@
             <h2 class="categoryTitle">{{ category.getName() }}</h2>
             <div id="showQuestion">
                 {% for item in category.questions %}
-                    {#{% if curUser not in item.spams() %}#}
-                        <div class="singleQuestion likable-item" data-id="{{ item.getId() }}">
-                            <div class="userName">{{ item.user|trans }}</div>
-                            <div class="questionDate">{{ item.datetime|date('d.m.Y H:i') }}</div>
-                            {% if item.user==curUser or not category.getId() %}
-                                <div class="closeButton"></div>
-                            {% endif %}
-                            <div style="clear: both;"></div>
-                            <div class="questionText">
-                            {{ item.text|raw }}
-                                <div class="socialIcons">
-                                    {% if curUser %}
-                                        {% if item.getUser()!=curUser %}
-                                            <div title="{% trans %}отметить как спам{% endtrans %}" class="spamButton {% if curUser in item.spams %}spamButtonActive{% endif %}"></div>
-                                            <div title="{% trans %}мне нравится{% endtrans %}" class="likeButton {% if curUser in item.likes %}likeButtonActive{% endif %}"></div>
-                                            <div title="{% trans %}добавить в заметки{% endtrans %}" class="repostButton"></div>
-                                        {% endif %}
+                    <div class="singleQuestion likable-item" data-id="{{ item.getId() }}">
+                        <div class="userName">{{ item.user|trans }}</div>
+                        <div class="questionDate">{{ item.datetime|date('d.m.Y H:i') }}</div>
+                        {% if item.user==curUser or not category.getId() %}
+                            <div class="closeButton"></div>
+                        {% endif %}
+                        <div style="clear: both;"></div>
+                        <div class="questionText">
+                        {{ item.text }}
+                            <div class="socialIcons">
+                                {% if curUser %}
+                                    {% if item.getUser()!=curUser %}
+                                        <div title="{% trans %}отметить как спам{% endtrans %}" class="spamButton {% if curUser in item.spams %}spamButtonActive{% endif %}"></div>
+                                        <div title="{% trans %}мне нравится{% endtrans %}" class="likeButton {% if curUser in item.likes %}likeButtonActive{% endif %}"></div>
+                                        <div title="{% trans %}добавить в заметки{% endtrans %}" class="repostButton"></div>
                                     {% endif %}
-                                    {#{% if curUser or _rush %}#}
-                                        <form class="answer">
-                                            {% if item.iAnswered or not curUser or item.getUser()==curUser %}
-                                                {% if item.getPrivate()<1 %}
-                                                    <input class="answerButton" type="button" {% if not item.answers|length  %}disabled="disabled"{% endif %} value="{{ item.answers|length ~ ' отв.' }}" data-alter-name="{% trans %}свернуть{% endtrans %}" />
-                                                {% else %}
-                                                    <input class="answerButton" type="button" value="{% trans %}закрытый{% endtrans %}" data-alter-name="{% trans %}свернуть{% endtrans %}" />
-                                                {% endif %}
+                                {% endif %}
+                                {#{% if curUser or _rush %}#}
+                                    <form class="answer">
+                                        {% if item.iAnswered or not curUser or item.getUser()==curUser %}
+                                            {% if item.getPrivate()<1 %}
+                                                <input class="answerButton" type="button" {% if not item.answers|length  %}disabled="disabled"{% endif %} value="{{ item.answers|length ~ ' отв.' }}" data-alter-name="{% trans %}свернуть{% endtrans %}" />
                                             {% else %}
-                                                <input class="answerButton" type="button" value="{% trans %}ответить{% endtrans %}" data-alter-name="{% trans %}свернуть{% endtrans %}" />
+                                                <input class="answerButton" type="button" value="{% trans %}закрытый{% endtrans %}" data-alter-name="{% trans %}свернуть{% endtrans %}" />
                                             {% endif %}
-                                        </form>
-                                    {#{% endif %}#}
-                                </div>
+                                        {% else %}
+                                            <input class="answerButton" type="button" value="{% trans %}ответить{% endtrans %}" data-alter-name="{% trans %}свернуть{% endtrans %}" />
+                                        {% endif %}
+                                    </form>
+                                {#{% endif %}#}
                             </div>
                         </div>
+                    </div>
                         {#{% if curUser or _rush %}#}
                             {% if category.getId()==null or item.iAnswered or not curUser or item.getUser()==curUser %}
                                 <div class="myAnswer {% if item.answers==null %}no-border{% endif %}">

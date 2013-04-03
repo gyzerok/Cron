@@ -6,15 +6,17 @@
     <link href="/css/reset.css" rel="stylesheet">
 	<link href="/css/jquery-ui-1.9.2.custom.css" rel="stylesheet" />
 	<link rel="stylesheet" href="/css/tinyeditor.css">
+	<link rel="stylesheet" href="/css/elrte.full.css" type="text/css" media="screen" charset="utf-8">
 	<script src="/js/jquery.js"></script>
 	<script src="/js/jquery.validate.min.js"></script>
 	<script src="/js/jquery.form.js"></script>
 	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 	<script src="/js/jquery.autosize-min.js"></script>
-      <script src="/js/tiny.editor.packed.js"></script>
-      <script src="/js/soundmanager2.js"></script>
-      <script src="/js/script.js"></script>
-      <script src="/js/chat.js"></script>
+    <script src="/js/tiny.editor.packed.js"></script>
+    <script src="/js/soundmanager2.js"></script>
+    <script src="/js/script.js"></script>
+    <script src="/js/chat.js"></script>
+    <script src="/js/elrte.min.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body class="{{ app.getSession().get('_sound_settings') }}{% if app.user %}auth{% endif %} {% if app.request.requestUri=='/' %}index-page{% endif %}">
 
@@ -121,6 +123,7 @@
 			$(document).ready(function() {
 				$( ".userLinkAddWindow" ).draggable();
 				$(".feedbackWindow").draggable();
+                $('.forgotPassword-window').draggable();
 								
 				$('#feedback-type').change(function () {
 					var check = $('#feedback-type').val();
@@ -177,7 +180,7 @@
 			<ul class="menuNavigation">
 				<li>{% trans %}вопросы{% endtrans %}
 					<ul class="subMenuNavigation">
-                        {{ app.getSession().get('_category_list_view')|raw }}
+                        {{ app.getSession().get('_category_list_view')|trans |raw }}
 					</ul>
 				</li>
                 <li>{% trans %}Заметки{% endtrans %}
