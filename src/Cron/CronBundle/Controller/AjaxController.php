@@ -287,7 +287,7 @@ class AjaxController extends AbstractController
     {
         $user = $this->getUser();
         if (!$user instanceof User){
-            return new Response("", 403);
+            return new Response("", 200);
         }
 
         $need_cash = $request->get('need_cash');
