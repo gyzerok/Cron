@@ -157,6 +157,12 @@ class Question
      */
     private $hide_on_index = false;
 
+    /**
+     * @var string $locale
+     *
+     * @ORM\Column(name="locale", type="string", length=5, nullable=false)
+     */
+    private $locale = 'ru_RU';
 
 
     /**

@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="question")
  * @ORM\Entity(repositoryClass="Cron\CronBundle\Model\Repository\QuestionRepository")
  */
-class Question
+class Question extends AbstractEntity
 {
     /**
      * @var integer $id
@@ -157,6 +157,12 @@ class Question
      */
     private $hide_on_index = false;
 
+    /**
+     * @var string $locale
+     *
+     * @ORM\Column(name="locale", type="string", length=2, nullable=false)
+     */
+    private $locale = 'ru';
 
 
     /**
@@ -189,7 +195,7 @@ class Question
      */
     public function getText()
     {
-        return $this->text;
+        return $this->makeClickableLinks($this->text);
     }
 
     /**
@@ -614,5 +620,28 @@ class Question
     public function getHideOnIndex()
     {
         return $this->hide_on_index;
+    }
+
+    /**
+     * Set locale
+     *
+     * @param string $locale
+     * @return Question
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
+    
+        return $this;
+    }
+
+    /**
+     * Get locale
+     *
+     * @return string 
+     */
+    public function getLocale()
+    {
+        return $this->locale;
     }
 }

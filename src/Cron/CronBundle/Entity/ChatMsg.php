@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="chat_msg")
  * @ORM\Entity
  */
-class ChatMsg {
+class ChatMsg extends AbstractEntity {
     /**
      * @var integer $id
      *
@@ -86,7 +86,7 @@ class ChatMsg {
      */
     public function getMsgText()
     {
-        return $this->msg_text;
+        return $this->makeClickableLinks($this->msg_text);
     }
 
     /**

@@ -232,6 +232,17 @@ getBoundaryPrice:
   pattern:  /ajax/getBoundaryPrice
   defaults: { _controller: CronCronBundle:Ajax:getBoundaryPrice }
 
+hideIncomeQuestion:
+  pattern:  /ajax/hideIncomeQuestion
+  defaults: { _controller: CronCronBundle:Ajax:hideIncomeQuestion }
+
+checkCash:
+  pattern:  /ajax/checkCash
+  defaults: { _controller: CronCronBundle:Ajax:checkCash }
+
+deleteNotedQuestion:
+  pattern:  /ajax/deleteNotedQuestion
+  defaults: { _controller: CronCronBundle:Ajax:deleteNotedQuestion }
 
 # Chat routes
 

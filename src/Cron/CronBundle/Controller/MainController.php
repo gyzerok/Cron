@@ -81,6 +81,12 @@ class MainController extends AbstractController
                     $user->setCredits($user->getCredits()-5);
                 }
 
+                $locale = $request->getSession()->get('_locale');
+                if (!$locale){
+                    $locale = 'ru_RU';
+                }
+                $question->setLocale($locale);
+
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($question);
                 $em->flush();
@@ -123,12 +129,13 @@ class MainController extends AbstractController
             }
         }
 
-        $my_settings = new UserSettings();
         $viewbytime = new \DateTime();
         $view_cats = array();
+        $view_locale = array('ru', 'en', 'pt');
+        $income_locale = array('ru', 'en', 'pt');
         $income_cats = array();
         if ($user instanceof User){
-            $my_settings = $this->getDoctrine()->getRepository("CronCronBundle:UserSettings")->findOneBy(array("user"=>$user->getId()));
+            $my_settings = $user->getSettings();
             if ($my_settings instanceof UserSettings){
                 switch($my_settings->getViewByTime()){
                     case 'day':
@@ -150,9 +157,25 @@ class MainController extends AbstractController
                         array_push($view_cats, $id);
                     }
                 }
+                if ($my_settings->getViewLocale()){
+                    $view_locale = array();
+                    foreach ($my_settings->getViewLocale() as $id=>$view_loc) {
+                        if ($view_loc){
+                            array_push($view_locale, $id);
+                        }
+                    }
+                }
                 if ($my_settings->getIncomeCats()){
                     foreach ($my_settings->getIncomeCats() as $id=>$income_cat) {
                         array_push($income_cats, $id);
+                    }
+                }
+                if ($my_settings->getIncomeLocale()){
+                    $income_locale = array();
+                    foreach ($my_settings->getIncomeLocale() as $id=>$income_loc) {
+                        if ($income_loc){
+                            array_push($income_locale, $id);
+                        }
                     }
                 }
             } else {
@@ -163,18 +186,30 @@ class MainController extends AbstractController
         }
 
 
+
         if ($category_id>0){ //single category
             $categorized = array();
             $categorized[0] = $this->getDoctrine()->getRepository("CronCronBundle:Category")->find($category_id);
-            $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
+            $questions = array();
+            if (!empty($view_locale)){
+                $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                 ->createQueryBuilder('question')
-                ->where('question.category = :cid AND question.status <> :status AND question.datetime > :viewbytime  AND question.isSpam = false AND question.user <> :user')
+                ->where('question.category = :cid AND question.status '.($user instanceof User ? '<>': '=').' :status AND question.datetime > :viewbytime  AND question.isSpam = false AND question.user <> :user AND question.locale IN (:locale)')
                 ->setParameter('cid', $category_id)
                 ->setParameter('status', '2')
                 ->setParameter('viewbytime', $viewbytime->format("Y-m-d H:i:s"))
                 ->setParameter('user', ($user instanceof User ? $user->getId(): 0))
+                ->setParameter('locale', $view_locale)
                 ->getQuery()
                 ->getResult();
+            }
+
+            foreach ($questions as $qid=>$question) {
+                if ($question->getSpams()->contains($user)){
+                    unset($questions[$qid]);
+                }
+            }
+
             $categorized[0]->questions = $questions;
         } elseif ($category_id<0) { //income questions
 
@@ -184,17 +219,17 @@ class MainController extends AbstractController
             if (!$user instanceof User){
                 $my_answers = array();
             } else {
-                $my_answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("user"=>$user->getId()), array("pubDate"=>"DESC"));
+                $my_answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("user"=>$user->getId(), "hide_income"=>0), array("pubDate"=>"DESC"));
             }
 
             $income->questions = array();
             foreach ($my_answers as $my_answer) {
                 $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($my_answer->getQuestion()->getId());
-//                if (empty($income_cats) || in_array($question->getCategory()->getId(), $income_cats)){
+                if (!$question->getSpams()->contains($user)){
                     $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()), array("pubDate"=>"DESC"));
                     $question->answers = $answers;
                     array_push($income->questions, $question);
-//                }
+                }
             }
             $categorized[0] = $income;
 
@@ -215,16 +250,28 @@ class MainController extends AbstractController
                 if ($category->getId()==1){
                     unset($categorized[$id]);
                 } else {
-                    $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
-                        ->createQueryBuilder('question')
-                        ->where('question.category = :cid AND question.status <> :status AND question.datetime > :viewbytime AND question.isSpam = false AND question.user <> :user')
-                        ->setParameter('cid', $category->getId())
-                        ->setParameter('status', '2')
-                        ->setParameter('viewbytime', $viewbytime->format("Y-m-d H:i:s"))
-                        ->setParameter('user', ($user instanceof User ? $user->getId(): 0))
-                        ->getQuery()
-                        ->setMaxResults(5)
-                        ->getResult();
+                    $questions = array();
+                    if (!empty($income_locale)){
+                        $questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")
+                            ->createQueryBuilder('question')
+                            ->where('question.category = :cid AND question.status '.($user instanceof User ? '<>': '=').' :status AND question.isSpam = false AND question.user <> :user AND question.locale IN (:locale)')
+                            ->setParameter('cid', $category->getId())
+                            ->setParameter('status', '2')
+//                        ->setParameter('viewbytime', $viewbytime->format("Y-m-d H:i:s"))
+                            ->setParameter('user', ($user instanceof User ? $user->getId(): 0))
+                            ->setParameter('locale', $income_locale)
+                            ->getQuery()
+                            ->setMaxResults(5)
+                            ->getResult();
+
+                        foreach ($questions as $qid=>$question) {
+                            if ($question->getSpams()->contains($user)){
+                                unset($questions[$qid]);
+                            }
+                        }
+                    }
+
+
                     if (count($questions)){
                         $categorized[$id]->questions = $questions;
                     } else {
@@ -280,18 +327,37 @@ class MainController extends AbstractController
             }
         }
 
+        $income_locale = array('ru', 'en', 'pt');
+        if ($user instanceof User){
+            $my_settings = $user->getSettings();
+            if ($my_settings instanceof UserSettings){
+                if ($my_settings->getViewLocale()){
+                    $income_locale = array();
+                    foreach ($my_settings->getIncomeLocale() as $id=>$income_loc) {
+                        if ($income_loc){
+                            array_push($income_locale, $id);
+                        }
+                    }
+                }
+            }
+        }
+
         $rush_id = 1;
         $categorized = array();
         $categorized[0] = $this->getDoctrine()->getRepository("CronCronBundle:Category")->find($rush_id);
 
-        $rush = $this->getDoctrine()->getRepository("CronCronBundle:Question")
+        $rush = array();
+        if (!empty($income_locale)){
+            $rush = $this->getDoctrine()->getRepository("CronCronBundle:Question")
                                     ->createQueryBuilder('question')
-                                    ->where('question.category = :cid  AND question.status <> :status AND question.isSpam = false AND question.user <> :user')
+                                    ->where('question.category = :cid  AND question.status '.($user instanceof User ? '<>': '=').' :status AND question.isSpam = false AND question.user <> :user AND question.locale IN (:locale)')
                                     ->setParameter('cid', $rush_id)
                                     ->setParameter('status', '2')
                                     ->setParameter('user', ($user instanceof User ? $user->getId(): 0))
+                                    ->setParameter('locale', $income_locale)
                                     ->getQuery()
                                     ->getResult();
+        }
 
         if ($user instanceof User){
             foreach ($rush as $id=>$question){
@@ -559,7 +625,13 @@ class MainController extends AbstractController
                 'onlineUserCount' => $this->onlineUserCount, 'totalUserCount' => $this->totalUserCount
             ));
         } else {
-            $article_categories = $this->getDoctrine()->getRepository("CronCronBundle:ArticleCategory")->findAll();
+            $article_categories = array();
+            $articles = $this->getDoctrine()->getRepository("CronCronBundle:Article")->findBy(array("locale"=> $_locale), array("id"=>"ASC"));
+            foreach ($articles as $article) {
+                $article_categories[$article->getCategory()->getId()] = $article->getCategory();
+            }
+
+//            $article_categories = $this->getDoctrine()->getRepository("CronCronBundle:ArticleCategory")->findAll();
 
             return $this->render("CronCronBundle:Articles:article_categories.html.twig", array('title' => 'Статьи',
                 'categories' => $article_categories,

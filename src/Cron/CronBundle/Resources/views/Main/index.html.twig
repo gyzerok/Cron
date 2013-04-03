@@ -128,19 +128,21 @@
 
             $(".deleteMyQuestion").live('click', function(){
                 if (confirm('Удалить вопрос? (Стоимость 5 кредитов)')){
-                    var cur_credits = $("#current-credits");
-                    cur_credits.text(cur_credits.text()-5);
                     var question = $(this).closest('.singleQuestion');
-                    $.ajax({
-                        url: "/ajax/deleteMyQuestion",
-                        type: "POST",
-                        data: {
-                            question: question.data('id')
-                        },
-                        success:function () {}
+                    checkCash(5, function(){
+                        var cur_credits = $("#current-credits");
+                        cur_credits.text(cur_credits.text()-5);
+                        $.ajax({
+                            url: "/ajax/deleteMyQuestion",
+                            type: "POST",
+                            data: {
+                                question: question.data('id')
+                            },
+                            success:function () {}
+                        });
+                        question.next('.myAnswer').remove();
+                        question.remove();
                     });
-                    question.next('.myAnswer').remove();
-                    question.remove();
                 }
             });
 
@@ -305,10 +307,25 @@
                 });
             });
 
+            $("#writeQuestionForm").submit(function(e){
+                var self = this;
+                e.preventDefault();
+                var need_cash = 0;
+                if ($('#question_boundary').val() >= 50){
+                    need_cash = $('#boundary-cost').text();
+                } else if ($("#question_private").is(':checked')) {
+                    need_cash = 5;
+                }
+                checkCash(need_cash, function(){
+                    self.submit();
+                });
+                return false;
+            });
+
         });
     </script>
     {% if form %}
-        <form name="writeQuestion" class="writeQuestion" action="{{ path('index') }}"
+        <form name="writeQuestion" class="writeQuestion" id="writeQuestionForm" action="{{ path('index') }}"
               method="post" {{ form_enctype(form) }}>
             {{ form_errors(form) }}
 
@@ -353,7 +370,7 @@
                     </div>
                     <p class="questionCost">Стоимость <span id="boundary-cost">5</span> кредитов</p>
                     <input name="cancelInformation" class="submitButton" type="button" value="{% trans %}отмена{% endtrans %}"/>
-                    <input class="submitButton" type="submit" value="{% trans %}отправить{% endtrans %}"/>
+                    <input class="submitButton" type="submit" name="submit-question" value="{% trans %}отправить{% endtrans %}"/>
                 </div>
             </div>
 
@@ -379,10 +396,12 @@
             <div class="singleQuestion" data-id="{{ question.getId() }}">
                 <div style="border: 1px solid #fff;" class="userName"></div>
                 <div class="questionDate">{{ question.datetime|date('d.m.Y H:i') }}</div>
-                <div class="closeButton" title="{% trans %}удалить из списка{% endtrans %}"></div>
+                {% if form %}
+                    <div class="closeButton" title="{% trans %}удалить из списка{% endtrans %}"></div>
+                {% endif %}
                 <div style="clear: both;"></div>
                 <div class="questionText">
-                    {{ question.text }}
+                    {{ question.text|raw }}
                     <div class="actionButton">
                         <form class="answer">
                             {% if not question.isClosed() %}
@@ -403,7 +422,7 @@
                         <div class="answerDate">{{ answer.getPubDate()|date('d.m.Y H:i') }}</div>
                         <div style="clear: both;"></div>
                         <div class="questionText">
-                            {{ answer.getText() }}
+                            {{ answer.getText()|raw }}
                             <div class="socialIcons">
                                 <div class="spamButton {% if curUser in answer.getSpams() %}spamButtonActive{% endif %}" title="Пометить как спам"></div>
                                 <div class="likeButton {% if curUser in answer.getLikes() %}likeButtonActive{% endif %}" title="Мне нравится!"></div>

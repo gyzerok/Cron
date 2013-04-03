@@ -102,7 +102,7 @@ class UserSettings {
     /**
      * Get income_cats
      *
-     * @return string 
+     * @return Array
      */
     public function getIncomeCats()
     {
@@ -125,7 +125,7 @@ class UserSettings {
     /**
      * Get income_locale
      *
-     * @return string 
+     * @return Array
      */
     public function getIncomeLocale()
     {
@@ -171,7 +171,7 @@ class UserSettings {
     /**
      * Get view_locale
      *
-     * @return string 
+     * @return Array
      */
     public function getViewLocale()
     {

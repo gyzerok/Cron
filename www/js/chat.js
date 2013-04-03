@@ -275,7 +275,7 @@ $(document).ready(function(){
 
     $(".chat-tab").live('click', function(){
         $(".chat-tab").removeClass('active');
-        $(this).removeClass('indicate').addClass('active');
+        $(this).removeClass('newMsgs').addClass('active');
         $(".chat-content").hide();
         var tab_id = $(this).data('tab');
 
