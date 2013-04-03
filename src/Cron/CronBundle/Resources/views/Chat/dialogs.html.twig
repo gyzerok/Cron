@@ -1,74 +1,14 @@
-
-                    <div class="feedback-header">
-                        <h2 class="feedback-title">Обратная связь</h2>
-                        <p>Здесь вы можете задать интересующий вас вопрос.</p>
-                        <div class="close-button"></div>  
-                    </div>
-                    <div class="feedback-main">
-                        <form class="feedback-form">
-                            <label for="name"><span class="violet-color">*</span>Ваше имя:</label>
-                            <input id="name" />
-                            <label for="email"><span class="violet-color">*</span>E-mail:</label>
-                            <input id="email" />
-                            <label for="phone">Ваш телефон:</label>
-                            <input id="phone" />
-                            <label for="text"><span class="violet-color">*</span>Сообщение:</label>
-                            <textarea id="text"></textarea>
-                            <p>* — поля, обязательные для заполнения</p>
-                            <button class="feedback-submit" type="submit" value="Отправить">Отправить</button>    
-                        </form>
-                    </div>  
-					
-					
-	<div class="mfeedback">				
-		<?if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();?>
-		<div class="feedback-header">
-			<h2 class="feedback-title">Обратная связь</h2>
-			<p>Здесь вы можете задать интересующий вас вопрос.</p>
-			<div class="close-button"></div>  
-		</div>
-		<div class="feedback-main">
-			<form class="feedback-form" action="" method="POST">
-			<?=bitrix_sessid_post()?>
-				<label for="name"><span class="violet-color">*</span>Ваше имя:</label>
-				<input id="name" name="user_name" type="text" value="<?=$arResult["AUTHOR_NAME"]?> />
-				<label for="email"><span class="violet-color">*</span>E-mail:</label>
-				<input type="text" name="user_email" id="email" value="<?=$arResult["AUTHOR_EMAIL"]?>" />
-				<label for="phone">Ваш телефон:</label>
-				<input id="phone" />
-				<label for="text"><span class="violet-color">*</span>Сообщение:</label>
-				<textarea  name="MESSAGE" id="text"><?=$arResult["MESSAGE"]?></textarea>
-				<p>* — поля, обязательные для заполнения</p>
-				<input class="feedback-submit" type="submit" name="submit" value="Отправить" />   
-			</form>
-		</div> 
-	</div>
-	
-	
-	
-	
-		<div class="mfeedback">				
-		<?if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();?>
-		<div class="feedback-header">
-			<h2 class="feedback-title">Обратная связь</h2>
-			<p>Здесь вы можете задать интересующий вас вопрос.</p>
-			<div class="close-button"></div>  
-		</div>
-		<div class="feedback-main">
-			<form class="feedback-form" action="" method="POST">
-			<?=bitrix_sessid_post()?>
-				<label for="name"><span class="violet-color">*</span>Ваше имя:</label>
-				<input id="name" name="user_name" type="text" />
-				<label for="email"><span class="violet-color">*</span>E-mail:</label>
-				<input type="text" name="user_email" id="email" />
-				<label for="phone">Ваш телефон:</label>
-	<?foreach($arParams["NEW_EXT_FIELDS"] as $i => $ext_field):?>
-				<input id="phone" name="custom[<?0?>]" />
-	<?endforeach;?>
-				<label for="text"><span class="violet-color">*</span>Сообщение:</label>
-				<textarea  name="MESSAGE" id="text"></textarea>
-				<p>* — поля, обязательные для заполнения</p>
-				<input class="feedback-submit" type="submit" name="submit" value="Отправить" />   
-			</form>
-		</div>
-	</div>
+{% for dialog in dialogs %}
+    <div class="singleDialog" data-dialog="{{ dialog.getId() }}">
+        <div class="dialogUsername">
+            {% if dialog.user1==curUser %}
+                {{ dialog.user2.getNick() }}
+            {% else %}
+                {{ dialog.user1.getNick() }}
+            {% endif %}
+        </div>
+        <div class="messagesAmount">{{ dialog.unreads }}</div>
+        <div class="closeDialogs"><a title="закрыть диалог" href=""></a></div>
+        <div class="spamDialogs"><a title="пометить как спам" href=""></a></div>
+    </div>
+{% endfor %}
