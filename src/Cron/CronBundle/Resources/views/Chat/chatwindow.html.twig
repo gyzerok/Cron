@@ -60,7 +60,7 @@
                         {% for message in mychat.messages %}
                             <div class="singleMessage{% if message.getUser()==curUser %} my-message{% endif %}">
                                 <div class="chatUsername">{{ message.getUser().getNick() }}</div>
-                                <div class="messageText">{{ message.getMsgText()|nl2br }}</div>
+                                <div class="messageText">{{ message.getMsgText()|nl2br|raw }}</div>
                             </div>
                         {% endfor %}
                     </div>
@@ -86,7 +86,7 @@
                         {% for message in in_chat.messages %}
                             <div class="singleMessage{% if message.getUser()==curUser %} my-message{% endif %}">
                                 <div class="chatUsername">{{ message.getUser().getNick() }}</div>
-                                <div class="messageText">{{ message.getMsgText()|nl2br }}</div>
+                                <div class="messageText">{{ message.getMsgText()|nl2br|raw }}</div>
                             </div>
                         {% endfor %}
                     </div>
@@ -102,7 +102,7 @@
                         {% for message in dialog.messages %}
                             <div class="singleMessage{% if message.getUser()==curUser %} my-message{% endif %}">
                                 <div class="chatUsername">{{ message.getUser().getNick() }}</div>
-                                <div class="messageText">{{ message.getMsgText()|nl2br }}</div>
+                                <div class="messageText">{{ message.getMsgText()|nl2br|raw }}</div>
                             </div>
                         {% endfor %}
                     </div>

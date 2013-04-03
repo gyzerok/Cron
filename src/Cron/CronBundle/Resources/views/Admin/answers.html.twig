@@ -81,7 +81,7 @@
                         <div class="questionDate">{{ item.pubDate|date('d.m.Y H:i') }}</div>
                         <div style="clear: both;"></div>
                         <div class="questionText">
-                            {{ item.text }}
+                            {{ item.text|raw }}
                             <div class="socialIcons">
                                 {% if tab=='spam' %}
                                     {#<div class="spam-index">Спам: {{ item.getSpams()|length }}</div>#}

@@ -1,6 +1,22 @@
 {% extends '::base.html.twig' %}
 {% block content %}
     <h2 class="categoryH2">Заметки / Вопросы</h2>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //Удаление вопроса из заметок
+            $('.singleQuestion .closeButton').click(function(){
+                var question_id = $(this).closest('.singleQuestion').data('id');
+                $.ajax({
+                    'url': '{{ path("deleteNotedQuestion") }}',
+                    'type':'post',
+                    'data': {
+                        question_id: question_id
+                    }
+                });
+                $(this).closest('.singleQuestion').remove();
+            });
+        });
+    </script>
     <div style="max-height: 800px;overflow: auto;width: 733px;margin-left: -5px;">
     {% if questions %}
         <ul class="article-list">
@@ -11,7 +27,7 @@
                     <div class="closeButton"></div>
                     <div style="clear: both;"></div>
                     <div class="questionText">
-                        {{ item.getQuestion().getText() }}
+                        {{ item.getQuestion().getText()|raw }}
                         <div class="socialIcons" style="width: 75px;">
                             <form class="answer">
                                 <input class="answerButton" type="button" value="ответить" />
@@ -27,7 +43,7 @@
                             <div class="answerDate">{{ answer.getPubDate()|date("Y-m-d H:i:s") }}</div>
                             <div style="clear: both;"></div>
                             <div class="questionText">
-                                {{ answer.getText() }}
+                                {{ answer.getText()|raw }}
                                 <div class="socialIcons">
                                     <div class="spamButton" title="Пометить как спам"></div>
                                     <div class="likeButton" title="Мне нравится!"></div>

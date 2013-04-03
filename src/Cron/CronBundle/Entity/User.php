@@ -10,12 +10,15 @@ use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * Cron\CronBundle\Entity\User
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="Cron\CronBundle\Service\UserRepository")
+ * @UniqueEntity("username")
  */
 class User implements UserInterface, \Serializable
 {

@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="answer")
  * @ORM\Entity
  */
-class Answer
+class Answer extends AbstractEntity
 {
     /**
      * @var integer $id
@@ -34,6 +34,13 @@ class Answer
      * @ORM\Column(name="status", type="boolean", nullable=false)
      */
     private $status;
+
+    /**
+     * @var boolean $hide_income
+     *
+     * @ORM\Column(name="hide_income", type="boolean", nullable=false)
+     */
+    private $hide_income = 0;
 
     /**
      * @var \DateTime $pubDate
@@ -122,7 +129,7 @@ class Answer
      */
     public function getText()
     {
-        return $this->text;
+        return $this->makeClickableLinks($this->text);
     }
 
     /**
@@ -336,5 +343,28 @@ class Answer
     public function getIsSpam()
     {
         return $this->isSpam;
+    }
+
+    /**
+     * Set hide_income
+     *
+     * @param boolean $hideIncome
+     * @return Answer
+     */
+    public function setHideIncome($hideIncome)
+    {
+        $this->hide_income = $hideIncome;
+    
+        return $this;
+    }
+
+    /**
+     * Get hide_income
+     *
+     * @return boolean 
+     */
+    public function getHideIncome()
+    {
+        return $this->hide_income;
     }
 }

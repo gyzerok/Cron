@@ -8,12 +8,17 @@ use Doctrine\ORM\Mapping as ORM;
 //use Doctrine\ORM\EntityManager;
 //use Doctrine\ORM\EntityRepository;
 
+use Symfony\Component\Validator\Constraints as Assert;
+
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * Cron\CronBundle\Entity\User
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="Cron\CronBundle\Service\UserRepository")
+ * @UniqueEntity("username")
  */
 class User implements UserInterface, \Serializable
 {
@@ -44,6 +49,18 @@ class User implements UserInterface, \Serializable
      * @var string $nick
      *
      * @ORM\Column(name="nick", type="string", length=45, nullable=false)
+     *
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "12",
+     *      minMessage = "некорректное заполнение|некорректное заполнение",
+     *      maxMessage = "некорректное заполнение|некорректное заполнение"
+     * )
+     * @Assert\Regex(
+     *      pattern = "/\d/",
+     *      match = false,
+     *      message = "некорректное заполнение"
+     * )
      */
     private $nick;
 
@@ -101,10 +118,10 @@ class User implements UserInterface, \Serializable
      *
      * @ORM\ManyToOne(targetEntity="State")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="state_id", referencedColumnName="id", nullable=true)
+     *   @ORM\JoinColumn(name="state_id", nullable=true, referencedColumnName="id")
      * })
      */
-    private $state;
+    private $state = null;
 
     /**
      * @var City
@@ -114,7 +131,7 @@ class User implements UserInterface, \Serializable
      *   @ORM\JoinColumn(name="city_id", referencedColumnName="id", nullable=true)
      * })
      */
-    private $city;
+    private $city = null;
 
     /**
      * @var Country

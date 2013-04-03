@@ -260,15 +260,14 @@ class AjaxController extends AbstractController
             $em->persist($answer);
             $em->flush();
 
+            $html = '';
             if ($question->getPrivate()){
-                $answers = $this->getDoctrine()->getRepository('CronCronBundle:Answer')->findby(array("id"=>$answer->getId()));
+//                $answers = $this->getDoctrine()->getRepository('CronCronBundle:Answer')->findby(array("id"=>$answer->getId()));
+                $html = '<span class="spamMessage">'.$this->get('translator')->trans('вопрос является закрытым, вы не можете просматривать ответы других пользователей').'</span>';
             } else {
                 $answers = $this->getDoctrine()->getRepository('CronCronBundle:Answer')->findby(array("question"=>$question->getId()), array("pubDate"=>"ASC"));
-            }
-
-            $html = '';
-            foreach ($answers as $ans) {
-                $html .= '<div class="singleAnswer" data-user="'.$ans->getUser()->getId().'">
+                foreach ($answers as $ans) {
+                    $html .= '<div class="singleAnswer" data-user="'.$ans->getUser()->getId().'">
 					<div class="userName">'.$ans->getUser()->getNick().'</div>
 					<div class="answerDate">'.$ans->getPubDate()->format("d.m.Y H:i").'</div>
 					<div style="clear: both;"></div>
@@ -278,10 +277,26 @@ class AjaxController extends AbstractController
 						</div>
 					</div>
 				</div>';
+                }
             }
-
             return new Response($html);
         }
+    }
+
+    public function checkCashAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            return new Response("", 403);
+        }
+
+        $need_cash = $request->get('need_cash');
+
+        if ($user->getCredits()<$need_cash){
+            return new Response("", 403);
+        }
+
+        return new Response("OK");
     }
 
     public function questionsToJSON(array $questions)
@@ -618,28 +633,61 @@ class AjaxController extends AbstractController
 
     public function updateQuestionsAction(Request $request)
     {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+        }
         $lastTime = $request->get("questions_last_update");
 
         $em = $this->getDoctrine()->getManager();
 
-        $questionRepo = $this->getDoctrine()->getRepository('CronCronBundle:Question');
-        $catQuery = $questionRepo->createQueryBuilder('question')
-            ->innerJoin('question.user', 'user')
-            ->where('question.category > :cid AND question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false')
-            ->setParameter('cid', '1')
-            ->setParameter('lastTime', $lastTime)
-            ->setParameter('status', '2')
-            ->getQuery();
-        $categorized = $catQuery->getResult();
+        $my_settings = $user->getSettings();
+        $income_cats = range(2,30);
+        $income_locale = array('ru', 'en', 'pt');
+        if ($my_settings instanceof UserSettings){
+            if ($my_settings->getIncomeCats()){
+                $income_cats = array();
+                foreach ($my_settings->getIncomeCats() as $id=>$income_cat) {
+                    array_push($income_cats, $id);
+                }
+            }
+            if ($my_settings->getIncomeLocale()){
+                $income_locale = array();
+                foreach ($my_settings->getIncomeLocale() as $id=>$income_loc) {
+                    if ($income_loc){
+                        array_push($income_locale, $id);
+                    }
+                }
+            }
+        }
 
-        $rushQuery = $questionRepo->createQueryBuilder('question')
-            ->innerJoin('question.user', 'user')
-            ->where('question.category = :cid AND question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false')
-            ->setParameter('cid', '1')
-            ->setParameter('lastTime', $lastTime)
-            ->setParameter('status', '2')
-            ->getQuery();
-        $rush = $rushQuery->getResult();
+        $categorized = array();
+        $rush = array();
+        if (!empty($income_locale)){
+            $questionRepo = $this->getDoctrine()->getRepository('CronCronBundle:Question');
+            $catQuery = $questionRepo->createQueryBuilder('question')
+                ->innerJoin('question.user', 'user')
+                ->where('question.category IN (:cid) AND question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false AND question.user != :user AND question.locale IN (:locale)')
+                ->setParameter('cid', $income_cats)
+                ->setParameter('locale', $income_locale)
+                ->setParameter('lastTime', $lastTime)
+                ->setParameter('status', '2')
+                ->setParameter('user', $user->getId())
+                ->getQuery();
+            $categorized = $catQuery->getResult();
+
+            $rushQuery = $questionRepo->createQueryBuilder('question')
+                ->innerJoin('question.user', 'user')
+                ->where('question.category = :cid AND question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false AND question.user != :user AND question.locale IN (:locale)')
+                ->setParameter('cid', '1')
+                ->setParameter('locale', $income_locale)
+                ->setParameter('lastTime', $lastTime)
+                ->setParameter('status', '2')
+                ->setParameter('user', $user->getId())
+                ->getQuery();
+            $rush = $rushQuery->getResult();
+        }
+
 
         $data = array();
         $data['new_categorized_questions'] = count($categorized);
@@ -647,7 +695,7 @@ class AjaxController extends AbstractController
         $data['questions_last_update'] = date('Y-m-d H:i:s');
 
         if ($request->get('update_my_questions')){
-            $user = $this->getUser();
+//            $user = $this->getUser();
             if ($user instanceof User){
                 $my_questions = $questionRepo->findAllNotClosedByUser($user);
                 $my_updated_questions = array();
@@ -778,6 +826,51 @@ class AjaxController extends AbstractController
 
             $em->persist($question);
 
+            $em->flush();
+        }
+
+        return new Response("SUCCESS");
+    }
+
+    public function hideIncomeQuestionAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $question_id = $request->get("question_id");
+
+        $my_answer = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findOneBy(array("question"=>$question_id, "user"=>$user->getId()));
+
+        if ($my_answer instanceof Answer){
+            $my_answer->setHideIncome(1);
+
+            $em->persist($my_answer);
+
+            $em->flush();
+        }
+
+        return new Response("SUCCESS");
+    }
+
+    public function deleteNotedQuestionAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $question_id = $request->get("question_id");
+
+        $noted_question = $this->getDoctrine()->getRepository("CronCronBundle:NotesQuestion")->findOneBy(array("question"=>$question_id, "user"=>$user->getId()));
+
+        if ($noted_question instanceof \Cron\CronBundle\Entity\NotesQuestion){
+            $em->remove($noted_question);
             $em->flush();
         }
 

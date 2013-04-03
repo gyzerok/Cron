@@ -18,6 +18,24 @@
   </head>
   <body class="{{ app.getSession().get('_sound_settings') }}{% if app.user %}auth{% endif %} {% if app.request.requestUri=='/' %}index-page{% endif %}">
 
+  <script type="text/javascript">
+      function checkCash(need_cash, callback){
+          $.ajax({
+              url: '{{ path("checkCash") }}',
+              type:'post',
+              data: {
+                  need_cash: need_cash
+              },
+              success: function(response){
+                  callback();
+              },
+              error: function(){
+                  alert('{% trans %}У вас недостаточно кредитов.{% endtrans %}');
+              }
+          });
+      }
+  </script>
+
   <div id="questions_last_update">{{ "now"|date('Y-m-d H:i:s') }}</div>
 
   {% set _locale = app.getSession().get('_locale') %}
