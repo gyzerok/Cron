@@ -681,4 +681,50 @@ class User implements UserInterface, \Serializable
     {
         return $this->settings;
     }
+
+    /**
+     * Set lastCatsView
+     *
+     * @param \DateTime $lastCatsView
+     * @return User
+     */
+    public function setLastCatsView($lastCatsView)
+    {
+        $this->lastCatsView = $lastCatsView;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastCatsView
+     *
+     * @return \DateTime 
+     */
+    public function getLastCatsView()
+    {
+        return $this->lastCatsView;
+    }
+
+    /**
+     * Set lastRushView
+     *
+     * @param \DateTime $lastRushView
+     * @return User
+     */
+    public function setLastRushView($lastRushView)
+    {
+        $this->lastRushView = $lastRushView;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastRushView
+     *
+     * @return \DateTime 
+     */
+    public function getLastRushView()
+    {
+        return $this->lastRushView;
+    }
 }

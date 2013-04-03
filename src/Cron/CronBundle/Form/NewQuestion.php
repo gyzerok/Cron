@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\Event\DataEvent;
 use Cron\CronBundle\Entity\Country;
 use Cron\CronBundle\Entity\State;
+
 use Doctrine\ORM\EntityRepository;
 
 class NewQuestion extends AbstractType
@@ -28,8 +29,14 @@ class NewQuestion extends AbstractType
                 ->add('category', null, array('label' => 'Категория', 'expanded' => true))
                 ->add('private', 'checkbox', array('label' => 'закрытый', 'required' => false, 'disabled' => !$this->userAuth))
                 ->add('country', 'entity', array('label' => 'Страна', 'class' => 'CronCronBundle:Country', 'property' => 'name', 'empty_value' => 'Любая страна', 'required' => false))
-                ->add('state', 'entity', array('label' => 'Регион', 'class' => 'CronCronBundle:State', 'property' => 'name', 'empty_value' => 'Любой регион', 'disabled' => true, 'required' => false))
-                ->add('city', 'entity', array('label' => 'Город', 'class' => 'CronCronBundle:City', 'property' => 'name', 'empty_value' => 'Любой город', 'disabled' => true, 'required' => false))
+                ->add('state', 'entity', array('label' => 'Регион', 'class' => 'CronCronBundle:State', 'property' => 'name', 'empty_value' => 'Любой регион', 'disabled' => true, 'required' => false, 'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('state')
+                        ->where('state.id IS NULL');
+                }))
+                ->add('city', 'entity', array('label' => 'Город', 'class' => 'CronCronBundle:City', 'property' => 'name', 'empty_value' => 'Любой город', 'disabled' => true, 'required' => false, 'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('city')
+                        ->where('city.id IS NULL');
+                }))
                 ->add('boundary', 'choice', array('label' => 'Минимальная наполняемость ответами', 'choices' => $this->numAnswers));
 
         $factory = $builder->getFormFactory();

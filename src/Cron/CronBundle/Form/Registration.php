@@ -31,8 +31,14 @@ class Registration extends AbstractType
                 ->add('gender', 'choice', array('label' => 'Пол', 'choices' => array(1 => 'Мужской', 2 => 'Женский'), 'expanded' => true, 'required' => false))
                 ->add('birthDate', 'birthday', array('label' => 'Дата рождения', 'format' => 'dd MMMM yyyy', 'years' => $years, 'required' => false))
                 ->add('country', 'entity', array('label' => 'Страна', 'class' => 'CronCronBundle:Country', 'property' => 'name', 'empty_value' => 'Все страны', 'required' => false))
-                ->add('state', 'entity', array('label' => 'Регион', 'class' => 'CronCronBundle:State', 'property' => 'name', 'empty_value' => 'Все регионы', 'disabled' => true, 'required' => false))
-                ->add('city', 'entity', array('label' => 'Город', 'class' => 'CronCronBundle:City', 'property' => 'name', 'empty_value' => 'Все города', 'disabled' => true, 'required' => false))
+                ->add('state', 'entity', array('label' => 'Регион', 'class' => 'CronCronBundle:State', 'property' => 'name', 'empty_value' => 'Все регионы', 'disabled' => true, 'required' => false, 'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('state')
+                        ->where('state.id IS NULL');
+                }))
+                ->add('city', 'entity', array('label' => 'Город', 'class' => 'CronCronBundle:City', 'property' => 'name', 'empty_value' => 'Все города', 'disabled' => true, 'required' => false, 'query_builder' => function(EntityRepository $er) {
+                    return $er->createQueryBuilder('city')
+                        ->where('city.id IS NULL');
+                }))
                 ->add('agreement', null, array('label' => 'Правила', 'required' => true));
 
         $factory = $builder->getFormFactory();
