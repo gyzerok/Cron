@@ -54,7 +54,7 @@
             <div id="showQuestion">
                 {% for item in category.questions %}
                     <div class="singleQuestion likable-item" data-id="{{ item.getId() }}">
-                        <div class="userName">{{ item.user }}</div>
+                        <div class="userName">{{ item.user|trans }}</div>
                         <div class="questionDate">{{ item.datetime|date('d.m.Y H:i') }}</div>
                         {% if item.user==curUser or not category.getId() %}
                             <div class="closeButton"></div>
@@ -92,7 +92,7 @@
                                 {% if item.getPrivate()<1 %}
                                     {% for answer in item.answers %}
                                         <div class="singleAnswer likable-item" data-user="{{ answer.getUser().getId() }}" data-id="{{ answer.getId() }}">
-                                            <div class="userName">{{ answer.getUser().getNick() }}</div>
+                                            <div class="userName">{{ answer.getUser().getNick()|trans }}</div>
                                             <div class="answerDate">{{ answer.getPubDate()|date('d.m.Y H:i') }}</div>
                                             <div style="clear: both;"></div>
                                             <div class="questionText">

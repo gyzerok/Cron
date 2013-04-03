@@ -427,7 +427,7 @@
 }
 
 #menu ul.menuNavigation li:hover {
-	background-color: #ffebdb;
+	background-color: #ffebdb !important;
 }
 
 #menu ul.menuNavigation li.chatInvite {
@@ -2921,7 +2921,7 @@ a.toggleSettingsGroup {
 }
 
 a.toggleSettingsGroup:hover {
-	color: #3b3ffd;
+	color: #3b3ffd !important;
 }
 
 .settingsGroupWrap {
