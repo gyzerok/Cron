@@ -22,11 +22,18 @@ class City
     private $id;
 
     /**
-     * @var string $name
+     * @var string $name_ru
      *
-     * @ORM\Column(name="name", type="string", length=128, nullable=false)
+     * @ORM\Column(name="name_ru", type="string", length=128, nullable=false)
      */
-    private $name;
+    private $name_ru;
+
+    /**
+     * @var string $name_en
+     *
+     * @ORM\Column(name="name_en", type="string", length=128, nullable=false)
+     */
+    private $name_en;
 
     /**
      * @var State
@@ -70,7 +77,7 @@ class City
      */
     public function getName()
     {
-        return $this->name;
+        return $this->name_ru;
     }
 
     /**
@@ -99,5 +106,51 @@ class City
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Set name_ru
+     *
+     * @param string $nameRu
+     * @return City
+     */
+    public function setNameRu($nameRu)
+    {
+        $this->name_ru = $nameRu;
+    
+        return $this;
+    }
+
+    /**
+     * Get name_ru
+     *
+     * @return string 
+     */
+    public function getNameRu()
+    {
+        return $this->name_ru;
+    }
+
+    /**
+     * Set name_en
+     *
+     * @param string $nameEn
+     * @return City
+     */
+    public function setNameEn($nameEn)
+    {
+        $this->name_en = $nameEn;
+    
+        return $this;
+    }
+
+    /**
+     * Get name_en
+     *
+     * @return string 
+     */
+    public function getNameEn()
+    {
+        return $this->name_en;
     }
 }

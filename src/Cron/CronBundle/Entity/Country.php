@@ -4,6 +4,8 @@ namespace Cron\CronBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+
 /**
  * Cron\CronBundle\Entity\Country
  *
@@ -12,6 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Country
 {
+    private $locale = 'ru_RU';
+
     /**
      * @var integer $id
      *
@@ -22,11 +26,18 @@ class Country
     private $id;
 
     /**
-     * @var string $name
+     * @var string $name_ru
      *
-     * @ORM\Column(name="name", type="string", length=128, nullable=false)
+     * @ORM\Column(name="name_ru", type="string", length=128, nullable=false)
      */
-    private $name;
+    private $name_ru;
+
+    /**
+     * @var string $name_en
+     *
+     * @ORM\Column(name="name_en", type="string", length=128, nullable=false)
+     */
+    private $name_en;
 
 
 
@@ -60,11 +71,73 @@ class Country
      */
     public function getName()
     {
-        return $this->name;
+        $name = $this->getNameRu();
+        switch($this->locale){
+            case 'ru_RU':
+                $name = $this->getNameRu();
+                break;
+            case 'en_US':
+            case 'pt_PT':
+            default:
+                $name = $this->getNameEn();
+                break;
+        }
+        return $name;
     }
 
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Set name_ru
+     *
+     * @param string $nameRu
+     * @return Country
+     */
+    public function setNameRu($nameRu)
+    {
+        $this->name_ru = $nameRu;
+    
+        return $this;
+    }
+
+    /**
+     * Get name_ru
+     *
+     * @return string 
+     */
+    public function getNameRu()
+    {
+        return $this->name_ru;
+    }
+
+    /**
+     * Set name_en
+     *
+     * @param string $nameEn
+     * @return Country
+     */
+    public function setNameEn($nameEn)
+    {
+        $this->name_en = $nameEn;
+    
+        return $this;
+    }
+
+    /**
+     * Get name_en
+     *
+     * @return string 
+     */
+    public function getNameEn()
+    {
+        return $this->name_en;
+    }
+
+    public function __construct($session)
+    {
+        $this->locale = $session->getLocale();
     }
 }
