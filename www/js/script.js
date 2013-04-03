@@ -261,6 +261,7 @@ $(document).ready(function() {
     };
 
     if ($("body").is('.auth')){
+        updateQuestions(iAmOnIndexPage);
         setInterval('updateQuestions(iAmOnIndexPage);', 30000);
     }
 

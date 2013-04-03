@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="answer")
  * @ORM\Entity
  */
-class Answer
+class Answer extends AbstractEntity
 {
     /**
      * @var integer $id
@@ -129,7 +129,7 @@ class Answer
      */
     public function getText()
     {
-        return $this->text;
+        return $this->makeClickableLinks($this->text);
     }
 
     /**

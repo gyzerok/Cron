@@ -114,6 +114,20 @@ class User implements UserInterface, \Serializable
     private $lockedTill;
 
     /**
+     * @var \DateTime $lastCatsView
+     *
+     * @ORM\Column(name="last_cats_view", type="datetime", nullable=false)
+     */
+    private $lastCatsView;
+
+    /**
+     * @var \DateTime $lastRushView
+     *
+     * @ORM\Column(name="last_rush_view", type="datetime", nullable=false)
+     */
+    private $lastRushView;
+
+    /**
      * @var State
      *
      * @ORM\ManyToOne(targetEntity="State")
@@ -477,6 +491,8 @@ class User implements UserInterface, \Serializable
     {
         $this->regDate = new \DateTime();
         $this->lastVisit = new \DateTime();
+        $this->lastCatsView = new \DateTime();
+        $this->lastRushView = new \DateTime();
         $this->isActive = false;
         $this->spamActivity = 0;
     }
@@ -664,5 +680,51 @@ class User implements UserInterface, \Serializable
     public function getSettings()
     {
         return $this->settings;
+    }
+
+    /**
+     * Set lastCatsView
+     *
+     * @param \DateTime $lastCatsView
+     * @return User
+     */
+    public function setLastCatsView($lastCatsView)
+    {
+        $this->lastCatsView = $lastCatsView;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastCatsView
+     *
+     * @return \DateTime 
+     */
+    public function getLastCatsView()
+    {
+        return $this->lastCatsView;
+    }
+
+    /**
+     * Set lastRushView
+     *
+     * @param \DateTime $lastRushView
+     * @return User
+     */
+    public function setLastRushView($lastRushView)
+    {
+        $this->lastRushView = $lastRushView;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastRushView
+     *
+     * @return \DateTime 
+     */
+    public function getLastRushView()
+    {
+        return $this->lastRushView;
     }
 }

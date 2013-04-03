@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="dialog_msg")
  * @ORM\Entity
  */
-class DialogMsg {
+class DialogMsg extends AbstractEntity {
     /**
      * @var integer $id
      *
@@ -93,7 +93,7 @@ class DialogMsg {
      */
     public function getMsgText()
     {
-        return $this->msg_text;
+        return $this->makeClickableLinks($this->msg_text);
     }
 
     /**

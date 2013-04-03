@@ -670,7 +670,7 @@ class AjaxController extends AbstractController
                 ->where('question.category IN (:cid) AND question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false AND question.user != :user AND question.locale IN (:locale)')
                 ->setParameter('cid', $income_cats)
                 ->setParameter('locale', $income_locale)
-                ->setParameter('lastTime', $lastTime)
+                ->setParameter('lastTime', $user->getLastCatsView())
                 ->setParameter('status', '2')
                 ->setParameter('user', $user->getId())
                 ->getQuery();
@@ -681,7 +681,7 @@ class AjaxController extends AbstractController
                 ->where('question.category = :cid AND question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false AND question.user != :user AND question.locale IN (:locale)')
                 ->setParameter('cid', '1')
                 ->setParameter('locale', $income_locale)
-                ->setParameter('lastTime', $lastTime)
+                ->setParameter('lastTime', $user->getLastRushView())
                 ->setParameter('status', '2')
                 ->setParameter('user', $user->getId())
                 ->getQuery();

@@ -119,6 +119,8 @@ class MainController extends AbstractController
     {
         $user = $this->getUser();
 
+        $em = $this->getDoctrine()->getManager();
+
         $answer = new Answer();
         $form = $this->createForm(new NewAnswer(), $answer);
         if ($request->isMethod('POST')) {
@@ -235,6 +237,13 @@ class MainController extends AbstractController
 
         } else { //all categories
 
+            if ($user instanceof User){
+                $user->setLastCatsView(new \DateTime());
+
+                $em->persist($user);
+                $em->flush();
+            }
+
             if (!empty($income_cats)){
                 $categorized = $this->getDoctrine()->getRepository("CronCronBundle:Category")
                     ->createQueryBuilder('category')
@@ -316,6 +325,15 @@ class MainController extends AbstractController
     public function rushAction(Request $request)
     {
         $user = $this->getUser();
+
+        $em = $this->getDoctrine()->getManager();
+
+        if ($user instanceof User){
+            $user->setLastRushView(new \DateTime());
+
+            $em->persist($user);
+            $em->flush();
+        }
 
         $answer = new Answer();
         $form = $this->createForm(new NewAnswer(), $answer);
