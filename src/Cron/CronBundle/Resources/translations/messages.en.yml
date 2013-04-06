@@ -13,7 +13,7 @@
 Выйти:	log out
 логин:	login
 пароль:	password
-Кредиты:	credits
+Кредиты:	Credits
 Забыли пароль?:	Forgot your password?
 введите адрес электронной почты:	enter your email address
 Настройки:	Settings
@@ -22,23 +22,25 @@
 вопросы:	questions
 Заметки:	notes
 Информация:	information
-Кибердиск:	cyberdisk	
+Кибердиск:	files
 Сообщения:	messages
 статьи:	articles
 автор:	author
 источник:	source
-ссылка:	link
+Ссылка:	Link
 блокнот:	notebook
+закрыть блокнот: close notebook
 добавить ссылку:	add link
 адрес страницы в интернете:	webpage address
-название:	title
+Название::	Title:
 удалить:	delete
+удалить ссылку:	delete link
 Адрес файла:	Address file
 добавить:	add
 занято:	busy
 свободно:	freely
 загрузить:	download
-диалоги:	dialogues
+Диалоги:	dialogues
 свернуть:	minimize
 закрыть:	close
 закрыть диалог:	close dialog
@@ -46,7 +48,8 @@
 ответов:	replies
 подтвердить:	сonfirm
 отклонить:	decline
-приглашения в чат:	chat invitations 
+приглашения в чат:	chat invitations
+Приглашения в чат:	chat invitations  
 окно чата:	chat window
 Мой чат:	My chat 
 Входящий чат:	Incoming chat 
@@ -56,8 +59,8 @@
 О нас:	About us
 Рекламодателям:	Advertisers
 Помощь:	Support
-жалоба:	complaint
-предложение:	proposal
+Жалоба:	Complaint
+Предложение:	Proposal
 текст сообщения:	text messages
 обращение в службу поддержки:	contacting customer support
 Правила:	Site rules
@@ -105,6 +108,7 @@ email:	e-mail
 ноябрь:	november
 декабрь:	december
 Местонахождение:	Location
+Масимум 15 символов: Maximum of 15 characters
 Пожалуйста, ознакомьтесь с: Please read the
 пользовательским соглашением:  user agreement
 Зарегистрироваться:	Sign up
@@ -127,7 +131,9 @@ email:	e-mail
 сохранить:	save
 Сейчас Вы можете использовать ресурс только на 30%. Пожалуйста, зарегистрируйтесь или авторизуйтесь.:	Now you can use the resource at 30%. Please register or login
 ресурс находится в стадии тестирования:	the resource is in the testing phase
-стоимость 5 кредитов:	cost 5 credits
+Стоимость : Cost
+кредитов: credits
+стоимость 5 кредитов: cost 5 credits
 удалить из списка:	remove from the list 
 отметить как спам:	mark as spam 
 мне нравится:	like
