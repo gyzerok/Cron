@@ -16,11 +16,22 @@ class NewQuestion extends AbstractType
 {
     protected $userAuth;
     protected $numAnswers;
+    protected $locale;
 
-    public function __construct($userAuth, $numAnswers)
+    public function __construct($session, $userAuth, $numAnswers)
     {
         $this->userAuth = $userAuth;
         $this->numAnswers = $numAnswers;
+        $this->locale = $session->get('_locale');
+        switch($this->locale){
+            case 'pt_PT':
+            case 'en_US':
+                $this->locale = 'en_US';
+                break;
+            default:
+                $this->locale = 'ru_RU';
+                break;
+        }
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -28,12 +39,12 @@ class NewQuestion extends AbstractType
         $builder->add('text', 'textarea', array('label' => 'Вопрос', 'max_length' => 200))
                 ->add('category', null, array('label' => 'Категория', 'expanded' => true))
                 ->add('private', 'checkbox', array('label' => 'закрытый', 'required' => false, 'disabled' => !$this->userAuth))
-                ->add('country', 'entity', array('label' => 'Страна', 'class' => 'CronCronBundle:Country', 'property' => 'name', 'empty_value' => 'Любая страна', 'required' => false))
-                ->add('state', 'entity', array('label' => 'Регион', 'class' => 'CronCronBundle:State', 'property' => 'name', 'empty_value' => 'Любой регион', 'disabled' => true, 'required' => false, 'query_builder' => function(EntityRepository $er) {
+                ->add('country', 'entity', array('label' => 'Страна', 'class' => 'CronCronBundle:Country', 'property' => 'name_'.substr($this->locale,0,2), 'empty_value' => 'Любая страна', 'required' => false))
+                ->add('state', 'entity', array('label' => 'Регион', 'class' => 'CronCronBundle:State', 'property' => 'name_'.substr($this->locale,0,2), 'empty_value' => 'Любой регион', 'disabled' => true, 'required' => false, 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('state')
                         ->where('state.id IS NULL');
                 }))
-                ->add('city', 'entity', array('label' => 'Город', 'class' => 'CronCronBundle:City', 'property' => 'name', 'empty_value' => 'Любой город', 'disabled' => true, 'required' => false, 'query_builder' => function(EntityRepository $er) {
+                ->add('city', 'entity', array('label' => 'Город', 'class' => 'CronCronBundle:City', 'property' => 'name_'.substr($this->locale,0,2), 'empty_value' => 'Любой город', 'disabled' => true, 'required' => false, 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('city')
                         ->where('city.id IS NULL');
                 }))
@@ -41,11 +52,12 @@ class NewQuestion extends AbstractType
 
         $factory = $builder->getFormFactory();
 
+        $locale = $this->locale;
+
         $refreshStates = function ($form, $country) use ($factory)
         {
             $form->add($factory->createNamed('state', 'entity', null, array(
                 'class'         => 'Cron\CronBundle\Entity\State',
-                'property'      => 'name',
                 'empty_value'   => 'Все регионы',
                 'query_builder' => function (EntityRepository $repository) use ($country)
                 {
@@ -71,7 +83,6 @@ class NewQuestion extends AbstractType
         {
             $form->add($factory->createNamed('city', 'entity', null, array(
                 'class'         => 'Cron\CronBundle\Entity\City',
-                'property'      => 'name',
                 'empty_value'   => 'Все регионы',
                 'query_builder' => function (EntityRepository $repository) use ($state)
                 {
@@ -97,7 +108,6 @@ class NewQuestion extends AbstractType
         {
             $form->add($factory->createNamed('country', 'entity', null, array(
                 'class'         => 'CronCronBundle:Country',
-                'property'      => 'name',
                 'property_path' => false,
                 'empty_value'   => 'Все страны',
                 'data'          => $country,
@@ -108,7 +118,6 @@ class NewQuestion extends AbstractType
         {
             $form->add($factory->createNamed('state', 'entity', null, array(
                 'class'         => 'CronCronBundle:State',
-                'property'      => 'name',
                 'property_path' => false,
                 'empty_value'   => 'Все регионы',
                 'data'          => $state,

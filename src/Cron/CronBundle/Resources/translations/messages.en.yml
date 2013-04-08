@@ -142,9 +142,9 @@ email:	e-mail
 Пароли совпадают:	passwords are the same
 Пароли не совпадают:	passwords dont match
 Укажите ваше имя или никнейм;:  specify your name or nickname;
-от 2 до 12 символов - нельзя использовать цифры.: of 4 to 12 characters - can not use the numbers.
+от 2 до 12 символов - нельзя использовать цифры.: 4 to 12 characters - can not use the numbers.
 некорректное заполнение:	entering incorrect
-поле не заполнено:	field is not filled
+Поле не заполнено:	field is not filled
 укажите ваш пол:	specify your gender
 вы не ознакомились с пользовательским соглашением:	you have not read the user agreement
 на ваш email отправлено письмо, прочтите его для завершения регистрации:	to your email sent to message, read it to complete registration
@@ -169,3 +169,24 @@ email:	e-mail
 выгнать пользователя: 
 отправить сообщение:
 на главную:
+Любая страна: Any country
+Любой регион: Any region
+Любой город: Any city
+Все страны: All countries
+Все регионы: All regions
+Все города: All cities
+Выберите страну: Choose country
+Пароль: Password
+Повторите пароль: Password confirm
+Ваше имя: Your nick
+Пол: Gender
+Дата рождения: Birthdate
+Страна: Country
+Регион: Region
+Город: City
+Мужской:	Male
+Женский:	Female
+поле не заполнено: field is empty
+введите вопрос: type question here
+Стоимость: Cost
+кредитов: credits

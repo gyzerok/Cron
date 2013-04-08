@@ -98,6 +98,13 @@ class Answer extends AbstractEntity
      */
     private $isSpam;
 
+    /**
+     * @var boolean $amnestied
+     *
+     * @ORM\Column(name="amnestied", type="boolean", nullable=false)
+     */
+    private $amnestied = false;
+
 
     /**
      * Get id
@@ -366,5 +373,28 @@ class Answer extends AbstractEntity
     public function getHideIncome()
     {
         return $this->hide_income;
+    }
+
+    /**
+     * Set amnestied
+     *
+     * @param boolean $amnestied
+     * @return Answer
+     */
+    public function setAmnestied($amnestied)
+    {
+        $this->amnestied = $amnestied;
+    
+        return $this;
+    }
+
+    /**
+     * Get amnestied
+     *
+     * @return boolean 
+     */
+    public function getAmnestied()
+    {
+        return $this->amnestied;
     }
 }

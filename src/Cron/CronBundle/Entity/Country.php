@@ -5,6 +5,8 @@ namespace Cron\CronBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Bundle\FrameworkBundle\Translation\Translator;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * Cron\CronBundle\Entity\Country
@@ -139,5 +141,7 @@ class Country
     public function __construct($session)
     {
         $this->locale = $session->getLocale();
+
+        return $this;
     }
 }

@@ -10,7 +10,7 @@
                         url:"{{ path('getStates') }}",
                         success:function (data) {
                             $('#question_state option:gt(0)').remove();
-                            $('#question_state').append(data);
+                            $('#question_state').append({% trans %}data{% endtrans %});
                             document.getElementById('question_state').disabled = false;
                         }
                     });
@@ -51,7 +51,7 @@
                 $('.greeting').fadeOut(500);
             });
             
-            $('#question_text').attr('placeholder', 'введите вопрос');
+            $('#question_text').attr('placeholder', '{% trans %}введите вопрос{% endtrans %}');
 
             // Появление блока с информацией о вопросе
             $('#questionsType > input:first').click(function () {
@@ -265,7 +265,7 @@
             });
 
             //Спам
-            $('.spamButton').click(function(){
+            $('.spamButton').live('click', function(){
                 $(this).addClass("spamButtonActive");
                 var question_id = $(this).closest('.singleQuestion').data('id');
                 var answer_id = $(this).closest('.singleAnswer').data('id');
@@ -289,7 +289,7 @@
             });
 
             //Лайки
-            $('.likeButton').click(function(){
+            $('.likeButton').live('click', function(){
                 $(this).addClass("likeButtonActive");
                 var question_id = $(this).closest('.singleQuestion').data('id');
                 var answer_id = $(this).closest('.singleAnswer').data('id');
@@ -368,7 +368,7 @@
                         {{ form_errors(form.boundary) }}
                         {{ form_widget(form.boundary) }}
                     </div>
-                    <p class="questionCost">Стоимость <span id="boundary-cost">5</span> кредитов</p>
+                    <p class="questionCost">{% trans %}Стоимость{% endtrans %} <span id="boundary-cost">5</span> {% trans %}кредитов{% endtrans %}</p>
                     <input name="cancelInformation" class="submitButton" type="button" value="{% trans %}отмена{% endtrans %}"/>
                     <input class="submitButton" type="submit" name="submit-question" value="{% trans %}отправить{% endtrans %}"/>
                 </div>

@@ -2,6 +2,7 @@
 
 namespace Cron\CronBundle\Controller;
 
+use Cron\CronBundle\Entity\Question;
 use Cron\CronBundle\Entity\User;
 use Cron\CronBundle\Entity\UserLink;
 use Cron\CronBundle\Entity\UserSettings;
@@ -16,10 +17,15 @@ class AbstractController extends Controller implements InitializableControllerIn
     protected $onlineUserCount;
     protected $totalUserCount;
     protected $user;
+    protected $locale;
 
     public function initialize(Request $request)
     {
-        $request->setLocale($request->getSession()->get('_locale'));
+        $this->locale = $request->getSession()->get('_locale');
+        if(!$this->locale){
+            $this->locale = 'ru_RU';
+        }
+        $request->setLocale($this->locale);
 
         $this->user = $this->getUser();
 
@@ -251,6 +257,23 @@ class AbstractController extends Controller implements InitializableControllerIn
         }
 
         return $html;
+    }
+
+    public function geoFilterQuestion(User $user, Question $question)
+    {
+        if (!$user->getCountry()){
+            return true;
+        } elseif (!$question->getCountry()){
+            return true;
+        } elseif (!$question->getState() && ($user->getCountry() == $question->getCountry())) {
+            return true;
+        } elseif (!$question->getCity() && ($user->getState() == $question->getState()) && ($user->getCountry() == $question->getCountry())){
+            return true;
+        } elseif (($user->getCity() == $question->getCity()) && ($user->getState() == $question->getState()) && ($user->getCountry() == $question->getCountry())){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private function updateUserCounters(Request $request)

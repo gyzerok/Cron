@@ -12,6 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 
 /**
  * Cron\CronBundle\Entity\User
@@ -74,7 +76,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var \DateTime $birthDate
      *
-     * @ORM\Column(name="birth_date", type="date", nullable=false)
+     * @ORM\Column(name="birth_date", type="date", nullable=true)
      */
     private $birthDate;
 
@@ -183,6 +185,17 @@ class User implements UserInterface, \Serializable
      * @ORM\JoinColumn(name="settings", referencedColumnName="id")
      */
     private $settings;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Question")
+     * @ORM\JoinTable(name="ignored_questions",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="question_id", referencedColumnName="id")}
+     * )
+     *
+     * @var ArrayCollection $ignored_questions
+     */
+    private $ignored_questions;
 
 
     /**
@@ -495,6 +508,7 @@ class User implements UserInterface, \Serializable
         $this->lastRushView = new \DateTime();
         $this->isActive = false;
         $this->spamActivity = 0;
+        $this->ignored_questions = new ArrayCollection();
     }
 
     public function __toString()
@@ -726,5 +740,38 @@ class User implements UserInterface, \Serializable
     public function getLastRushView()
     {
         return $this->lastRushView;
+    }
+
+    /**
+     * Add ignored_questions
+     *
+     * @param Cron\CronBundle\Entity\Question $ignoredQuestions
+     * @return User
+     */
+    public function addIgnoredQuestion(\Cron\CronBundle\Entity\Question $ignoredQuestions)
+    {
+        $this->ignored_questions[] = $ignoredQuestions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove ignored_questions
+     *
+     * @param Cron\CronBundle\Entity\Question $ignoredQuestions
+     */
+    public function removeIgnoredQuestion(\Cron\CronBundle\Entity\Question $ignoredQuestions)
+    {
+        $this->ignored_questions->removeElement($ignoredQuestions);
+    }
+
+    /**
+     * Get ignored_questions
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getIgnoredQuestions()
+    {
+        return $this->ignored_questions;
     }
 }

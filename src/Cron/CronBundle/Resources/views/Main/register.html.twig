@@ -47,7 +47,7 @@
 		
 		
 		//Русский язык в форме регистрации. Отображение некоторых эдементов
-		$('.registrationFieldPass > label').text('Пароль');
+		$('.registrationFieldPass > label').text('{% trans %}Пароль{% endtrans %}');
 		$('#register_password > div:first > label').remove();
 		$('.registrationFieldPass > label').css({
 			'margin-top': '38px'
@@ -56,7 +56,7 @@
 			'position': 'relative',
 			'top':'40px',
 			'left': '-1px'
-		}).text('Повторите пароль');
+		}).text('{% trans %}Повторите пароль{% endtrans %}');
 		$('.genderLabel > label').css({
 			'margin-left':'4px'
 		});

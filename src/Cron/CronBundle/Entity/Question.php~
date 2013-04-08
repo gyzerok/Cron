@@ -158,6 +158,13 @@ class Question extends AbstractEntity
     private $hide_on_index = false;
 
     /**
+     * @var boolean $amnestied
+     *
+     * @ORM\Column(name="amnestied", type="boolean", nullable=false)
+     */
+    private $amnestied = false;
+
+    /**
      * @var string $locale
      *
      * @ORM\Column(name="locale", type="string", length=2, nullable=false)
@@ -643,5 +650,28 @@ class Question extends AbstractEntity
     public function getLocale()
     {
         return $this->locale;
+    }
+
+    /**
+     * Set amnestied
+     *
+     * @param boolean $amnestied
+     * @return Question
+     */
+    public function setAmnestied($amnestied)
+    {
+        $this->amnestied = $amnestied;
+    
+        return $this;
+    }
+
+    /**
+     * Get amnestied
+     *
+     * @return boolean 
+     */
+    public function getAmnestied()
+    {
+        return $this->amnestied;
     }
 }

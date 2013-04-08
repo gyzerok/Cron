@@ -34,7 +34,7 @@ class MainController extends AbstractController
             $numAnswers = array(10 => '10', 20 => '20', 50 => '50', 100 => '100', 1000 => '1000');
 
         $question = new Question();
-        $form = $this->createForm(new NewQuestion($this->getUser() instanceof User, $numAnswers), $question);
+        $form = $this->createForm(new NewQuestion($this->container->get('session'), $this->getUser() instanceof User, $numAnswers), $question);
 
         if ($request->isMethod('POST'))
         {
@@ -207,7 +207,7 @@ class MainController extends AbstractController
             }
 
             foreach ($questions as $qid=>$question) {
-                if ($question->getSpams()->contains($user)){
+                if ($question->getSpams()->contains($user) || $user->getIgnoredQuestions()->contains($question) || !$this->geoFilterQuestion($user, $question)){
                     unset($questions[$qid]);
                 }
             }
@@ -274,7 +274,7 @@ class MainController extends AbstractController
                             ->getResult();
 
                         foreach ($questions as $qid=>$question) {
-                            if ($question->getSpams()->contains($user)){
+                            if ($question->getSpams()->contains($user) || $user->getIgnoredQuestions()->contains($question) || !$this->geoFilterQuestion($user, $question)){
                                 unset($questions[$qid]);
                             }
                         }
@@ -380,10 +380,14 @@ class MainController extends AbstractController
         if ($user instanceof User){
             foreach ($rush as $id=>$question){
                 $rush[$id]->iAnswered = false;
-                foreach ($question->getAnswers() as $answer) {
-                    if ($answer->getUser()==$user){
+                if ($question->getSpams()->contains($user) || $user->getIgnoredQuestions()->contains($question) || !$this->geoFilterQuestion($user, $question)){
+                    unset($rush[$id]);
+                } else {
+                    foreach ($question->getAnswers() as $answer) {
+                        if ($answer->getUser()==$user){
 //                        $rush[$id]->iAnswered = true;
-                        unset($rush[$id]);
+                            unset($rush[$id]);
+                        }
                     }
                 }
             }
@@ -743,7 +747,7 @@ class MainController extends AbstractController
         if (!$user->getCity()){
             $user->setCity(null);
         }*/
-        $form = $this->createForm(new Registration(), $user);
+        $form = $this->createForm(new Registration($this->container->get('session')), $user);
         if ($request->isMethod('POST')) {
 
             $form->bind($request);

@@ -208,8 +208,9 @@ class AdminController extends AbstractController
             $this->redirect("/");
         }
 
-        $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($request->get("question"));
+        $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findOneBy(array("id" => $request->get("question"), "amnestied" => false));
         $question->setSpams(null);
+        $question->setAmnestied(true);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($question);
@@ -287,8 +288,9 @@ class AdminController extends AbstractController
             $this->redirect("/");
         }
 
-        $answer = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->find($request->get("answer"));
+        $answer = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findOneBy(array("id" => $request->get("answer"), "amnestied" => false));
         $answer->setSpams(null);
+        $answer->setAmnestied(true);
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($answer);
