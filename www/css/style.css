@@ -36,7 +36,7 @@
     position: relative;
     left: 49px;
     top: 18px;
-    height: 60px;
+    height: 70px;
     overflow: hidden;
 }
 
@@ -837,7 +837,7 @@ p.questionPrivateCost {
 
 p.questionCost {
 	display: none;
-	width: auto;
+	width: 210px;
 	float: right;
 	margin: -20px 100px 0 0;
 	font-family: 'Arial';
@@ -2269,7 +2269,8 @@ div.dialogUsername {
 	font-family: 'Arial';
 	font-size: 14px;
 	color: #7e7e7e;
-	margin: 12px 111px 0 0;
+    margin: 12px 94px 0 0;
+    width: 165px;
 }
 
 .userLinkAddWindow form input#user-link-url {
@@ -3413,4 +3414,18 @@ a.toggleSettingsGroup.blue {
     border-bottom: 1px solid #000000;
     font-size: 12px;
     padding: 3px;
+}
+
+.question-wrap {
+    width: 725px;
+    overflow: auto;
+    max-height: 744px;
+}
+
+.srv-msg {
+    font-family: 'Calibri';
+    font-size: 17px;
+    color: #808080;
+    text-align: center;
+    display: inline-block;
 }

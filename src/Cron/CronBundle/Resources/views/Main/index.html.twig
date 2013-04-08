@@ -390,31 +390,31 @@
     {% else %}
         <h2 class="categoryTitle">Мои вопросы</h2>
     {% endif %}
-
+            <div class="question-wrap">
     {% if userQuestions|length > 0 %}
         {% for question in userQuestions %}
-            <div class="singleQuestion" data-id="{{ question.getId() }}">
-                <div style="border: 1px solid #fff;" class="userName"></div>
-                <div class="questionDate">{{ question.datetime|date('d.m.Y H:i') }}</div>
-                {% if form %}
-                    <div class="closeButton" title="{% trans %}удалить из списка{% endtrans %}"></div>
-                {% endif %}
-                <div style="clear: both;"></div>
-                <div class="questionText">
-                    {{ question.text|raw }}
-                    <div class="actionButton">
-                        <form class="answer">
-                            {% if not question.isClosed() %}
-                                <input class="closeMyQuestion" type="button" value="{% trans %}закрыть{% endtrans %}"/>
-                            {% endif %}
-                            {% if curUser %}
-                                <input class="deleteMyQuestion" type="button" value="{% trans %}удалить{% endtrans %}"/>
-                            {% endif %}
-                            <input class="answerButtonItalic" type="button" value="{{ question.getAnswers()|length }} отв." data-alter-name="{% trans %}свернуть{% endtrans %}"/>
-                        </form>
+                <div class="singleQuestion" data-id="{{ question.getId() }}">
+                    <div style="border: 1px solid #fff;" class="userName"></div>
+                    <div class="questionDate">{{ question.datetime|date('d.m.Y H:i') }}</div>
+                    {% if form %}
+                        <div class="closeButton" title="{% trans %}удалить из списка{% endtrans %}"></div>
+                    {% endif %}
+                    <div style="clear: both;"></div>
+                    <div class="questionText">
+                        {{ question.text|raw }}
+                        <div class="actionButton">
+                            <form class="answer">
+                                {% if not question.isClosed() %}
+                                    <input class="closeMyQuestion" type="button" value="{% trans %}закрыть{% endtrans %}"/>
+                                {% endif %}
+                                {% if curUser %}
+                                    <input class="deleteMyQuestion" type="button" value="{% trans %}удалить{% endtrans %}"/>
+                                {% endif %}
+                                <input class="answerButtonItalic" type="button" value="{{ question.getAnswers()|length }} отв." data-alter-name="{% trans %}свернуть{% endtrans %}"/>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
             <div class="myAnswer {% if question.answers|length == 0 %}no-border{% endif %}">
                 {% for answer in question.answers %}
                     <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}" data-id="{{ answer.getId() }}">
@@ -434,6 +434,7 @@
                 {% endfor %}
             </div>
         {% endfor %}
+        </div>
     {% endif %}
     {% if show_success_msg %}
         <div class="successful-reg">

@@ -524,8 +524,8 @@ function indicateChatInvite () {
             .animate({borderWidth: '2px', borderColor: '#e6e6e6', color: '#333'}, 500);
 //        $(".chat-tab.indicate").animate({borderWidth: '2px', borderColor: '#e85b2d', color: '#000'}, 500)
 //            .animate({borderWidth: '2px', borderColor: '#e6e6e6', color: '#333'}, 500);
-        $(".chatWindow.indicate").animate({backgroundColor: '#ffebdb'}, 1000)
-            .animate({backgroundColor:'#ebf2fa'}, 1000);
+        $(".chatWindow.indicate").animate({backgroundColor: '#ffebdb'})
+            .animate({backgroundColor:'#fff'});
     }
 }
 

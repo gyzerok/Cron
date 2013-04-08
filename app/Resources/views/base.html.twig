@@ -50,7 +50,7 @@
                 {% if app.user %}
                     {{ app.getSession().get('_srvmsg')|raw }}
                 {% else %}
-                    {% trans %}Сейчас Вы можете использовать ресурс только на 30%. Пожалуйста, зарегистрируйтесь или авторизуйтесь.{% endtrans %}
+                    {% trans %}<span class="srv-msg">Сейчас Вы можете использовать </br> ресурс только на 30%. </br> Пожалуйста, зарегистрируйтесь </br> или авторизуйтесь.</span>{% endtrans %}
                 {% endif %}
             </div>
 			<div class="language">
@@ -142,10 +142,10 @@
             <div class="userLinkAddWindow" style="display:none;">
                 <div class="closeUserLinkWindow"><a href=""></a></div>
                 <form action="/ajax/newUserLink" method="post">
-                    <label for="user-link-title">Название:</label> <input type="text" maxlength="15" id="user-link-title" name="title" /><span>{% trans %}Масимум 15 символов{% endtrans %}</span><br/>
+                    <label for="user-link-title">{% trans %}Название:{% endtrans %}</label> <input type="text" maxlength="15" id="user-link-title" name="title" /><span>{% trans %}Масимум 15 символов{% endtrans %}</span><br/>
 					<div style="clear: both;"></div>
                     <label for="user-link-url">{% trans %}Ссылка{% endtrans %}:</label> <input type="text" id="user-link-url" name="url" />
-                    <input type="button" class="cancelUserLink" value="{% trans %}отменить{% endtrans %}" /> <input type="submit" class="saveUserLink" value="{% trans %}сохранить{% endtrans %}" />
+                    <input type="button" class="cancelUserLink" value="{% trans %}отмена{% endtrans %}" /> <input type="submit" class="saveUserLink" value="{% trans %}сохранить{% endtrans %}" />
                 </form>
             </div>
 
@@ -233,7 +233,7 @@
 				<li class="chatInvite">{% trans %}приглашения в чат{% endtrans %}</li>
                 <div id="notepad" style="margin-top: 10px;width: 272px;{% if not app.getSession().get('_notepad_opened') %}display:none;{% endif %}}">
                     <textarea id="notepad-text" style="height: 200px;width: 189px;resize: none;border: 1px solid #CC2A03;border-radius: 5px;margin-left: -9px;float: left;margin-top: 10px;">{{ app.getSession().get('_notepad') }}</textarea>
-                    <div class="closeNotepad"><a title="закрыть блокнот" href=""></a></div>
+                    <div class="closeNotepad"><a title="{% trans %}закрыть блокнот{% endtrans %}" href=""></a></div>
                 </div>
 				<div style="clear: both;">
 			</ul>
