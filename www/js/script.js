@@ -13,7 +13,7 @@ $(document).ready(function() {
     });
 
     var answerFrom = $('.answerForm');
-    $('.socialIcons .answerButton').click(function() {
+    $('.socialIcons .answerButton').live('click', function() {
         var cur_answerForm = $(this).closest('.singleQuestion').nextAll('.answerForm').first();
         $(".answerForm").not(cur_answerForm).slideUp(500);
         cur_answerForm.slideToggle(500);
@@ -29,7 +29,7 @@ $(document).ready(function() {
     });
 
 //		var answerFormNavigation = $('.answerFormNavigation');
-    $('.cancelButton').click(function() {
+    $('.cancelButton').live('click', function() {
         $(this).closest('.answerForm').slideUp(500);
         $(this).closest('.answerForm').prevAll('.myAnswer').first().slideUp(500);
     });
@@ -283,7 +283,8 @@ function updateQuestions(update_my_questions){
         dataType: 'json',
         data: {
             questions_last_update: $("#questions_last_update").text(),
-            update_my_questions: update_my_questions
+            update_my_questions: update_my_questions,
+            rush: ($("#showQuestion").is('.rushed') ? true : false)
 //            chats:  chats.substr(0,chats/**/.length-1),
 //            dialogs: dialogs.substr(0,dialogs.length-1)
         },
@@ -317,6 +318,9 @@ function updateQuestions(update_my_questions){
                 $("#new_rush_questions").text('('+data.new_rush_questions+')');
             } else {
                 $("#new_rush_questions").text('');
+            }
+            if (data.rush_questions){
+                $("#showQuestion.rushed").prepend(data.rush_questions);
             }
 
             if ((data.new_categorized_questions || data.new_rush_questions) && $("body").is('.sound_newQuestion')){

@@ -66,6 +66,7 @@ $(document).ready(function(){
                 question:singleAnswer.closest('.myAnswer').prevAll('.singleQuestion').data('id')
             },
             success:function (dialog) {
+                $(".chatWindow").click();
             }
         });
     });
@@ -191,8 +192,10 @@ $(document).ready(function(){
 
     var chat_container = $(".chat-container");
     $('.chatWindow').click(function() {
-        if (!$('.chat').size()){
+        $(this).removeClass('indicate');
+        if (!$('.chat-tab.newMsgs').size()){
             addChatLoadingOverlay();
+//            chat_container.html('<div class="chat-empty-text">Загрузка...</div>');
             $.ajax({
                 url: '/chat/loadChat',
                 success: function(response){
@@ -203,6 +206,9 @@ $(document).ready(function(){
                     if (chat_container.is('.open-new-income-chat')){
                         $(".numberOnTab.chat-tab:last").click();
                         chat_container.removeClass('open-new-income-chat');
+                    } else if (chat_container.data('open-dialog')) {
+                        $(".chat-tab[data-tab=d"+chat_container.data('open-dialog')+"]").click();
+                        chat_container.removeData('open-dialog');
                     } else {
                         chat_container.find(".chat-tab").first().click();
                     }
@@ -210,7 +216,6 @@ $(document).ready(function(){
                 }
             });
 
-            chat_container.html('<div class="chat-empty-text">Загрузка...</div>');
         } else {
             chat_container.find(".chat-tab").first().click();
         }
@@ -338,11 +343,17 @@ $(document).ready(function(){
             url: '/chat/finishChat',
             data: {
                 chat:current_chat.data('chat-id')
+            },
+            success: function(response){
+                current_chat.find('.messageWrap').append(response);
+                var objDiv = current_chat.find('.chat');
+                objDiv[0].scrollTop = objDiv[0].scrollHeight;
             }
         });
+        $(".finishConversation").addClass('hidden');
         $(".usersInChat .singleUser").remove();
-        $(".chat-tab.active").remove();
-        $(".chat-tab").first().click();
+//        $(".chat-tab.active").remove();
+//        $(".chat-tab").first().click();
     });
     $(".leaveConversation input").live('click', function(){
         var current_chat = $(".chat-content:visible");
@@ -350,14 +361,25 @@ $(document).ready(function(){
             url: '/chat/leaveChat',
             data: {
                 chat:current_chat.data('chat-id')
+            },
+            success: function(response){
+                current_chat.find('.messageWrap').append(response);
+                var objDiv = current_chat.find('.chat');
+                objDiv[0].scrollTop = objDiv[0].scrollHeight;
             }
         });
+        $(".leaveConversation").hide();
         $(".chat-tab.active").removeClass('chat-tab');
-        $(".chat-tab").first().click();
+//        $(".chat-tab").first().click();
     });
 
     if ($("body").is('.auth')){
-        loadChat();
+        var chat_button = $(".chatWindow");
+        if (chat_button.is('.opened')){
+            chat_button.click();
+        } else {
+            loadChat();
+        }
 
         var chat_update_interval = setInterval('updateChat();', 10000);
 
@@ -377,11 +399,6 @@ $(document).ready(function(){
                 soundManager.play('personalMessage');
             }
             $(".open-dialog-list").animate({color: '#e85b2d '}, 500); //todo color
-        }
-
-        var chat_button = $(".chatWindow");
-        if (chat_button.is('.opened')){
-            chat_button.click();
         }
     }
 
@@ -439,7 +456,7 @@ function updateChat(){
                 $(".open-dialog-list").animate({color: '#e85b2d '}, 500);
             }
 
-            $("#chat-last-update").attr('value', data.questions_last_update);
+            $("#chat-last-update").attr('value', data.chat_last_update);
 
             for (var i in data.chats){
                 var cur_chat = $(".chat-content[data-chat-id="+i+"]");
@@ -467,17 +484,25 @@ function updateChat(){
             }
 
             for (var i in data.srvmsgs.chats){
-                var cur_chat = $(".chat-content[data-dialog-id="+i+"]");
+                var cur_chat = $(".chat-content[data-chat-id="+i+"]");
                 for (var j in data.srvmsgs.chats[i]){
                     $(".chat-tab:not(.active)[data-tab="+cur_chat.attr('tab')+"]").addClass('newMsgs');
-                    cur_chat.find(".messageWrap").append('<div class="singleMessage chatSrvMsg"><div class="messageText">'+data.srvmsgs.chats[i][j].msg_text+'</div></div>');
-                }
-            }
-            for (var i in data.srvmsgs.dialogs){
-                var cur_chat = $(".chat-content[data-dialog-id="+i+"]");
-                for (var j in data.srvmsgs.dialogs[i]){
-                    $(".chat-tab:not(.active)[data-tab="+cur_chat.attr('tab')+"]").addClass('newMsgs');
-                    cur_chat.find(".messageWrap").append('<div class="singleMessage chatSrvMsg"><div class="messageText">'+data.srvmsgs.dialogs[i][j].msg_text+'</div></div>');
+                    cur_chat.find(".messageWrap").append('<div class="singleMessage srv-message"><div class="messageText">'+data.srvmsgs.chats[i][j].msg_text+'</div></div>');
+                    if (data.srvmsgs.chats[i][j].msg_text_id==2){
+                        $(".usersInChat").prepend('<div class="singleUser" data-user="'+data.srvmsgs.chats[i][j].about_user.id+'"><div class="singleUsername">'+data.srvmsgs.chats[i][j].about_user.nick+'</div><div title="выгнать пользователя" class="kickUser"></div></div>');
+                        if ($(".finishConversation").is('.hidden')){
+                            $(".chatWindow").click();
+                        }
+                    }
+                    if (data.srvmsgs.chats[i][j].msg_text_id==3){
+                        $(".usersInChat").find('.singleUser[data-user='+data.srvmsgs.chats[i][j].about_user.id+']').remove();
+                    }
+                    if (data.srvmsgs.chats[i][j].msg_text_id==4){
+                        $(".leaveConversation input").click();
+                    }
+                    if (data.srvmsgs.chats[i][j].msg_text_id==6){
+                        $(".leaveConversation input").click();
+                    }
                 }
             }
 
@@ -490,27 +515,30 @@ function updateChat(){
 }
 
 function getDialog(obj, event){
-    $(".chatWindow").click();
-    var existed_tab = $(".chat-container .chat-tab[data-tab=d"+obj.data('dialog')+"]");
-    if (!$(event.target).closest(".closeDialogs").length && !$(event.target).closest(".spamDialogs").length && !existed_tab.size()){
-        addChatLoadingOverlay();
-        var new_tab = $('<div class="singleTab chat-tab" data-tab="d'+obj.data('dialog')+'"><a href="#" class="closeDialogTab"></a>'+obj.find(".dialogUsername").text()+'</div>');
-        $(".chat-container .chatTabs").append(new_tab);
-        new_tab.click();
+//    var existed_tab = $(".chat-container .chat-tab[data-tab=d"+obj.data('dialog')+"]");
+    if (!$(event.target).closest(".closeDialogs").length && !$(event.target).closest(".spamDialogs").length/* && !existed_tab.size()*/){
+//        addChatLoadingOverlay();
+//        var new_tab = $('<div class="singleTab chat-tab" data-tab="d'+obj.data('dialog')+'"><a href="#" class="closeDialogTab"></a>'+obj.find(".dialogUsername").text()+'</div>');
+//        $(".chat-container .chatTabs").append(new_tab);
+//        new_tab.click();
+        obj.addClass('waiting');
+        $(".chat-container").data('open-dialog', obj.data('dialog'));
         $.ajax({
             url: '/chat/openDialog',
             data: {dialog:obj.data('dialog')},
             success: function(response){
-                if (!$.trim(response))
-                    response = '<div class="dialogs-empty-text">Сообщений нет.</div>';
-                $(".chat-container .mainWindow").append(response);
-                new_tab.click();
-                removeChatLoadingOverlay();
+//                if (!$.trim(response))
+//                    response = '<div class="dialogs-empty-text">Сообщений нет.</div>';
+//                $(".chat-container .mainWindow").append(response);
+//                new_tab.click();
+//                removeChatLoadingOverlay();
+                obj.removeClass('waiting');
+                $(".chatWindow").click();
             }
         });
-    }
-    existed_tab.click();
-    $(".chat-input").focus();
+    } else
+        $(".chatWindow").click();
+//    $(".chat-input").focus();
 }
 
 function nl2br (str, is_xhtml) {
@@ -530,7 +558,7 @@ function indicateChatInvite () {
 }
 
 function addChatLoadingOverlay(){
-    $(".chatWrapper").append('<div class="loading">Загрузка...</div>');
+    $(".chatWrapper").append('<div class="loading">Loading...</div>');
 }
 function removeChatLoadingOverlay(){
     $(".chatWrapper .loading").remove();
@@ -547,6 +575,13 @@ function sendMessage(chatInput) {
                     dialog: current_chat.data('dialog-id'),
                     to_user: current_chat.data('to-user'),
                     message: message
+                },
+                success: function(response){
+                    if (response){
+                        current_chat.find('.messageWrap').append(response);
+                        var objDiv = current_chat.find(".chat");
+                        objDiv[0].scrollTop = objDiv[0].scrollHeight;
+                    }
                 }
             });
         } else {

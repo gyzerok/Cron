@@ -522,6 +522,19 @@ class AdminController extends AbstractController
         $bunDate->modify("+60 minutes");
         $user4block->setLockedTill($bunDate);
 
+        $mailer = $this->get('mailer');
+        $message = \Swift_Message::newInstance(null, null, "text/html")
+            ->setSubject('Ваш аккаунт заблокирован')
+            ->setFrom("aditus777@gmail.com")
+            ->setTo($user4block->getUsername())
+            ->setBody('<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body>' .
+                'Здравствуйте, '.$user4block->getNick().'!<br>' .
+                'Ваш акаунт  автоматически заблокирован на 60 минут в следствии нарушения правил ресурса.!<br>' .
+                'Пожалуйста, ознакомьтесь с <a href="http://aditus.ru/agreement">пользовательским соглашением</a> и <a href="http://aditus.ru/rules">правилами</a> ADITUS.ru<br>' .
+                'Если у вас есть вопросы или вам необходима помощь, вы можете обратиться в службу поддержки ADITUS.ru<br>' .
+                '</body></html>');
+        $mailer->send($message);
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($user4block);
         $em->flush();

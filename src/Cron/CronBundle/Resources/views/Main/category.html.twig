@@ -6,7 +6,7 @@
         <script type="text/javascript">
 			$(document).ready(function(){
                 //Спам
-                $('.spamButton').click(function(){
+                $('.spamButton').live('click', function(){
 					$(this).addClass("spamButtonActive");
 					var question_id = $(this).closest('.singleQuestion').data('id');
 					var answer_id = $(this).closest('.singleAnswer').data('id');
@@ -30,7 +30,7 @@
 				});
 
 				//Лайки
-				$('.likeButton').click(function(){
+				$('.likeButton').live('click', function(){
 					$(this).addClass("likeButtonActive");
 					var question_id = $(this).closest('.singleQuestion').data('id');
 					var answer_id = $(this).closest('.singleAnswer').data('id');
@@ -50,7 +50,7 @@
 
                 {% if _income %}
                     //Удаление вопросы из списка "Входящие вопросы"
-                    $('.singleQuestion .closeButton').click(function(){
+                    $('.singleQuestion .closeButton').live('click', function(){
                         var question_id = $(this).closest('.singleQuestion').data('id');
                         $.ajax({
                             'url': '{{ path("hideIncomeQuestion") }}',
@@ -63,7 +63,7 @@
                     });
                 {% else %}
                     //Удаление вопросы из списка "По категориям" / "Срочные"
-                    $('.singleQuestion .closeButton').click(function(){
+                    $('.singleQuestion .closeButton').live('click', function(){
                         var question_id = $(this).closest('.singleQuestion').data('id');
                         $.ajax({
                             'url': '{{ path("ignoreQuestion") }}',
@@ -80,7 +80,7 @@
 		<div style="max-height: 820px;overflow: auto;overflow-x: hidden;overflow-y: auto;width: 728px;">
         {% for category in categorized_questions %}
             <h2 class="categoryTitle">{{ category.getName() }}</h2>
-            <div id="showQuestion">
+            <div id="showQuestion" class="{% if _rush %}rushed{% endif %}">
                 {% for item in category.questions %}
                     <div class="singleQuestion likable-item" data-id="{{ item.getId() }}">
                         <div class="userName">{{ item.user|trans }}</div>

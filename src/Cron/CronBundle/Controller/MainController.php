@@ -775,19 +775,20 @@ class MainController extends AbstractController
                 //acception
                 $hash = md5($user->getId() + $user->getNick() + $user->getUsername());
                 $mailer = $this->get('mailer');
+                $translator = $this->get('translator');
                 $message = \Swift_Message::newInstance(null, null, "text/html")
-                    ->setSubject('Обратная связь')
+                    ->setSubject($translator->trans('Обратная связь'))
                     ->setFrom("aditus777@gmail.com")
                     ->setTo($user->getUsername())
                     ->setBody('<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body>' .
-                    'Поздравляем Вас с успешной регистрацией!<br>' .
-                    'Ваш логин ' . $user->getUsername() . '<br>' .
-                    'Ваш пароль ' . $forconf . '<br>' .
-                    'Перейдите по ссылке для подтверждения вашего e-mail адреса:<br><a href="http://' . $_SERVER['HTTP_HOST'] . '/regconf?id=' . $user->getId() . '&hash=' . $hash . '">http://' . $_SERVER['HTTP_HOST'] . '/regconf?id=' . $user->getId() . '&hash=' . $hash . '</a><br>' .
-                    '(если не можете нажать на нее, скопируйте ее в адресную строку Вашего браузера)<br>' .
-                    'Добро пожаловать на ADITUS.ru!<br><br>' .
-                    'Данное сообщение было выслано автоматически. Это сообщение является служебным письмом, которое связано с вашей учётной записью на ADITUS. Если у вас есть вопросы или вам необходима помощь, вы можете обратиться в службу поддержки ADITUS.<br><br>' .
-                    'Если Вы считаете, что данное сообщение послано Вам ошибочно, проигнорируйте его и все данные будут автоматически удалены.');
+                    $translator->trans('Поздравляем Вас с успешной регистрацией!').'<br>' .
+                    $translator->trans('Ваш логин').' ' . $user->getUsername() . '<br>' .
+                    $translator->trans('Ваш пароль').' ' . $forconf . '<br>' .
+                    $translator->trans('Перейдите по ссылке для подтверждения вашего e-mail адреса').':<br><a href="http://' . $_SERVER['HTTP_HOST'] . '/regconf?id=' . $user->getId() . '&hash=' . $hash . '">http://' . $_SERVER['HTTP_HOST'] . '/regconf?id=' . $user->getId() . '&hash=' . $hash . '</a><br>' .
+                    '('.$translator->trans('если не можете нажать на нее, скопируйте ее в адресную строку Вашего браузера').')<br>' .
+                    $translator->trans('Добро пожаловать на ADITUS.ru!').'<br><br>' .
+                    $translator->trans('Данное сообщение было выслано автоматически. Это сообщение является служебным письмом, которое связано с вашей учётной записью на ADITUS. Если у вас есть вопросы или вам необходима помощь, вы можете обратиться в службу поддержки ADITUS.').'<br><br>' .
+                    $translator->trans('Если Вы считаете, что данное сообщение послано Вам ошибочно, проигнорируйте его и все данные будут автоматически удалены.'));
                 $mailer->send($message);
 
                 return $this->redirect($this->generateUrl('index', array("reg_success"=>"1")));

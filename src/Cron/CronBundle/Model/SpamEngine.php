@@ -5,14 +5,21 @@ namespace Cron\CronBundle\Model;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Cron\CronBundle\Entity\Question;
 use Cron\CronBundle\Entity\Answer;
+use Cron\CronBundle\Entity\User;
 
 class SpamEngine
 {
     private $doctrine;
 
-    public function __construct(Registry $registry)
+    private $mailer;
+
+    private $translator;
+
+    public function __construct(Registry $registry, $mailer, $translator)
     {
         $this->doctrine = $registry;
+        $this->mailer = $mailer;
+        $this->translator = $translator;
     }
 
     public function markQuestionAsSpam(\Cron\CronBundle\Entity\User $user, $qid)
@@ -84,10 +91,41 @@ class SpamEngine
                 case 5:
                     $banDate->add(new \DateInterval('PT30M'));
                     $user->setLockedTill($banDate);
+
+                    $message = \Swift_Message::newInstance(null, null, "text/html")
+                        ->setSubject($this->translator->trans('Ваш аккаунт заблокирован'))
+                        ->setFrom("aditus777@gmail.com")
+                        ->setTo($user->getUsername())
+                        ->setBody('<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body>' .
+                            $this->translator->trans('Здравствуйте').', '.$user->getNick().'!<br>' .
+                            $this->translator->trans('Ваш акаунт автоматически заблокирован на').' '.
+                            '30 '.
+                            $this->translator->trans('минут').
+                            ' '.$this->translator->trans('в следствии нарушения правил ресурса').'.<br>' .
+                            $this->translator->trans('Пожалуйста, ознакомьтесь с').' <a href="http://aditus.ru/agreement">'.$this->translator->trans('пользовательским соглашением').'</a> '.$this->translator->trans('и').' <a href="http://aditus.ru/rules">'.$this->translator->trans('правилами').'</a> ADITUS.ru<br>' .
+                            $this->translator->trans('Если у вас есть вопросы или вам необходима помощь, вы можете обратиться в службу поддержки ADITUS.ru').'<br>' .
+                            '</body></html>');
+                    $this->mailer->send($message);
+
                     break;
                 case 6:
                     $banDate->add(new \DateInterval('P30D'));
                     $user->setLockedTill($banDate);
+
+                    $message = \Swift_Message::newInstance(null, null, "text/html")
+                        ->setSubject($this->translator->trans('Ваш аккаунт заблокирован'))
+                        ->setFrom("aditus777@gmail.com")
+                        ->setTo($user->getUsername())
+                        ->setBody('<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body>' .
+                            $this->translator->trans('Здравствуйте').', '.$user->getNick().'!<br>' .
+                            $this->translator->trans('Ваш акаунт автоматически заблокирован на').' '.
+                            '30 '.
+                            $this->translator->trans('дней').
+                            ' '.$this->translator->trans('в следствии нарушения правил ресурса').'.<br>' .
+                            $this->translator->trans('Пожалуйста, ознакомьтесь с').' <a href="http://aditus.ru/agreement">'.$this->translator->trans('пользовательским соглашением').'</a> '.$this->translator->trans('и').' <a href="http://aditus.ru/rules">'.$this->translator->trans('правилами').'</a> ADITUS.ru<br>' .
+                            $this->translator->trans('Если у вас есть вопросы или вам необходима помощь, вы можете обратиться в службу поддержки ADITUS.ru').'<br>' .
+                            '</body></html>');
+                    $this->mailer->send($message);
                     break;
                 default:
                     break;

@@ -2138,6 +2138,9 @@ h2.dialogTitle {
     cursor: pointer;
     background-color: #ffebdb;
 }
+.singleDialog.waiting {
+    cursor: wait;
+}
 .dialogs-empty-text {
     padding: 17px;
 }
@@ -2716,7 +2719,7 @@ h2.chatInviteTitle{
 }
 .chat-tab.newMsgs {
     background-color: #adc7de;
-    /*color: #ff0000;*/
+    color: #000000;
 }
 
 .mainWindow{
@@ -2747,6 +2750,10 @@ h2.chatInviteTitle{
 
 .singleMessage.my-message {
 	background-color: #eeeeee;
+}
+.singleMessage.srv-message {
+    color: #aaaaaa;
+    font-style: italic;
 }
 
 .chatUsername {
