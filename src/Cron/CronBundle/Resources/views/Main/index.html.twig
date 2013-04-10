@@ -410,7 +410,7 @@
                                 {% if curUser %}
                                     <input class="deleteMyQuestion" type="button" value="{% trans %}удалить{% endtrans %}"/>
                                 {% endif %}
-                                <input class="answerButtonItalic" type="button" value="{{ question.getAnswers()|length }} отв." data-alter-name="{% trans %}свернуть{% endtrans %}"/>
+                                <input class="answerButtonItalic" type="button" value="{{ question.getAnswers()|length }} {% trans %}отв{% endtrans %}." data-alter-name="{% trans %}свернуть{% endtrans %}"/>
                             </form>
                         </div>
                     </div>

@@ -14,8 +14,8 @@
 	<script src="/js/jquery.autosize-min.js"></script>
     <script src="/js/tiny.editor.packed.js"></script>
     <script src="/js/soundmanager2.js"></script>
-    <script src="/js/script.js"></script>
-    <script src="/js/chat.js"></script>
+    {% include 'CronCronBundle:Main:script.html.twig' %}
+    {% include 'CronCronBundle:Main:chat.html.twig' %}
     <script src="/js/elrte.min.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body class="{{ app.getSession().get('_sound_settings') }}{% if app.user %}auth{% endif %} {% if app.request.requestUri=='/' %}index-page{% endif %}">
