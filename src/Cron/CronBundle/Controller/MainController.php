@@ -205,10 +205,11 @@ class MainController extends AbstractController
                 ->getQuery()
                 ->getResult();
             }
-
-            foreach ($questions as $qid=>$question) {
-                if ($question->getSpams()->contains($user) || $user->getIgnoredQuestions()->contains($question) || !$this->geoFilterQuestion($user, $question)){
-                    unset($questions[$qid]);
+            if ($user instanceof User){
+                foreach ($questions as $qid=>$question) {
+                    if ($question->getSpams()->contains($user) || $user->getIgnoredQuestions()->contains($question) || !$this->geoFilterQuestion($user, $question)){
+                        unset($questions[$qid]);
+                    }
                 }
             }
 
@@ -273,9 +274,11 @@ class MainController extends AbstractController
                             ->setMaxResults(5)
                             ->getResult();
 
-                        foreach ($questions as $qid=>$question) {
-                            if ($question->getSpams()->contains($user) || $user->getIgnoredQuestions()->contains($question) || !$this->geoFilterQuestion($user, $question)){
-                                unset($questions[$qid]);
+                        if ($user instanceof User){
+                            foreach ($questions as $qid=>$question) {
+                                if ($question->getSpams()->contains($user) || $user->getIgnoredQuestions()->contains($question) || !$this->geoFilterQuestion($user, $question)){
+                                    unset($questions[$qid]);
+                                }
                             }
                         }
                     }
