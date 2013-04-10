@@ -1,11 +1,12 @@
 {% set _rush =  app.request.requestUri=='/rush' ? true : false %}
+{% set _income =  app.request.requestUri=='/income' ? true : false %}
 {% extends '::base.html.twig' %}
 
 	{% block content %}
         <script type="text/javascript">
 			$(document).ready(function(){
                 //Спам
-                $('.spamButton').click(function(){
+                $('.spamButton').live('click', function(){
 					$(this).addClass("spamButtonActive");
 					var question_id = $(this).closest('.singleQuestion').data('id');
 					var answer_id = $(this).closest('.singleAnswer').data('id');
@@ -29,7 +30,7 @@
 				});
 
 				//Лайки
-				$('.likeButton').click(function(){
+				$('.likeButton').live('click', function(){
 					$(this).addClass("likeButtonActive");
 					var question_id = $(this).closest('.singleQuestion').data('id');
 					var answer_id = $(this).closest('.singleAnswer').data('id');
@@ -47,31 +48,46 @@
 					});
 				});
 
-                //Удаление вопросы из списка "Входящие вопросы"
-                $('.singleQuestion .closeButton').click(function(){
-                    var question_id = $(this).closest('.singleQuestion').data('id');
-                    $.ajax({
-                        'url': '{{ path("hideIncomeQuestion") }}',
-                        'type':'post',
-                        'data': {
-                            question_id: question_id
-                        }
+                {% if _income %}
+                    //Удаление вопросы из списка "Входящие вопросы"
+                    $('.singleQuestion .closeButton').live('click', function(){
+                        var question_id = $(this).closest('.singleQuestion').data('id');
+                        $.ajax({
+                            'url': '{{ path("hideIncomeQuestion") }}',
+                            'type':'post',
+                            'data': {
+                                question_id: question_id
+                            }
+                        });
+                        $(this).closest('.singleQuestion').remove();
                     });
-                    $(this).closest('.singleQuestion').remove();
-                });
+                {% else %}
+                    //Удаление вопросы из списка "По категориям" / "Срочные"
+                    $('.singleQuestion .closeButton').live('click', function(){
+                        var question_id = $(this).closest('.singleQuestion').data('id');
+                        $.ajax({
+                            'url': '{{ path("ignoreQuestion") }}',
+                            'type':'post',
+                            'data': {
+                                question_id: question_id
+                            }
+                        });
+                        $(this).closest('.singleQuestion').remove();
+                    });
+                {% endif %}
 			});
         </script>
 		<div style="max-height: 820px;overflow: auto;overflow-x: hidden;overflow-y: auto;width: 728px;">
         {% for category in categorized_questions %}
             <h2 class="categoryTitle">{{ category.getName() }}</h2>
-            <div id="showQuestion">
+            <div id="showQuestion" class="{% if _rush %}rushed{% endif %}">
                 {% for item in category.questions %}
                     <div class="singleQuestion likable-item" data-id="{{ item.getId() }}">
                         <div class="userName">{{ item.user|trans }}</div>
                         <div class="questionDate">{{ item.datetime|date('d.m.Y H:i') }}</div>
-                        {% if item.user==curUser or not category.getId() %}
+                        {#{% if item.user==curUser or not category.getId() %}#}
                             <div class="closeButton"></div>
-                        {% endif %}
+                        {#{% endif %}#}
                         <div style="clear: both;"></div>
                         <div class="questionText">
                         {{ item.text }}

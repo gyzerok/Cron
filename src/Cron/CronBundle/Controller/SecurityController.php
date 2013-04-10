@@ -77,12 +77,16 @@ class SecurityController extends AbstractController
                 $hash = md5($user->getId() + $user->getNick() + $user->getUsername()) . '_' . md5($user->getPassword());
 
                 $mailer = $this->get('mailer');
+                $translator = $this->get('translator');
                 $message = \Swift_Message::newInstance(null, null, "text/html")
-                    ->setSubject('Обратная связь')
+                    ->setSubject($translator->trans('Восстановление пароля'))
                     ->setFrom("aditus777@gmail.com")
                     ->setTo($user->getUsername())
                     ->setBody('<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body>' .
-                    $_SERVER['HTTP_HOST'] . '/change_password?id=' . $user->getId() . '&hash=' . $hash .
+                    $translator->trans('Здравствуйте!').'<br>' .
+                    $translator->trans('Перейдите по ссылке для изменения вашего пароля').':<br><a href="http://' . $_SERVER['HTTP_HOST'] . '/change_password?id=' . $user->getId() . '&hash=' . $hash . '">http://' . $_SERVER['HTTP_HOST'] . '/change_password?id=' . $user->getId() . '&hash=' . $hash . '</a><br>' .
+                    '('.$translator->trans('если не можете нажать на нее, скопируйте ее в адресную строку Вашего браузера').')<br><br>' .
+                    $translator->trans('С уважением, служба поддержки aditus.ru').'<br>' .
                     '</body></html>');
                 $mailer->send($message);
 

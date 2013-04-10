@@ -28,7 +28,7 @@ class AjaxController extends AbstractController
 
             $html = '';
             foreach($states as $state)
-                $html = $html . sprintf('<option value="%d">%s</option>', $state->getId(), $state->getName());
+                $html = $html . sprintf('<option value="%d">%s</option>', $state->getId(), $state->getName($this->locale));
 
             return new Response($html);
         }
@@ -44,7 +44,7 @@ class AjaxController extends AbstractController
 
             $html = '';
             foreach($cities as $city)
-                $html = $html . sprintf('<option value="%d">%s</option>', $city->getId(), $city->getName());
+                $html = $html . sprintf('<option value="%d">%s</option>', $city->getId(), $city->getName($this->locale));
 
             return new Response($html);
         }
@@ -189,14 +189,18 @@ class AjaxController extends AbstractController
         {
             if ($qid = $request->get('question_id'))
             {
-                $spamEngine = new SpamEngine($this->getDoctrine());
+                $spamEngine = new SpamEngine($this->getDoctrine(), $this->get('mailer'), $this->get('translator'));
                 $spamEngine->markQuestionAsSpam($this->getUser(), $qid);
 
                 return new Response('Success');
             } elseif ($aid = $request->get('answer_id'))
             {
-                $spamEngine = new SpamEngine($this->getDoctrine());
-                $spamEngine->markAnswerAsSpam($this->getUser(), $aid);
+                $user = $this->getUser();
+                if (!$user instanceof User){
+                    $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+                }
+                $spamEngine = new SpamEngine($this->getDoctrine(), $this->get('mailer'), $this->get('translator'));
+                $spamEngine->markAnswerAsSpam($user, $aid);
 
                 return new Response('Success');
             }
@@ -210,7 +214,7 @@ class AjaxController extends AbstractController
         {
             if ($qid = $request->get('question_id'))
             {
-                $spamEngine = new SpamEngine($this->getDoctrine());
+                $spamEngine = new SpamEngine($this->getDoctrine(), $this->get('mailer'), $this->get('translator'));
                 $spamEngine->markQuestionAsSpam($this->getUser(), $qid);
 
                 return new Response('Success');
@@ -226,7 +230,7 @@ class AjaxController extends AbstractController
         {
             if ($aid = $request->get('answer_id'))
             {
-                $spamEngine = new SpamEngine($this->getDoctrine());
+                $spamEngine = new SpamEngine($this->getDoctrine(), $this->get('mailer'), $this->get('translator'));
                 $spamEngine->markAnswerAsSpam($this->getUser(), $aid);
 
                 return new Response('Success');
@@ -633,71 +637,153 @@ class AjaxController extends AbstractController
 
     public function updateQuestionsAction(Request $request)
     {
+        $guest = false;
         $user = $this->getUser();
         if (!$user instanceof User){
+            $guest = true;
             $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
         }
-        $lastTime = $request->get("questions_last_update");
+//        $lastTime = $request->get("questions_last_update");
 
         $em = $this->getDoctrine()->getManager();
 
-        $my_settings = $user->getSettings();
-        $income_cats = range(2,30);
-        $income_locale = array('ru', 'en', 'pt');
-        if ($my_settings instanceof UserSettings){
-            if ($my_settings->getIncomeCats()){
-                $income_cats = array();
-                foreach ($my_settings->getIncomeCats() as $id=>$income_cat) {
-                    array_push($income_cats, $id);
+        $questionRepo = $this->getDoctrine()->getRepository('CronCronBundle:Question');
+
+        $data = array();
+
+        if (!$guest){
+            $my_settings = $user->getSettings();
+            $income_cats = range(2,30);
+            $income_locale = array('ru', 'en', 'pt');
+            if ($my_settings instanceof UserSettings){
+                if ($my_settings->getIncomeCats()){
+                    $income_cats = array();
+                    foreach ($my_settings->getIncomeCats() as $id=>$income_cat) {
+                        array_push($income_cats, $id);
+                    }
                 }
-            }
-            if ($my_settings->getIncomeLocale()){
-                $income_locale = array();
-                foreach ($my_settings->getIncomeLocale() as $id=>$income_loc) {
-                    if ($income_loc){
-                        array_push($income_locale, $id);
+                if ($my_settings->getIncomeLocale()){
+                    $income_locale = array();
+                    foreach ($my_settings->getIncomeLocale() as $id=>$income_loc) {
+                        if ($income_loc){
+                            array_push($income_locale, $id);
+                        }
                     }
                 }
             }
+
+            $categorized = array();
+            $rush = array();
+            if (!empty($income_locale)){
+                $catQuery = $questionRepo->createQueryBuilder('question')
+                    ->innerJoin('question.user', 'user')
+                    ->where('question.category IN (:cid) AND question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false AND question.user != :user AND question.locale IN (:locale)')
+                    ->setParameter('cid', $income_cats)
+                    ->setParameter('locale', $income_locale)
+                    ->setParameter('lastTime', $user->getLastCatsView())
+                    ->setParameter('status', '2')
+                    ->setParameter('user', $user->getId())
+                    ->getQuery();
+                $categorized = $catQuery->getResult();
+
+                foreach ($categorized as $cid=>$question) {
+                    if (!$this->geoFilterQuestion($user, $question)){
+                        unset($categorized[$cid]);
+                    }
+                }
+
+                $rushQuery = $questionRepo->createQueryBuilder('question')
+                    ->innerJoin('question.user', 'user')
+                    ->where('question.category = :cid AND question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false AND question.user != :user AND question.locale IN (:locale)')
+                    ->setParameter('cid', '1')
+                    ->setParameter('locale', $income_locale)
+                    ->setParameter('lastTime', $user->getLastRushView())
+                    ->setParameter('status', '2')
+                    ->setParameter('user', $user->getId())
+                    ->getQuery();
+                $rush = $rushQuery->getResult();
+
+                foreach ($rush as $rid=>$question) {
+                    if (!$this->geoFilterQuestion($user, $question)){
+                        unset($rush[$rid]);
+                    }
+                }
+
+            }
+
+
+            $data['new_categorized_questions'] = count($categorized);
+            $data['new_rush_questions'] = count($rush);
+            $data['questions_last_update'] = date('Y-m-d H:i:s');
+
+//            if ($request->get('by_category')){
+//                $html = '';
+//                foreach ($categorized as $question) {
+//                    $html .= '<div class="singleQuestion" data-id="'.$question->getId().'" data-user="'.$question->getUser()->getId().'">
+//                    <div class="userName">'.$question->getUser().'</div>
+//                    <div class="questionDate">'.$question->getDatetime()->format('d.m.Y h:i').'</div>
+//                    <div style="clear: both;"></div>
+//                    <div class="questionText">
+//                        '.$question->getText().'
+//                        <div class="socialIcons">
+//                            <div title="'.$this->get('translator')->trans('отметить как спам').'" class="spamButton"></div>
+//                            <div title="'.$this->get('translator')->trans('не нравится').'" class="likeButton"></div>
+//                            <div title="'.$this->get('translator')->trans('добавить в заметки').'" class="repostButton"></div>
+//                            <form class="answer">
+//                                <input class="answerButton" type="button" value="'.$this->get('translator')->trans('ответить').'" data-alter-name="'.$this->get('translator')->trans('свернуть').'" />
+//                            </form>
+//                        </div>
+//                    </div>
+//                </div>';
+//
+//                }
+//                $data['categorized_questions'] = $html;
+//                $user->setLastCatsView(new \DateTime());
+//
+//                $em->persist($user);
+//                $em->flush();
+//            }
+            if ($request->get('rush')){
+                $html = '';
+                foreach ($rush as $question) {
+                    $html .= '<div class="singleQuestion" data-id="'.$question->getId().'" data-user="'.$question->getUser()->getId().'">
+                    <div class="userName">'.$question->getUser().'</div>
+                    <div class="questionDate">'.$question->getDatetime()->format('d.m.Y h:i').'</div>
+                    <div style="clear: both;"></div>
+                    <div class="questionText">
+                        '.$question->getText().'
+                        <div class="socialIcons">
+                            <div title="'.$this->get('translator')->trans('отметить как спам').'" class="spamButton"></div>
+                            <div title="'.$this->get('translator')->trans('не нравится').'" class="likeButton"></div>
+                            <div title="'.$this->get('translator')->trans('добавить в заметки').'" class="repostButton"></div>
+                            <form class="answer">
+                                <input class="answerButton" type="button" value="'.$this->get('translator')->trans('ответить').'" data-alter-name="'.$this->get('translator')->trans('свернуть').'" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="myAnswer no-border"></div>
+                <form class="answerForm">
+                    <textarea class="answerTextarea" ></textarea>
+                    <div class="answerFormNavigation">
+                        <input class="cancelButton" type="button" value="'.$this->get('translator')->trans('отмена').'" />
+                        <input class="submitAnswerButton" type="submit" value="'.$this->get('translator')->trans('отправить').'" />
+                    </div>
+                </form>';
+
+                }
+                $data['rush_questions'] = $html;
+                $user->setLastRushView(new \DateTime());
+
+                $em->persist($user);
+                $em->flush();
+            }
         }
 
-        $categorized = array();
-        $rush = array();
-        if (!empty($income_locale)){
-            $questionRepo = $this->getDoctrine()->getRepository('CronCronBundle:Question');
-            $catQuery = $questionRepo->createQueryBuilder('question')
-                ->innerJoin('question.user', 'user')
-                ->where('question.category IN (:cid) AND question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false AND question.user != :user AND question.locale IN (:locale)')
-                ->setParameter('cid', $income_cats)
-                ->setParameter('locale', $income_locale)
-                ->setParameter('lastTime', $user->getLastCatsView())
-                ->setParameter('status', '2')
-                ->setParameter('user', $user->getId())
-                ->getQuery();
-            $categorized = $catQuery->getResult();
-
-            $rushQuery = $questionRepo->createQueryBuilder('question')
-                ->innerJoin('question.user', 'user')
-                ->where('question.category = :cid AND question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false AND question.user != :user AND question.locale IN (:locale)')
-                ->setParameter('cid', '1')
-                ->setParameter('locale', $income_locale)
-                ->setParameter('lastTime', $user->getLastRushView())
-                ->setParameter('status', '2')
-                ->setParameter('user', $user->getId())
-                ->getQuery();
-            $rush = $rushQuery->getResult();
-        }
-
-
-        $data = array();
-        $data['new_categorized_questions'] = count($categorized);
-        $data['new_rush_questions'] = count($rush);
-        $data['questions_last_update'] = date('Y-m-d H:i:s');
 
         if ($request->get('update_my_questions')){
-//            $user = $this->getUser();
             if ($user instanceof User){
-                $my_questions = $questionRepo->findAllNotClosedByUser($user);
+                $my_questions = $questionRepo->findAllNotClosedByUser($user, $this->container->get('request')->getClientIp());
                 $my_updated_questions = array();
                 $i = 0;
                 foreach ($my_questions as $id => $my_question) {
@@ -705,9 +791,11 @@ class AjaxController extends AbstractController
                     $html = '';
                     $j = 0;
                     foreach ($answers as $ans) {
-                        if (!in_array($user, (array)$ans->getSpams())){
-                            $html .= '<div class="singleAnswer" data-user="'.$ans->getUser()->getId().'"><div class="userName">'.$ans->getUser()->getNick().'</div><div class="answerDate">'.$ans->getPubDate()->format("d.m.Y H:i").'</div><div style="clear: both;"></div><div class="questionText">'.$ans->getText().'<div class="socialIcons"><div class="spamButton '.(in_array($user, (array)$ans->getSpams()) ? 'spamButtonActive' : '').'"></div><div class="likeButton '.(in_array($user, (array)$ans->getLikes()) ? 'likeButtonActive' : '').'"></div><div class="arrowButton inviteUser"></div><div class="letterButton sendMessage"></div></div></div></div>';
-                            $j++;
+                        if (!$ans->getSpams()->contains($user)){
+//                            if (!in_array($user, (array)$ans->getSpams())){
+                                $html .= '<div class="singleAnswer" data-user="'.$ans->getUser()->getId().'" data-id="'.$ans->getId().'"><div class="userName">'.$ans->getUser()->getNick().'</div><div class="answerDate">'.$ans->getPubDate()->format("d.m.Y H:i").'</div><div style="clear: both;"></div><div class="questionText">'.$ans->getText().'<div class="socialIcons"><div class="spamButton '.($ans->getSpams()->contains($user) ? 'spamButtonActive' : '').'"></div><div class="likeButton '.(in_array($user, (array)$ans->getLikes()) ? 'likeButtonActive' : '').'"></div><div class="arrowButton inviteUser"></div><div class="letterButton sendMessage"></div></div></div></div>';
+                                $j++;
+//                            }
                         }
                     }
                     $my_updated_questions[$i]['id'] = $my_question->getId();
@@ -856,6 +944,28 @@ class AjaxController extends AbstractController
         return new Response("SUCCESS");
     }
 
+    public function ignoreQuestionAction(Request $request)
+    {
+        $user = $this->getUser();
+        if (!$user instanceof User){
+            $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($request->get("question_id"));
+
+        if ($question instanceof Question){
+            $user->addIgnoredQuestion($question);
+
+            $em->persist($user);
+
+            $em->flush();
+        }
+
+        return new Response("SUCCESS");
+    }
+
     public function deleteNotedQuestionAction(Request $request)
     {
         $user = $this->getUser();
@@ -905,14 +1015,14 @@ class AjaxController extends AbstractController
     public function getLastSpamQuestionsAction(Request $request)
     {
         $lastTime = $request->get("questions_last_update");
-        $lastTime = "2013-03-20 00:00:00";
+//        $lastTime = "2013-01-20 00:00:00";
 
         $em = $this->getDoctrine()->getManager();
 
         $questionsRepo = $this->getDoctrine()->getRepository('CronCronBundle:Question');
         $query = $questionsRepo->createQueryBuilder('question')
             ->innerJoin('question.user', 'user')
-            ->where('question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false')
+            ->where('question.datetime > :lastTime AND question.status <> :status AND question.isSpam = false AND question.amnestied = false')
             ->setParameter('lastTime', $lastTime)
             ->setParameter('status', '2')
             ->getQuery();
@@ -922,9 +1032,10 @@ class AjaxController extends AbstractController
         $data = array();
         $html = '';
         foreach ($questions as $question) {
-            $user_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user"=>$question->getUser()->getId()));
-            $question->question_count = count($user_questions);
-            $html .= '<div class="singleQuestion" data-id="'.$question->getId().'" data-user="'.$question->getUser()->getId().'">
+            if ($question->getSpams()->count()){
+                $user_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user"=>$question->getUser()->getId()));
+                $question->question_count = count($user_questions);
+                $html .= '<div class="singleQuestion" data-id="'.$question->getId().'" data-user="'.$question->getUser()->getId().'">
                     <div class="userName">'.$question->getUser().'</div>
                     <div class="questionDate">'.$question->getDatetime()->format('d.m.Y h:i').'</div>
                     <div style="clear: both;"></div>
@@ -939,6 +1050,56 @@ class AjaxController extends AbstractController
                         </div>
                     </div>
                 </div>';
+            }
+
+        }
+
+        $data['questions'] = $html;
+        $data['questions_last_update'] = date('Y-m-d H:i:s');
+
+        return new Response(json_encode($data, true));
+    }
+
+    public function getLastSpamAnswersAction(Request $request)
+    {
+        $lastTime = $request->get("questions_last_update");
+//        $lastTime = "2013-01-20 00:00:00";
+
+        $em = $this->getDoctrine()->getManager();
+
+        $answersRepo = $this->getDoctrine()->getRepository('CronCronBundle:Answer');
+        $query = $answersRepo->createQueryBuilder('answer')
+            ->innerJoin('answer.user', 'user')
+            ->where('answer.datetime > :lastTime AND answer.status <> :status AND answer.isSpam = false AND answer.amnestied = false')
+            ->setParameter('lastTime', $lastTime)
+            ->setParameter('status', '2')
+            ->getQuery();
+        $answers = $query->getResult();
+
+
+        $data = array();
+        $html = '';
+        foreach ($answers as $answer) {
+            if ($answer->getSpams()->count()){
+                $user_questions = $this->getDoctrine()->getRepository("CronCronBundle:Question")->findBy(array("user"=>$answer->getUser()->getId()));
+                $answer->question_count = count($user_questions);
+                $html .= '<div class="singleQuestion" data-id="'.$answer->getId().'" data-user="'.$answer->getUser()->getId().'">
+                    <div class="userName">'.$answer->getUser().'</div>
+                    <div class="questionDate">'.$answer->getDatetime()->format('d.m.Y h:i').'</div>
+                    <div style="clear: both;"></div>
+                    <div class="questionText">
+                        '.$answer->getText().'
+                        <div class="socialIcons">
+                            <div class="spam-index">Спам-индекс: '.$answer->getUser()->getSpamActivity().'</div>
+                            <div class="questions-count">Вопросов: '.$answer->question_count.'</div>
+                            <a href="#" class="confirm-spam">Подтвердить</a>
+                            <a href="#" class="cancel-spam">Отмена</a>
+                            <a href="#" class="block-user">Блок пользователя</a>
+                        </div>
+                    </div>
+                </div>';
+            }
+
         }
 
         $data['questions'] = $html;

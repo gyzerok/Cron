@@ -34,13 +34,21 @@ class QuestionRepository extends EntityRepository
         return $questions;
     }
 
-    public function findAllNotClosedByUser(\Cron\CronBundle\Entity\User $user)
+    public function findAllNotClosedByUser(\Cron\CronBundle\Entity\User $user, $quest_ip = '')
     {
-        $questions = $this->createQueryBuilder('question')
-            ->where('question.user = :uid AND question.status <> :status AND question.hide_on_index = 0 ')
-            ->setParameters(array('status' => CLOSED, 'uid' => $user->getId()))
-            ->getQuery()
-            ->getResult();
+        if (!$quest_ip){
+            $questions = $this->createQueryBuilder('question')
+                ->where('question.user = :uid AND question.status <> :status AND question.hide_on_index = 0 ')
+                ->setParameters(array('status' => CLOSED, 'uid' => $user->getId()))
+                ->getQuery()
+                ->getResult();
+        } else {
+            $questions = $this->createQueryBuilder('question')
+                ->where('question.user = :uid AND question.status <> :status AND question.hide_on_index = 0 AND question.user_ip = :user_ip')
+                ->setParameters(array('status' => CLOSED, 'uid' => $user->getId(), 'user_ip' => $quest_ip))
+                ->getQuery()
+                ->getResult();
+        }
 
         return $questions;
     }

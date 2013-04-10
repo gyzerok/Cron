@@ -56,12 +56,13 @@
                 return false;
             });
 
-            {#{% if tab=='spam' %}
+            {% if tab=='spam' %}
                 //Подгрузка новых спам вопросо
+                updateSpamQuestions();
                 setInterval('updateSpamQuestions();',30000);
-            {% endif %}#}
+            {% endif %}
         });
-        /*function updateSpamQuestions(){
+        function updateSpamQuestions(){
             $.ajax({
                 url: '/ajax/getLastSpamQuestions',
                 type: 'post',
@@ -70,8 +71,9 @@
                     questions_last_update: $("#questions_last_update").text()
                 },
                 success: function(data){
+//                    alert(data.questions);
                     if (data.questions){
-                        $("#showQuestions").prepend(data.questions);
+                        $("#showQuestion").prepend(data.questions);
                     }
                     if (data.questions && $("body").is('.sound_newQuestion')){
                         soundManager.play('newQuestion');
@@ -79,7 +81,7 @@
                     $("#questions_last_update").text(data.questions_last_update);
                 }
             });
-        }*/
+        }
     </script>
     <h2 class="categoryTitle">Вопросы</h2>
     <div class="admin-wrap">

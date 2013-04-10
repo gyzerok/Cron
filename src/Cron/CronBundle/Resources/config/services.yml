@@ -14,3 +14,7 @@ services:
     scope: request
     tags:
       - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+#  doctrine.entity.country:
+#    class: Cron\CronBundle\Entity\Country
+#    scope: request
+#    arguments: [@session]

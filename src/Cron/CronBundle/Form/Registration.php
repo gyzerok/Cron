@@ -15,6 +15,22 @@ use Doctrine\ORM\EntityRepository;
 
 class Registration extends AbstractType
 {
+    protected $locale;
+
+    public function __construct($session)
+    {
+        $this->locale = $session->get('_locale');
+        switch($this->locale){
+            case 'pt_PT':
+            case 'en_US':
+                $this->locale = 'en_US';
+                break;
+            default:
+                $this->locale = 'ru_RU';
+                break;
+        }
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $days = array();
@@ -26,11 +42,11 @@ class Registration extends AbstractType
             $years[$i] = $i;
 
         $builder->add('username', 'text', array('label' => 'Email', 'required' => false))
-                ->add('password', 'repeated', array('required' => false, 'first_name' => 'Password', 'second_name' => 'Confirm', 'type' => 'password'))
-                ->add('nick', null, array('label' => 'Ваше имя', 'required' => false))
+                ->add('password', 'repeated', array('required' => false, 'first_name' => 'Password', 'second_name' => 'Confirm', 'type' => 'password', 'first_options'  => array('max_length'=>12), 'second_options'  => array('max_length'=>12)))
+                ->add('nick', null, array('label' => 'Ваше имя', 'required' => false, 'max_length'=>12))
                 ->add('gender', 'choice', array('label' => 'Пол', 'choices' => array(1 => 'Мужской', 2 => 'Женский'), 'expanded' => true, 'required' => false))
                 ->add('birthDate', 'birthday', array('label' => 'Дата рождения', 'format' => 'dd MMMM yyyy', 'years' => $years, 'required' => false))
-                ->add('country', 'entity', array('label' => 'Страна', 'class' => 'CronCronBundle:Country', 'property' => 'name', 'empty_value' => 'Все страны', 'required' => false))
+                ->add('country', 'entity', array('label' => 'Страна', 'class' => 'CronCronBundle:Country', 'property' => 'name_'.substr($this->locale,0,2), 'empty_value' => 'Все страны', 'required' => false))
                 ->add('state', 'entity', array('label' => 'Регион', 'class' => 'CronCronBundle:State', 'property' => 'name', 'empty_value' => 'Все регионы', 'disabled' => true, 'required' => false, 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('state')
                         ->where('state.id IS NULL');
@@ -43,14 +59,16 @@ class Registration extends AbstractType
 
         $factory = $builder->getFormFactory();
 
-        $refreshStates = function ($form, $country) use ($factory)
+        $locale = $this->locale;
+
+        $refreshStates = function ($form, $country) use ($factory, $locale)
         {
             $form->add($factory->createNamed('state', 'entity', null, array(
                 'class'         => 'Cron\CronBundle\Entity\State',
-                'property'      => 'name',
+                'property'      => 'name_'.substr($locale,0,2),
                 'required'      => false,
-                'empty_value'   => 'Выберите регион',
-                'query_builder' => function (EntityRepository $repository) use ($country)
+                'empty_value'   => 'Все регионы',
+                'query_builder' => function (EntityRepository $repository) use ($country, $locale)
                 {
                     $qb = $repository->createQueryBuilder('state')
                         ->innerJoin('state.country', 'country');
@@ -62,7 +80,7 @@ class Registration extends AbstractType
                         $qb->where('country.id = :country')
                             ->setParameter('country', $country);
                     }else{
-                        $qb->where('country.name = :country')
+                        $qb->where('country.name_'.substr($locale,0,2).' = :country')
                             ->setParameter('country', null);
                     }
                     return $qb;
@@ -70,14 +88,14 @@ class Registration extends AbstractType
             )));
         };
 
-        $refreshCities = function ($form, $state) use ($factory)
+        $refreshCities = function ($form, $state) use ($factory, $locale)
         {
             $form->add($factory->createNamed('city', 'entity', null, array(
                 'class'         => 'Cron\CronBundle\Entity\City',
-                'property'      => 'name',
-                'empty_value'   => 'Выберите город',
+                'property'      => 'name_'.substr($locale,0,2),
+                'empty_value'   => 'Все города',
                 'required'      => false,
-                'query_builder' => function (EntityRepository $repository) use ($state)
+                'query_builder' => function (EntityRepository $repository) use ($state, $locale)
                 {
                     $qb = $repository->createQueryBuilder('city')
                         ->innerJoin('city.state', 'state');
@@ -89,7 +107,7 @@ class Registration extends AbstractType
                         $qb->where('state.id = :state')
                             ->setParameter('state', $state);
                     }else{
-                        $qb->where('state.name = :state')
+                        $qb->where('state.name_'.substr($locale,0,2).' = :state')
                             ->setParameter('state', null);
                     }
                     return $qb;
@@ -97,24 +115,24 @@ class Registration extends AbstractType
             )));
         };
 
-        $setCountry = function ($form, $country) use ($factory)
+        $setCountry = function ($form, $country) use ($factory, $locale)
         {
             $form->add($factory->createNamed('country', 'entity', null, array(
                 'class'         => 'CronCronBundle:Country',
-                'property'      => 'name',
+                'property'      => 'name_'.substr($locale,0,2),
                 'property_path' => false,
                 'empty_value'   => 'Выберите страну',
                 'data'          => $country,
             )));
         };
 
-        $setState = function ($form, $state) use ($factory)
+        $setState = function ($form, $state) use ($factory, $locale)
         {
             $form->add($factory->createNamed('state', 'entity', null, array(
                 'class'         => 'CronCronBundle:State',
-                'property'      => 'name',
+                'property'      => 'name_'.substr($locale,0,2),
                 'property_path' => false,
-                'empty_value'   => 'Выберите регион',
+                'empty_value'   => 'Все регионы',
                 'required'      => false,
                 'data'          => $state,
             )));

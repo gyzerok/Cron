@@ -10,7 +10,7 @@
                         url:"{{ path('getStates') }}",
                         success:function (data) {
                             $('#question_state option:gt(0)').remove();
-                            $('#question_state').append(data);
+                            $('#question_state').append({% trans %}data{% endtrans %});
                             document.getElementById('question_state').disabled = false;
                         }
                     });
@@ -265,7 +265,7 @@
             });
 
             //Спам
-            $('.spamButton').click(function(){
+            $('.spamButton').live('click', function(){
                 $(this).addClass("spamButtonActive");
                 var question_id = $(this).closest('.singleQuestion').data('id');
                 var answer_id = $(this).closest('.singleAnswer').data('id');
@@ -289,7 +289,7 @@
             });
 
             //Лайки
-            $('.likeButton').click(function(){
+            $('.likeButton').live('click', function(){
                 $(this).addClass("likeButtonActive");
                 var question_id = $(this).closest('.singleQuestion').data('id');
                 var answer_id = $(this).closest('.singleAnswer').data('id');

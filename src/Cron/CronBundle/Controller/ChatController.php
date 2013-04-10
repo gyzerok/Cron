@@ -35,6 +35,10 @@ class ChatController extends AbstractController
                 $chat_messages = $this->getDoctrine()->getRepository('CronCronBundle:ChatMsg')->findBy(array("chat" => $mychat->getId()), array("msg_date" => "ASC"));
 
                 $mychat->messages = $chat_messages;
+            } else {
+                $mychat = new Chat();
+                $mychat->messages = array();
+                $mychat->members = array();
             }
 
 
@@ -141,7 +145,7 @@ class ChatController extends AbstractController
                         ->getResult();
                     if (count($srv_messages)){
                         foreach ($srv_messages as $msg) {
-                            $srvmsgs['chats'][$chat_id][$msg->getId()] = array("msg_text"=>$this->getChatSrvMsg($msg));
+                            $srvmsgs['chats'][$chat_id][$msg->getId()] = array("msg_text"=>$this->getChatSrvMsg($msg), "msg_text_id"=>$msg->getMsgTextId(), "about_user"=>array('id'=>$msg->getAboutUser()->getId(), 'nick'=>$msg->getAboutUser()->getNick()));
                         }
                     }
                 }
@@ -163,20 +167,6 @@ class ChatController extends AbstractController
                     if (count($messages)){
                         foreach ($messages as $msg) {
                             $dialogs[$dialog_id][$msg->getId()] = array("user_id"=>$msg->getUser()->getId(), "user_name"=>$msg->getUser()->getNick(), "msg_text"=>nl2br($msg->getMsgText()));
-                        }
-                    }
-                    $srv_messages = $this->getDoctrine()->getRepository('CronCronBundle:ChatSrvMsg')
-                        ->createQueryBuilder('chat_srvmsg')
-                        ->where('chat_srvmsg.dialog = :did AND chat_srvmsg.msg_date > :lid AND chat_srvmsg.to_user = :myid')
-                        ->setParameter('did', $dialog_id)
-                        ->setParameter('lid', $request->get("chat_last_update"))
-                        ->setParameter('myid', $user->getId())
-                        ->orderBy('chat_srvmsg.msg_date', 'ASC')
-                        ->getQuery()
-                        ->getResult();
-                    if (count($srv_messages)){
-                        foreach ($srv_messages as $msg) {
-                            $srvmsgs['dialogs'][$dialog_id][$msg->getId()] = array("msg_text"=>$this->getChatSrvMsg($msg));
                         }
                     }
                 }
@@ -267,11 +257,11 @@ class ChatController extends AbstractController
                     }
                     break;
                 case "ChatIsFinished":
-                    $srvmsg->setChat($params['chat'])
-                        ->setToUser($params['chat']->getOwner())
-                        ->setMsgTextId(7);
-                    $em->persist($srvmsg);
-                    $em->flush();
+//                    $srvmsg->setChat($params['chat'])
+//                        ->setToUser($params['chat']->getOwner())
+//                        ->setMsgTextId(7);
+//                    $em->persist($srvmsg);
+//                    $em->flush();
 
                     $chat_members = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findBy(array('chat' => $params['chat']->getId()));
                     foreach ($chat_members as $member) {
@@ -279,6 +269,7 @@ class ChatController extends AbstractController
                         $sub_srvmsg->setMsgDate(new \DateTime())
                             ->setChat($params['chat'])
                             ->setToUser($member->getUser())
+                            ->setAboutUser($member->getUser())
                             ->setMsgTextId(6);
                         $em->persist($sub_srvmsg);
                         $em->flush();
@@ -315,6 +306,7 @@ class ChatController extends AbstractController
                     $sub_srvmsg->setMsgDate(new \DateTime())
                         ->setChat($params['chat'])
                         ->setToUser($params['about_user'])
+                        ->setAboutUser($params['about_user'])
                         ->setMsgTextId(4);
                     $em->persist($sub_srvmsg);
                     $em->flush();
@@ -433,16 +425,12 @@ class ChatController extends AbstractController
     public function getMyChatAction(Request $request){
         if (/*$request->isMethod('POST') && */($user = $this->getUser() instanceof User)){
 
-            //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
             return new Response('SUCCESS');
         }
     }
 
     public function getIncomeChatsAction(Request $request){
         if (/*$request->isMethod('POST') && */($user = $this->getUser() instanceof User)){
-
-            //TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
             return new Response('SUCCESS');
         }
@@ -464,16 +452,29 @@ class ChatController extends AbstractController
                 $em->persist($dialog);
                 $em->flush();
             }
-            $dialog_msg = new DialogMsg();
-            $dialog_msg->setDialog($dialog);
-            $dialog_msg->setUser($user);
-            $dialog_msg->setMsgDate(new \DateTime());
-            $dialog_msg->setMsgText($request->get('message'));
-            $dialog_msg->setReadFlag(0);
+            if ($dialog->getSpam1() || $dialog->getSpam2()){
+                $response = '<div class="singleMessage srv-message">
+                                <div class="messageText">'.$this->get('translator')->trans('Пользователь не хочет с вами больше говорить').'</div>
+                            </div>';
+                return new Response($response);
+            } else {
+                $dialog_msg = new DialogMsg();
+                $dialog_msg->setDialog($dialog);
+                $dialog_msg->setUser($user);
+                $dialog_msg->setMsgDate(new \DateTime());
+                $dialog_msg->setMsgText($request->get('message'));
+                $dialog_msg->setReadFlag(0);
 
-            $em->persist($dialog_msg);
-            $em->flush();
-            return new Response('SUCCESS');
+                $dialog->setDel1(false);
+                $dialog->setDel2(false);
+
+                $em->persist($dialog_msg);
+                $em->persist($dialog);
+                $em->flush();
+            }
+
+
+            return new Response('');
         }
     }
 
@@ -488,7 +489,6 @@ class ChatController extends AbstractController
                 $chat_msg->setUser($user);
                 $chat_msg->setMsgDate(new \DateTime());
                 $chat_msg->setMsgText($request->get('message'));
-                $chat_msg->setReadFlag(0);
 
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($chat_msg);
@@ -736,6 +736,8 @@ class ChatController extends AbstractController
             $em->persist($chat);
 //            $em->flush();
 
+            $this->sendChatSrvMsg('ChatIsFinished', array("chat"=>$chat));
+
             $chat_members = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findBy(array('chat' => $chat->getId()));
             foreach ($chat_members as $member) {
                 $em->remove($member);
@@ -748,9 +750,11 @@ class ChatController extends AbstractController
 //            $em->remove($chat_invites);
             $em->flush();
 
-            $this->sendChatSrvMsg('ChatIsFinished', array("chat"=>$chat));
 
-            return new Response('SUCCESS');
+            $response = '<div class="singleMessage srv-message">
+                                <div class="messageText">'.$this->get('translator')->trans('Чат завершен').'</div>
+                            </div>';
+            return new Response($response);
         }
     }
 
@@ -759,13 +763,19 @@ class ChatController extends AbstractController
         if (/*$request->isMethod('POST') && */($user instanceof User)){
 
             $chat_member = $this->getDoctrine()->getRepository('CronCronBundle:ChatMember')->findOneBy(array('chat' => $request->get('chat'), 'user' => $user->getId()));
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($chat_member);
-            $em->flush();
+            if ($chat_member instanceof ChatMember){
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($chat_member);
+                $em->flush();
 
-            $this->sendChatSrvMsg('UserLeavesTheChat', array("chat"=>$chat_member->getChat(), "about_user"=>$user));
+                $this->sendChatSrvMsg('UserLeavesTheChat', array("chat"=>$chat_member->getChat(), "about_user"=>$user));
 
-            return new Response('SUCCESS');
+                $response = '<div class="singleMessage srv-message">
+                                <div class="messageText">'.$this->get('translator')->trans('Вы вышли из чата').'</div>
+                            </div>';
+                return new Response($response);
+            }
+            return new Response('');
         }
     }
 
@@ -778,7 +788,7 @@ class ChatController extends AbstractController
             $em->remove($chat_member);
             $em->flush();
 
-            $this->sendChatSrvMsg('UserWasKicked', array("chat"=>$chat_member->getChat(), "about_user"=>$user));
+            $this->sendChatSrvMsg('UserWasKicked', array("chat"=>$chat_member->getChat(), "to_user"=>$user, "about_user"=>$chat_member->getUser()));
 
             return new Response('SUCCESS');
         }

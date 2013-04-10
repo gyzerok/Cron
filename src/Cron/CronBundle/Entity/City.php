@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class City
 {
+    private $locale = 'ru_RU';
     /**
      * @var integer $id
      *
@@ -75,9 +76,21 @@ class City
      *
      * @return string 
      */
-    public function getName()
+    public function getName($locale = 'ru_RU')
     {
-        return $this->name_ru;
+        $this->locale = $locale;
+
+        switch($this->locale){
+            case 'ru_RU':
+                $name = $this->getNameRu();
+                break;
+            case 'en_US':
+            case 'pt_PT':
+            default:
+                $name = $this->getNameEn();
+                break;
+        }
+        return $name;
     }
 
     /**

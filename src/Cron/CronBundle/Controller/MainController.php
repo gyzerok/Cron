@@ -34,7 +34,7 @@ class MainController extends AbstractController
             $numAnswers = array(10 => '10', 20 => '20', 50 => '50', 100 => '100', 1000 => '1000');
 
         $question = new Question();
-        $form = $this->createForm(new NewQuestion($this->getUser() instanceof User, $numAnswers), $question);
+        $form = $this->createForm(new NewQuestion($this->container->get('session'), $this->getUser() instanceof User, $numAnswers), $question);
 
         if ($request->isMethod('POST'))
         {
@@ -207,7 +207,7 @@ class MainController extends AbstractController
             }
 
             foreach ($questions as $qid=>$question) {
-                if ($question->getSpams()->contains($user)){
+                if ($question->getSpams()->contains($user) || $user->getIgnoredQuestions()->contains($question) || !$this->geoFilterQuestion($user, $question)){
                     unset($questions[$qid]);
                 }
             }
@@ -274,7 +274,7 @@ class MainController extends AbstractController
                             ->getResult();
 
                         foreach ($questions as $qid=>$question) {
-                            if ($question->getSpams()->contains($user)){
+                            if ($question->getSpams()->contains($user) || $user->getIgnoredQuestions()->contains($question) || !$this->geoFilterQuestion($user, $question)){
                                 unset($questions[$qid]);
                             }
                         }
@@ -380,10 +380,14 @@ class MainController extends AbstractController
         if ($user instanceof User){
             foreach ($rush as $id=>$question){
                 $rush[$id]->iAnswered = false;
-                foreach ($question->getAnswers() as $answer) {
-                    if ($answer->getUser()==$user){
+                if ($question->getSpams()->contains($user) || $user->getIgnoredQuestions()->contains($question) || !$this->geoFilterQuestion($user, $question)){
+                    unset($rush[$id]);
+                } else {
+                    foreach ($question->getAnswers() as $answer) {
+                        if ($answer->getUser()==$user){
 //                        $rush[$id]->iAnswered = true;
-                        unset($rush[$id]);
+                            unset($rush[$id]);
+                        }
                     }
                 }
             }
@@ -743,7 +747,7 @@ class MainController extends AbstractController
         if (!$user->getCity()){
             $user->setCity(null);
         }*/
-        $form = $this->createForm(new Registration(), $user);
+        $form = $this->createForm(new Registration($this->container->get('session')), $user);
         if ($request->isMethod('POST')) {
 
             $form->bind($request);
@@ -771,19 +775,20 @@ class MainController extends AbstractController
                 //acception
                 $hash = md5($user->getId() + $user->getNick() + $user->getUsername());
                 $mailer = $this->get('mailer');
+                $translator = $this->get('translator');
                 $message = \Swift_Message::newInstance(null, null, "text/html")
-                    ->setSubject('Обратная связь')
+                    ->setSubject($translator->trans('Обратная связь'))
                     ->setFrom("aditus777@gmail.com")
                     ->setTo($user->getUsername())
                     ->setBody('<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body>' .
-                    'Поздравляем Вас с успешной регистрацией!<br>' .
-                    'Ваш логин ' . $user->getUsername() . '<br>' .
-                    'Ваш пароль ' . $forconf . '<br>' .
-                    'Перейдите по ссылке для подтверждения вашего e-mail адреса:<br><a href="http://' . $_SERVER['HTTP_HOST'] . '/regconf?id=' . $user->getId() . '&hash=' . $hash . '">http://' . $_SERVER['HTTP_HOST'] . '/regconf?id=' . $user->getId() . '&hash=' . $hash . '</a><br>' .
-                    '(если не можете нажать на нее, скопируйте ее в адресную строку Вашего браузера)<br>' .
-                    'Добро пожаловать на ADITUS.ru!<br><br>' .
-                    'Данное сообщение было выслано автоматически. Это сообщение является служебным письмом, которое связано с вашей учётной записью на ADITUS. Если у вас есть вопросы или вам необходима помощь, вы можете обратиться в службу поддержки ADITUS.<br><br>' .
-                    'Если Вы считаете, что данное сообщение послано Вам ошибочно, проигнорируйте его и все данные будут автоматически удалены.');
+                    $translator->trans('Поздравляем Вас с успешной регистрацией!').'<br>' .
+                    $translator->trans('Ваш логин').' ' . $user->getUsername() . '<br>' .
+                    $translator->trans('Ваш пароль').' ' . $forconf . '<br>' .
+                    $translator->trans('Перейдите по ссылке для подтверждения вашего e-mail адреса').':<br><a href="http://' . $_SERVER['HTTP_HOST'] . '/regconf?id=' . $user->getId() . '&hash=' . $hash . '">http://' . $_SERVER['HTTP_HOST'] . '/regconf?id=' . $user->getId() . '&hash=' . $hash . '</a><br>' .
+                    '('.$translator->trans('если не можете нажать на нее, скопируйте ее в адресную строку Вашего браузера').')<br>' .
+                    $translator->trans('Добро пожаловать на ADITUS.ru!').'<br><br>' .
+                    $translator->trans('Данное сообщение было выслано автоматически. Это сообщение является служебным письмом, которое связано с вашей учётной записью на ADITUS. Если у вас есть вопросы или вам необходима помощь, вы можете обратиться в службу поддержки ADITUS.').'<br><br>' .
+                    $translator->trans('Если Вы считаете, что данное сообщение послано Вам ошибочно, проигнорируйте его и все данные будут автоматически удалены.'));
                 $mailer->send($message);
 
                 return $this->redirect($this->generateUrl('index', array("reg_success"=>"1")));

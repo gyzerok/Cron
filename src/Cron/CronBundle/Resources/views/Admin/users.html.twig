@@ -82,7 +82,7 @@
                             <th>№</th>
                             <th>Имя</th>
                             <th>Email</th>
-                            <th>Место</th>
+                            {#<th>Место</th>#}
                             <th>Пол</th>
                             <th>Возраст</th>
                             <th>Кредиты</th>
@@ -99,7 +99,7 @@
                             <td>{{ user.getId() }}</td>
                             <td>{{ user.getNick() }}</td>
                             <td>{{ user.getUsername() }}</td>
-                            <td>{{ user.getCity().getName() }}</td>
+                            {#<td>{{ user.getCountry().getId() }}</td>#}
                             <td>{{ user.getGenderLetter() }}</td>
                             <td>{{ user.getAge() }}</td>
                             <td><input style="width: 50px;" type="text" name="credits" class="user-credits" value="{{ user.getCredits() }}"></td>

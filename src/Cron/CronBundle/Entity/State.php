@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class State
 {
+    private $locale = 'ru_RU';
+
     /**
      * @var integer $id
      *
@@ -66,18 +68,30 @@ class State
     public function setName($name)
     {
         $this->name = $name;
-    
+
         return $this;
     }
 
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
-    public function getName()
+    public function getName($locale = 'ru_RU')
     {
-        return $this->name_ru;
+        $this->locale = $locale;
+
+        switch($this->locale){
+            case 'ru_RU':
+                $name = $this->getNameRu();
+                break;
+            case 'en_US':
+            case 'pt_PT':
+            default:
+                $name = $this->getNameEn();
+                break;
+        }
+        return $name;
     }
 
     /**
@@ -152,5 +166,12 @@ class State
     public function getNameEn()
     {
         return $this->name_en;
+    }
+
+    public function __construct($session)
+    {
+        $this->locale = $session->getLocale();
+
+        return $this;
     }
 }

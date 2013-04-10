@@ -19,9 +19,9 @@ Cron\CronBundle\Entity\User:
       - NotBlank:   { message: "укажите ваш пол" }
     country:
       - NotBlank:   { message: "поле не заполнено" }
-    state:
-      - NotBlank:   { message: "поле не заполнено" }
-    city:
-      - NotBlank:   { message: "поле не заполнено" }
+#    state:
+#      - NotBlank:   { message: "поле не заполнено" }
+#    city:
+#      - NotBlank:   { message: "поле не заполнено" }
     agreement:
       - NotBlank:   { message: "вы не ознакомились с пользовательским соглашением" }

@@ -236,6 +236,10 @@ hideIncomeQuestion:
   pattern:  /ajax/hideIncomeQuestion
   defaults: { _controller: CronCronBundle:Ajax:hideIncomeQuestion }
 
+ignoreQuestion:
+  pattern:  /ajax/ignoreQuestion
+  defaults: { _controller: CronCronBundle:Ajax:ignoreQuestion }
+
 checkCash:
   pattern:  /ajax/checkCash
   defaults: { _controller: CronCronBundle:Ajax:checkCash }
