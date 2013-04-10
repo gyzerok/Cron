@@ -165,12 +165,12 @@
             </div>
 
             <div class="forgotPassword-window" style="display: none;">
-                <h2 class="forgot-password-tittle">Введите адрес электронной почты</h2>
+                <h2 class="forgot-password-tittle">{% trans %}Введите адрес электронной почты{% endtrans %}</h2>
                 <form action="{{ path('forgot_password') }}" method="post">
                     <input type="text" id="email" name="email" value="" />
-                    <p class="forgot-explanation">По этому адресу будут отправлены Ваши регистрационные данные.</p>
-                    <a href="#" class="forgot-cancel">отмена</a>
-                    <input class="forgot-submit" type="submit" name="accept" value="отправить" />
+                    <p class="forgot-explanation">{% trans %}По этому адресу будут отправлены Ваши регистрационные данные{% endtrans %}.</p>
+                    <a href="#" class="forgot-cancel">{% trans %}отмена{% endtrans %}</a>
+                    <input class="forgot-submit" type="submit" name="accept" value="{% trans %}отправить{% endtrans %}" />
                 </form>
             </div>
 		</div>

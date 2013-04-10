@@ -1,86 +1,180 @@
-Автор: Autor
-Адрес файла: Endereço do arquivo
-Английский: Inglês
-Блокнот: Bloco de Notas
-В сети: Conectado
-Вопросы: Perguntas
-Вопросы по категориям: Perguntas por Categoria
-Все: Tudo
-Войти: Entrar
-Входящие вопросы: Perguntas Recebidas
-Входящий чат: Bate-papo recebido
-Выйти: Sair
-Главная: Casa
-Город: Cidade
-Добавить: Adicionar
-Добавить в заметки: Adicionar às notas
-За месяц: Para o mês
-За неделю: Para a semana
-За сутки: Durante o dia
-Заблокировать пользователя: Bloquear usuário
-Забыли пароль?: Esqueceu a senha?
-Загрузить: Baixar
-Закончить общение: Encerrar bate-papo
-Закрытый: Fechado
-Закрыть: Fechar
-Заметки: Notas
-Занято: Ocupado
-Звуковая схема: Esquema de som
-Информация: Informação
-Источник: Fonte
-#Кибердиск
-Кредиты: Empréstimos
-Кредиты сайта: Créditos do Site
-Личные сообщения: Mensagens Privadas
-Любая страна: Qualquer país
-Любой город: Qualquer cidade
-Любой регион: Qualquer área
-Минимальное количество ответов: O número mínimo de respostas
-Мне нравится: Gostar
-Мои вопросы: Minhas perguntas
-Мой чат: Mey bate-papo
-На английском: Em inglês
-На португальском: Em português
-На русском: Em russo
-На украинском: Em Ucraniano
-На французском: Em Francês
-Написать сообщение: Enviar mensagem
-Настройки: Configurações
-Новая строка в чате: Uma nova linha no bate-papo
-Обратная связь: Entre em contato conosco
-Окно чата: Janela de bate-papo
-Ответить: Responder
-Ответов: Respostas
-Отклонить: Recusar
-Отмена: Cancelar
-Отметить как спам: Marcar como spam
-Отправить: Enviar
-Отправить вопрос: Enviar uma pergunta
-По времени: No tempo
-по категориям: por categoria
-По языкам: Por língua
-Подтвердить: Confirmar
-Пользователей на сайте: Visitantes do site
-Португальский: Português
-Приглашение в чат: Convite para bate-papo
-Приглашения в чат: Convites para bate-papo
-Просмотр всех тем: Ver todos os tópicos
-Развернуть: Expandir
-Регион: Região
-Регистрация: Registrar
-Рекламодателям: Anunciantes
-Русский: Russo
-Свернуть: Minimizar
-Свободно: Livremente
-Сообщения: Mensagens
-Сохранить: Salvar
-срочные: urgente
-Срочные вопросы: Questões urgentes
-Ссылка: Link
-Статьи: Artigos
-#Стоимость N кредитов
-Страна: País
-Убрать из списка: Remover da lista
-Удалить: Deletar
-Украинский: Ucraniano
-Французский: Francês
+Гость: Guest
+русский:	russo
+английский:	inglês
+португальский:	português
+Главная:	HomeCasa
+по категориям:	por categoria
+срочный:	urgente
+закрытый:	fechado
+На сайте:	no sítio
+В сети:	conectado
+введите вопрос: type a question
+Войти:	entrar
+Регистрация:	Registrar
+Выйти:	sair
+логин:	login
+пароль:	senha
+Нет избранных вопросов: No favorite questions
+удалить из заметок: remove from notes
+Кредиты:	Créditos
+Забыли пароль?:	Esqueceu a senha?
+Введите адрес электронной почты:	Digite seu endereço de e-mail
+Настройки:	Configurações
+Мои вопросы: 	Minhas perguntas
+Входящие вопросы:	Perguntas Recebidas
+вопросы:	perguntas
+Заметки:	notas
+Информация:	informação
+Кибердиск:	files
+Сообщения:	mensagens
+статьи:	artigos
+автор:	autor
+источник:	fonte
+Ссылка:	Link
+блокнот:	Bloco de Notas
+закрыть блокнот: close notebook
+добавить ссылку:	adicionar link
+адрес страницы в интернете:	webpage address
+Название::	Título:
+удалить:	deletar
+удалить ссылку:	delete link
+Адрес файла:	Arquivo de endereço
+добавить:	adicionar
+занято:	ocupado
+свободно:	livremente
+загрузить:	baixar
+Диалоги:	diálogos
+свернуть:	minimizar
+закрыть:	fechar
+закрыть диалог:	close dialog
+ответить:	responder
+ответов:	respostas
+подтвердить:	confirmar
+отклонить:	recusar
+приглашения в чат:	convites para bate-papo
+Приглашения в чат:	convites para bate-papo  
+окно чата:	janela de bate-papo
+Мой чат:	Mey bate-papo
+Входящий чат:	Bate-papo recebido
+закончить:  encerrar 
+общение:  bate-papo
+выйти из чата:	sair do bate-papo
+О нас:	Sobre nós
+Рекламодателям:	Anunciantes
+Помощь:	Apoiar
+Жалоба:	Reclamação
+Предложение:	Proposta
+текст сообщения:	mensagens de texto
+обращение в службу поддержки:	contactando o Suporte ao Cliente
+Правила:	Regras do site
+Пользовательское соглашение:	Acordo de Usuário
+семья, дом, дети:	família, casa, filhos
+любовь, отношения:	amor, relacionamentos
+культура, досуг:	cultura, lazer
+туризм:	turismo
+компьютеры, интернет:	computadores, a Internet
+компьютерные игры:	jogos de computador
+техника:	técnica
+знакомства, общение:	namoro, socializando
+экономика:	economia
+юриспруденция:	jurisprudência
+опросы:	sondagens
+новости:	notícia
+спорт:	esporte
+страна:	país
+регион:	região
+город:	cidade
+Минимальная наполняемость ответами:	O número mínimo de respostas
+отправить:	enviar
+отмена:	cancelar
+Все поля обязательны для заполнения:	Todos os campos são obrigatórios
+email:	e-mail
+повторите пароль:	repita a senha
+ваше имя:	seu nome
+пол:	género
+мужской:	masculino
+женский:	feminino
+дата рождения:	data de nascimento
+День: 	Dia
+Месяц: 	Mês
+Год:	Ano
+январь: 	janeiro
+февраль: 	fevereiro
+март:	março
+апрель:	abril
+май:	maio
+июнь:	junho
+июль:	julho
+август:	agosto
+сентябрь:	setembro
+октябрь:	outubro
+ноябрь:	novembro
+декабрь:	dezembro
+Местонахождение:	Localização
+Масимум 15 символов: Maximum of 15 characters
+Пожалуйста, ознакомьтесь с: Por favor, leia 
+пользовательским соглашением:  o contrato de usuário
+Зарегистрироваться:	Registe-se
+Я принимаю условия пользовательского соглашения:	Eu aceito o contrato do usuário
+Просмотр всех тем:	Ver todos os tópicos
+Звуковая схема:	Esquema de som
+по языкам:	por língua
+на русском:	em russo
+на английском:	em inglês
+на португальском:	em português
+по времени:	no tempo
+за сутки:	durante o dia
+за неделю:	para a semana
+за месяц:	para o mês
+все:	tudo
+вопросы по категориям:	perguntas por categoria
+срочные:	questões urgentes
+новая строка в чате:	uma nova linha no bate-papo
+личные сообщения:	mensagens Privadas
+сохранить:	salvar
+Сейчас Вы можете использовать ресурс только на 30%. Пожалуйста, зарегистрируйтесь или авторизуйтесь.:	Agora você pode usar o recurso em 30%. Por favor, registrar ou login
+ресурс находится в стадии тестирования:	o recurso está em fase de testes
+Стоимость : Custa
+кредитов: créditos
+стоимость 5 кредитов: custa 5 créditos
+удалить из списка:	remover da lista
+отметить как спам:	marcar como spam 
+мне нравится:	gostar
+добавить в заметки:	adicionar às notas
+копировать ссылку:	copie
+пригласить в чат:	convidar para de chat
+отправить личное сообщение:	enviar uma mensagem privada
+Укажите реальный и действующий e-mail адрес.: Por favor insira um endereço de e-mail válido.
+Он потребуется для входа на сайт и для получения уведомлений.: Ele vai precisar para fazer login no site e receber notificações.
+Придумайте сложный пароль, который нельзя подобрать;: Invente senha complexa que é impossível escolher;
+От 4 до 12 символов — цифры и латинские буквы.: de 4 a 12 caracteres - números e letras latinas.
+Пароли совпадают:	senhas são as mesmas
+Пароли не совпадают:	as senhas não coincidem
+Укажите ваше имя или никнейм;:  Especifique o seu nome ou apelido; 
+от 2 до 12 символов - нельзя использовать цифры.: de 4 a 12 caracteres - não pode usar os números.
+некорректное заполнение:	entrando incorreta
+поле не заполнено:	campo não for preenchido
+укажите ваш пол:	especifique o seu gênero
+вы не ознакомились с пользовательским соглашением:	você não leu o contrato de usuário
+на ваш email отправлено письмо, прочтите его для завершения регистрации:	para o seu e-mail enviado a mensagem, lê-lo para concluir o registo
+вы уверены?:	você tem certeza?
+недоступно незарегистрированным пользователям: 	não disponível para usuários não registrados
+на вашем счету недостаточно средств для оплаты:	sua conta não tem fundos suficientes para pagar
+вопрос был отмечен как спам: 	a questão foi marcada como spam
+ответ был отмечен как спам: 	a resposta foi marcada como spam
+в чат добавлен (...):	(...) adicionado ao chat
+в чат вошел  (...):	(...) entrou para o bate-papo
+чат покинул (...):	(...) saiu do bate-papo
+вы были удалены из чата:	você foi removido do papo
+из чата был удален (...):	(...) foi removido do papo
+чат завершен автором вопроса: 	asker de chat concluída
+чат завершен: 	bater papo concluída
+вы вышли из чата:	você está fora do bate-papo
+вопрос является закрытым, вы не можете просматривать ответы других пользователей: 	a questão está fechado, você não pode ver as respostas de outros usuários
+неверный логин или пароль: 	Nome de usuário ou senha inválida
+обновляется...: updating...
+Этот ресурс создан для быстрого поиска людей, обладающих нужными Вам знаниями. Здесь Вы можете найти интересных собеседников и обсуждать интересующие Вас вопросы. ADITUS сделает Вашу жизнь проще и сэкономит много времени: Este recurso foi criado para que se possa rapidamente procurar as pessoas com conhecimentos úteis para sua pesquisa. Você poderá encontrar interessantes interlocutores e discutir suas questões aqui. ADITUS pode tornar sua vida mais fácil e ajudar você a economizar tempo em pesquisas relevantes.
+На ADITUS Вы можете задать свой вопрос любому пользователю или группе специалистов из области вашего вопроса  в режиме онлайн и, оценив полученные ответы, выбрать подходящего собеседника для приватной беседы,  либо продолжить обсуждение в группе.  Это безусловно повысит эффективность использования интернета и сэкономит самый драгоценный ресурс – время.: Na ADITUS, você pode fazer uma pergunta a qualquer usuário ou grupo de especialistas no campo da sua pesquisa, online e, a partir da avaliação das respostas, selecionar o interlocutor adequado para uma conversa privada ou continuar a discussão em grupo. Certamente, isso ajudará você a aumentar a eficiência no uso da Internet e a economizar o recurso mais precioso: o tempo.
+выгнать пользователя: 
+отправить сообщение: send a message
+на главную:

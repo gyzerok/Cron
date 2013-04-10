@@ -30,7 +30,7 @@
                         {{ item.getQuestion().getText()|raw }}
                         <div class="socialIcons" style="width: 75px;">
                             <form class="answer">
-                                <input class="answerButton" type="button" value="ответить" />
+                                <input class="answerButton" type="button" value="{% trans %}ответить{% endtrans %}" />
                             </form>
                         </div>
                     </div>
@@ -45,10 +45,10 @@
                             <div class="questionText">
                                 {{ answer.getText()|raw }}
                                 <div class="socialIcons">
-                                    <div class="spamButton" title="Пометить как спам"></div>
-                                    <div class="likeButton" title="Мне нравится!"></div>
-                                    <div class="arrowButton inviteUser" title="Отправить приглашение в чат"></div>
-                                    <div class="letterButton sendMessage" title="Отправить сообщение"></div>
+                                    <div class="spamButton" title="{% trans %}отметить как спам{% endtrans %}"></div>
+                                    <div class="likeButton" title="{% trans %}мне нравится{% endtrans %}"></div>
+                                    <div class="arrowButton inviteUser" title="{% trans %}пригласить в чат{% endtrans %}"></div>
+                                    <div class="letterButton sendMessage" title="{% trans %}отправить личное сообщение{% endtrans %}"></div>
                                 </div>
                             </div>
                         </div>
@@ -58,14 +58,14 @@
                 <form class="answerForm">
                     <textarea class="answerTextarea" ></textarea>
                     <div class="answerFormNavigation">
-                        <input class="submitAnswerButton" type="submit" value="отправить" />
-                        <input class="cancelButton" type="button" value="отменить" />
+                        <input class="submitAnswerButton" type="submit" value="{% trans %}отправить{% endtrans %}" />
+                        <input class="cancelButton" type="button" value="{% trans %}отменить{% endtrans %}" />
                     </div>
                 </form>
             {% endfor %}
         </ul>
     {% else %}
-        <div class="empty-notes">Нет избранных вопросов</div>
+        <div class="empty-notes">{% trans %}Нет избранных вопросов{% endtrans %}</div>
     {% endif %}
     </div>
 {% endblock %}
