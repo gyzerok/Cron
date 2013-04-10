@@ -535,3 +535,192 @@ agreement_bigtext: |
   mso-hansi-theme-font:major-latin;mso-ansi-language:RU'><o:p></o:p></span></p>
 
   <p class=MsoNormal><span style='mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+  
+credits_bigtext: |
+    <p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+    style='font-size:16.0pt;font-family:"Cambria","serif";mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></b></p>
+    
+    <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph;
+    text-indent:1.0cm'><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><span style="font-weight: bold;">Кредиты</span> - это внутренняя виртуальная денежная единица
+    нашего сайта. Каждый пользователь имеет свой виртуальный кошелёк, на котором на
+    момент регистрации анкеты имеется 10 кредитов. При желании Вы можете пополнить
+    кошелёк способами, указанными ниже, при пополнении кошелька 1 кредит
+    эквивалентен 1 российскому рублю.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph;
+    text-indent:1.0cm'><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>Кредитами можно оплачивать различные сервисы нашего
+    сайта.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph;
+    text-indent:1.0cm'><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>Кредиты нельзя вывести с сайта (обналичить), потому что
+    кредиты не являются платёжным денежным средством.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph;
+    text-indent:1.0cm'><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><span style="font-weight: bold;">Способы пополнения счета:</span><o:p></o:p></span></p>
+    
+    <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph;
+    text-indent:1.0cm'><u><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><a href="#" class="toggle-pay-window pay-by-emoney">Электронными деньгами</a><o:p></o:p></span></u></p>
+    
+    <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph;
+    text-indent:1.0cm'><u><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><a href="#" class="toggle-pay-window pay-by-sms">Через СМС</a><o:p></o:p></span></u></p>
+    
+    <p class=MsoNormal style='text-align:justify;text-justify:inter-ideograph;
+    text-indent:1.0cm'><u><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU; text-decoration: underline;'>Дополнительно:<o:p></o:p></span></u></p>
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>На Ваш счет поступает по<span class=GramE>1</span>
+    кредиту за каждую положительную<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>оценку Ваших вопросов и ответов.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+    
+    <p class=MsoNormal style='text-indent:1.0cm'><span style='font-size:14.0pt;
+    font-family:"Cambria","serif";mso-ansi-language:RU'><span style="font-weight: bold;">Платные функции на сайте:</span><o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU;'>- <span style="color: #7C96D1;">закрыть вопрос</span> (стоимость 5 кредитов) - пользователь<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><span style='mso-spacerun:yes'>  </span>не видит ответы
+    других после отправки своего ответа на Ваш вопрос.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>- <span style="color: #7C96D1;">удалить вопрос</span> (стоимость 5 кредитов) - вопрос и ответы<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><span style='mso-spacerun:yes'>  </span>на него перестают
+    существовать на сайте.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>- <span style="color: #7C96D1;">увеличить число ответов на вопрос</span> - автоматическое <o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><span style='mso-spacerun:yes'>  </span>закрытие вопроса
+    происходит после его наполнения <o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><span style='mso-spacerun:yes'>  </span><span
+    class=GramE>необходим</span> количеством ответов.</span><span lang=EN-US
+    style='font-size:14.0pt;font-family:"Cambria","serif"'><o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:"Cambria","serif"'><o:p>&nbsp;</o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><span style='mso-spacerun:yes'>         </span>50 ответов
+    - 5 кредитов<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><span style='mso-spacerun:yes'>       </span>100 ответов
+    - 10 кредитов<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><span style='mso-spacerun:yes'>     </span>1000 ответов -
+    50 кредитов</span><span lang=EN-US style='font-family:"Cambria","serif"'><o:p></o:p></span></p>
+    
+rules_bigtext: |
+
+    <p class=MsoNormal align=center style='text-align:center'><span
+    style='font-size:16.0pt;font-family:"Cambria","serif";mso-ansi-language:RU'>Правила
+    сайта<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:16.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>1. Возможности пользователей.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal style='text-indent:1.0cm'><span style='font-size:14.0pt;
+    font-family:"Cambria","serif";mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+    
+    <p class=MsoNormal style='text-indent:1.0cm'><span style='font-size:14.0pt;
+    font-family:"Cambria","serif";mso-ansi-language:RU'>Этот ресурс является
+    средством для быстрого и эффективного взаимодействия людей. Каждый
+    зарегистрированный пользователь может задать вопрос или оповестить <span
+    class=GramE>людей</span> о чем либо. Вы можете настраивать под себя функции
+    отображения вопросов, ограждая себя от ненужной информации. <o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>Кратко о каждой функции<span class=GramE> :</span><o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>1) Вопросы - текстовые <span class=GramE>сообщения</span>
+    отправленные определенному количеству пользователей данного сайта.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>2) Заметки - сохранение интересной информации для
+    последующего быстрого доступа к ней. <o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>3) Информация - статьи и другая полезная информация, не
+    имеющая прямого отношения к данному ресурсу.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>4) <span class=SpellE>Кибердиск</span> - место для
+    временного хранения ваших файлов. Вы можете значительно расширить возможности
+    поиска нужной информации, добавив к вопросу ссылку на один из них.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>5) Сообщения - Вы можете вести личную переписку с любым
+    пользователем, ответившим на Ваш вопрос.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:16.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>2. Платные услуги.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+    
+    <p class=MsoNormal><span class=SpellE><span lang=EN-US style='font-size:14.0pt;
+    font-family:"Cambria","serif"'>Aditus</span></span><span style='font-size:14.0pt;
+    font-family:"Cambria","serif";mso-ansi-language:RU'>.</span><span class=SpellE><span
+    lang=EN-US style='font-size:14.0pt;font-family:"Cambria","serif"'>ru</span></span><span
+    style='font-size:14.0pt;font-family:"Cambria","serif";mso-ansi-language:RU'>
+    является бесплатным ресурсом, за исключением трех платных действий:<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>1) Отправка закрытого вопроса - пользователи могут
+    отвечать на Ваш вопрос, но не увидят другие ответы. Этот вопрос не будет
+    отображаться пользователям в режиме просмотра всех тем.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>2) Удаление вопроса - это действие позволит Вам полностью
+    убрать свой вопрос и ответы на него с сайта, даже если он находится в заметках
+    пользователей.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>3) Увеличение количества ответов на Ваш вопрос - рассылка
+    вопроса будет происходить до полного его наполнения нужным количеством ответов.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:16.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>3. Борьба со спамом.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'><o:p>&nbsp;</o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>Спам - любое сообщение, не соответствующее требованиям
+    получателя и содержащее в себе потенциально вредоносную информацию.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>Любой пользователь, зарегистрированный на сайте, может
+    отмечать Ваши вопросы и ответы как спам. Если 5 пользователей посчитают Ваш
+    вопрос спамом, то он будет автоматически закрыт. При отправке 5 спам сообщений
+    в виде вопроса или ответа, Ваш аккаунт будет временно заблокирован.<o:p></o:p></span></p>
+    
+    <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Cambria","serif";
+    mso-ansi-language:RU'>При многочисленных нарушениях правил <span class=GramE>Ваш</span>
+    аккаунт может быть удален.<o:p></o:p></span></p>
