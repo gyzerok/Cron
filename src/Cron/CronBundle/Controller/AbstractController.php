@@ -218,20 +218,21 @@ class AbstractController extends Controller implements InitializableControllerIn
           <li><a href="/category/14">новости</a></li>
           <li><a href="/category/15">спорт</a></li>
          */
+        $trans = $this->get('translator');
         $categories = array(
-            2 => "семья, дом, дети",
-            3 => "любовь, отношения",
-            5 => "культура, досуг",
-            6 => "туризм",
-            7 => "компьютеры, интернет",
-            8 => "компьютерные игры",
-            9 => "техника",
-            10 => "знакомства, общение",
-            11 => "экономика",
-            12 => "юриспрунденция",
-            13 => "опросы",
-            14 => "новости",
-            15 => "спорт",
+            2 => $trans->trans("семья, дом, дети"),
+            3 => $trans->trans("любовь, отношения"),
+            5 => $trans->trans("культура, досуг"),
+            6 => $trans->trans("туризм"),
+            7 => $trans->trans("компьютеры, интернет"),
+            8 => $trans->trans("компьютерные игры"),
+            9 => $trans->trans("техника"),
+            10 => $trans->trans("знакомства, общение"),
+            11 => $trans->trans("экономика"),
+            12 => $trans->trans("юриспрунденция"),
+            13 => $trans->trans("опросы"),
+            14 => $trans->trans("новости"),
+            15 => $trans->trans("спорт"),
         );
         $view_cats = array();
         $user = $this->getUser();

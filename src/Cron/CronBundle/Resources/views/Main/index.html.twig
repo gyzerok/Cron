@@ -390,8 +390,8 @@
     {% else %}
         <h2 class="categoryTitle">Мои вопросы</h2>
     {% endif %}
-            <div class="question-wrap">
     {% if userQuestions|length > 0 %}
+        <div class="question-wrap">
         {% for question in userQuestions %}
                 <div class="singleQuestion" data-id="{{ question.getId() }}">
                     <div style="border: 1px solid #fff;" class="userName"></div>
