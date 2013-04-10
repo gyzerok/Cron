@@ -22,6 +22,9 @@ class ChatController extends AbstractController
 {
     public function loadChatAction(Request $request){
         $user = $this->getUser();
+        if (!$user instanceof User){
+            $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
+        }
         if (/*$request->isMethod('POST') && */($user instanceof User)){
 
             $mychat = $this->getDoctrine()->getRepository('CronCronBundle:Chat')->findOneBy(array("owner" => $user->getId()));
