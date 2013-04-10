@@ -198,16 +198,16 @@
 			{{ form_errors(form.city) }}
 			</div>
 		</div>
-		<div class="registrationField">
+        <div style="clear: both;"></div>
+        <div class="registrationField">
 			<span class="agreementLabel">{% trans %}Пожалуйста, ознакомьтесь с{% endtrans %} <a href="#">{% trans %}пользовательским соглашением{% endtrans %}</a></span>
 			{{ form_widget(form.agreement) }}
 			<div class="agreementError">
 			{{ form_errors(form.agreement) }}
 			</div>
 		</div>
-
 			{{ form_rest(form) }}
-		<input class="registerButton" type="submit" value="{% trans %}Зарегистрироваться{% endtrans %}">
+		<input class="registerButton" type="submit" value="{% trans %}Зарегистрироваться{% endtrans %}" />
 		</form>
 	</div>
 	

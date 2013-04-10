@@ -135,7 +135,10 @@ email:	e-mail
 новая строка в чате:	a new line in the chat 
 личные сообщения:	private messages
 сохранить:	save
-Сейчас Вы можете использовать ресурс только на 30%. Пожалуйста, зарегистрируйтесь или авторизуйтесь.:	Now you can use the resource at 30%. Please register or login
+Сейчас Вы можете использовать: Now you can use
+ресурс только на 30%: the resource at 30%
+Пожалуйста, зарегистрируйтесь: Please register or login.
+или авторизуйтесь: ""
 ресурс находится в стадии тестирования:	the resource is in the testing phase
 Стоимость : Cost
 кредитов: credits

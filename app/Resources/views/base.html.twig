@@ -50,7 +50,7 @@
                 {% if app.user %}
                     {{ app.getSession().get('_srvmsg')|raw }}
                 {% else %}
-                    {% trans %}<span class="srv-msg">Сейчас Вы можете использовать </br> ресурс только на 30%. </br> Пожалуйста, зарегистрируйтесь </br> или авторизуйтесь.</span>{% endtrans %}
+                    <span class="srv-msg">{% trans %}Сейчас Вы можете использовать{% endtrans %} </br> {% trans %}ресурс только на 30%{% endtrans %}. </br> {% trans %}Пожалуйста, зарегистрируйтесь{% endtrans %} </br> {% trans %}или авторизуйтесь{% endtrans %}</span>
                 {% endif %}
             </div>
 			<div class="language">

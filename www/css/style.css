@@ -178,7 +178,7 @@
     color: #495677;
     margin-right: 21px;
     margin-left: 5px;
-    width: 69px;
+    width: 71px;
     text-align: left;
     display: inline-block
 }
@@ -191,7 +191,7 @@
 	font-size: 20px;
 	color: #495677;
 	margin-left: 5px;
-    width: 90px;
+    width: 92px;
     text-align: left;
     display: inline-block
 }
@@ -691,7 +691,6 @@
 
 .writeQuestionDiv {
 	width: 680px;
-	border-bottom: 2px solid #CC2A03;
 	border-left: 2px solid #CC2A03;
 	border-right: 2px solid #CC2A03;
 	margin: 0 auto;
