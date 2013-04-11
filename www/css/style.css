@@ -1437,7 +1437,7 @@ span.birtDateDescription {
 
 .genderRadio {
 	display: block;
-	width: 121px;
+	width: 126px;
 	overflow: hidden;
 	float: right;
 	margin-right: 606px;
@@ -2617,7 +2617,8 @@ h2.chatInviteTitle{
 }
 
 .singleTab {
-	width: 118px;
+    padding-left: 15px;
+    padding-right: 15px;
 	height: 24px;
 	border-top: 1px solid #495677;
 	border-left: 1px solid #495677;

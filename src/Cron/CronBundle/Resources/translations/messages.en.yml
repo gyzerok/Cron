@@ -12,7 +12,7 @@
 На сайте:	On the site
 В сети:	Online
 введите вопрос: type a question
-Войти:	log in
+Войти:	Log in
 Регистрация:	Register
 Выйти:	log out
 логин:	login
@@ -64,6 +64,9 @@
 общение:  chat
 выйти из чата:	sign out of chat
 О нас:	About us
+Выберите категорию:: Select a category:
+Введите Ваш email: Enter your email
+Введите текст сообщения: Enter the message text
 Рекламодателям:	Advertisers
 Помощь:	Support
 Жалоба:	Complaint
@@ -96,9 +99,9 @@ email:	e-mail
 повторите пароль:	repeat password
 ваше имя:	your name
 пол:	gender
-мужской:	masculine
-женский:	feminine
-дата рождения:	date of birth
+Мужской:	masculine
+Женский:	feminine
+Дата рождения:	date of birth
 День: 	Day
 Месяц: 	Month
 Год:	Year
@@ -180,6 +183,7 @@ email:	e-mail
 вопрос является закрытым, вы не можете просматривать ответы других пользователей: 	the issue is closed, you can not view the answers of other users
 неверный логин или пароль: 	incorrect login or password
 обновляется...: updating...
+По этому адресу будут отправлены Ваши регистрационные данные: To this address will be sent your registration data
 Этот ресурс создан для быстрого поиска людей, обладающих нужными Вам знаниями. Здесь Вы можете найти интересных собеседников и обсуждать интересующие Вас вопросы. ADITUS сделает Вашу жизнь проще и сэкономит много времени: This resource was created to quickly search for people, who have useful knowledge for you. You can find interesting interlocutors and discuss your questions here. ADITUS can make your life easier and save a lot of time in searching for relevant information.
 На ADITUS Вы можете задать свой вопрос любому пользователю или группе специалистов из области вашего вопроса  в режиме онлайн и, оценив полученные ответы, выбрать подходящего собеседника для приватной беседы,  либо продолжить обсуждение в группе.  Это безусловно повысит эффективность использования интернета и сэкономит самый драгоценный ресурс – время.: At ADITUS you can ask a question to any user or group of experts from the field of your question online and by evaluating the responses, select a suitable companion for a private conversation, or to continue the discussion in the group. Of course, it helps you increase the efficiency of using the Internet and save the most precious resource - time.
 выгнать пользователя: 
@@ -198,12 +202,9 @@ email:	e-mail
 Повторите пароль: Password confirm
 Ваше имя: Your nick
 Пол: Gender
-Дата рождения: Birthdate
 Страна: Country
 Регион: Region
 Город: City
-Мужской:	Male
-Женский:	Female
 поле не заполнено: field is empty
 введите вопрос: type question here
 Стоимость: Cost
@@ -261,8 +262,8 @@ agreement_bigtext: |
     <p class=MsoNormal align=center style='text-align:center'><span lang=EN-US
     style='font-family:"Cambria","serif";mso-ascii-theme-font:major-latin;
     mso-hansi-theme-font:major-latin'>This agreement was written in Russian. If a
-    translation of this agreement is in conflict with its English version, it
-    remains a priority for the English version.<o:p></o:p></span></p>
+    translation of this agreement is in conflict with its Russian version, it
+    remains a priority for the Russian version.<o:p></o:p></span></p>
     
     <p class=MsoNormal><span lang=EN-US style='font-family:"Times New Roman","serif"'><o:p>&nbsp;</o:p></span></p>
     
