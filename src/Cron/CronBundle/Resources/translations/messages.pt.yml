@@ -16,6 +16,7 @@
 Выйти:	sair
 логин:	login
 пароль:	senha
+Пароль:	Senha
 Нет избранных вопросов: No favorite questions
 удалить из заметок: remove from notes
 Кредиты:	Créditos
@@ -86,36 +87,36 @@
 опросы:	sondagens
 новости:	notícia
 спорт:	esporte
-страна:	país
-регион:	região
-город:	cidade
+Страна:	País
+Регион:	Região
+Город:	Cidade
 Минимальная наполняемость ответами:	O número mínimo de respostas
 отправить:	enviar
 отмена:	cancelar
 Все поля обязательны для заполнения:	Todos os campos são obrigatórios
 email:	e-mail
-повторите пароль:	repita a senha
-ваше имя:	seu nome
-пол:	género
-мужской:	masculino
-женский:	feminino
-дата рождения:	data de nascimento
+Повторите пароль:	Repita a senha
+Ваше имя:	Seu nome
+Пол:	Género
+Мужской:	Masculino
+Женский:	Feminino
+Дата рождения:	Data de nascimento
 День: 	Dia
 Месяц: 	Mês
 Год:	Ano
-январь: 	janeiro
-февраль: 	fevereiro
-март:	março
-апрель:	abril
-май:	maio
-июнь:	junho
-июль:	julho
-август:	agosto
-сентябрь:	setembro
-октябрь:	outubro
+Январь: 	janeiro
+Февраль: 	fevereiro
+Март:	março
+Апрель:	abril
+Май:	maio
+Июнь:	junho
+Июль:	julho
+Август:	agosto
+Сентябрь:	setembro
+Октябрь:	outubro
 По этому адресу будут отправлены Ваши регистрационные данные: Para este endereço serão enviadas seus dados de registro
-ноябрь:	novembro
-декабрь:	dezembro
+Ноябрь:	novembro
+Декабрь:	dezembro
 Местонахождение:	Localização
 Масимум 15 символов: Maximum of 15 characters
 Пожалуйста, ознакомьтесь с: Por favor, leia 
