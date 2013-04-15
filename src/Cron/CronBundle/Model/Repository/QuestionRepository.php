@@ -17,6 +17,7 @@ class QuestionRepository extends EntityRepository
         $questions = $this->createQueryBuilder('question')
                           ->where('question.user = :uid AND question.status <> :status AND question.hide_on_index = 0 ')
                           ->setParameters(array('status' => DELETED, 'uid' => $user->getId()))
+                          ->orderBy('question.datetime', 'DESC')
                           ->getQuery()
                           ->getResult();
 
@@ -28,6 +29,7 @@ class QuestionRepository extends EntityRepository
         $questions = $this->createQueryBuilder('question')
             ->where('question.user = :uid AND question.status <> :status ')
             ->setParameters(array('status' => DELETED, 'uid' => $user->getId()))
+            ->orderBy('question.datetime', 'DESC')
             ->getQuery()
             ->getResult();
 
@@ -40,12 +42,14 @@ class QuestionRepository extends EntityRepository
             $questions = $this->createQueryBuilder('question')
                 ->where('question.user = :uid AND question.status <> :status AND question.hide_on_index = 0 ')
                 ->setParameters(array('status' => CLOSED, 'uid' => $user->getId()))
+                ->orderBy('question.datetime', 'DESC')
                 ->getQuery()
                 ->getResult();
         } else {
             $questions = $this->createQueryBuilder('question')
                 ->where('question.user = :uid AND question.status <> :status AND question.hide_on_index = 0 AND question.user_ip = :user_ip')
                 ->setParameters(array('status' => CLOSED, 'uid' => $user->getId(), 'user_ip' => $quest_ip))
+                ->orderBy('question.datetime', 'DESC')
                 ->getQuery()
                 ->getResult();
         }
@@ -62,6 +66,7 @@ class QuestionRepository extends EntityRepository
                                   ->innerJoin('question.spams', 'user')
                                   ->where('question.category <> :cid  AND question.status <> :status AND question.spams <> :user')
                                   ->setParameters(array('cid' => '1', 'status' => DELETED, 'user' => $user->getId()))
+                                  ->orderBy('question.datetime', 'DESC')
                                   ->getQuery()
                                   ->getResult();
                 break;
@@ -69,6 +74,7 @@ class QuestionRepository extends EntityRepository
                 $questions = $this->createQueryBuilder('question')
                                   ->where('question.category = :cid  AND question.status <> :status AND question')
                                   ->setParameters(array('status' => DELETED, 'cid' => '1'))
+                                  ->orderBy('question.datetime', 'DESC')
                                   ->getQuery()
                                   ->getResult();
                 break;

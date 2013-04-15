@@ -320,7 +320,8 @@ class AjaxController extends AbstractController
             $files_dir = $_SERVER['DOCUMENT_ROOT'].'/files/'.$user->getId().'/';
             if (!is_dir($files_dir))
                 mkdir($files_dir);
-            $file_name = iconv("utf-8", "cp1251", $_FILES['file']['name']);
+//            $file_name = iconv("utf-8", "cp1251", $_FILES['file']['name']);
+            $file_name = $_FILES['file']['name'];
             move_uploaded_file($_FILES['file']['tmp_name'], $files_dir.$file_name);
 
             $total_filesize = $this->getDoctrine()->getRepository("CronCronBundle:File")
@@ -404,7 +405,7 @@ class AjaxController extends AbstractController
                     <tr>
                         <td><div class="my-file-name">'.$last_file->getFilename().'</div></td>
                         <td width="90"><div class="my-file-size">'.$last_file->getFilesize().'</div></td>
-                        <td width="210"><input type="button" class="delete-my-file" value="удалить"><input type="button" class="download-my-file" value="загрузить"></td>
+                        <td width="210"><input type="button" class="delete-my-file" value="'.$this->get('translator')->trans('удалить').'"><input type="button" class="download-my-file" value="'.$this->get('translator')->trans('загрузить').'"></td>
                     </tr>
                 </table>
             </div>';

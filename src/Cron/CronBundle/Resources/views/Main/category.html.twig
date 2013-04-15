@@ -79,7 +79,7 @@
         </script>
 		<div style="max-height: 820px;overflow: auto;overflow-x: hidden;overflow-y: auto;width: 728px;">
         {% for category in categorized_questions %}
-            <h2 class="categoryTitle">{{ category.getName() }}</h2>
+            <h2 class="categoryTitle">{{ category.getName()|trans }}</h2>
             <div id="showQuestion" class="{% if _rush %}rushed{% endif %}">
                 {% for item in category.questions %}
                     <div class="singleQuestion likable-item" data-id="{{ item.getId() }}">
@@ -103,7 +103,7 @@
                                     <form class="answer">
                                         {% if item.iAnswered or not curUser or item.getUser()==curUser %}
                                             {% if item.getPrivate()<1 %}
-                                                <input class="answerButton" type="button" {% if not item.answers|length  %}disabled="disabled"{% endif %} value="{{ item.answers|length ~ ' {% trans %}отв{% endtrans %}.' }}" data-alter-name="{% trans %}свернуть{% endtrans %}" />
+                                                <input class="answerButton" type="button" {% if not item.answers|length  %}disabled="disabled"{% endif %} value="{{ item.answers|length }} {{ 'отв'|trans }}" data-alter-name="{% trans %}свернуть{% endtrans %}" />
                                             {% else %}
                                                 <input class="answerButton" type="button" value="{% trans %}закрытый{% endtrans %}" data-alter-name="{% trans %}свернуть{% endtrans %}" />
                                             {% endif %}
@@ -127,16 +127,16 @@
                                                     <div style="clear: both;"></div>
                                                     <div class="questionText">
                                                         {{ answer.getText()|raw }}
-                                                        {% if item.getUser()==curUser or answer.getUser()!=curUser %}
-                                                            <div class="socialIcons">
-                                                                {% if curUser %}
-                                                                    <div class="spamButton {% if curUser in answer.getSpams() %}spamButtonActive{% endif %}" title="{% trans %}отметить как спам{% endtrans %}"></div>
-                                                                    <div class="likeButton {% if curUser in answer.getLikes() %}likeButtonActive{% endif %}" title="{% trans %}мне нравится{% endtrans %}"></div>
-                                                                    <div class="arrowButton inviteUser" title="{% trans %}пригласить в чат{% endtrans %}"></div>
-                                                                    <div class="letterButton sendMessage" title="{% trans %}отправить личное сообщение{% endtrans %}"></div>
-                                                                {% endif %}
-                                                            </div>
-                                                        {% endif %}
+                                                        {#{% if item.getUser()==curUser or answer.getUser()!=curUser %}#}
+                                                            {#<div class="socialIcons">#}
+                                                                {#{% if curUser %}#}
+                                                                    {#<div class="spamButton {% if curUser in answer.getSpams() %}spamButtonActive{% endif %}" title="{% trans %}отметить как спам{% endtrans %}"></div>#}
+                                                                    {#<div class="likeButton {% if curUser in answer.getLikes() %}likeButtonActive{% endif %}" title="{% trans %}мне нравится{% endtrans %}"></div>#}
+                                                                    {#<div class="arrowButton inviteUser" title="{% trans %}пригласить в чат{% endtrans %}"></div>#}
+                                                                    {#<div class="letterButton sendMessage" title="{% trans %}отправить личное сообщение{% endtrans %}"></div>#}
+                                                                {#{% endif %}#}
+                                                            {#</div>#}
+                                                        {#{% endif %}#}
                                                     </div>
                                                 </div>
                                             {% endif %}

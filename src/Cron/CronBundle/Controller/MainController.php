@@ -202,12 +202,13 @@ class MainController extends AbstractController
                 ->setParameter('viewbytime', $viewbytime->format("Y-m-d H:i:s"))
                 ->setParameter('user', ($user instanceof User ? $user->getId(): 0))
                 ->setParameter('locale', $view_locale)
+                ->orderBy('question.datetime', 'DESC')
                 ->getQuery()
                 ->getResult();
             }
             if ($user instanceof User){
                 foreach ($questions as $qid=>$question) {
-                    if ($question->getSpams()->contains($user) || $user->getIgnoredQuestions()->contains($question) || !$this->geoFilterQuestion($user, $question)){
+                    if ($question->getSpams()->contains($user) || $user->getIgnoredQuestions()->contains($question) || !$this->geoFilterQuestion($user, $question) || $this->IAnsweredThisQuestion($user, $question)){
                         unset($questions[$qid]);
                     }
                 }
@@ -270,13 +271,14 @@ class MainController extends AbstractController
 //                        ->setParameter('viewbytime', $viewbytime->format("Y-m-d H:i:s"))
                             ->setParameter('user', ($user instanceof User ? $user->getId(): 0))
                             ->setParameter('locale', $income_locale)
+                            ->orderBy('question.datetime', 'DESC')
                             ->getQuery()
                             ->setMaxResults(5)
                             ->getResult();
 
                         if ($user instanceof User){
                             foreach ($questions as $qid=>$question) {
-                                if ($question->getSpams()->contains($user) || $user->getIgnoredQuestions()->contains($question) || !$this->geoFilterQuestion($user, $question)){
+                                if ($question->getSpams()->contains($user) || $user->getIgnoredQuestions()->contains($question) || !$this->geoFilterQuestion($user, $question) || $this->IAnsweredThisQuestion($user, $question)){
                                     unset($questions[$qid]);
                                 }
                             }
@@ -376,6 +378,7 @@ class MainController extends AbstractController
                                     ->setParameter('status', '2')
                                     ->setParameter('user', ($user instanceof User ? $user->getId(): 0))
                                     ->setParameter('locale', $income_locale)
+                                    ->orderBy('question.datetime', 'DESC')
                                     ->getQuery()
                                     ->getResult();
         }
@@ -383,7 +386,7 @@ class MainController extends AbstractController
         if ($user instanceof User){
             foreach ($rush as $id=>$question){
                 $rush[$id]->iAnswered = false;
-                if ($question->getSpams()->contains($user) || $user->getIgnoredQuestions()->contains($question) || !$this->geoFilterQuestion($user, $question)){
+                if ($question->getSpams()->contains($user) || $user->getIgnoredQuestions()->contains($question) || !$this->geoFilterQuestion($user, $question) || $this->IAnsweredThisQuestion($user, $question)){
                     unset($rush[$id]);
                 } else {
                     foreach ($question->getAnswers() as $answer) {

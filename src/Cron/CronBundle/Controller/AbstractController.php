@@ -2,6 +2,7 @@
 
 namespace Cron\CronBundle\Controller;
 
+use Cron\CronBundle\Entity\Answer;
 use Cron\CronBundle\Entity\Question;
 use Cron\CronBundle\Entity\User;
 use Cron\CronBundle\Entity\UserLink;
@@ -275,6 +276,17 @@ class AbstractController extends Controller implements InitializableControllerIn
         } else {
             return false;
         }
+    }
+
+    public function IAnsweredThisQuestion(User $user, Question $question)
+    {
+        $answer = $this->getDoctrine()->getRepository('CronCronBundle:Answer')->findOneBy(array('user'=>$user->getId(), 'question'=>$question->getId()));
+        if ($answer instanceof Answer){
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     private function updateUserCounters(Request $request)

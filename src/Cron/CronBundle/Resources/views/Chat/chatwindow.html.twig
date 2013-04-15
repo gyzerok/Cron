@@ -126,12 +126,10 @@
 			<input id="chat-nl-switch" type="checkbox" />
 		</div>
 		<div class="finishConversation{% if mychat %}{% if mychat.members|length<1 %} hidden{% endif %}{% endif %}">
-			<input type="button" value="{% trans %}закончить{% endtrans %}
-{% trans %}общение{% endtrans %}" />
+			<input type="button" value="{% trans %}закончить{% endtrans %}&#10;{% trans %}общение{% endtrans %}" />
 		</div>
         <div class="leaveConversation" style="display:none;">
-            <input type="button" value="{% trans %}выйти
-из чата{% endtrans %}" />
+            <input type="button" value="{% trans %}выйти{% endtrans %}&#10;{% trans %}из чата{% endtrans %}" />
         </div>
 	</div>
 {#
