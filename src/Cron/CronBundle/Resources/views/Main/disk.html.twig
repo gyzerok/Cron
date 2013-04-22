@@ -116,7 +116,7 @@
                 $("body").mousemove(function(event) {
                     clip.setText($('#file-path-field').val().trim());
                 });
-                $("#ZeroClipboardMovie_1").bind('click', function(){
+                $("#ZeroClipboardMovie_1").attr('title', '{% trans %}копировать ссылку{% endtrans %}').bind('click', function(){
                     alert('{% trans %}Ссылка скопирована в буфер обмена.{% endtrans %}');
                 });
 

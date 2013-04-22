@@ -13,6 +13,7 @@ use Cron\CronBundle\Entity\File;
 use Cron\CronBundle\Entity\Feedback;
 use Cron\CronBundle\Entity\AdminSettings;
 use Cron\CronBundle\Form\NewArticle;
+use Cron\CronBundle\Entity\Chat;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -167,18 +168,43 @@ class AdminController extends AbstractController
         if ($user->getRole()<1){
             $this->redirect("/");
         }
+        $em = $this->getDoctrine()->getManager();
 
-        $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($request->get("question"));
+        $question = $this->getDoctrine()->getRepository("CronCronBundle:Question")->find($request->get('question'));
         $note_questions = $this->getDoctrine()->getRepository("CronCronBundle:NotesQuestion")->findBy(array("question"=>$question->getId()));
         $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getId()));
 
-        $em = $this->getDoctrine()->getManager();
+        $chat = $this->getDoctrine()->getRepository("CronCronBundle:Chat")->findOneBy(array("question"=>$question->getId()));
+        if ($chat instanceof Chat)
+        {
+            $chats_msgs = $this->getDoctrine()->getRepository("CronCronBundle:ChatMsg")->findBy(array("chat"=>$chat->getId()));
+            $chats_srvmsgs = $this->getDoctrine()->getRepository("CronCronBundle:ChatSrvMsg")->findBy(array("chat"=>$chat->getId()));
+            $chats_membering = $this->getDoctrine()->getRepository("CronCronBundle:ChatMember")->findBy(array("chat"=>$chat->getId()));
+            $chats_invites = $this->getDoctrine()->getRepository("CronCronBundle:ChatInvite")->findBy(array("chat"=>$chat->getId()));
+
+            foreach ($chats_invites as $chats_invites1) {
+                $em->remove($chats_invites1);
+            }
+            foreach ($chats_membering as $chats_membering1) {
+                $em->remove($chats_membering1);
+            }
+            foreach ($chats_msgs as $chats_msgs1) {
+                $em->remove($chats_msgs1);
+            }
+            foreach ($chats_srvmsgs as $chats_srvmsgs1) {
+                $em->remove($chats_srvmsgs1);
+            }
+            $em->remove($chat);
+            $em->flush();
+        }
+
         foreach ($note_questions as $note_questions1) {
             $em->remove($note_questions1);
         }
         foreach ($answers as $answers1) {
             $em->remove($answers1);
         }
+
         $em->remove($question);
         $em->flush();
         return new Response("SUCCESS");

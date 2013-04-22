@@ -158,6 +158,13 @@ class Question extends AbstractEntity
     private $hide_on_index = false;
 
     /**
+     * @var boolean $hide_on_my_page
+     *
+     * @ORM\Column(name="hide_on_my_page", type="boolean", nullable=false)
+     */
+    private $hide_on_my_page = false;
+
+    /**
      * @var boolean $amnestied
      *
      * @ORM\Column(name="amnestied", type="boolean", nullable=false)
@@ -170,6 +177,13 @@ class Question extends AbstractEntity
      * @ORM\Column(name="locale", type="string", length=2, nullable=false)
      */
     private $locale = 'ru';
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="ignored_questions")
+     *
+     * @var ArrayCollection $ignored_by_users
+     */
+    private $ignored_by_users;
 
 
     /**
@@ -673,5 +687,61 @@ class Question extends AbstractEntity
     public function getAmnestied()
     {
         return $this->amnestied;
+    }
+
+    /**
+     * Add ignored_by_users
+     *
+     * @param Cron\CronBundle\Entity\User $ignoredByUsers
+     * @return Question
+     */
+    public function addIgnoredByUser(\Cron\CronBundle\Entity\User $ignoredByUsers)
+    {
+        $this->ignored_by_users[] = $ignoredByUsers;
+    
+        return $this;
+    }
+
+    /**
+     * Remove ignored_by_users
+     *
+     * @param Cron\CronBundle\Entity\User $ignoredByUsers
+     */
+    public function removeIgnoredByUser(\Cron\CronBundle\Entity\User $ignoredByUsers)
+    {
+        $this->ignored_by_users->removeElement($ignoredByUsers);
+    }
+
+    /**
+     * Get ignored_by_users
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getIgnoredByUsers()
+    {
+        return $this->ignored_by_users;
+    }
+
+    /**
+     * Set hide_on_my_page
+     *
+     * @param boolean $hideOnMyPage
+     * @return Question
+     */
+    public function setHideOnMyPage($hideOnMyPage)
+    {
+        $this->hide_on_my_page = $hideOnMyPage;
+    
+        return $this;
+    }
+
+    /**
+     * Get hide_on_my_page
+     *
+     * @return boolean 
+     */
+    public function getHideOnMyPage()
+    {
+        return $this->hide_on_my_page;
     }
 }

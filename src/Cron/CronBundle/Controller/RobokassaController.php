@@ -133,11 +133,13 @@ class RobokassaController extends AbstractController
         return new Response($new_crc);
     }
 
-    public function resultAction(Request $request) //doesn't work :(
+    public function resultAction(Request $request)
     {
         $user = $this->getUser();
         if (!$user instanceof User){
-            return $this->redirect("/");
+            echo "FAIL";
+            return;
+//            return $this->redirect("/");
         }
 
         $out_summ = $request->get("OutSum");
@@ -149,17 +151,19 @@ class RobokassaController extends AbstractController
         $my_crc = strtolower(md5("$out_summ:$inv_id:$this->mrh_pass2"));
 
         if ($my_crc !=$crc){
-            return new Response("FAIL");
+            echo "FAIL";
+            return;
 //            return $this->redirect("/credits?fail=1");
         } else {
-            $payment = $this->getDoctrine()->getRepository("CronCronBundle:Payment")->findOneBy(array('hash' => $my_crc, 'user' => $user->getId()));
+            $payment = $this->getDoctrine()->getRepository("CronCronBundle:Payment")->findOneBy(array('hash' => $inv_id, 'user' => $user->getId()));
             $payment->setPaid(1);
             $user->setCredits($user->getCredits()+(int)$out_summ);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($payment);
             $em->flush();
-            return "OK".$inv_id;
+            echo "OK".$inv_id;
+            return;
         }
 
 

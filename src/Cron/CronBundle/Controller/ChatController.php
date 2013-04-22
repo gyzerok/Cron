@@ -191,30 +191,31 @@ class ChatController extends AbstractController
     public function getChatSrvMsg($srvmsg){
         $user = $this->getUser();
         if (/*$request->isMethod('POST') && */($user instanceof User)){
+            $translator = $this->get('translator');
             switch($srvmsg->getMsgTextId()){
                 case "1":
-                    return sprintf('В чат вошел %s.', $srvmsg->getAboutUser()->getNick());
+                    return $translator->trans('В чат вошел %name%.', array('%name%' => $srvmsg->getAboutUser()->getNick()));
                     break;
                 case "2":
-                    return sprintf('В чат добавлен %s.', $srvmsg->getAboutUser()->getNick());
+                    return $translator->trans('В чат добавлен %name%.', array('%name%' => $srvmsg->getAboutUser()->getNick()));
                     break;
                 case "3":
-                    return sprintf('Чат покинул %s.', $srvmsg->getAboutUser()->getNick());
+                    return $translator->trans('Чат покинул %name%.', array('%name%' => $srvmsg->getAboutUser()->getNick()));
                     break;
                 case "4":
-                    return "Вы были удалены из чата.";
+                    return $translator->trans("Вы были удалены из чата.");
                     break;
                 case "5":
-                    return sprintf('Из чата был удален %s.', $srvmsg->getAboutUser()->getNick());
+                    return $translator->trans('Из чата был удален %name%.', array('%name%' => $srvmsg->getAboutUser()->getNick()));
                     break;
                 case "6":
-                    return "Чат завершен автором вопроса.";
+                    return $translator->trans("Чат завершен автором вопроса.");
                     break;
                 case "7":
-                    return "Чат завершен.";
+                    return $translator->trans("Чат завершен.");
                     break;
                 case "8":
-                    return sprintf('%s прекратил общение с вами.', $srvmsg->getAboutUser()->getNick());
+                    return $translator->trans('%name% прекратил общение с вами.', array('%name%' => $srvmsg->getAboutUser()->getNick()));
                     break;
                 default:
                     break;
@@ -755,7 +756,7 @@ class ChatController extends AbstractController
 
 
             $response = '<div class="singleMessage srv-message">
-                                <div class="messageText">'.$this->get('translator')->trans('Чат завершен').'</div>
+                                <div class="messageText">'.$this->get('translator')->trans('Чат завершен.').'</div>
                             </div>';
             return new Response($response);
         }

@@ -13,7 +13,7 @@
 введите вопрос: digite uma pergunta
 Войти:	Entrar
 Регистрация:	Registrar
-Выйти:	sair
+Выйти:	Sair
 логин:	login
 пароль:	senha
 Пароль:	Senha
@@ -33,14 +33,17 @@
 статьи:	artigos
 автор:	autor
 источник:	fonte
+Источник:	Fonte
 Ссылка:	Link
+Автор статьи: o autor
 блокнот:	Bloco de Notas
 закрыть блокнот: close notebook
 добавить ссылку:	adicionar link
 адрес страницы в интернете:	webpage address
 Название::	Título:
 удалить:	deletar
-удалить ссылку:	delete link
+Приглашений нет: Nenhum convite
+удалить ссылку:	remover link
 Адрес файла:	Arquivo de endereço
 добавить:	adicionar
 занято:	ocupado
@@ -57,13 +60,14 @@
 приглашения в чат:	convites para bate-papo
 Приглашения в чат:	convites para bate-papo  
 окно чата:	janela de bate-papo
-Мой чат:	Mey bate-papo
-Входящий чат:	Bate-papo recebido
+Мой чат:	My chat
+Входящий чат:	Incoming chat
 закончить:  encerrar 
 общение:  bate-papo
-выйти:	sair
+выйти:	Sair
 из чата: do bate-papo
 О нас:	Sobre nós
+Сообщение отправлено на: Mensagem enviada para o
 Выберите категорию:: Selecione uma categoria:
 Введите Ваш email: Digite o seu e-mail
 Введите текст сообщения: Digite o texto da mensagem
@@ -137,6 +141,8 @@ email:	e-mail
 все:	tudo
 вопросы по категориям:	perguntas por categoria
 срочные:	urgentes
+срочные вопросы:	urgentes perguntas
+Срочные:	Urgentes
 новая строка в чате:	uma nova linha no bate-papo
 личные сообщения:	mensagens Privadas
 сохранить:	salvar
@@ -186,7 +192,7 @@ email:	e-mail
 обновляется...: updating...
 Этот ресурс создан для быстрого поиска людей, обладающих нужными Вам знаниями. Здесь Вы можете найти интересных собеседников и обсуждать интересующие Вас вопросы. ADITUS сделает Вашу жизнь проще и сэкономит много времени: Este recurso foi criado para que se possa rapidamente procurar as pessoas com conhecimentos úteis para sua pesquisa. Você poderá encontrar interessantes interlocutores e discutir suas questões aqui. ADITUS pode tornar sua vida mais fácil e ajudar você a economizar tempo em pesquisas relevantes.
 На ADITUS Вы можете задать свой вопрос любому пользователю или группе специалистов из области вашего вопроса  в режиме онлайн и, оценив полученные ответы, выбрать подходящего собеседника для приватной беседы,  либо продолжить обсуждение в группе.  Это безусловно повысит эффективность использования интернета и сэкономит самый драгоценный ресурс – время.: Na ADITUS, você pode fazer uma pergunta a qualquer usuário ou grupo de especialistas no campo da sua pesquisa, online e, a partir da avaliação das respostas, selecionar o interlocutor adequado para uma conversa privada ou continuar a discussão em grupo. Certamente, isso ajudará você a aumentar a eficiência no uso da Internet e a economizar o recurso mais precioso: o tempo.
-выгнать пользователя: 
+выгнать пользователя: expulsar usuário
 отправить сообщение: send a message
 на главную:
 
@@ -1009,3 +1015,12 @@ rules_bigtext: |
     <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:"Times New Roman","serif";
     mso-ansi-language:EN-US'>With numerous violations of the rules your account may
     be deleted.<o:p></o:p></span></p>
+
+Вы были удалены из чата.: Você foi removido do papo.
+Чат завершен автором вопроса.: Asker de chat concluída.
+Чат завершен.: Bater papo concluída.
+Вы вышли из чата.: Você está fora do bate-papo.
+В чат добавлен %name%.: %name% adicionado ao chat.
+В чат вошел %name%.: %name% entrou para o bate-papo.
+Чат покинул %name%.: %name% saiu do bate-papo.
+Из чата был удален %name%.: %name% foi removido do papo.

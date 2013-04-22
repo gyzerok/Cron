@@ -153,12 +153,15 @@
                         url: "/ajax/closeMyQuestion",
                         type: "POST",
                         data: {
-                            question: question.data('id')
+                            question: question.data('id'),
+                            hide_on_my_page: ($(".question-wrap").is('.my') ? true : false)
                         },
                         success:function () {}
                     });
                     question.find('.closeMyQuestion').remove();
-//                    question.remove();
+                    if ($(".question-wrap").is('.my')){
+                        question.remove();
+                    }
                 }
             });
 
@@ -388,17 +391,17 @@
             {% endif %}
         {% endif %}
     {% else %}
-        <h2 class="categoryTitle">Мои вопросы</h2>
+        <h2 class="categoryTitle">{% trans %}Мои вопросы{% endtrans %}</h2>
     {% endif %}
     {% if userQuestions|length > 0 %}
-        <div class="question-wrap">
+        <div class="question-wrap {% if app.request.requestUri=='/my' %}my{% endif %}">
         {% for question in userQuestions %}
                 <div class="singleQuestion" data-id="{{ question.getId() }}">
                     <div style="border: 1px solid #fff;" class="userName"></div>
                     <div class="questionDate">{{ question.datetime|date('d.m.Y H:i') }}</div>
-                    {% if form %}
+                    {#{% if form %}#}
                         <div class="closeButton" title="{% trans %}удалить из списка{% endtrans %}"></div>
-                    {% endif %}
+                    {#{% endif %}#}
                     <div style="clear: both;"></div>
                     <div class="questionText">
                         {{ question.text|raw }}

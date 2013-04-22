@@ -86,7 +86,7 @@ class AbstractController extends Controller implements InitializableControllerIn
 
             $html = '';
             foreach ($links as $link) {
-                $html .= '<li data-id="'.$link->getId().'"><a href="'.$link->getUrl().'" target="_blank">'.$link->getTitle().'</a><a title="удалить ссылку" class="delete-link"></a></li>';
+                $html .= '<li data-id="'.$link->getId().'"><a href="'.$link->getUrl().'" target="_blank">'.$link->getTitle().'</a><a title="'.$this->get('translator')->trans('удалить ссылку').'" class="delete-link"></a></li>';
             }
 
             return $html;
@@ -97,7 +97,7 @@ class AbstractController extends Controller implements InitializableControllerIn
     {
         $user = $this->getUser();
         if (!$user instanceof User){
-            return "sound_inChat sound_personalMessage sound_chatInvite sound_newQuestion sound_questionIsClosed ";
+            return "sound_inChat sound_personalMessage sound_chatInvite sound_rushQuestion sound_catQuestion sound_questionIsClosed ";
         } else {
             $my_settings = $user->getSettings();
             if ($my_settings instanceof UserSettings){
@@ -108,8 +108,10 @@ class AbstractController extends Controller implements InitializableControllerIn
                         if ($val){
                             switch($sound){
                                 case 'cats':
+                                    $classes .= "sound_catQuestion ";
+                                    break;
                                 case 'rush':
-                                    $classes .= "sound_newQuestion ";
+                                    $classes .= "sound_rushQuestion ";
                                     break;
                                 case 'invite':
                                     $classes .= "sound_chatInvite ";
@@ -126,11 +128,11 @@ class AbstractController extends Controller implements InitializableControllerIn
                     }
                     $classes .= "sound_questionIsClosed ";
                 } else {
-                    return "sound_inChat sound_personalMessage sound_chatInvite sound_newQuestion sound_questionIsClosed ";
+                    return "sound_inChat sound_personalMessage sound_chatInvite sound_rushQuestion sound_catQuestion sound_questionIsClosed ";
                 }
                 return $classes;
             } else {
-                return "sound_inChat sound_personalMessage sound_chatInvite sound_newQuestion sound_questionIsClosed ";
+                return "sound_inChat sound_personalMessage sound_chatInvite sound_rushQuestion sound_catQuestion sound_questionIsClosed ";
             }
 
         }
@@ -230,7 +232,7 @@ class AbstractController extends Controller implements InitializableControllerIn
             9 => $trans->trans("техника"),
             10 => $trans->trans("знакомства, общение"),
             11 => $trans->trans("экономика"),
-            12 => $trans->trans("юриспрунденция"),
+            12 => $trans->trans("юриспруденция"),
             13 => $trans->trans("опросы"),
             14 => $trans->trans("новости"),
             15 => $trans->trans("спорт"),

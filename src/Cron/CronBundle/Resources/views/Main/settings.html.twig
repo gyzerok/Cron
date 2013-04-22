@@ -48,15 +48,15 @@
                     <div class="settingsGroupHeader">{% trans %}по категориям{% endtrans %}</div>
                     {% for category in categories %}
                         {% if not loop.first %}
-                            <input type="checkbox" name="cat[{{ category.getId() }}]" id="income_{{ category.getId() }}" {{ settings.income_cats[category.getId()] }}> <label for="income_{{ category.getId() }}">{{ category.getName() }}</label><br>
+                            <input type="checkbox" name="cat[{{ category.getId() }}]" id="income_{{ category.getId() }}" {{ settings.income_cats[category.getId()] }}> <label for="income_{{ category.getId() }}">{{ category.getName()|trans }}</label><br>
                         {% endif %}
                     {% endfor %}
                 </div>
                 <div style="float:left; margin-left: 36px">
                     <div class="settingsGroupHeader">{% trans %}по языкам{% endtrans %}</div>
-                    <input type="checkbox" name="ru" id="income_ru" {{ settings.income_locale.ru }}> <label for="income_ru">на русском</label><br>
-                    <input type="checkbox" name="en" id="income_en" {{ settings.income_locale.en }}> <label for="income_en">на английском</label><br>
-                    <input type="checkbox" name="pt" id="income_pt" {{ settings.income_locale.pt }}> <label for="income_pt">на португальском</label><br>
+                    <input type="checkbox" name="ru" id="income_ru" {{ settings.income_locale.ru }}> <label for="income_ru">{% trans %}на русском{% endtrans %}</label><br>
+                    <input type="checkbox" name="en" id="income_en" {{ settings.income_locale.en }}> <label for="income_en">{% trans %}на английском{% endtrans %}</label><br>
+                    <input type="checkbox" name="pt" id="income_pt" {{ settings.income_locale.pt }}> <label for="income_pt">{% trans %}на португальском{% endtrans %}</label><br>
                 </div>
                 <input type="submit" class="settingsSubmit large" value="{% trans %}сохранить{% endtrans %}">
                 <input type="button" class="closeSettingsGroup large" value="{% trans %}отмена{% endtrans %}">
@@ -72,21 +72,21 @@
                     <div class="settingsGroupHeader">{% trans %}по категориям{% endtrans %}</div>
                     {% for category in categories %}
                         {% if not loop.first %}
-                            <input type="checkbox" name="cat[{{ category.getId() }}]" id="view_{{ category.getId() }}"  {{ settings.view_cats[category.getId()] }}> <label for="view_{{ category.getId() }}">{{ category.getName() }}</label><br>
+                            <input type="checkbox" name="cat[{{ category.getId() }}]" id="view_{{ category.getId() }}"  {{ settings.view_cats[category.getId()] }}> <label for="view_{{ category.getId() }}">{{ category.getName()|trans }}</label><br>
                         {% endif %}
                     {% endfor %}
                 </div>
                 <div style="float:left; margin-left: 36px">
                     <div class="settingsGroupHeader">{% trans %}по языкам{% endtrans %}</div>
-                    <input type="checkbox" name="ru" id="view_ru" {{ settings.view_locale.ru }}> <label for="view_ru">на русском</label><br>
-                    <input type="checkbox" name="en" id="view_en" {{ settings.view_locale.en }}> <label for="view_en">на английском</label><br>
-                    <input type="checkbox" name="pt" id="view_pt" {{ settings.view_locale.pt }}> <label for="view_pt">на португальском</label><br>
+                    <input type="checkbox" name="ru" id="view_ru" {{ settings.view_locale.ru }}> <label for="view_ru">{% trans %}на русском{% endtrans %}</label><br>
+                    <input type="checkbox" name="en" id="view_en" {{ settings.view_locale.en }}> <label for="view_en">{% trans %}на английском{% endtrans %}</label><br>
+                    <input type="checkbox" name="pt" id="view_pt" {{ settings.view_locale.pt }}> <label for="view_pt">{% trans %}на португальском{% endtrans %}</label><br>
                     <br>
                     <div class="settingsGroupHeader">{% trans %}по времени{% endtrans %}</div>
-                    <input type="radio" name="by_time" id="view_day" value="day" {{ settings.view_by_time.day }}> <label for="view_day">за сутки</label><br>
-                    <input type="radio" name="by_time" id="view_week" value="week" {{ settings.view_by_time.week }}> <label for="view_week">за неделю</label><br>
-                    <input type="radio" name="by_time" id="view_month" value="month" {{ settings.view_by_time.month }}> <label for="view_month">за месяц</label><br>
-                    <input type="radio" name="by_time" id="view_all" value="all" {{ settings.view_by_time.all }}> <label for="view_all">все</label><br>
+                    <input type="radio" name="by_time" id="view_day" value="day" {{ settings.view_by_time.day }}> <label for="view_day">{% trans %}за сутки{% endtrans %}</label><br>
+                    <input type="radio" name="by_time" id="view_week" value="week" {{ settings.view_by_time.week }}> <label for="view_week">{% trans %}за неделю{% endtrans %}</label><br>
+                    <input type="radio" name="by_time" id="view_month" value="month" {{ settings.view_by_time.month }}> <label for="view_month">{% trans %}за месяц{% endtrans %}</label><br>
+                    <input type="radio" name="by_time" id="view_all" value="all" {{ settings.view_by_time.all }}> <label for="view_all">{% trans %}все{% endtrans %}</label><br>
                 </div>
                 <input type="submit" class="settingsSubmit large all-topics" value="{% trans %}сохранить{% endtrans %}">
                 <input type="button" class="closeSettingsGroup large all-topics" value="{% trans %}отмена{% endtrans %}">
@@ -98,11 +98,11 @@
         <div class="settingsGroup" style="width: 294px;margin-left:-16px;margin-top: 5px;">
             <form action="/ajax/saveSettings" method="post">
                 <input type="hidden" name="group" value="sound">
-                <input type="checkbox" name="cats" id="sound_cats" {{ settings.sounds.cats }}> <label for="sound_cats">вопросы по категориям</label><br>
-                <input type="checkbox" name="rush" id="sound_rush" {{ settings.sounds.rush }}> <label for="sound_rush">срочные вопросы</label><br>
-                <input type="checkbox" name="invite" id="sound_invite" {{ settings.sounds.invite }}> <label for="sound_invite">приглашения в чат</label><br>
-                <input type="checkbox" name="chat" id="sound_chat" {{ settings.sounds.chat }}> <label for="sound_chat">новая строка в чате</label><br>
-                <input type="checkbox" name="dialog" id="sound_dialog" {{ settings.sounds.dialog }}> <label for="sound_dialog">личные сообщения</label><br>
+                <input type="checkbox" name="cats" id="sound_cats" {{ settings.sounds.cats }}> <label for="sound_cats">{% trans %}вопросы по категориям{% endtrans %}</label><br>
+                <input type="checkbox" name="rush" id="sound_rush" {{ settings.sounds.rush }}> <label for="sound_rush">{% trans %}срочные вопросы{% endtrans %}</label><br>
+                <input type="checkbox" name="invite" id="sound_invite" {{ settings.sounds.invite }}> <label for="sound_invite">{% trans %}приглашения в чат{% endtrans %}</label><br>
+                <input type="checkbox" name="chat" id="sound_chat" {{ settings.sounds.chat }}> <label for="sound_chat">{% trans %}новая строка в чате{% endtrans %}</label><br>
+                <input type="checkbox" name="dialog" id="sound_dialog" {{ settings.sounds.dialog }}> <label for="sound_dialog">{% trans %}личные сообщения{% endtrans %}</label><br>
                 <input type="submit" class="settingsSubmit" value="{% trans %}сохранить{% endtrans %}">
                 <input type="button" class="closeSettingsGroup" value="{% trans %}отмена{% endtrans %}">
             </form>

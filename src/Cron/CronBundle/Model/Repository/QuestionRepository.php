@@ -27,7 +27,7 @@ class QuestionRepository extends EntityRepository
     public function findAllMyByUser(\Cron\CronBundle\Entity\User $user)
     {
         $questions = $this->createQueryBuilder('question')
-            ->where('question.user = :uid AND question.status <> :status ')
+            ->where('question.user = :uid AND question.status <> :status AND question.hide_on_my_page = 0 ')
             ->setParameters(array('status' => DELETED, 'uid' => $user->getId()))
             ->orderBy('question.datetime', 'DESC')
             ->getQuery()

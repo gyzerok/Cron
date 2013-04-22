@@ -17,6 +17,8 @@ Cron\CronBundle\Entity\User:
       - NotBlank:   { message: "поле не заполнено" }
     gender:
       - NotBlank:   { message: "укажите ваш пол" }
+    birthDate:
+      - NotBlank:   { message: "поле не заполнено" }
     country:
       - NotBlank:   { message: "поле не заполнено" }
 #    state:

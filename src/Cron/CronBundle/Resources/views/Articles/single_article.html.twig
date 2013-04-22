@@ -8,7 +8,7 @@
         <div class="single-article-text">{{ article.getText()|raw }}</div>
 		<div style="clear: both;"></div>
         <div class="single-article-source">
-            <b>{{ article.getLinkTypeTextly() }}:</b><br/>
+            <b>{{ article.getLinkTypeTextly()|trans }}:</b><br/>
             {% if article.getLinkType()==3 %}
                 {{ article.getLinkValue() }}
             {% else %}

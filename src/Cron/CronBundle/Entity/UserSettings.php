@@ -24,10 +24,8 @@ class UserSettings {
     /**
      * @var User
      *
-     * @ORM\OneToOne(targetEntity="User")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="user", referencedColumnName="id", nullable=false)
-     * })
+     * @ORM\OneToOne(targetEntity="User", inversedBy="settings")
+     * @ORM\JoinColumn(name="user", referencedColumnName="id", nullable=false)
      */
     protected $user;
 

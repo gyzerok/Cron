@@ -80,7 +80,7 @@ $(document).ready(function(){
                 data: { dialog:singleDialog.data('dialog') }
             });
             removeSingleDialog(singleDialog);
-            $(".open-dialog-list").animate({color: '#383838'}, 500);
+            $(".open-dialog-list").removeClass('animated').animate({color: '#383838'}, 500);
         }
         return false;
     });
@@ -93,7 +93,7 @@ $(document).ready(function(){
                 data: { dialog:singleDialog.data('dialog') }
             });
             removeSingleDialog(singleDialog);
-            $(".open-dialog-list").animate({color: '#383838'}, 500);
+            $(".open-dialog-list").removeClass('animated').animate({color: '#383838'}, 500);
         }
         return false;
     });
@@ -193,7 +193,7 @@ $(document).ready(function(){
 
     var chat_container = $(".chat-container");
     $('.chatWindow').click(function() {
-        $(this).removeClass('indicate');
+        $(this).removeClass('indicate').removeAttr('style');
         if (!$('.chat-tab.newMsgs').size()){
             addChatLoadingOverlay();
 //            chat_container.html('<div class="chat-empty-text">Загрузка...</div>');
@@ -232,7 +232,7 @@ $(document).ready(function(){
 
         openChat.show();
         $(".chat-input").focus();
-        $(".open-dialog-list").animate({color: '#383838'}, 500);
+        $(".open-dialog-list").removeClass('animated').animate({color: '#383838'}, 500);
     });
     $('.closeChat').click(function() {
 //        openChat.fadeOut();
@@ -241,6 +241,7 @@ $(document).ready(function(){
         });
         $('.chatWrapper').fadeOut();
         openChat.hide();
+        $(".chatWindow").removeAttr('style');
     });
     $(".kickUser").live('click', function(){
         if (confirm('{% trans %}Выгнать пользователя{% endtrans %}?')) {
@@ -389,7 +390,9 @@ $(document).ready(function(){
         var invites_container = $(".chatInviteWindow .invites-container");
         if (invites_container.find('.singleInvite').size()){
             if ($("body").is('.sound_chatInvite')){
-                soundManager.play('chatInvite');
+                soundManager.onready = function(){
+                    soundManager.play('chatInvite');
+                };
             }
             $(".chatInvite").addClass('indicate');
         }
@@ -397,9 +400,11 @@ $(document).ready(function(){
         var dialogs_container = $(".dialogsWrapper .dialogs-container");
         if (dialogs_container.find('.messagesAmount').text()!=''){
             if ($("body").is('.sound_personalMessage')){
-                soundManager.play('personalMessage');
+                soundManager.onready = function(){
+                    soundManager.play('personalMessage');
+                };
             }
-            $(".open-dialog-list").animate({color: '#e85b2d '}, 500); //todo color
+            $(".open-dialog-list").addClass('animated').animate({color: '#e85b2d '}, 500);
         }
     }
 
@@ -451,10 +456,10 @@ function updateChat(){
 //                });
             }
             if (data.new_dialogs){
-                if ($("body").is('.sound_personalMessage')){
+                if ($("body").is('.sound_personalMessage') && !$(".open-dialog-list").is('.animated')){
                     soundManager.play('personalMessage');
                 }
-                $(".open-dialog-list").animate({color: '#e85b2d '}, 500);
+                $(".open-dialog-list").addClass('animated').animate({color: '#e85b2d '}, 500);
             }
 
             $("#chat-last-update").attr('value', data.chat_last_update);
@@ -553,7 +558,7 @@ function indicateChatInvite () {
             .animate({borderWidth: '2px', borderColor: '#e6e6e6', color: '#333'}, 500);
 //        $(".chat-tab.indicate").animate({borderWidth: '2px', borderColor: '#e85b2d', color: '#000'}, 500)
 //            .animate({borderWidth: '2px', borderColor: '#e6e6e6', color: '#333'}, 500);
-        $(".chatWindow.indicate").animate({backgroundColor: '#ffebdb'})
+        $(".chatWindow.indicate").animate({backgroundColor: '#e2cfbd'})
             .animate({backgroundColor:'#fff'});
     }
 }
@@ -568,6 +573,9 @@ function removeChatLoadingOverlay(){
 function sendMessage(chatInput) {
     var message = chatInput.val();
     if (message) {
+        if ($("body").is('.sound_inChat')){
+            soundManager.play('inChat');
+        }
         var current_chat = $(".chat-content:visible");
         if (current_chat.data('dialog-id')) {
             $.ajax({

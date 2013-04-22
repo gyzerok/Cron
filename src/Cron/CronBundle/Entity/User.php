@@ -76,7 +76,7 @@ class User implements UserInterface, \Serializable
     /**
      * @var \DateTime $birthDate
      *
-     * @ORM\Column(name="birth_date", type="date", nullable=true)
+     * @ORM\Column(name="birth_date", type="date", nullable=false)
      */
     private $birthDate;
 
@@ -181,13 +181,12 @@ class User implements UserInterface, \Serializable
     private $credits = 0;
 
     /**
-     * @ORM\OneToOne(targetEntity="UserSettings")
-     * @ORM\JoinColumn(name="settings", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="UserSettings", mappedBy="user")
      */
     private $settings;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Question")
+     * @ORM\ManyToMany(targetEntity="Question", cascade={"persist", "remove"}, inversedBy="ignored_by_users")
      * @ORM\JoinTable(name="ignored_questions",
      *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="question_id", referencedColumnName="id")}

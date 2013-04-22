@@ -1552,6 +1552,18 @@ span.agreementLabel a:hover {
 	top: 25px;
 	margin: 0;
 	padding: 0;
+    width: 160px;
+}
+
+.birthDateError {
+    font-family: 'Arial';
+    font-size: 18px;
+    color: #ff5151;
+    position: absolute;
+    right: 345px;
+    top: 20px;
+    margin: 0;
+    padding: 0;
 }
 
 .genderError {

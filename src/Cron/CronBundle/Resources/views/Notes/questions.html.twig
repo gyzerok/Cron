@@ -30,38 +30,48 @@
                         {{ item.getQuestion().getText()|raw }}
                         <div class="socialIcons" style="width: 75px;">
                             <form class="answer">
-                                <input class="answerButton" type="button" value="{% trans %}ответить{% endtrans %}" />
+                                {% if item.iAnswered or not curUser %}
+                                    {% if item.getQuestion().getPrivate()<1 %}
+                                        <input class="answerButton" type="button" {% if not item.getQuestion().getAnswers()|length  %}disabled="disabled"{% endif %} value="{{ item.getQuestion().getAnswers()|length }} {{ 'отв'|trans }}" data-alter-name="{% trans %}свернуть{% endtrans %}" />
+                                    {% else %}
+                                        <input class="answerButton" type="button" value="{% trans %}закрытый{% endtrans %}" data-alter-name="{% trans %}свернуть{% endtrans %}" />
+                                    {% endif %}
+                                {% else %}
+                                    <input class="answerButton" type="button" value="{% trans %}ответить{% endtrans %}" data-alter-name="{% trans %}свернуть{% endtrans %}" />
+                                {% endif %}
                             </form>
                         </div>
                     </div>
                 </div>
-                <div class="myAnswer {% if item.answers==null %}no-border{% endif %}">
-                    {#{% if item.getPrivate()>0 %}#}
-                    {% for answer in item.answers %}
-                        <div class="singleAnswer" data-user="{{ answer.getUser().getId() }}">
-                            <div class="userName">{{ answer.getUser().getNick() }}</div>
-                            <div class="answerDate">{{ answer.getPubDate()|date("Y-m-d H:i:s") }}</div>
-                            <div style="clear: both;"></div>
-                            <div class="questionText">
-                                {{ answer.getText()|raw }}
-                                <div class="socialIcons">
-                                    <div class="spamButton" title="{% trans %}отметить как спам{% endtrans %}"></div>
-                                    <div class="likeButton" title="{% trans %}мне нравится{% endtrans %}"></div>
-                                    <div class="arrowButton inviteUser" title="{% trans %}пригласить в чат{% endtrans %}"></div>
-                                    <div class="letterButton sendMessage" title="{% trans %}отправить личное сообщение{% endtrans %}"></div>
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                    {#{% endif %}#}
-                </div>
-                <form class="answerForm">
-                    <textarea class="answerTextarea" ></textarea>
-                    <div class="answerFormNavigation">
-                        <input class="submitAnswerButton" type="submit" value="{% trans %}отправить{% endtrans %}" />
-                        <input class="cancelButton" type="button" value="{% trans %}отменить{% endtrans %}" />
+                {% if item.iAnswered or not curUser %}
+                    <div class="myAnswer {% if item.getQuestion().getAnswers()|length == 0 %}no-border{% endif %}">
+                        {% if item.getQuestion().getPrivate()<1 %}
+                            {% for answer in item.getQuestion().getAnswers() %}
+                                {% if curUser not in answer.getSpams() %}
+                                    <div class="singleAnswer likable-item" data-user="{{ answer.getUser().getId() }}" data-id="{{ answer.getId() }}">
+                                        <div class="userName">{{ answer.getUser().getNick() }}</div>
+                                        <div class="answerDate">{{ answer.getPubDate()|date('d.m.Y H:i') }}</div>
+                                        <div style="clear: both;"></div>
+                                        <div class="questionText">
+                                            {{ answer.getText()|raw }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
                     </div>
-                </form>
+                    <form class="answerForm"></form>
+                {% else %}
+                    <div class="myAnswer no-border">
+                    </div>
+                    <form class="answerForm">
+                        <textarea class="answerTextarea" ></textarea>
+                        <div class="answerFormNavigation">
+                            <input class="cancelButton" type="button" value="{% trans %}отмена{% endtrans %}" />
+                            <input class="submitAnswerButton" type="submit" value="{% trans %}отправить{% endtrans %}" />
+                        </div>
+                    </form>
+                {% endif %}
             {% endfor %}
         </ul>
     {% else %}

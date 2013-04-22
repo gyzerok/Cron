@@ -45,7 +45,7 @@ class Registration extends AbstractType
                 ->add('password', 'repeated', array('required' => false, 'first_name' => 'Password', 'second_name' => 'Confirm', 'type' => 'password', 'first_options'  => array('max_length'=>12), 'second_options'  => array('max_length'=>12)))
                 ->add('nick', null, array('label' => 'Ваше имя', 'required' => false, 'max_length'=>12))
                 ->add('gender', 'choice', array('label' => 'Пол', 'choices' => array(1 => 'Мужской', 2 => 'Женский'), 'expanded' => true, 'required' => false))
-                ->add('birthDate', 'birthday', array('label' => 'Дата рождения', 'format' => 'dd MMMM yyyy', 'years' => $years, 'required' => false))
+                ->add('birthDate', 'birthday', array('label' => 'Дата рождения', 'format' => 'dd MMMM yyyy', 'empty_value' => '', 'years' => $years, 'required' => false))
                 ->add('country', 'entity', array('label' => 'Страна', 'class' => 'CronCronBundle:Country', 'property' => 'name_'.substr($this->locale,0,2), 'empty_value' => 'Все страны', 'required' => false))
                 ->add('state', 'entity', array('label' => 'Регион', 'class' => 'CronCronBundle:State', 'property' => 'name', 'empty_value' => 'Все регионы', 'disabled' => true, 'required' => false, 'query_builder' => function(EntityRepository $er) {
                     return $er->createQueryBuilder('state')

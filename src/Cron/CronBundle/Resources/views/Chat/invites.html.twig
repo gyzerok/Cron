@@ -1,7 +1,7 @@
 {% for invite in invites %}
     <div class="singleInvite" data-invite="{{ invite.getId() }}">
         <div class="InviteUsername">{{ invite.user1.getNick() }}</div>
-        <input type="button" class="decline-invite" value="отклонить" />
-        <input type="button" class="accept-invite" value="подтвердить" />
+        <input type="button" class="decline-invite" value="{% trans %}отклонить{% endtrans %}" />
+        <input type="button" class="accept-invite" value="{% trans %}подтвердить{% endtrans %}" />
     </div>
 {% endfor %}

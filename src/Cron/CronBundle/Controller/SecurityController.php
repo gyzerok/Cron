@@ -83,14 +83,14 @@ class SecurityController extends AbstractController
                     ->setFrom("aditus777@gmail.com")
                     ->setTo($user->getUsername())
                     ->setBody('<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body>' .
-                    $translator->trans('Здравствуйте!').'<br>' .
+                    $translator->trans('Здравствуйте!').'<br><br>' .
                     $translator->trans('Перейдите по ссылке для изменения вашего пароля').':<br><a href="http://' . $_SERVER['HTTP_HOST'] . '/change_password?id=' . $user->getId() . '&hash=' . $hash . '">http://' . $_SERVER['HTTP_HOST'] . '/change_password?id=' . $user->getId() . '&hash=' . $hash . '</a><br>' .
                     '('.$translator->trans('если не можете нажать на нее, скопируйте ее в адресную строку Вашего браузера').')<br><br>' .
                     $translator->trans('С уважением, служба поддержки aditus.ru').'<br>' .
                     '</body></html>');
                 $mailer->send($message);
 
-                return $this->render('CronCronBundle:Main:info.html.twig', array('info' => 'Сообщение отправлено на ' . $user->getUsername(), 'totalUserCount' => $this->totalUserCount, 'onlineUserCount' => $this->onlineUserCount, 'curUser' => $this->user));
+                return $this->render('CronCronBundle:Main:info.html.twig', array('info' => $this->get('translator')->trans('Сообщение отправлено на').' ' . $user->getUsername(), 'totalUserCount' => $this->totalUserCount, 'onlineUserCount' => $this->onlineUserCount, 'curUser' => $this->user));
             }
 
             return $this->render('CronCronBundle:Main:info.html.twig', array('info' => 'Такого пользователя не существует', 'totalUserCount' => $this->totalUserCount, 'onlineUserCount' => $this->onlineUserCount, 'curUser' => $this->user));

@@ -61,9 +61,9 @@ robokassa_prepare:
   pattern: /pay/prepare
   defaults: { _controller: CronCronBundle:Robokassa:prepare}
 
-#robokassa_result:
-#  pattern: /pay/result
-#  defaults: { _controller: CronCronBundle:Robokassa:result}
+robokassa_result:
+  pattern: /pay/result
+  defaults: { _controller: CronCronBundle:Robokassa:result}
 
 robokassa_get_robolink:
   pattern: /pay/getRobolink

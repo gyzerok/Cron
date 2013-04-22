@@ -774,7 +774,7 @@ class AjaxController extends AbstractController
 
                 }
                 $data['rush_questions'] = $html;
-                $user->setLastRushView(new \DateTime());
+//                $user->setLastRushView(new \DateTime());
 
                 $em->persist($user);
                 $em->flush();
@@ -794,7 +794,7 @@ class AjaxController extends AbstractController
                     foreach ($answers as $ans) {
                         if (!$ans->getSpams()->contains($user)){
 //                            if (!in_array($user, (array)$ans->getSpams())){
-                                $html .= '<div class="singleAnswer" data-user="'.$ans->getUser()->getId().'" data-id="'.$ans->getId().'"><div class="userName">'.$ans->getUser()->getNick().'</div><div class="answerDate">'.$ans->getPubDate()->format("d.m.Y H:i").'</div><div style="clear: both;"></div><div class="questionText">'.$ans->getText().'<div class="socialIcons"><div class="spamButton '.($ans->getSpams()->contains($user) ? 'spamButtonActive' : '').'"></div><div class="likeButton '.(in_array($user, (array)$ans->getLikes()) ? 'likeButtonActive' : '').'"></div><div class="arrowButton inviteUser"></div><div class="letterButton sendMessage"></div></div></div></div>';
+                                $html .= '<div class="singleAnswer" data-user="'.$ans->getUser()->getId().'" data-id="'.$ans->getId().'"><div class="userName">'.$ans->getUser()->getNick().'</div><div class="answerDate">'.$ans->getPubDate()->format("d.m.Y H:i").'</div><div style="clear: both;"></div><div class="questionText">'.$ans->getText().'<div class="socialIcons"><div title="'.$this->get('translator')->trans('отметить как спам').'" class="spamButton '.($ans->getSpams()->contains($user) ? 'spamButtonActive' : '').'"></div><div title="'.$this->get('translator')->trans('мне нравится').'" class="likeButton '.(in_array($user, (array)$ans->getLikes()) ? 'likeButtonActive' : '').'"></div><div title="'.$this->get('translator')->trans('пригласить в чат').'" class="arrowButton inviteUser"></div><div title="'.$this->get('translator')->trans('отправить личное сообщение').'" class="letterButton sendMessage"></div></div></div></div>';
                                 $j++;
 //                            }
                         }
@@ -885,6 +885,9 @@ class AjaxController extends AbstractController
 
         if ($question->getUser()==$user)
         {
+            if ($request->get('hide_on_my_page')){
+                $question->setHideOnMyPage(true);
+            }
             $question->setStatus(2);
 
             $em->persist($question);
@@ -900,7 +903,9 @@ class AjaxController extends AbstractController
     public function hideMyQuestionAction(Request $request)
     {
         $user = $this->getUser();
+        $guest = false;
         if (!$user instanceof User){
+            $guest = true;
             $user = $this->getDoctrine()->getRepository('CronCronBundle:User')->findOneByUsername('Guest');
         }
 
@@ -912,6 +917,10 @@ class AjaxController extends AbstractController
 
         if ($question->getUser()==$user){
             $question->setHideOnIndex(true);
+
+            if ($guest){
+                $question->setStatus(2);
+            }
 
             $em->persist($question);
 

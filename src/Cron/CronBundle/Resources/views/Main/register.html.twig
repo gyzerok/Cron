@@ -173,11 +173,13 @@
 			</div>
 			<div class="registrationField">
 				{{ form_label(form.birthDate) }}
-				{{ form_errors(form.birthDate) }}
 				<span class="birtDateDescription">{% trans %}День{% endtrans %}&nbsp;&nbsp; {% trans %}Месяц{% endtrans %} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% trans %}Год{% endtrans %}</span>
 				<div class="birthDateSelect">
 				{{ form_widget(form.birthDate) }}
 				</div>
+                <div class="birthDateError">
+                    {{ form_errors(form.birthDate) }}
+                </div>
 			</div>
 	<div class="registrationFieldPlace">
 		<span class="placeLabel">{% trans %}Местонахождение{% endtrans %}</span>

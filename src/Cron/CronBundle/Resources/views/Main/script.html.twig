@@ -1,6 +1,6 @@
 <script>
 var mySound1,mySound2,mySound3,mySound4,mySound5;
-var iAmOnIndexPage = $("body").is('.index-page') ? true : false;
+var iAmOnIndexPage = {% if app.request.requestUri=='/' %}true{% else %}false{% endif %};
 
 $(document).ready(function() {
 
@@ -227,41 +227,42 @@ $(document).ready(function() {
     
     
     //Sounds
-    soundManager.setup({ 
+    soundManager.setup({
         url: '/flash/',
         debugMode: false,
         flashVersion: 9
     });
-            
-    soundManager.onload = function() {    
+
+    soundManager.onload = function() {
         mySound1 = soundManager.createSound({
-            id: 'newQuestion',     
-            url: '/audio/newQuestion.mp3',         
-            volume: 100        
+            id: 'newQuestion',
+            url: '/audio/newQuestion.mp3',
+            volume: 100
             });
         mySound2 = soundManager.createSound({
-            id: 'personalMessage',     
-            url: '/audio/personalMessage.mp3',         
-            volume: 100       
-            }); 
+            id: 'personalMessage',
+            url: '/audio/personalMessage.mp3',
+            volume: 100
+            });
         mySound3 = soundManager.createSound({
-            id: 'questionIsClosed',     
-            url: '/audio/questionIsClosed.mp3',         
-            volume: 100        
-            }); 
+            id: 'questionIsClosed',
+            url: '/audio/questionIsClosed.mp3',
+            volume: 100
+            });
         mySound4 = soundManager.createSound({
-            id: 'inChat',     
-            url: '/audio/inChat.mp3',         
-            volume: 100        
-        }); 
+            id: 'inChat',
+            url: '/audio/inChat.mp3',
+            volume: 100
+        });
         mySound5 = soundManager.createSound({
-            id: 'chatInvite',     
-            url: '/audio/chatInvite.mp3',         
-            volume: 100        
+            id: 'chatInvite',
+            url: '/audio/chatInvite.mp3',
+            volume: 100
         });
     };
 
 //    if ($("body").is('.auth')){
+
         updateQuestions(iAmOnIndexPage);
         setInterval('updateQuestions(iAmOnIndexPage);', 30000);
 //    }
@@ -290,7 +291,7 @@ function updateQuestions(update_my_questions){
 //            dialogs: dialogs.substr(0,dialogs.length-1)
         },
         success: function(data){
-//            if (update_my_questions){
+            if (update_my_questions){
 //                alert('asd');
                 if (data.my_questions){
                     var questionIsClosed = false;
@@ -309,7 +310,7 @@ function updateQuestions(update_my_questions){
                         soundManager.play('questionIsClosed');
                     }
                 }
-//            }
+            }
             if (data.new_categorized_questions){
                 $("#new_categorized_questions").text('('+data.new_categorized_questions+')');
             } else {
@@ -324,7 +325,10 @@ function updateQuestions(update_my_questions){
                 $("#showQuestion.rushed").prepend(data.rush_questions);
             }
 
-            if ((data.new_categorized_questions || data.new_rush_questions) && $("body").is('.sound_newQuestion')){
+            if (data.new_rush_questions && $("body").is('.sound_rushQuestion')){
+                soundManager.play('newQuestion');
+            }
+            if (data.new_categorized_questions && $("body").is('.sound_catQuestion')){
                 soundManager.play('newQuestion');
             }
 

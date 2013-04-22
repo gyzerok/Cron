@@ -678,10 +678,25 @@ class MainController extends AbstractController
             case 'questions':
                 $questions = $this->getDoctrine()->getRepository("CronCronBundle:NotesQuestion")->findBy(array("user"=>$user->getId()));
 //                print_r($questions);
-                foreach ($questions as $id=>$question) {
-                    $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getQuestion()->getId()));
-                    $questions[$id]->answers = $answers;
+//                foreach ($questions as $id=>$question) {
+//                    $answers = $this->getDoctrine()->getRepository("CronCronBundle:Answer")->findBy(array("question"=>$question->getQuestion()->getId()));
+//                    $questions[$id]->answers = $answers;
+//                }
+                if ($user instanceof User) {
+                    foreach ($questions as $id => $question) {
+                        $questions[$id]->iAnswered = false;
+                        foreach ($question->getQuestion()->getAnswers() as $answer) {
+                            if ($answer->getUser() == $user) {
+                                $questions[$id]->iAnswered = true;
+                            }
+                        }
+                    }
+                } else {
+                    foreach ($questions as $id => $question) {
+                        $questions[$id]->iAnswered = false;
+                    }
                 }
+
                 return $this->render("CronCronBundle:Notes:questions.html.twig", array('title' => 'Заметки / Статьи',
                     'questions' => $questions,
                     'curUser' => $user,
@@ -787,7 +802,7 @@ class MainController extends AbstractController
                     ->setFrom("aditus777@gmail.com")
                     ->setTo($user->getUsername())
                     ->setBody('<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body>' .
-                    $translator->trans('Поздравляем Вас с успешной регистрацией!').'<br>' .
+                    $translator->trans('Поздравляем Вас с успешной регистрацией!').'<br><br>' .
                     $translator->trans('Ваш логин').' ' . $user->getUsername() . '<br>' .
                     $translator->trans('Ваш пароль').' ' . $forconf . '<br>' .
                     $translator->trans('Перейдите по ссылке для подтверждения вашего e-mail адреса').':<br><a href="http://' . $_SERVER['HTTP_HOST'] . '/regconf?id=' . $user->getId() . '&hash=' . $hash . '">http://' . $_SERVER['HTTP_HOST'] . '/regconf?id=' . $user->getId() . '&hash=' . $hash . '</a><br>' .
@@ -826,6 +841,8 @@ class MainController extends AbstractController
                 $em->flush();
 
                 $success = true;
+
+                return $this->redirect("/", 302);
             }
         }
 

@@ -19,7 +19,6 @@
     <script src="/js/elrte.min.js" type="text/javascript" charset="utf-8"></script>
   </head>
   <body class="{{ app.getSession().get('_sound_settings') }}{% if app.user %}auth{% endif %} {% if app.request.requestUri=='/' %}index-page{% endif %}">
-
   <script type="text/javascript">
       function checkCash(need_cash, callback){
           $.ajax({
@@ -84,7 +83,7 @@
 				{#<input type="submit" value="{% trans %}Настройки{% endtrans %}" />#}
 				<a href="/settings">{% trans %}Настройки{% endtrans %}</a>
 			</form>
-			<p class="credits"><a href="/credits">{% trans %}Кредиты{% endtrans %} <span id="current-credits">{{ curUser.getCredits() }}</span></a></p>
+			<p class="credits"><a href="/credits">{% trans %}Кредиты{% endtrans %}<br/><span id="current-credits">{{ curUser.getCredits() }}</span></a></p>
 			<p class="myQuestions"><a href="/my">{% trans %}Мои вопросы{% endtrans %}</a></p>
 			<p class="myQuestions"><a href="/income">{% trans %}Входящие вопросы{% endtrans %}</a></p>
 			{% else %}

@@ -14,7 +14,7 @@
 введите вопрос: type a question
 Войти:	Log in
 Регистрация:	Register
-Выйти:	log out
+Выйти:	Log out
 логин:	login
 пароль:	password
 Нет избранных вопросов: No favorite questions
@@ -34,14 +34,16 @@
 статьи:	articles
 автор:	author
 источник:	source
+Источник:	Source
 Ссылка:	Link
+Автор статьи: Author
 блокнот:	notebook
 закрыть блокнот: close notebook
 добавить ссылку:	add link
 адрес страницы в интернете:	webpage address
 Название::	Title:
 удалить:	delete
-удалить ссылку:	delete link
+удалить ссылку:	remove link
 Адрес файла:	Address file
 добавить:	add
 занято:	busy
@@ -65,6 +67,7 @@
 выйти:	sign out
 из чата: of chat
 О нас:	About us
+Сообщение отправлено на: Message has been sent to
 Выберите категорию:: Select a category:
 Введите Ваш email: Enter your email
 Введите текст сообщения: Enter the message text
@@ -137,7 +140,9 @@ email:	e-mail
 все:	all 
 вопросы по категориям:	questions by category 
 срочные:	urgent
-новая строка в чате:	a new line in the chat 
+срочные вопросы:	urgent questions
+Срочные:	Urgent
+новая строка в чате:	a new line in the chat
 личные сообщения:	private messages
 сохранить:	save
 Сейчас Вы можете использовать: Now you can use
@@ -187,7 +192,7 @@ email:	e-mail
 По этому адресу будут отправлены Ваши регистрационные данные: To this address will be sent your registration data
 Этот ресурс создан для быстрого поиска людей, обладающих нужными Вам знаниями. Здесь Вы можете найти интересных собеседников и обсуждать интересующие Вас вопросы. ADITUS сделает Вашу жизнь проще и сэкономит много времени: This resource was created to quickly search for people, who have useful knowledge for you. You can find interesting interlocutors and discuss your questions here. ADITUS can make your life easier and save a lot of time in searching for relevant information.
 На ADITUS Вы можете задать свой вопрос любому пользователю или группе специалистов из области вашего вопроса  в режиме онлайн и, оценив полученные ответы, выбрать подходящего собеседника для приватной беседы,  либо продолжить обсуждение в группе.  Это безусловно повысит эффективность использования интернета и сэкономит самый драгоценный ресурс – время.: At ADITUS you can ask a question to any user or group of experts from the field of your question online and by evaluating the responses, select a suitable companion for a private conversation, or to continue the discussion in the group. Of course, it helps you increase the efficiency of using the Internet and save the most precious resource - time.
-выгнать пользователя: 
+выгнать пользователя: kick out user
 отправить сообщение: send a message
 на главную:
 отправить сообщение:
@@ -807,3 +812,12 @@ rules_bigtext: |
     <p class=MsoNormal><span lang=EN-US style='font-size:14.0pt;font-family:"Times New Roman","serif";
     mso-ansi-language:EN-US'>With numerous violations of the rules your account may
     be deleted.<o:p></o:p></span></p>
+
+Вы были удалены из чата.: You have been removed from the chat.
+Чат завершен автором вопроса.: Author of a question completed chat.
+Чат завершен.: Chat completed.
+Вы вышли из чата.: You're out of chat.
+В чат добавлен %name%.: %name% added to the chat.
+В чат вошел %name%.: %name% went to the chat.
+Чат покинул %name%.: %name% came out of chat.
+Из чата был удален %name%.: %name% was removed from the chat.

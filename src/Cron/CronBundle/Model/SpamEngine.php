@@ -97,7 +97,7 @@ class SpamEngine
                         ->setFrom("aditus777@gmail.com")
                         ->setTo($user->getUsername())
                         ->setBody('<html><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><body>' .
-                            $this->translator->trans('Здравствуйте').', '.$user->getNick().'!<br>' .
+                            $this->translator->trans('Здравствуйте').', '.$user->getNick().'!<br><br>' .
                             $this->translator->trans('Ваш акаунт автоматически заблокирован на').' '.
                             '30 '.
                             $this->translator->trans('минут').
